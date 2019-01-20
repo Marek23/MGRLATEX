@@ -116,18 +116,20 @@ Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania w ostatnich cza
 	\label{1_fig1}
 \end{figure}
 \par
-Obrazy przedstawiono w parze: po lewej obraz wejściowy, po prawej wynikowy obraz poddany operacji wmalowywania. Mogą nimi być uszkodzenia jak w przypadku a oraz b, napisy znajdujące się na obrazie - c, czy też obiekty, którym w konkretnym przypadku d jest postać. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według niego zostać usunięty. Program sam automatycznie nie jest w stanie domyśleć się, która część powinna zostać opracowana.
+Obrazy przedstawiono w parze: po lewej obraz wejściowy, po prawej wynikowy obraz poddany operacji wmalowywania. Mogą nimi być uszkodzenia jak w przypadku a oraz b, napisy znajdujące się na obrazie - c, czy też obiekty, którym w konkretnym przypadku d jest postać. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według niego zostać usunięty. Program automatycznie nie jest w stanie wyznaczyć części, która powinna zostać przearanżowana.
 \par
 Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany region na scenie musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze.
 \par
-Głównym celem pracy jest osiągniecie algorytmu skutecznie odbudowującego uprzednio zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. W uproszczeniu zagadnienia poddane analizie w pracy można podzielić na trzy kategorie:
+Głównym celem pracy jest osiągniecie algorytmu skutecznie odbudowującego uprzednio zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi operacjami wykorzystywanymi w bardziej złożonych algorytmach rekonstrukcji są:
 \begin{enumerate}
 \item
-Rozwiązanie cząstkowych równań różniczkowych wyższego rzędu
+Rozwiązanie cząstkowych równań różniczkowych wyższego rzędu bazujących na kontynuacji tekstur, geometrii, struktur obrazu.
 \item
-Wypełnienie brakującego regionu na podstawie kopii kawałków obrazów z najlepszym dopasowaniem
+Problem minimalizacji energii o bogatym asortymencie sposobu definicji.
 \item
-Połączenie powyższych algorytmów
+Wyznaczenie podobieństwa pomiędzy obszarami w obrazie za pomocą. wprowadzonej metryki 
+\item
+Obliczenia przeprowadzane na modelu wariacyjnym
 \end{enumerate}
 \par
 W pracy opisano przedstawione powyżej algorytmy, porównano oraz zaproponowano nowy model uzupełniania brakujących danych. Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
@@ -135,7 +137,12 @@ W pracy opisano przedstawione powyżej algorytmy, porównano oraz zaproponowano 
 Pierwszą gałęzią algorytmów zgodnie z rozróżnieniem wprowadzonym w  \cite{SalientStrucTexProp} są metody opierające się na rozwiązaniu równań różniczkowych wyższego rzędu. Wśród nich pojawia się próba przystosowania procesu dyfuzji do wypełniania braków w obrazie (źródła \cite{bertalmio2000image} lub \cite{BertalmioNavierStokes}), dzięki której przy wykorzystaniu zależności z działu mechaniki płynu można dokonać próby kontynuacji informacji z otoczenia w brakujące obszary. Innym sposobem wyznaczenia braków opierającym się na równaniach różniczkowych wyższego rzędu jest próba wprowadzenia problemu minimalizacji energii zdefiniowanej w oparciu o pojęcie wahania funkcji tak jak  \cite{MathematicalModelsforNLTextureInpainting} czy też \cite{ColorTextureInpaintingNLCTVModel}.
 \par
 Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu kawałek po kawałku skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. Na przestrzeni czasu pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. \cite{StructurePropagationManual}.
-Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem grupy może być \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najbliższego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych.
+\par
+Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem grupy może być \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najbliższego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują nielokalny model wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi skrawkami obrazu.
+\par
+Większość metod wmalowywania opisanych w literaturze opiera się na algorytmach kontynuujących strukturę, geometrię bądź teksturę obrazu. Modele bazujące na geometrii i strukturze w uogólnieniu generują efekt uboczny w postaci rozmazanego wynikowego obrazu, bez zachowanych tekstur.
+Do algorytmów broniących się przed efektem rozmycia wyniku można zaliczyć takie, w których wyznaczeniu konkretnego miejsca w nieznanym obszarze może towarzyszyć przebadanie całego zbioru punktów niemodyfikowanej części obrazu. Stąd metody kontynuujące tekstury w większości uważa się za metody nielokalne.
+
 \chapter{Równania różniczkowe wyższego rzędu.}
 \section{Rozwiązanie równania Naviera-Stokesa }
 W celu dokładnego nakreślenia idei wmalowywania w oparciu o równanie Naviera-Stokesa należy rozważyć poniższe równanie przepływu cieczy Newtonowskiej:
@@ -1038,7 +1045,7 @@ Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i 
 	\caption{Prosty algorytm wmalowywania tekstury obrazu.}
 	\label{5_fig1}
 \end{figure}
-Zgodnie z \label{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm można wykonywać pobierając piksele z granicy w kolejności zgodnej ze wskazówkami zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich pikseli. Odnalezienie okna najlepszego dopasowania można wykonać analogicznie do metody wykorzystanej w publikacji Criminisi'ego, w oparciu o zależności \eqref{FROBDIST} oraz \eqref{FROBENIUS}. 
+Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm można wykonywać pobierając piksele z granicy w kolejności zgodnej ze wskazówkami zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich pikseli. Odnalezienie okna najlepszego dopasowania można wykonać analogicznie do metody wykorzystanej w publikacji Criminisi'ego, w oparciu o zależności \eqref{FROBDIST} oraz \eqref{FROBENIUS}. 
 
  W przypadku obrazów kolorowych pierwszym krokiem wykonania operacji wmalowywania jest transformacja do współrzędnych sferycznych zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \cite{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie 3 uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
 \begin{enumerate}
@@ -1052,7 +1059,39 @@ Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ met
 Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie prostego algorytmu syntezy tekstury najlepszymi dopasowaniami uzyskanymi na podstawie warstwy $v_1$
 \end{enumerate}
 
+\chapter{Model wariacyjny z nielokalnym modelu wmalowywania}
+Ostatnią z rozważanych metod będzie metoda zaproponowana przez autorów Fedorov, Facciolo i Arias w \cite{arias2011variational}. Autorzy w publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej od dwóch niewiadomych:
+\begin{itemize}
+\item
+nieznanego obszaru obrazu $u(\mathcal{O})$
+\item
+mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z nieznanego obszaru jego odpowiednika z obszaru poza maską $\varphi(\hat{x})$
+\end{itemize}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{rysunki/6_fig1}
+	\caption{Określenie charakterystycznych obszarów obrazu.}
+	\label{6_fig1}
+\end{figure}
+Zgodnie z \autoref{6_fig1} niech obraz stanowi przekształcenie $ u : {\Omega} \rightarrow R$, $\mathcal{O}$ oznacza obszar do uzupełnienia, $\mathcal{O}^c$ oryginalną część obrazu nie ulegającego modyfikacji, $\mathrm{\Omega }_p$ podzbiór pikseli scentrowanych względem  piksela $p \in \Omega$, gdzie $\Omega = \mathcal{O}^c + \mathcal{O}$, $\widetilde{\mathcal{O}} := \mathcal{O} + \mathrm{\Omega }_{ps}$, gdzie $\mathrm{\Omega }_{ps}$ oznacza sumę wszystkich zbiorów punktów $x \in \mathcal{O}$. Podobnie jak w \cite{arias2011variational} niech przekształcenie $u(x)$ jest zarezerwowane dla przestrzeni maski, a $\hat{u}(\hat{x})$ odpowiada przekształceniu w przestrzeni stałej obrazu $\widetilde{\mathcal{O}}$ ( $\hat{x} \in \mathcal{O}$). Mapowanie funkcji podobieństwa $\varphi(x)$ przedstawiono na \autoref{6_fig2}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{rysunki/6_fig2}
+	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
+	\label{6_fig2}
+\end{figure}
 
+$\mathcal{O}$
+
+$\mathcal{E}$
+
+$\widetilde O$
+
+$\mathrm{\Omega }_p$
+
+$x,u(x)$
+
+$\hat{x}, \hat{u}(\hat{x})$
 
  
 
