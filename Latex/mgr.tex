@@ -751,6 +751,7 @@ P\left(p\right)=Ct(p)\cdot Dt(p)
 Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczenie wartości funkcji $Ct(p)$ definiowanej:
 \begin{align}
 Ct\left(p\right)=\ \frac{\sum_{q\in {\varphi }_{p'}}{C(q)}}{\left|{\varphi }_p\right|}
+\label{confidenceTerm}
 \end{align}
 gdzie $C(q)$ - funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu, $\left|{\varphi }_p\right|$ - liczba pikseli w analizowanym kawałku - rozmiar rozważanego okna. 
 \par
@@ -1059,7 +1060,7 @@ Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ met
 Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie prostego algorytmu syntezy tekstury najlepszymi dopasowaniami uzyskanymi na podstawie warstwy $v_1$
 \end{enumerate}
 
-\chapter{Model wariacyjny z nielokalnym modelu wmalowywania}
+\chapter{Wariacyjny, nielokalny model wmalowywania}
 Ostatnią z rozważanych metod będzie metoda zaproponowana przez autorów Fedorov, Facciolo i Arias w \cite{arias2011variational}. Autorzy w publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej od dwóch niewiadomych:
 \begin{itemize}
 \item
@@ -1073,13 +1074,124 @@ mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z nieznane
 	\caption{Określenie charakterystycznych obszarów obrazu.}
 	\label{6_fig1}
 \end{figure}
-Zgodnie z \autoref{6_fig1} niech obraz stanowi przekształcenie $ u : {\Omega} \rightarrow R$, $\mathcal{O}$ oznacza obszar do uzupełnienia, $\mathcal{O}^c$ oryginalną część obrazu nie ulegającego modyfikacji, $\mathrm{\Omega }_p$ podzbiór pikseli scentrowanych względem  piksela $p \in \Omega$, gdzie $\Omega = \mathcal{O}^c + \mathcal{O}$, $\widetilde{\mathcal{O}} := \mathcal{O} + \mathrm{\Omega }_{ps}$, gdzie $\mathrm{\Omega }_{ps}$ oznacza sumę wszystkich zbiorów punktów $x \in \mathcal{O}$. Podobnie jak w \cite{arias2011variational} niech przekształcenie $u(x)$ jest zarezerwowane dla przestrzeni maski, a $\hat{u}(\hat{x})$ odpowiada przekształceniu w przestrzeni stałej obrazu $\widetilde{\mathcal{O}}$ ( $\hat{x} \in \mathcal{O}$). Mapowanie funkcji podobieństwa $\varphi(x)$ przedstawiono na \autoref{6_fig2}
+Zgodnie z \autoref{6_fig1} niech obraz stanowi przekształcenie $ u : {\Omega} \rightarrow R$, $\mathcal{O}$ oznacza obszar do uzupełnienia, $\mathcal{O}^c$ oryginalną część obrazu nie ulegającego modyfikacji, $\mathrm{\Omega }_p$ podzbiór pikseli scentrowanych względem  piksela $p \in \Omega$, gdzie $\Omega = \mathcal{O}^c + \mathcal{O}$, $\widetilde{\mathcal{O}} := \mathcal{O} + \mathrm{\Omega }_{ps}$, gdzie $\mathrm{\Omega }_{ps}$ oznacza sumę wszystkich zbiorów punktów $x \in \mathcal{O}$. Podobnie jak w \cite{arias2011variational} niech przekształcenie $u(x)$ jest zarezerwowane dla przestrzeni maski, a $\hat{u}(\hat{x})$ odpowiada przekształceniu w przestrzeni stałej obrazu $\widetilde{\mathcal{O}}$ ( $\hat{x} \in \mathcal{O}$). Mapowanie funkcji podobieństwa $\varphi(x)$ przedstawia \autoref{6_fig2}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.9]{rysunki/6_fig2}
 	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
 	\label{6_fig2}
 \end{figure}
+Energię poddawaną minimalizacji przedstawia się zależnością:
+\begin{align}
+\begin{aligned}
+\mathcal{E}(u,\varphi) = \int_{\mathcal{\widetilde{O}}}\int_{\Omega_p}\abs{u(x+h) - \hat{u}(\varphi(x)+h)}^2dhdx
+\end{aligned}
+\end{align}
+Funkcja jest niewypukła i pozwala obliczyć jedynie lokalne minima. W pracy wykorzystano iteracyjny algorytm przemiennej minimalizacji polegający na wyznaczaniu w każdym kroku $u(x)$ względem stałej wartości $\varphi(x)$, a następnie $\varphi(x)$ względem stałej wartości $u(x)$.
+\section{Wyznaczenia mapy podobieństwa.}
+Proces minimalizacji funkcji względem stałej zmiennej $u(x)$ można opisać zależnością:
+\begin{align}
+\begin{aligned}
+\mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\left( p_{u}(x) - p_{\hat{u}}(x+t)\right),\operatorname{gdzie} \ \forall_t : x+t \in \mathcal{O}^c
+\label{minNNF}
+\end{aligned}
+\end{align}
+Zmienna $t$ w minimalizacji stanowi zbiór wartości, który po dodaniu do współrzędnej $x$ mapuje do dowolnego położenia w $\mathcal{O}^c$. Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $\mathcal{O}^c$, $\Theta(x) :\mathcal{O} \ \rightarrow \ \mathcal{O}^c$. Warto zaznaczyć, iż najbliższego sąsiada punktu $x$ nie rozumie się znajdującego się najbliżej, a tego dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\| 
+\label{normNNF}
+\end{aligned}
+\end{align}
+Norma może być wyznaczana zgodnie z \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Autorzy w \cite{MathematicalModelsforNLTextureInpainting} proponują dodatkowe definicje norm, które zostaną opisane w dalszej części pracy. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i stanowić duże obciążenie obliczeniowe. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu PatchMatch dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm oparty jest na 2 krokach (punkt $x$ oznaczany będzie zamiennie ze współrzędną $(i, j)$ w obrazie):
+\begin{enumerate}
+\item
+Losowej inicjalizacji pikseli
+\item
+Ograniczonej uprzednio definiowaną liczbą iteracji powtarzanej czynności:
+\begin{enumerate}[a)]
+\item
+propagacja: w przypadku parzystej iteracji sprawdzenie wszystkich pikseli $x$ z maski w kierunku rastrowym przedstawionym na \autoref{6_fig3}, czy 
+wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i+1,j)) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j+1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku nadpisaniu najbliższego sąsiada $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
+w przypadku nieparzystej iteracji sprawdzenie wszystkich pikseli $x$ w kierunku odwrotnym do rastrowego przedstawionym na \autoref{6_fig3}, czy 
+wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i-1,j)) \big\|$ bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j-1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku nadpisaniu najbliższego sąsiada $\varphi(i,j) = \varphi(i-1,j)$, lub $\varphi(i,j) = \varphi(i,j-1)$
+\item
+poszukiwanie w oknach: dla każdego punktu $(i,j)$ sprawdzane jest, czy w stopniowo pomniejszanych oknach centrowanych względem punktu $\varphi(i,j)$ istnieje losowy punkt $(i', j')$, dla którego zachodzi $\big\| p_{u}(i,j) - p_{\hat{u}}(i',j') \big\| < \big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j) \big\|$, który w następstwie jest podmieniany.
+\end{enumerate}
+\end{enumerate}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{rysunki/6_fig3}
+	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
+	\label{6_fig3}
+\end{figure}
+Kroki algorytmu PatchMatch zostały przedstawione graficznie na \autoref{6_fig4}.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{rysunki/6_fig4}
+	\caption{Algorytm PatchMatch. Źródło \cite{arias2011variational}.}
+	\label{6_fig4}
+\end{figure}
+\section{Wyznaczenie wartości obrazu.}
+Niech funkcja $e: \Omega_{p} \rightarrow {\rm I\!R}^{+}$ stanowi sumę ważonych błędów pomiędzy dwoma skrawkami obrazu scentrowanymi względem punktów $x$ i $\hat{x}$.
+\begin{align}
+\begin{aligned}
+e(x, \hat{x}) &= g \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{u}) \big\| = g \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| \\ 
+&= \int_{\Omega_{p}} g(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
+\label{patchErrorVFI}
+\end{aligned}
+\end{align} 
+Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
+\begin{align}
+\begin{aligned}
+E(u) &= \int_{\widetilde O}\int_{\Omega_{p}}g(h)e(u(x+h) - \hat{u}(\varphi(x)+h)dhdx
+\label{patchMatchEnergy}
+\end{aligned}
+\end{align} 
+Niech $z := x+h$ i $\hat{z} := \hat{x}+h$. Wprowadzając zależność:
+\begin{align}
+m(z,\hat{z}) = \int_{\Omega_{p}}g(h)\chi_{\widetilde O}(z-h)\delta_{\varphi(z-h)}(\hat{z}-h)dh
+\end{align}
+gdzie:
+\begin{enumerate}
+\item
+$\chi(p)$ podobnie jak w modelu $NLCTV$ przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
+\item
+$\delta(p)$ podobnie jak w metodzie Criminisi określa pewność co do danego piksela wewnątrz maski i jest określone następującą zależnością:
+\begin{align}
+\delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0 
+\end{align}
+\end{enumerate}
+wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
+\begin{enumerate}
+\item
+Nielokalnej uśrednionej:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |^2
+\label{nonLocalMeans}
+\end{aligned}
+\end{align}
+\item
+Nielokalnej medianowej:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{g,1} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |
+\label{nonLocalMedians}
+\end{aligned}
+\end{align}
+\item
+Nielokalnej Poissona:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{P} = \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} + \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2,\nabla}
+\label{nonLocalpoisson}
+\end{aligned}
+\end{align}
+
+\end{enumerate}
+
+
 
 $\mathcal{O}$
 
