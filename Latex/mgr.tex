@@ -692,7 +692,20 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
 \subsection{Modyfikacje algorytmu}
-\chapter{Uzupełnianie kawałkami obrazu}
+\subsubsection{Modyfikacja funkcji wagi.}
+Podczas testowania opisanego powyżej algorytmu wmalowywania jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
+\begin{align}
+\begin{aligned}
+w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\} }\\
+&\cdot {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ s(\cdot) \right)-I\left(y+\ s(\cdot) \right)\right|}^2}{r^2}\right\} }
+\label{NLWEIGHTMODIFIED}
+\end{aligned}
+\end{align}
+W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi. 
+\subsubsection{Modyfikacja wyznaczania wartości obrazu.}
+Złożoność obliczeniowa algorytmu skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
+
+\chapter{Uzupełnianie kawałkami obrazu.}
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie skrawkami pochodzącymi z ich otoczenia. W odróżnieniu od metod bazujących na równaniach różniczkowych metoda uzupełniania braków nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na poniższym rysunku.
 \begin{figure}[!h]
 	\centering
