@@ -691,6 +691,7 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \begin{equation}
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
+\subsection{Modyfikacje algorytmu}
 \chapter{Uzupełnianie kawałkami obrazu}
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie skrawkami pochodzącymi z ich otoczenia. W odróżnieniu od metod bazujących na równaniach różniczkowych metoda uzupełniania braków nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na poniższym rysunku.
 \begin{figure}[!h]
@@ -1141,7 +1142,7 @@ Niech funkcja $e: \Omega_{p} \rightarrow {\rm I\!R}^{+}$ stanowi sumę ważonych
 \begin{aligned}
 e(x, \hat{x}) &= g \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{u}) \big\| = g \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| \\ 
 &= \int_{\Omega_{p}} g(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
-\label{patchErrorVFI}
+\label{minUs}
 \end{aligned}
 \end{align} 
 Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
@@ -1253,36 +1254,36 @@ Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ 
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{g \ast \chi_{(O^s)^c} u^s(x)}{g \ast \chi_{(O^s)^c}(x) }
 \end{align}
-Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania do góry, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego w poprzednim stopniu oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space}.
+Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania do góry, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego w poprzednim stopniu oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \section{Podsumowanie algorytmu}
-Podsumowując wykorzystane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następującym schemacie:
+Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
 \begin{enumerate}
 \item
-Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$
+Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $I$
 \item
-Wyznaczenie piramidy maski stanowiącego zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
-Wyznaczenie piramidy obrazu stanowiącego zbiór: $\{u^s\}_{s=0,...,S-1}$
+Wyznaczenie piramidy maski stanowiącej zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
+Wyznaczenie piramidy obrazu stanowiącej zbiór: $\{u^s\}_{s=0,...,S-1}$
+\item
+Inicjalizacja obrazu $u^{S-1}$ w obszarze $\mathcal{O}$ \\
+Wyznaczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$
+\item
+Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
+\begin{enumerate}[a)]
+\item
+Przeskalowanie mapy podobieństwa z zastosowaniem algorytmu interpolacji najbliższego sąsiada $\varphi^s=r \cdot (\uparrow_r \varphi^{s+1})$
+\item
+Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\mathcal{O})=u^s_0(\mathcal{O})$ w celu inicjalizacji
+\item
+Powtarzanie $I$-tą ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF}
+\begin{itemize}
+\item
+minimalizacja \eqref{minNNF} w celu wyznaczenia $\varphi^s$
+\item
+minimalizacja \eqref{minUs} w celu wyznaczenia $u^s$
+\end{itemize}  
 \end{enumerate}
- 
-
-\quad asd
-
-\quad \quad asd
-
-$\mathcal{O}$
-
-$\mathcal{E}$
-
-$\widetilde O$
-
-$\mathrm{\Omega }_p$
-
-$x,u(x)$
-
-$\hat{x}, \hat{u}(\hat{x})$
-
- 
-
+\end{enumerate}
+Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$
 
 
  
