@@ -12,6 +12,7 @@
 \usepackage[MeX]{polski}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
+\usepackage{listings}
 \geometry{left=25mm,right=25mm,%
 bindingoffset=10mm, top=25mm, bottom=25mm}
 \usepackage{amssymb, latexsym}
@@ -35,6 +36,7 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 
 \renewcommand*{\figureautorefname}{Rysunek}
 \renewcommand*{\tableautorefname}{Tabela}
+\renewcommand*{\chapterautorefname}{Rozdział}
 
 \author{Marek Szweda}
 \title{Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania}
@@ -144,6 +146,7 @@ Większość metod wmalowywania opisanych w literaturze opiera się na algorytma
 Do algorytmów broniących się przed efektem rozmycia wyniku można zaliczyć takie, w których wyznaczeniu konkretnego miejsca w nieznanym obszarze może towarzyszyć przebadanie całego zbioru punktów niemodyfikowanej części obrazu. Stąd metody kontynuujące tekstury w większości uważa się za metody nielokalne.
 
 \chapter{Równania różniczkowe wyższego rzędu.}
+\label{chap:navierstokes}
 \section{Rozwiązanie równania Naviera-Stokesa }
 W celu dokładnego nakreślenia idei wmalowywania w oparciu o równanie Naviera-Stokesa należy rozważyć poniższe równanie przepływu cieczy Newtonowskiej:
 \begin{equation}
@@ -728,7 +731,7 @@ Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znale
 Dystans pomiędzy dwoma skrawkami $d({\varphi }_{p'},{\varphi }_{q'})$ definiowany jest jako suma kwadratów różnic wszystkich odpowiadających sobie pikseli ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$.
 \begin{align}
 d(\varphi_{p'},\varphi_{q'})= \sum_{p\in \varphi_{p'}} \left( \varphi_{p^{'}}(p) - \varphi _{q^{'}} \left(p^{'}\right) \right)^2
-\label{FROBENIUS} 
+\label{FROBENIUS2} 
 \end{align}
 
 
@@ -1162,7 +1165,7 @@ $\delta(p)$ podobnie jak w metodzie Criminisi określa pewność co do danego pi
 \delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0 
 \end{align}
 \end{enumerate}
-wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
+wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
 \begin{enumerate}
 \item
 Nielokalnej uśrednionej:
@@ -1184,14 +1187,87 @@ Nielokalnej medianowej:
 Nielokalnej Poissona:
 \begin{align}
 \begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{P} = \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} + \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2,\nabla}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{P} &= \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} + \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2,\nabla} \\
+&= g \ast (\lambda | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) | \\
+&+ (1-\lambda)|\nabla u(x+\cdot) - \nabla \hat{u}(\hat{x}+\cdot)|
 \label{nonLocalpoisson}
 \end{aligned}
 \end{align}
-
 \end{enumerate}
+Suma różnic pikseli w przypadku normy Poissona dodatkowo wymaga wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny z członów będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla norm uzyskuje się odpowiednio rozwiązania w postaci:
+\begin{enumerate}
+\item
+równanie:
+\begin{align}
+u(z) = \frac{1}{k(z)}\int_{\widetilde O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
+\end{align}
+gdzie
+\begin{align}
+k(z) := \int_{\widetilde O^c}m(z,\hat{z})d\hat{z}
+\end{align}
+\item
+równanie Eulera:
+\begin{align}
+[\delta_{u}\mathcal{E}(u)](z) = \int_{\mathcal{O}^c}sign[u(z)-\hat{u}(\hat{z})]m(z,\hat{z})d\hat{z} \ni \mathcal{O} 
+\end{align}
+\item
+równania Eulera rozwiązane względem zmiennej $u$:
+\begin{align}
+\begin{aligned}
+\begin{cases}
+\nabla \cdot [k(z)\nabla u(z)] - \frac{\lambda}{1-\lambda}]k(z)u(z) = \\ 
+\ \ \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \mathcal{O} \\
+u(z)=\hat{u}(z) , & z \in \partial \mathcal{O} \setminus \partial \Omega \\
+\nabla u(z) \cdot n_{\Omega}(z) = 0 , & z \in \partial \mathcal{O} \cap \partial \Omega
+\end{cases}
+\end{aligned}
+\end{align}
+gdzie:
+\begin{align}
+v(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\nabla\hat{u}(\hat{z})d\hat{z}
+\end{align}
+\begin{align}
+f(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
+\end{align}
+Człon $n_{\Omega}(z)$ oznacza wektor normalny do $\Omega$ dla $z \in \partial \Omega$.
+\end{enumerate}
+Dokładne wyprowadzenia zależności można znaleść w \cite{arias2011variational}.
+\section{Wielostopniowy schemat wypełniania.}
+W wielu algorytmach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm polega na utworzeniu serii pomniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu uprzednio wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
+\begin{itemize}
+\item
+losowo wyznaczone wartości obrazu pobierane z obszaru $\mathcal{O}^c$
+\item
+rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR zgodnie z zależnością \eqref{DiscreteSOR}.
+\end{itemize}
+Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy w \cite{arias2011variational} proponują model Gauss'owskiej piramidy.\\
+W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę stopni piramidy, a oryginalny wymiar jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{s-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
+\begin{align}
+r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
+\end{align}
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Jako rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako stały uprzednio definiowany. Niech indeks górny s odnosi się do zmiennych i obszarów w zakresie rozważanego stopnia piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\mathcal{O}^s$ i $\mathcal{O}^{s+1}$:
+\begin{align}
+\chi_{\mathcal{O}^{s+1}}=(\downarrow_rg_{\sigma(r)}\ast\chi_{\mathcal{O}^s})> T_{0}.
+\end{align}
+Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
+\begin{align}
+u^{s+1}(x)= \downarrow_r \frac{g \ast \chi_{(O^s)^c} u^s(x)}{g \ast \chi_{(O^s)^c}(x) }
+\end{align}
+Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania do góry, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego w poprzednim stopniu oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space}.
+\section{Podsumowanie algorytmu}
+Podsumowując wykorzystane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następującym schemacie:
+\begin{enumerate}
+\item
+Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$
+\item
+Wyznaczenie piramidy maski stanowiącego zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
+Wyznaczenie piramidy obrazu stanowiącego zbiór: $\{u^s\}_{s=0,...,S-1}$
+\end{enumerate}
+ 
 
+\quad asd
 
+\quad \quad asd
 
 $\mathcal{O}$
 
