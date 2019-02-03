@@ -631,6 +631,7 @@ Korzystając z dyskretnych form \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{NLPRODU
 &+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l \\
 &-\mathrm{\Theta} \Biggl( \sum_{j\in N_i} \left( \left({ v^k_i}\right)_{l,j} - (\left({ v^k_i}\right)_{l,j} - (\left({ v^k_i}\right)_{l,j} + (\left({ v^k_i}\right)_{l,j}\right) \sqrt{{\left(w_i\right)}_{l,j}} \Biggr]
 \end{aligned}
+\label{uNLCTV}
 \end{align}
 W przypadku równania \eqref{ELNLCTV1} Eulera-Lagrange’a należy przekształcić je względem zmiennej $\overrightarrow{v}$:
 \begin{align}
@@ -701,10 +702,40 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \
 \label{NLWEIGHTMODIFIED}
 \end{aligned}
 \end{align}
-W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi. 
-\subsubsection{Modyfikacja wyznaczania wartości obrazu.}
-Złożoność obliczeniowa algorytmu skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
-
+W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
+\subsubsection{Modyfikacja wyznaczania wartości obrazu $u$.}
+Złożoność obliczeniowa algorytmu skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
+\begin{align}
+\begin{aligned}
+{{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
+&+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr]
+\end{aligned}
+\end{align}
+W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu kroków, w których wyznaczane są przytoczone zmienne.
+\subsubsection{Połączenie metody Criminisi z funkcją wagi.}
+Kolejną z pozytywnych prób modyfikacji algorytmu NLCTV w pracy okazała się próba zastąpienia problemu minimalizacji energii \eqref{ENLCTV} opartej na funkcji wagi, metodą syntezy obrazu (bazującej na metodzie syntezy tekstury opisanej w dalszej części pracy w \autoref{chap:StructureTextureNavierStokes}). Kroki nowego algorytmu można przedstawić w następującym schemacie:
+\begin{enumerate}
+\item
+Ustawienie argumentów algorytmu: obraz $u}$, maska obrazu $\chi$, wielkość okna $SW$, wielkość skrawka obrazu $PS$ 
+\item
+Wyznaczenie funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT} dla parametrów $SW$ i $PS$ i $\chi$
+\item
+Powtarzanie do uzyskania zbioru $\Omega = \emptyset$
+\begin{enumerate}[a)]
+\item
+Znalezienie dla każdego piksela $p \in \partial\Omega$ najlepszego dopasowania $d \in D \cap N_p$, gdzie $N_p$ zbiór pikseli z okna utworzonego dla piksela $p$, dla którego zachodzi:
+\begin{align}
+d = \mathop{\mathrm{arg \ max}}_{t \in D \cap N_p} w(p,t)
+\end{align}
+a następnie przepisanie:
+\begin{align}
+u(p) = u(d)
+\end{align}
+\item
+Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
+\end{enumerate}
+\end{enumerate}
+Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu NLCTV można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
 \chapter{Uzupełnianie kawałkami obrazu.}
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie skrawkami pochodzącymi z ich otoczenia. W odróżnieniu od metod bazujących na równaniach różniczkowych metoda uzupełniania braków nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na poniższym rysunku.
 \begin{figure}[!h]
@@ -932,7 +963,7 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 \label{4_fig9}
 \end{figure}
 Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych skrawków $\psi $, czy też okien stanowiących podstawę do parowania danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy skrawków obrazu $\psi $ w wyznaczanym obszarze $\mathrm{\Omega }$.
-\chapter{Wmalowywanie struktury i tekstury obrazu.}
+\chapter{Wmalowywanie struktury i tekstury obrazu.}\label{chap:StructureTextureNavierStokes}
 Metoda jednoczesnego wmalowywania struktur i tekstur stanowi połączenie wcześniej opisanych w pracy metod opartych o równania różniczkowe wyższego rzędu z metodami bazującymi na przykładowych źródłach kawałków obrazów stanowiących podstawę do wypełniania brakujących regionów. Pierwszy raz przedstawiona została przez Bertalmio i innych w 2003 roku w \cite{NavierStokesAndTexturePropagation}, a bardziej zaawansowany algorytm pojawia się w 2004 roku w [26]. Metoda w \cite{NavierStokesAndTexturePropagation} opiera się na wmalowywaniu struktury w oparciu o algorytm przedstawiony w \cite{bertalmio2000image} przy jednoczesnej propozycji prostej syntezy tekstury. 
 \par
 Niech obraz $I:R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
