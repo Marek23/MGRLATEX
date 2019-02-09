@@ -109,8 +109,18 @@ Tu będzie jakieś streszczenie
 
 %-----------Poczłtek człłci zasadniczej-----------
 
-\chapter{Wprowadzenie}
-Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania w ostatnich czasach stała się jednym z głównych problemów w przetwarzaniu obrazów oraz widzeniu maszynowym. Jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Wmalowywanie obrazów definiuje się jako automatyczne wypełnianie braków w obrazie na podstawie otoczenia, w sposób uniemożliwiający obserwatorowi znalezienie pierwotnie wybrakowanych miejsc. Przykłady obrazów poddanych operacji wmalowywania przedstawia \autoref{1_fig1} 
+\chapter{Wprowadzenie do przetwarzania obrazów.}
+W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększając swój obszar w dziedzinie badań. Ogólnie proces analizy obrazu można przedstawić następującym modelem: \\
+\begin{figure}[!h]
+	\centering
+	\includegraphics{rysunki/1_fig1.png}
+\end{figure}
+\\
+Jest wiele rodzajów analizy obrazu takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest ulepszenie uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
+\section{Obraz cyfrowy.}
+Dwuwymiarowy obraz jest reprezentacją skończonej ilości dyskretnych wartości zwanych pikselami. Każdy z pikseli przypisany jest do konkretnego położenia w dwuwymiarowej przestrzeni $x = {i,j} \in D=\mathcal{R}^2$, gdzie $D$ oznacza przestrzeń obrazu. Wartość piksela $f(x)$ stanowi informację o natężeniu oraz nasyceniu kolorów w danym punkcie $x$. Najczęściej obraz przechowywany jest jako zbiór wartości $f(x) \in \langle 0,255 \rangle$, gdzie 0 oznacza najmniejszą wartość intensywności, a 255 największą wartość intensywności. Obraz w odcieniach szarości stanowi mapowanie $f: D \rightarrow \mathcal{R}$. W przypadku obrazów kolorowych obraz stanowi mapowanie $f: D \rightarrow \mathcal{R}^n$, gdzie $n$ określa ilość przestrzeni barw. Przykładem przestrzeni może być przestrzeń $RGB$, gdzie przy wykorzystaniu trzech kolorów $(n=3)$ uzyskuję się skończoną gammę innych kolorów. Biorąc pod uwagę trzy podstawowe kolory oraz 256 wartości ich intensywności obraz może modelować $256^3=16777216$ różnych kolorów. Jakość obrazu zależy od jego rozdzielczości. Rozdzielczość określa się jako liczbę wierszy i kolumn przypadających na obraz. Obrazy o dużej rozdzielczości charakteryzują się znikomą zdolnością do odróżnienia poszczególnego z pikseli obrazu, dzięki czemu w ogólnym wrażeniu tworzy gładki obraz.
+\section{Wmalowywanie obrazów.}
+Cyfrowe wmalowywanie obrazu jest artystycznym synonimem zapożyczonym z techniki wykorzystywanej przez profesjonalnych restauratorów odnawiających dzieła sztuki w muzeach. Niech $D$ oznacza całą przestrzeń obrazu będącego przekształceniem $f: D \rightarrow R^{n}$. Problem wmalowania obrazu polega na wypełnieniu pustej części zbioru $\Omega \subset D$ na podstawie informacji znajdującej się na zewnątrz $\Omega$. Do tak zdefiniowanego problemu istnieje wiele rozwiązań przedstawianych w literaturze. Wmalowywanie obrazów definiuje się jako automatyczne wypełnianie braków w obrazie na podstawie otoczenia, w sposób uniemożliwiający obserwatorowi znalezienie pierwotnie wybrakowanych miejsc. Przykłady obrazów poddanych operacji wmalowywania przedstawia \autoref{1_fig1} 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.7]{rysunki/fig1}
@@ -118,33 +128,23 @@ Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania w ostatnich cza
 	\label{1_fig1}
 \end{figure}
 \par
-Obrazy przedstawiono w parze: po lewej obraz wejściowy, po prawej wynikowy obraz poddany operacji wmalowywania. Mogą nimi być uszkodzenia jak w przypadku a oraz b, napisy znajdujące się na obrazie - c, czy też obiekty, którym w konkretnym przypadku d jest postać. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według niego zostać usunięty. Program automatycznie nie jest w stanie wyznaczyć części, która powinna zostać przearanżowana.
-\par
-Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany region na scenie musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze.
-\par
-Głównym celem pracy jest osiągniecie algorytmu skutecznie odbudowującego uprzednio zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi operacjami wykorzystywanymi w bardziej złożonych algorytmach rekonstrukcji są:
+Obrazy przedstawiono w parze: po lewej obraz wejściowy, po prawej wynikowy obraz poddany operacji wmalowywania. Mogą nimi być uszkodzenia jak w przypadku a oraz b, napisy znajdujące się na obrazie - c, czy też obiekty, którym w konkretnym przypadku d jest postać. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według niego zostać usunięty. Program automatycznie nie jest w stanie wyznaczyć części, która powinna zostać przearanżowana. 
+Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany region na scenie musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze. Głównym celem pracy jest osiągniecie algorytmu skutecznie odbudowującego uprzednio zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi operacjami wykorzystywanymi w bardziej złożonych algorytmach rekonstrukcji są:
 \begin{enumerate}
 \item
 Rozwiązanie cząstkowych równań różniczkowych wyższego rzędu bazujących na kontynuacji tekstur, geometrii, struktur obrazu.
 \item
-Problem minimalizacji energii o bogatym asortymencie sposobu definicji.
+Analiza funkcjonalna, problem minimalizacji energii o szerokim zakresie sposobów definicji.
 \item
-Wyznaczenie podobieństwa pomiędzy obszarami w obrazie za pomocą. wprowadzonej metryki 
-\item
-Obliczenia przeprowadzane na modelu wariacyjnym
+Wyznaczenie podobieństwa pomiędzy obszarami w obrazie za pomocą wprowadzonej metryki 
 \end{enumerate}
-\par
 W pracy opisano przedstawione powyżej algorytmy, porównano oraz zaproponowano nowy model uzupełniania brakujących danych. Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
 \chapter{Przegląd istniejących algorytmów.}
-Pierwszą gałęzią algorytmów zgodnie z rozróżnieniem wprowadzonym w  \cite{SalientStrucTexProp} są metody opierające się na rozwiązaniu równań różniczkowych wyższego rzędu. Wśród nich pojawia się próba przystosowania procesu dyfuzji do wypełniania braków w obrazie (źródła \cite{bertalmio2000image} lub \cite{BertalmioNavierStokes}), dzięki której przy wykorzystaniu zależności z działu mechaniki płynu można dokonać próby kontynuacji informacji z otoczenia w brakujące obszary. Innym sposobem wyznaczenia braków opierającym się na równaniach różniczkowych wyższego rzędu jest próba wprowadzenia problemu minimalizacji energii zdefiniowanej w oparciu o pojęcie wahania funkcji tak jak  \cite{MathematicalModelsforNLTextureInpainting} czy też \cite{ColorTextureInpaintingNLCTVModel}.
-\par
-Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu kawałek po kawałku skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. Na przestrzeni czasu pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. \cite{StructurePropagationManual}.
-\par
-Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem grupy może być \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najbliższego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują nielokalny model wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi skrawkami obrazu.
-\par
-Większość metod wmalowywania opisanych w literaturze opiera się na algorytmach kontynuujących strukturę, geometrię bądź teksturę obrazu. Modele bazujące na geometrii i strukturze w uogólnieniu generują efekt uboczny w postaci rozmazanego wynikowego obrazu, bez zachowanych tekstur.
-Do algorytmów broniących się przed efektem rozmycia wyniku można zaliczyć takie, w których wyznaczeniu konkretnego miejsca w nieznanym obszarze może towarzyszyć przebadanie całego zbioru punktów niemodyfikowanej części obrazu. Stąd metody kontynuujące tekstury w większości uważa się za metody nielokalne.
-
+Pierwszą gałęzią algorytmów zgodnie z rozróżnieniem wprowadzonym w  \cite{SalientStrucTexProp} są metody opierające się na rozwiązaniu równań różniczkowych wyższego rzędu. Wśród nich pojawia się próba przystosowania procesu dyfuzji do wypełniania braków w obrazie (źródła \cite{bertalmio2000image} lub \cite{BertalmioNavierStokes}), dzięki której przy wykorzystaniu zależności z działu mechaniki płynu można dokonać próby kontynuacji informacji z otoczenia w brakujące obszary. \\
+Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu kawałek po kawałku skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. Na przestrzeni czasu pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. \cite{StructurePropagationManual}. \\
+Innym sposobem wyznaczenia braków jest analiza funkcjonalna definiująca problem minimalizacji energii stanowiąca największą grupę zdefiniowanych rozwiązań wmalowywania. Przykładem mogą być \cite{MathematicalModelsforNLTextureInpainting}, \cite{ColorTextureInpaintingNLCTVModel}, czy też \cite{arias2011variational}. W przytoczonych przykładach rozwiązanie problemu minimalizacji stanowi wynik w postaci wmalowanego obrazu. Innym przykładem może być problem minimalizacji zdefiniowany w \cite{SalientStrucTexProp} stanowiący pośredni proces w wypełnianiu obrazu. Tu problem minimalizacji, będący segmentacją obrazu, pozwala oddzielić strukturę i teksturę, pozwalając w następstwie na przeprowadzenie oddzielnej syntezy dwóch zbiorów danych, za pomocą róznych algorytmów. \\
+Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem grupy może być przytoczone uprzednio \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najbliższego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują nielokalny model wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi skrawkami obrazu. \\
+Większość metod wmalowywania opisanych w literaturze opiera się na algorytmach kontynuujących strukturę, geometrię bądź teksturę obrazu. Modele bazujące na geometrii i strukturze w uogólnieniu generują efekt uboczny w postaci braku kontynuacji tekstur, sprawiających wrażenie rozmytego obrazu. Do algorytmów broniących się przed efektem rozmycia można zaliczyć takie, w których wyznaczeniu konkretnego miejsca w nieznanym obszarze może towarzyszyć przebadanie całego zbioru punktów niemodyfikowanej części obrazu. Stąd metody kontynuujące tekstury w większości uważa się za metody nielokalne.
 \chapter{Równania różniczkowe wyższego rzędu.}
 \label{chap:navierstokes}
 \section{Rozwiązanie równania Naviera-Stokesa }
@@ -443,9 +443,154 @@ Operację wmalowywania można wykonać na pierwotnych komponentach $[R,G,B]$ lec
 \Delta E=\ \sqrt{{\left(\Delta I_1\right)}^2+{\left(\Delta I_2\right)}^2+{\left(\Delta I_3\right)}^2}
 \label{deltaE}
 \end{equation}
-\section{Problem minimalizacji energii}
-	Innym sposobem zastosowania równań różniczkowych w procesie wmalowywania obrazu może być może być adaptacja problemu minimalizacji energii. Pojęcie wahania funkcji $TV$ w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin, Osher i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie lokalnych operatorów nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu nielokalnego modelu, który zostanie poddany analizie w niniejszej pracy.
-	Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, w wyniku prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NL-CTV$ zaproponowanego w \cite{duan2015fast} należy uprzednio wprowadzić oznaczenia i zależności nielokalnych operatorów. 
+\chapter{Analiza funkcjonalna.}
+\section{Wmalowywanie struktury i tekstury obrazu.}\label{chap:StructureTextureNavierStokes}
+Metoda jednoczesnego wmalowywania struktur i tekstur stanowi połączenie wcześniej opisanych w pracy metod opartych o równania różniczkowe wyższego rzędu z metodami bazującymi na przykładowych źródłach kawałków obrazów stanowiących podstawę do wypełniania brakujących regionów. Pierwszy raz przedstawiona została przez Bertalmio i innych w 2003 roku w \cite{NavierStokesAndTexturePropagation}, a bardziej zaawansowany algorytm pojawia się w 2004 roku w [26]. Metoda w \cite{NavierStokesAndTexturePropagation} opiera się na wmalowywaniu struktury w oparciu o algorytm przedstawiony w \cite{bertalmio2000image} przy jednoczesnej propozycji prostej syntezy tekstury. 
+\par
+Niech obraz $I:R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
+\begin{align}
+I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right) 
+\label{STRUCTURETEXTURE1}
+\end{align}
+uzyskaną na podstawie rozwiązania problemu minimalizacji energii:
+\begin{align} 
+{\mathop{\mathrm{min}}_{u} \Biggl\{E\left(u\right)=\int{\left|\mathrm{\nabla }u\right|+\lambda {\left|\left|v\right|\right|}^2_{L^2}}\Biggr\}\ }
+\label{STRUCTURETEXTURE2}
+\end{align}
+gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i powtarzające się w małej skali detale, przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ człon odpowiadający dokładności odwzorowania, $\lambda $ stanowi uprzednio definiowany parametr. Dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania jednorodnego komponentu $u$ reprezentującego odfiltrowany obraz oraz komponentu $v$ reprezentującego wahania w postaci szumu oraz tekstur. Zgodnie z dowodem Mayera w przypadku gdy pożądany jest wspomniany kształt funkcji $v$, można udowodnić jej  przynależność do przestrzeni Banacha oznaczanej $G$. W związku z tym (pomijając wyprowadzenia) problem minimalizacji można przedstawić w ostatecznej postaci minimalizacji energii:
+\begin{align}
+\begin{aligned} 
+\mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right|+\lambda \int{{\left|I-u-{\partial }_xg_1-{\partial }_yg_2\right|}^2dxdy}} \\
+&+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^pdxdy}\right]}^{\frac{1}{p}}\Biggr\}
+\end{aligned}
+\end{align}
+gdzie:
+\begin{align}
+v=div\left(\mathop{g}\limits^{\rightharpoonup}\right),\ \mathop{g}\limits^{\rightharpoonup}=\left(g_1,g_2\right),\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
+\label{VG1G2}
+\end{align}
+oraz $p\to \mathrm{\infty }$. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange'a uzyskuje się odpowiadające mu postacie funkcji wykorzystywane do minimalizacji energii:
+\begin{align}
+u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+\end{align}
+\begin{align}
+{\mu H\left(g_1,g_2\right)g}_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
+\end{align}
+\begin{align}
+\mu H\left(g_1,g_2\right)g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
+\end{align}
+gdzie $\mu$ stanowi uprzednio definiowany parametr dyskretyzacji, $H\left(g_1,g_2\right)$ opisuje się wzorem:
+\begin{align}
+H\left(g_1,g_2\right)={{{\left|\left|\sqrt{g^2_1+g^2_2}\right|\right|}_p}^{1-p}}{\left(\sqrt{g^2_1+g^2_2}\right)}^{p-2}
+\end{align}
+Zgodnie z \cite{vese2003modeling} w celach dyskretyzacji parametr $p$ przyjęto równy 1, ze względu na brak znaczących różnic wyniku w przypadku stosowania większych wartości. Wtedy:
+\begin{align}
+H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}}
+\end{align}
+Formalnie, jednym z równań Eulera-Lagrange'a uzyskiwanym podczas minimalizacji wspomnianej energii $E$ jest:
+\begin{align}
+u=I+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+\end{align}
+Stąd można wywnioskować:
+\begin{align}
+v=-\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+\end{align}
+Korzystając z zależności przedstawionych w \eqref{VG1G2} łatwo zauważyć $g^2_1+g^2_2=\frac{1}{2\lambda }$. Stąd:
+\begin{align}
+H\left(g_1,g_2\right)=\sqrt{2\lambda }
+\end{align}
+\begin{align}
+u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+\label{EU}
+\end{align}
+\begin{align}
+\mu \sqrt{2\lambda }g_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
+\label{EG1}
+\end{align}
+\begin{align}
+\mu \sqrt{2\lambda }g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
+\label{EG2}
+\end{align}
+Jako wartości początkowe iteracyjnego algorytmu można przyjąć następujące przypuszczenie:
+\begin{align}
+u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\right|},\ g_2=-\frac{1}{2\lambda }\frac{f_{\mathrm{y}}}{\left|\mathrm{\nabla }f\right|}
+\end{align}
+Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz poniższą metodę aproksymacji pochodnej drugiego stopnia:
+\begin{align}
+\begin{aligned} 
+{\partial }_{xy}g_1\left(i,j\right) &\cong \frac{1}{2h^2}\ \bigg[2g_1\left(i,\ j\right)+g_1\left(i-1,\ j-1\right)+g_1\left(i+1,\ j+1\right)-g_1\left(i,\ j-1\right) \\ 
+&-g_1\left(i-1,\ j\right)-g_1\left(i+1,\ j\right)-g_1\left(i,\ j+1\right)\bigg]
+\end{aligned}
+\end{align}
+równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} można przedstawić w następującej dyskretnej postaci:
+\begin{align}
+\begin{aligned}
+u^{n+1}\left(i,j\right) &= \left[\frac{1}{\ 1\ +\ \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\left(i,j\right)+c_2\left(i,j\right)+c_3\left(i,j\right)+c_4\left(i,j\right)\right)\ }\right] \\ 
+&\cdot \biggl[I\left(i,j\right)-\ \left(\frac{g^n_1\left(i+1,j\right)\cdot g^n_1\left(i-1,j\right)}{2h}\right)-\ \left(\frac{g^n_2\left(i,j+1\right)-g^n_2\left(i,j-1\right)}{2h}\right) \\ 
+&+\ \left(\frac{1}{2\lambda h^2}\right)\cdot \Bigl[c_1\left(i,j\right)\cdot u^n\left(i+1,j\right)+c_2\left(i,j\right)\cdot u^n\left(i-1,j\right) \\
+&+c_3\left(i,j\right)\cdot \lambda {\cdot u}^n\left(i,j+1\right)+c_4\left(i,j\right)\cdot u^n\left(i,j-1\right)\Bigr]\biggr]
+\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+g^{n+1}_1\left(i,j\right) &= \left[\frac{2\lambda }{\mu \sqrt{2\lambda }+\ 4\frac{\lambda }{2h}}\right]\cdot \Biggl[\frac{u^n\left(i+1,j\right)-u^n\left(i-1,j\right)}{2h}-\frac{I\left(i+1,j\right)-I\left(i-1,j\right)}{2h} \\
+&+\frac{g_1\left(i+1,j\right)+g_1\left(i-1,j\right)}{h^2}\frac{1}{2h^2}\cdot \Bigl[2g^n_2\left(i,j\right)+\ g^n_2\left(i-1,j-1\right) \\ 
+&+ g^n_2\left(i+1,j+1\right)
+g^n_2\left(i,j-1\right)-\ g^n_2\left(i-1,j\right)+\ g^n_2\left(i+1,j\right) \\
+&-g^n_2\left(i,j+1\right)\Bigr]\Biggr]
+\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+g^{n+1}_2\left(i,j\right) &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\cdot \Biggl[\frac{u^n\left(i,j+1\right)-u^n\left(i,j-1\right)}{2h}-\frac{I\left(i,j+1\right)-I\left(i,j-1\right)}{2h} \\ 
+&+\frac{g_2\left(i,j+1\right)+g_2\left(i,j-1\right)}{h^2}+\frac{1}{2h^2}\cdot \Bigl[2g^n_1\left(i,j\right)+\ g^n_1\left(i-1,j-1\right)+ g^n_1\left(i+1,j+1\right) \\
+&-\ g^n_1\left(i,j-1\right)-\ g^n_1\left(i-1,j\right)+\ g^n_1\left(i+1,j\right)-\ g^n_1\left(i,j+1\right)\Bigr]\Biggr]
+\end{aligned}
+\end{align}
+gdzie:
+\begin{align}
+\begin{aligned}
+c^n_1\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j\right)-u^n\left(i,j\right)}{h}\right)}^2+\ {\left(\frac{u^n\left(i,j+1\right)-u^n\left(i,j-1\right)}{2h}\right)}^2+\ \varepsilon }}
+\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+c^n_2\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i,j\right)-u^n\left(i-1,j\right)}{h}\right)}^2+\ {\left(\frac{u^n\left(i-1,j+1\right)-u^n\left(i-1,j-1\right)}{2h}\right)}^2+\ \varepsilon }}
+\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+c^n_3\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j\right)-u^n\left(i-1,j\right)}{2h}\right)}^2+\ {\left(\frac{u^n\left(i,j+1\right)-u^n\left(i,j\right)}{h}\right)}^2+\ \varepsilon }}\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+c^n_4\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j-1\right)-u^n\left(i-1,j-1\right)}{2h}\right)}^2+\ {\left(\frac{u^n\left(i,j\right)-u^n\left(i,j-1\right)}{h}\right)}^2+\ \varepsilon }}
+\end{aligned}
+\end{align}
+W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
+Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Zgodnie z ich charakterem najodpowiedniejszymi metodami wmalowywania struktur są metody oparte na równaniach różniczkowych, natomiast uzyskanie brakującej tekstury najlepiej wykonać metodą kopii kawałków obrazów z najlepszym dopasowaniem. W \cite{NavierStokesAndTexturePropagation} autorzy proponują następujący algorytm syntezy brakującej tekstury $\mathrm{\Omega }$:
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=1]{rysunki/5_fig1}
+	\caption{Prosty algorytm wmalowywania tekstury obrazu.}
+	\label{5_fig1}
+\end{figure}
+Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm można wykonywać pobierając piksele z granicy w kolejności zgodnej ze wskazówkami zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich pikseli. Odnalezienie okna najlepszego dopasowania można wykonać analogicznie do metody wykorzystanej w publikacji Criminisi'ego, w oparciu o zależności \eqref{FROBDIST} oraz \eqref{FROBENIUS}. 
+
+ W przypadku obrazów kolorowych pierwszym krokiem wykonania operacji wmalowywania jest transformacja do współrzędnych sferycznych zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \cite{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie 3 uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
+\begin{enumerate}
+\item
+Przekształcenie warstw $R,G,B$ obrazu na współrzędne sferyczne $I_1,I_2,I_3$
+\item
+Wyznaczenie $u_1,v_1,\ u_2,v_2,u_3,v_3$ na podstawie $I_1,I_2,I_3$
+\item
+Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ metodą adaptacji równania Navier-Stokes'a
+\item
+Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie prostego algorytmu syntezy tekstury najlepszymi dopasowaniami uzyskanymi na podstawie warstwy $v_1$
+\end{enumerate}
+\section{Wahanie funkcji.}
+Pojęcie wahania funkcji $TV$ w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin, Osher i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie lokalnych operatorów nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu nielokalnego modelu, który zostanie poddany analizie w niniejszej pracy. \\
+Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, w wyniku prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NL-CTV$ zaproponowanego w \cite{duan2015fast} należy uprzednio wprowadzić oznaczenia i zależności nielokalnych operatorów. 
 	Zgodnie z poprzednim działem niech $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako przekształcenie $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowaną dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji przedstawia się zależnością:
 \begin{equation}
 {\mathrm{\nabla }}_{NL}I\left(x,y\right)\triangleq \left[I\left(y\right)-I\left(x\right)\right]\sqrt{w(x,y)}
@@ -692,50 +837,226 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \begin{equation}
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
-\subsection{Modyfikacje algorytmu}
-\subsubsection{Modyfikacja funkcji wagi.}
-Podczas testowania opisanego powyżej algorytmu wmalowywania jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
+\section{Wariacyjny, nielokalny model wmalowywania}
+Ostatnią z rozważanych metod będzie metoda zaproponowana przez autorów Fedorov, Facciolo i Arias w \cite{arias2011variational}. Autorzy w publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej od dwóch niewiadomych:
+\begin{itemize}
+\item
+nieznanego obszaru obrazu $u(\mathcal{O})$
+\item
+mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z nieznanego obszaru jego odpowiednika z obszaru poza maską $\varphi(\hat{x})$
+\end{itemize}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{rysunki/6_fig1}
+	\caption{Określenie charakterystycznych obszarów obrazu.}
+	\label{6_fig1}
+\end{figure}
+Zgodnie z \autoref{6_fig1} niech obraz stanowi przekształcenie $ u : {\Omega} \rightarrow R$, $\mathcal{O}$ oznacza obszar do uzupełnienia, $\mathcal{O}^c$ oryginalną część obrazu nie ulegającego modyfikacji, $\mathrm{\Omega }_p$ podzbiór pikseli scentrowanych względem  piksela $p \in \Omega$, gdzie $\Omega = \mathcal{O}^c + \mathcal{O}$, $\widetilde{\mathcal{O}} := \mathcal{O} + \mathrm{\Omega }_{ps}$, gdzie $\mathrm{\Omega }_{ps}$ oznacza sumę wszystkich zbiorów punktów $x \in \mathcal{O}$. Podobnie jak w \cite{arias2011variational} niech przekształcenie $u(x)$ jest zarezerwowane dla przestrzeni maski, a $\hat{u}(\hat{x})$ odpowiada przekształceniu w przestrzeni stałej obrazu $\widetilde{\mathcal{O}}$ ( $\hat{x} \in \mathcal{O}$). Mapowanie funkcji podobieństwa $\varphi(x)$ przedstawia \autoref{6_fig2}.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{rysunki/6_fig2}
+	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
+	\label{6_fig2}
+\end{figure}
+Energię poddawaną minimalizacji przedstawia się zależnością:
 \begin{align}
 \begin{aligned}
-w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\} }\\
-&\cdot {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ s(\cdot) \right)-I\left(y+\ s(\cdot) \right)\right|}^2}{r^2}\right\} }
-\label{NLWEIGHTMODIFIED}
+\mathcal{E}(u,\varphi) = \int_{\mathcal{\widetilde{O}}}\int_{\Omega_p}\abs{u(x+h) - \hat{u}(\varphi(x)+h)}^2dhdx
 \end{aligned}
 \end{align}
-W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
-\subsubsection{Modyfikacja wyznaczania wartości obrazu $u$.}
-Złożoność obliczeniowa algorytmu skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
+Funkcja jest niewypukła i pozwala obliczyć jedynie lokalne minima. W pracy wykorzystano iteracyjny algorytm przemiennej minimalizacji polegający na wyznaczaniu w każdym kroku $u(x)$ względem stałej wartości $\varphi(x)$, a następnie $\varphi(x)$ względem stałej wartości $u(x)$.
+\subsection{Wyznaczenia mapy podobieństwa.}
+Proces minimalizacji funkcji względem stałej zmiennej $u(x)$ można opisać zależnością:
 \begin{align}
 \begin{aligned}
-{{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
-&+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr]
+\mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\left( p_{u}(x) - p_{\hat{u}}(x+t)\right),\operatorname{gdzie} \ \forall_t : x+t \in \mathcal{O}^c
+\label{minNNF}
 \end{aligned}
 \end{align}
-W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu kroków, w których wyznaczane są przytoczone zmienne.
-\subsubsection{Połączenie metody Criminisi z funkcją wagi.}
-Kolejną z pozytywnych prób modyfikacji algorytmu NLCTV w pracy okazała się próba zastąpienia problemu minimalizacji energii \eqref{ENLCTV} opartej na funkcji wagi, metodą syntezy obrazu (bazującej na metodzie syntezy tekstury opisanej w dalszej części pracy w \autoref{chap:StructureTextureNavierStokes}). Kroki nowego algorytmu można przedstawić w następującym schemacie:
+Zmienna $t$ w minimalizacji stanowi zbiór wartości, który po dodaniu do współrzędnej $x$ mapuje do dowolnego położenia w $\mathcal{O}^c$. Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $\mathcal{O}^c$, $\Theta(x) :\mathcal{O} \ \rightarrow \ \mathcal{O}^c$. Warto zaznaczyć, iż najbliższego sąsiada punktu $x$ nie rozumie się znajdującego się najbliżej, a tego dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\| 
+\label{normNNF}
+\end{aligned}
+\end{align}
+Norma może być wyznaczana zgodnie z \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Autorzy w \cite{MathematicalModelsforNLTextureInpainting} proponują dodatkowe definicje norm, które zostaną opisane w dalszej części pracy. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i stanowić duże obciążenie obliczeniowe. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu PatchMatch dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm oparty jest na 2 krokach (punkt $x$ oznaczany będzie zamiennie ze współrzędną $(i, j)$ w obrazie):
 \begin{enumerate}
 \item
-Ustawienie argumentów algorytmu: obraz $u}$, maska obrazu $\chi$, wielkość okna $SW$, wielkość skrawka obrazu $PS$ 
+Losowej inicjalizacji pikseli
 \item
-Wyznaczenie funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT} dla parametrów $SW$ i $PS$ i $\chi$
-\item
-Powtarzanie do uzyskania zbioru $\Omega = \emptyset$
+Ograniczonej uprzednio definiowaną liczbą iteracji powtarzanej czynności:
 \begin{enumerate}[a)]
 \item
-Znalezienie dla każdego piksela $p \in \partial\Omega$ najlepszego dopasowania $d \in D \cap N_p$, gdzie $N_p$ zbiór pikseli z okna utworzonego dla piksela $p$, dla którego zachodzi:
+propagacja: w przypadku parzystej iteracji sprawdzenie wszystkich pikseli $x$ z maski w kierunku rastrowym przedstawionym na \autoref{6_fig3}, czy 
+wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i+1,j)) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j+1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku nadpisaniu najbliższego sąsiada $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
+w przypadku nieparzystej iteracji sprawdzenie wszystkich pikseli $x$ w kierunku odwrotnym do rastrowego przedstawionym na \autoref{6_fig3}, czy 
+wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i-1,j)) \big\|$ bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j-1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku nadpisaniu najbliższego sąsiada $\varphi(i,j) = \varphi(i-1,j)$, lub $\varphi(i,j) = \varphi(i,j-1)$
+\item
+poszukiwanie w oknach: dla każdego punktu $(i,j)$ sprawdzane jest, czy w stopniowo pomniejszanych oknach centrowanych względem punktu $\varphi(i,j)$ istnieje losowy punkt $(i', j')$, dla którego zachodzi $\big\| p_{u}(i,j) - p_{\hat{u}}(i',j') \big\| < \big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j) \big\|$, który w następstwie jest podmieniany.
+\end{enumerate}
+\end{enumerate}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{rysunki/6_fig3}
+	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
+	\label{6_fig3}
+\end{figure}
+Kroki algorytmu PatchMatch zostały przedstawione graficznie na \autoref{6_fig4}.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{rysunki/6_fig4}
+	\caption{Algorytm PatchMatch. Źródło \cite{arias2011variational}.}
+	\label{6_fig4}
+\end{figure}
+\subsection{Wyznaczenie wartości obrazu.}
+Niech funkcja $e: \Omega_{p} \rightarrow {\rm I\!R}^{+}$ stanowi sumę ważonych błędów pomiędzy dwoma skrawkami obrazu scentrowanymi względem punktów $x$ i $\hat{x}$.
 \begin{align}
-d = \mathop{\mathrm{arg \ max}}_{t \in D \cap N_p} w(p,t)
+\begin{aligned}
+e(x, \hat{x}) &= g \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{u}) \big\| = g \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| \\ 
+&= \int_{\Omega_{p}} g(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
+\label{minUs}
+\end{aligned}
+\end{align} 
+Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
+\begin{align}
+\begin{aligned}
+E(u) &= \int_{\widetilde O}\int_{\Omega_{p}}g(h)e(u(x+h) - \hat{u}(\varphi(x)+h)dhdx
+\label{patchMatchEnergy}
+\end{aligned}
+\end{align} 
+Niech $z := x+h$ i $\hat{z} := \hat{x}+h$. Wprowadzając zależność:
+\begin{align}
+m(z,\hat{z}) = \int_{\Omega_{p}}g(h)\chi_{\widetilde O}(z-h)\delta_{\varphi(z-h)}(\hat{z}-h)dh
 \end{align}
-a następnie przepisanie:
+gdzie:
+\begin{enumerate}
+\item
+$\chi(p)$ podobnie jak w modelu $NLCTV$ przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
+\item
+$\delta(p)$ podobnie jak w metodzie Criminisi określa pewność co do danego piksela wewnątrz maski i jest określone następującą zależnością:
 \begin{align}
-u(p) = u(d)
+\delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0 
+\end{align}
+\end{enumerate}
+wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
+\begin{enumerate}
+\item
+Nielokalnej uśrednionej:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |^2
+\label{nonLocalMeans}
+\end{aligned}
 \end{align}
 \item
-Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
+Nielokalnej medianowej:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{g,1} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |
+\label{nonLocalMedians}
+\end{aligned}
+\end{align}
+\item
+Nielokalnej Poissona:
+\begin{align}
+\begin{aligned}
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{P} &= \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} + \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2,\nabla} \\
+&= g \ast (\lambda | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) | \\
+&+ (1-\lambda)|\nabla u(x+\cdot) - \nabla \hat{u}(\hat{x}+\cdot)|
+\label{nonLocalpoisson}
+\end{aligned}
+\end{align}
+\end{enumerate}
+Suma różnic pikseli w przypadku normy Poissona dodatkowo wymaga wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny z członów będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla norm uzyskuje się odpowiednio rozwiązania w postaci:
+\begin{enumerate}
+\item
+równanie:
+\begin{align}
+u(z) = \frac{1}{k(z)}\int_{\widetilde O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
+\end{align}
+gdzie
+\begin{align}
+k(z) := \int_{\widetilde O^c}m(z,\hat{z})d\hat{z}
+\end{align}
+\item
+równanie Eulera:
+\begin{align}
+[\delta_{u}\mathcal{E}(u)](z) = \int_{\mathcal{O}^c}sign[u(z)-\hat{u}(\hat{z})]m(z,\hat{z})d\hat{z} \ni \mathcal{O} 
+\end{align}
+\item
+równania Eulera rozwiązane względem zmiennej $u$:
+\begin{align}
+\begin{aligned}
+\begin{cases}
+\nabla \cdot [k(z)\nabla u(z)] - \frac{\lambda}{1-\lambda}]k(z)u(z) = \\ 
+\ \ \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \mathcal{O} \\
+u(z)=\hat{u}(z) , & z \in \partial \mathcal{O} \setminus \partial \Omega \\
+\nabla u(z) \cdot n_{\Omega}(z) = 0 , & z \in \partial \mathcal{O} \cap \partial \Omega
+\end{cases}
+\end{aligned}
+\end{align}
+gdzie:
+\begin{align}
+v(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\nabla\hat{u}(\hat{z})d\hat{z}
+\end{align}
+\begin{align}
+f(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
+\end{align}
+Człon $n_{\Omega}(z)$ oznacza wektor normalny do $\Omega$ dla $z \in \partial \Omega$.
+\end{enumerate}
+Dokładne wyprowadzenia zależności można znaleść w \cite{arias2011variational}.
+\subsection{Wielostopniowy schemat wypełniania.}
+W wielu algorytmach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm polega na utworzeniu serii pomniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu uprzednio wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
+\begin{itemize}
+\item
+losowo wyznaczone wartości obrazu pobierane z obszaru $\mathcal{O}^c$
+\item
+rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR zgodnie z zależnością \eqref{DiscreteSOR}.
+\end{itemize}
+Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy w \cite{arias2011variational} proponują model Gauss'owskiej piramidy.\\
+W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę stopni piramidy, a oryginalny wymiar jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{s-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
+\begin{align}
+r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
+\end{align}
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Jako rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako stały uprzednio definiowany. Niech indeks górny s odnosi się do zmiennych i obszarów w zakresie rozważanego stopnia piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\mathcal{O}^s$ i $\mathcal{O}^{s+1}$:
+\begin{align}
+\chi_{\mathcal{O}^{s+1}}=(\downarrow_rg_{\sigma(r)}\ast\chi_{\mathcal{O}^s})> T_{0}.
+\end{align}
+Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
+\begin{align}
+u^{s+1}(x)= \downarrow_r \frac{g \ast \chi_{(O^s)^c} u^s(x)}{g \ast \chi_{(O^s)^c}(x) }
+\end{align}
+Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania do góry, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego w poprzednim stopniu oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+\subsection{Podsumowanie algorytmu}
+Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
+\begin{enumerate}
+\item
+Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $I$
+\item
+Wyznaczenie piramidy maski stanowiącej zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
+Wyznaczenie piramidy obrazu stanowiącej zbiór: $\{u^s\}_{s=0,...,S-1}$
+\item
+Inicjalizacja obrazu $u^{S-1}$ w obszarze $\mathcal{O}$ \\
+Wyznaczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$
+\item
+Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
+\begin{enumerate}[a)]
+\item
+Przeskalowanie mapy podobieństwa z zastosowaniem algorytmu interpolacji najbliższego sąsiada $\varphi^s=r \cdot (\uparrow_r \varphi^{s+1})$
+\item
+Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\mathcal{O})=u^s_0(\mathcal{O})$ w celu inicjalizacji
+\item
+Powtarzanie $I$-tą ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF}
+\begin{itemize}
+\item
+minimalizacja \eqref{minNNF} w celu wyznaczenia $\varphi^s$
+\item
+minimalizacja \eqref{minUs} w celu wyznaczenia $u^s$
+\end{itemize}  
 \end{enumerate}
 \end{enumerate}
-Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu NLCTV można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
+Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$
 \chapter{Uzupełnianie kawałkami obrazu.}
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie skrawkami pochodzącymi z ich otoczenia. W odróżnieniu od metod bazujących na równaniach różniczkowych metoda uzupełniania braków nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na poniższym rysunku.
 \begin{figure}[!h]
@@ -778,8 +1099,6 @@ Dystans pomiędzy dwoma skrawkami $d({\varphi }_{p'},{\varphi }_{q'})$ definiowa
 d(\varphi_{p'},\varphi_{q'})= \sum_{p\in \varphi_{p'}} \left( \varphi_{p^{'}}(p) - \varphi _{q^{'}} \left(p^{'}\right) \right)^2
 \label{FROBENIUS2} 
 \end{align}
-
-
 gdzie $\varphi \left(p\right)$ wartość jasności piksela $p$ z badanego okna. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
 Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania może prowadzić do akumulowanej przez algorytm niespójności obrazu.
 \begin{figure}[!h]
@@ -963,378 +1282,50 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 \label{4_fig9}
 \end{figure}
 Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych skrawków $\psi $, czy też okien stanowiących podstawę do parowania danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy skrawków obrazu $\psi $ w wyznaczanym obszarze $\mathrm{\Omega }$.
-\chapter{Wmalowywanie struktury i tekstury obrazu.}\label{chap:StructureTextureNavierStokes}
-Metoda jednoczesnego wmalowywania struktur i tekstur stanowi połączenie wcześniej opisanych w pracy metod opartych o równania różniczkowe wyższego rzędu z metodami bazującymi na przykładowych źródłach kawałków obrazów stanowiących podstawę do wypełniania brakujących regionów. Pierwszy raz przedstawiona została przez Bertalmio i innych w 2003 roku w \cite{NavierStokesAndTexturePropagation}, a bardziej zaawansowany algorytm pojawia się w 2004 roku w [26]. Metoda w \cite{NavierStokesAndTexturePropagation} opiera się na wmalowywaniu struktury w oparciu o algorytm przedstawiony w \cite{bertalmio2000image} przy jednoczesnej propozycji prostej syntezy tekstury. 
-\par
-Niech obraz $I:R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
-\begin{align}
-I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right) 
-\label{STRUCTURETEXTURE1}
-\end{align}
-uzyskaną na podstawie rozwiązania problemu minimalizacji energii:
-\begin{align} 
-{\mathop{\mathrm{min}}_{u} \Biggl\{E\left(u\right)=\int{\left|\mathrm{\nabla }u\right|+\lambda {\left|\left|v\right|\right|}^2_{L^2}}\Biggr\}\ }
-\label{STRUCTURETEXTURE2}
-\end{align}
-gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i powtarzające się w małej skali detale, przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ człon odpowiadający dokładności odwzorowania, $\lambda $ stanowi uprzednio definiowany parametr. Dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania jednorodnego komponentu $u$ reprezentującego odfiltrowany obraz oraz komponentu $v$ reprezentującego wahania w postaci szumu oraz tekstur. Zgodnie z dowodem Mayera w przypadku gdy pożądany jest wspomniany kształt funkcji $v$, można udowodnić jej  przynależność do przestrzeni Banacha oznaczanej $G$. W związku z tym (pomijając wyprowadzenia) problem minimalizacji można przedstawić w ostatecznej postaci minimalizacji energii:
-\begin{align}
-\begin{aligned} 
-\mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right|+\lambda \int{{\left|I-u-{\partial }_xg_1-{\partial }_yg_2\right|}^2dxdy}} \\
-&+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^pdxdy}\right]}^{\frac{1}{p}}\Biggr\}
-\end{aligned}
-\end{align}
-gdzie:
-\begin{align}
-v=div\left(\mathop{g}\limits^{\rightharpoonup}\right),\ \mathop{g}\limits^{\rightharpoonup}=\left(g_1,g_2\right),\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
-\label{VG1G2}
-\end{align}
-oraz $p\to \mathrm{\infty }$. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange'a uzyskuje się odpowiadające mu postacie funkcji wykorzystywane do minimalizacji energii:
-\begin{align}
-u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
-\end{align}
-\begin{align}
-{\mu H\left(g_1,g_2\right)g}_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
-\end{align}
-\begin{align}
-\mu H\left(g_1,g_2\right)g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
-\end{align}
-gdzie $\mu$ stanowi uprzednio definiowany parametr dyskretyzacji, $H\left(g_1,g_2\right)$ opisuje się wzorem:
-\begin{align}
-H\left(g_1,g_2\right)={{{\left|\left|\sqrt{g^2_1+g^2_2}\right|\right|}_p}^{1-p}}{\left(\sqrt{g^2_1+g^2_2}\right)}^{p-2}
-\end{align}
-Zgodnie z \cite{vese2003modeling} w celach dyskretyzacji parametr $p$ przyjęto równy 1, ze względu na brak znaczących różnic wyniku w przypadku stosowania większych wartości. Wtedy:
-\begin{align}
-H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}}
-\end{align}
-Formalnie, jednym z równań Eulera-Lagrange'a uzyskiwanym podczas minimalizacji wspomnianej energii $E$ jest:
-\begin{align}
-u=I+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
-\end{align}
-Stąd można wywnioskować:
-\begin{align}
-v=-\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
-\end{align}
-Korzystając z zależności przedstawionych w \eqref{VG1G2} łatwo zauważyć $g^2_1+g^2_2=\frac{1}{2\lambda }$. Stąd:
-\begin{align}
-H\left(g_1,g_2\right)=\sqrt{2\lambda }
-\end{align}
-\begin{align}
-u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
-\label{EU}
-\end{align}
-\begin{align}
-\mu \sqrt{2\lambda }g_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
-\label{EG1}
-\end{align}
-\begin{align}
-\mu \sqrt{2\lambda }g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
-\label{EG2}
-\end{align}
-Jako wartości początkowe iteracyjnego algorytmu można przyjąć następujące przypuszczenie:
-\begin{align}
-u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\right|},\ g_2=-\frac{1}{2\lambda }\frac{f_{\mathrm{y}}}{\left|\mathrm{\nabla }f\right|}
-\end{align}
-Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz poniższą metodę aproksymacji pochodnej drugiego stopnia:
-\begin{align}
-\begin{aligned} 
-{\partial }_{xy}g_1\left(i,j\right) &\cong \frac{1}{2h^2}\ \bigg[2g_1\left(i,\ j\right)+g_1\left(i-1,\ j-1\right)+g_1\left(i+1,\ j+1\right)-g_1\left(i,\ j-1\right) \\ 
-&-g_1\left(i-1,\ j\right)-g_1\left(i+1,\ j\right)-g_1\left(i,\ j+1\right)\bigg]
-\end{aligned}
-\end{align}
-równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} można przedstawić w następującej dyskretnej postaci:
+\chapter{Modyfikacje algorytmów}
+\section{Modyfikacja funkcji wagi.}
+Podczas testowania opisanego powyżej algorytmu wmalowywania jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
 \begin{aligned}
-u^{n+1}\left(i,j\right) &= \left[\frac{1}{\ 1\ +\ \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\left(i,j\right)+c_2\left(i,j\right)+c_3\left(i,j\right)+c_4\left(i,j\right)\right)\ }\right] \\ 
-&\cdot \biggl[I\left(i,j\right)-\ \left(\frac{g^n_1\left(i+1,j\right)\cdot g^n_1\left(i-1,j\right)}{2h}\right)-\ \left(\frac{g^n_2\left(i,j+1\right)-g^n_2\left(i,j-1\right)}{2h}\right) \\ 
-&+\ \left(\frac{1}{2\lambda h^2}\right)\cdot \Bigl[c_1\left(i,j\right)\cdot u^n\left(i+1,j\right)+c_2\left(i,j\right)\cdot u^n\left(i-1,j\right) \\
-&+c_3\left(i,j\right)\cdot \lambda {\cdot u}^n\left(i,j+1\right)+c_4\left(i,j\right)\cdot u^n\left(i,j-1\right)\Bigr]\biggr]
+w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\} }\\
+&\cdot {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ s(\cdot) \right)-I\left(y+\ s(\cdot) \right)\right|}^2}{r^2}\right\} }
+\label{NLWEIGHTMODIFIED}
 \end{aligned}
 \end{align}
+W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
+\section{Modyfikacja wyznaczania wartości obrazu $u$.}
+Złożoność obliczeniowa algorytmu skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
-g^{n+1}_1\left(i,j\right) &= \left[\frac{2\lambda }{\mu \sqrt{2\lambda }+\ 4\frac{\lambda }{2h}}\right]\cdot \Biggl[\frac{u^n\left(i+1,j\right)-u^n\left(i-1,j\right)}{2h}-\frac{I\left(i+1,j\right)-I\left(i-1,j\right)}{2h} \\
-&+\frac{g_1\left(i+1,j\right)+g_1\left(i-1,j\right)}{h^2}\frac{1}{2h^2}\cdot \Bigl[2g^n_2\left(i,j\right)+\ g^n_2\left(i-1,j-1\right) \\ 
-&+ g^n_2\left(i+1,j+1\right)
-g^n_2\left(i,j-1\right)-\ g^n_2\left(i-1,j\right)+\ g^n_2\left(i+1,j\right) \\
-&-g^n_2\left(i,j+1\right)\Bigr]\Biggr]
+{{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
+&+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr]
 \end{aligned}
 \end{align}
-\begin{align}
-\begin{aligned}
-g^{n+1}_2\left(i,j\right) &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\cdot \Biggl[\frac{u^n\left(i,j+1\right)-u^n\left(i,j-1\right)}{2h}-\frac{I\left(i,j+1\right)-I\left(i,j-1\right)}{2h} \\ 
-&+\frac{g_2\left(i,j+1\right)+g_2\left(i,j-1\right)}{h^2}+\frac{1}{2h^2}\cdot \Bigl[2g^n_1\left(i,j\right)+\ g^n_1\left(i-1,j-1\right)+ g^n_1\left(i+1,j+1\right) \\
-&-\ g^n_1\left(i,j-1\right)-\ g^n_1\left(i-1,j\right)+\ g^n_1\left(i+1,j\right)-\ g^n_1\left(i,j+1\right)\Bigr]\Biggr]
-\end{aligned}
-\end{align}
-gdzie:
-\begin{align}
-\begin{aligned}
-c^n_1\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j\right)-u^n\left(i,j\right)}{h}\right)}^2+\ {\left(\frac{u^n\left(i,j+1\right)-u^n\left(i,j-1\right)}{2h}\right)}^2+\ \varepsilon }}
-\end{aligned}
-\end{align}
-\begin{align}
-\begin{aligned}
-c^n_2\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i,j\right)-u^n\left(i-1,j\right)}{h}\right)}^2+\ {\left(\frac{u^n\left(i-1,j+1\right)-u^n\left(i-1,j-1\right)}{2h}\right)}^2+\ \varepsilon }}
-\end{aligned}
-\end{align}
-\begin{align}
-\begin{aligned}
-c^n_3\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j\right)-u^n\left(i-1,j\right)}{2h}\right)}^2+\ {\left(\frac{u^n\left(i,j+1\right)-u^n\left(i,j\right)}{h}\right)}^2+\ \varepsilon }}\end{aligned}
-\end{align}
-\begin{align}
-\begin{aligned}
-c^n_4\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j-1\right)-u^n\left(i-1,j-1\right)}{2h}\right)}^2+\ {\left(\frac{u^n\left(i,j\right)-u^n\left(i,j-1\right)}{h}\right)}^2+\ \varepsilon }}
-\end{aligned}
-\end{align}
-W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
-Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Zgodnie z ich charakterem najodpowiedniejszymi metodami wmalowywania struktur są metody oparte na równaniach różniczkowych, natomiast uzyskanie brakującej tekstury najlepiej wykonać metodą kopii kawałków obrazów z najlepszym dopasowaniem. W \cite{NavierStokesAndTexturePropagation} autorzy proponują następujący algorytm syntezy brakującej tekstury $\mathrm{\Omega }$:
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=1]{rysunki/5_fig1}
-	\caption{Prosty algorytm wmalowywania tekstury obrazu.}
-	\label{5_fig1}
-\end{figure}
-Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm można wykonywać pobierając piksele z granicy w kolejności zgodnej ze wskazówkami zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich pikseli. Odnalezienie okna najlepszego dopasowania można wykonać analogicznie do metody wykorzystanej w publikacji Criminisi'ego, w oparciu o zależności \eqref{FROBDIST} oraz \eqref{FROBENIUS}. 
-
- W przypadku obrazów kolorowych pierwszym krokiem wykonania operacji wmalowywania jest transformacja do współrzędnych sferycznych zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \cite{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie 3 uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
+W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu kroków, w których wyznaczane są przytoczone zmienne.
+\section{Połączenie metody Criminisi z funkcją wagi.}
+Kolejną z pozytywnych prób modyfikacji algorytmu NLCTV w pracy okazała się próba zastąpienia problemu minimalizacji energii \eqref{ENLCTV} opartej na funkcji wagi, metodą syntezy obrazu (bazującej na metodzie syntezy tekstury opisanej w dalszej części pracy w \autoref{chap:StructureTextureNavierStokes}). Kroki nowego algorytmu można przedstawić w następującym schemacie:
 \begin{enumerate}
 \item
-Przekształcenie warstw $R,G,B$ obrazu na współrzędne sferyczne $I_1,I_2,I_3$
+Ustawienie argumentów algorytmu: obraz $u$, maska obrazu $\chi$, wielkość okna $SW$, wielkość skrawka obrazu $PS$ 
 \item
-Wyznaczenie $u_1,v_1,\ u_2,v_2,u_3,v_3$ na podstawie $I_1,I_2,I_3$
+Wyznaczenie funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT} dla parametrów $SW$ i $PS$ i $\chi$
 \item
-Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ metodą adaptacji równania Navier-Stokes'a
-\item
-Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie prostego algorytmu syntezy tekstury najlepszymi dopasowaniami uzyskanymi na podstawie warstwy $v_1$
-\end{enumerate}
-
-\chapter{Wariacyjny, nielokalny model wmalowywania}
-Ostatnią z rozważanych metod będzie metoda zaproponowana przez autorów Fedorov, Facciolo i Arias w \cite{arias2011variational}. Autorzy w publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej od dwóch niewiadomych:
-\begin{itemize}
-\item
-nieznanego obszaru obrazu $u(\mathcal{O})$
-\item
-mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z nieznanego obszaru jego odpowiednika z obszaru poza maską $\varphi(\hat{x})$
-\end{itemize}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.9]{rysunki/6_fig1}
-	\caption{Określenie charakterystycznych obszarów obrazu.}
-	\label{6_fig1}
-\end{figure}
-Zgodnie z \autoref{6_fig1} niech obraz stanowi przekształcenie $ u : {\Omega} \rightarrow R$, $\mathcal{O}$ oznacza obszar do uzupełnienia, $\mathcal{O}^c$ oryginalną część obrazu nie ulegającego modyfikacji, $\mathrm{\Omega }_p$ podzbiór pikseli scentrowanych względem  piksela $p \in \Omega$, gdzie $\Omega = \mathcal{O}^c + \mathcal{O}$, $\widetilde{\mathcal{O}} := \mathcal{O} + \mathrm{\Omega }_{ps}$, gdzie $\mathrm{\Omega }_{ps}$ oznacza sumę wszystkich zbiorów punktów $x \in \mathcal{O}$. Podobnie jak w \cite{arias2011variational} niech przekształcenie $u(x)$ jest zarezerwowane dla przestrzeni maski, a $\hat{u}(\hat{x})$ odpowiada przekształceniu w przestrzeni stałej obrazu $\widetilde{\mathcal{O}}$ ( $\hat{x} \in \mathcal{O}$). Mapowanie funkcji podobieństwa $\varphi(x)$ przedstawia \autoref{6_fig2}.
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.9]{rysunki/6_fig2}
-	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
-	\label{6_fig2}
-\end{figure}
-Energię poddawaną minimalizacji przedstawia się zależnością:
-\begin{align}
-\begin{aligned}
-\mathcal{E}(u,\varphi) = \int_{\mathcal{\widetilde{O}}}\int_{\Omega_p}\abs{u(x+h) - \hat{u}(\varphi(x)+h)}^2dhdx
-\end{aligned}
-\end{align}
-Funkcja jest niewypukła i pozwala obliczyć jedynie lokalne minima. W pracy wykorzystano iteracyjny algorytm przemiennej minimalizacji polegający na wyznaczaniu w każdym kroku $u(x)$ względem stałej wartości $\varphi(x)$, a następnie $\varphi(x)$ względem stałej wartości $u(x)$.
-\section{Wyznaczenia mapy podobieństwa.}
-Proces minimalizacji funkcji względem stałej zmiennej $u(x)$ można opisać zależnością:
-\begin{align}
-\begin{aligned}
-\mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\left( p_{u}(x) - p_{\hat{u}}(x+t)\right),\operatorname{gdzie} \ \forall_t : x+t \in \mathcal{O}^c
-\label{minNNF}
-\end{aligned}
-\end{align}
-Zmienna $t$ w minimalizacji stanowi zbiór wartości, który po dodaniu do współrzędnej $x$ mapuje do dowolnego położenia w $\mathcal{O}^c$. Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $\mathcal{O}^c$, $\Theta(x) :\mathcal{O} \ \rightarrow \ \mathcal{O}^c$. Warto zaznaczyć, iż najbliższego sąsiada punktu $x$ nie rozumie się znajdującego się najbliżej, a tego dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
-\begin{align}
-\begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\| 
-\label{normNNF}
-\end{aligned}
-\end{align}
-Norma może być wyznaczana zgodnie z \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Autorzy w \cite{MathematicalModelsforNLTextureInpainting} proponują dodatkowe definicje norm, które zostaną opisane w dalszej części pracy. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i stanowić duże obciążenie obliczeniowe. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu PatchMatch dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm oparty jest na 2 krokach (punkt $x$ oznaczany będzie zamiennie ze współrzędną $(i, j)$ w obrazie):
-\begin{enumerate}
-\item
-Losowej inicjalizacji pikseli
-\item
-Ograniczonej uprzednio definiowaną liczbą iteracji powtarzanej czynności:
+Powtarzanie do uzyskania zbioru $\Omega = \emptyset$
 \begin{enumerate}[a)]
 \item
-propagacja: w przypadku parzystej iteracji sprawdzenie wszystkich pikseli $x$ z maski w kierunku rastrowym przedstawionym na \autoref{6_fig3}, czy 
-wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i+1,j)) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j+1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku nadpisaniu najbliższego sąsiada $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
-w przypadku nieparzystej iteracji sprawdzenie wszystkich pikseli $x$ w kierunku odwrotnym do rastrowego przedstawionym na \autoref{6_fig3}, czy 
-wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i-1,j)) \big\|$ bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j-1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku nadpisaniu najbliższego sąsiada $\varphi(i,j) = \varphi(i-1,j)$, lub $\varphi(i,j) = \varphi(i,j-1)$
+Znalezienie dla każdego piksela $p \in \partial\Omega$ najlepszego dopasowania $d \in D \cap N_p$, gdzie $N_p$ zbiór pikseli z okna utworzonego dla piksela $p$, dla którego zachodzi:
+\begin{align}
+d = \mathop{\mathrm{arg \ max}}_{t \in D \cap N_p} w(p,t)
+\end{align}
+a następnie przepisanie:
+\begin{align}
+u(p) = u(d)
+\end{align}
 \item
-poszukiwanie w oknach: dla każdego punktu $(i,j)$ sprawdzane jest, czy w stopniowo pomniejszanych oknach centrowanych względem punktu $\varphi(i,j)$ istnieje losowy punkt $(i', j')$, dla którego zachodzi $\big\| p_{u}(i,j) - p_{\hat{u}}(i',j') \big\| < \big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j) \big\|$, który w następstwie jest podmieniany.
+Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
 \end{enumerate}
 \end{enumerate}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.5]{rysunki/6_fig3}
-	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
-	\label{6_fig3}
-\end{figure}
-Kroki algorytmu PatchMatch zostały przedstawione graficznie na \autoref{6_fig4}.
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.9]{rysunki/6_fig4}
-	\caption{Algorytm PatchMatch. Źródło \cite{arias2011variational}.}
-	\label{6_fig4}
-\end{figure}
-\section{Wyznaczenie wartości obrazu.}
-Niech funkcja $e: \Omega_{p} \rightarrow {\rm I\!R}^{+}$ stanowi sumę ważonych błędów pomiędzy dwoma skrawkami obrazu scentrowanymi względem punktów $x$ i $\hat{x}$.
-\begin{align}
-\begin{aligned}
-e(x, \hat{x}) &= g \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{u}) \big\| = g \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| \\ 
-&= \int_{\Omega_{p}} g(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
-\label{minUs}
-\end{aligned}
-\end{align} 
-Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
-\begin{align}
-\begin{aligned}
-E(u) &= \int_{\widetilde O}\int_{\Omega_{p}}g(h)e(u(x+h) - \hat{u}(\varphi(x)+h)dhdx
-\label{patchMatchEnergy}
-\end{aligned}
-\end{align} 
-Niech $z := x+h$ i $\hat{z} := \hat{x}+h$. Wprowadzając zależność:
-\begin{align}
-m(z,\hat{z}) = \int_{\Omega_{p}}g(h)\chi_{\widetilde O}(z-h)\delta_{\varphi(z-h)}(\hat{z}-h)dh
-\end{align}
-gdzie:
-\begin{enumerate}
-\item
-$\chi(p)$ podobnie jak w modelu $NLCTV$ przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
-\item
-$\delta(p)$ podobnie jak w metodzie Criminisi określa pewność co do danego piksela wewnątrz maski i jest określone następującą zależnością:
-\begin{align}
-\delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0 
-\end{align}
-\end{enumerate}
-wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
-\begin{enumerate}
-\item
-Nielokalnej uśrednionej:
-\begin{align}
-\begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |^2
-\label{nonLocalMeans}
-\end{aligned}
-\end{align}
-\item
-Nielokalnej medianowej:
-\begin{align}
-\begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{g,1} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |
-\label{nonLocalMedians}
-\end{aligned}
-\end{align}
-\item
-Nielokalnej Poissona:
-\begin{align}
-\begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{P} &= \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} + \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2,\nabla} \\
-&= g \ast (\lambda | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) | \\
-&+ (1-\lambda)|\nabla u(x+\cdot) - \nabla \hat{u}(\hat{x}+\cdot)|
-\label{nonLocalpoisson}
-\end{aligned}
-\end{align}
-\end{enumerate}
-Suma różnic pikseli w przypadku normy Poissona dodatkowo wymaga wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny z członów będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla norm uzyskuje się odpowiednio rozwiązania w postaci:
-\begin{enumerate}
-\item
-równanie:
-\begin{align}
-u(z) = \frac{1}{k(z)}\int_{\widetilde O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
-\end{align}
-gdzie
-\begin{align}
-k(z) := \int_{\widetilde O^c}m(z,\hat{z})d\hat{z}
-\end{align}
-\item
-równanie Eulera:
-\begin{align}
-[\delta_{u}\mathcal{E}(u)](z) = \int_{\mathcal{O}^c}sign[u(z)-\hat{u}(\hat{z})]m(z,\hat{z})d\hat{z} \ni \mathcal{O} 
-\end{align}
-\item
-równania Eulera rozwiązane względem zmiennej $u$:
-\begin{align}
-\begin{aligned}
-\begin{cases}
-\nabla \cdot [k(z)\nabla u(z)] - \frac{\lambda}{1-\lambda}]k(z)u(z) = \\ 
-\ \ \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \mathcal{O} \\
-u(z)=\hat{u}(z) , & z \in \partial \mathcal{O} \setminus \partial \Omega \\
-\nabla u(z) \cdot n_{\Omega}(z) = 0 , & z \in \partial \mathcal{O} \cap \partial \Omega
-\end{cases}
-\end{aligned}
-\end{align}
-gdzie:
-\begin{align}
-v(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\nabla\hat{u}(\hat{z})d\hat{z}
-\end{align}
-\begin{align}
-f(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
-\end{align}
-Człon $n_{\Omega}(z)$ oznacza wektor normalny do $\Omega$ dla $z \in \partial \Omega$.
-\end{enumerate}
-Dokładne wyprowadzenia zależności można znaleść w \cite{arias2011variational}.
-\section{Wielostopniowy schemat wypełniania.}
-W wielu algorytmach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm polega na utworzeniu serii pomniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu uprzednio wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
-\begin{itemize}
-\item
-losowo wyznaczone wartości obrazu pobierane z obszaru $\mathcal{O}^c$
-\item
-rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR zgodnie z zależnością \eqref{DiscreteSOR}.
-\end{itemize}
-Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy w \cite{arias2011variational} proponują model Gauss'owskiej piramidy.\\
-W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę stopni piramidy, a oryginalny wymiar jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{s-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
-\begin{align}
-r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
-\end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Jako rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako stały uprzednio definiowany. Niech indeks górny s odnosi się do zmiennych i obszarów w zakresie rozważanego stopnia piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\mathcal{O}^s$ i $\mathcal{O}^{s+1}$:
-\begin{align}
-\chi_{\mathcal{O}^{s+1}}=(\downarrow_rg_{\sigma(r)}\ast\chi_{\mathcal{O}^s})> T_{0}.
-\end{align}
-Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
-\begin{align}
-u^{s+1}(x)= \downarrow_r \frac{g \ast \chi_{(O^s)^c} u^s(x)}{g \ast \chi_{(O^s)^c}(x) }
-\end{align}
-Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania do góry, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego w poprzednim stopniu oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
-\section{Podsumowanie algorytmu}
-Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
-\begin{enumerate}
-\item
-Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $I$
-\item
-Wyznaczenie piramidy maski stanowiącej zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
-Wyznaczenie piramidy obrazu stanowiącej zbiór: $\{u^s\}_{s=0,...,S-1}$
-\item
-Inicjalizacja obrazu $u^{S-1}$ w obszarze $\mathcal{O}$ \\
-Wyznaczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$
-\item
-Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
-\begin{enumerate}[a)]
-\item
-Przeskalowanie mapy podobieństwa z zastosowaniem algorytmu interpolacji najbliższego sąsiada $\varphi^s=r \cdot (\uparrow_r \varphi^{s+1})$
-\item
-Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\mathcal{O})=u^s_0(\mathcal{O})$ w celu inicjalizacji
-\item
-Powtarzanie $I$-tą ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF}
-\begin{itemize}
-\item
-minimalizacja \eqref{minNNF} w celu wyznaczenia $\varphi^s$
-\item
-minimalizacja \eqref{minUs} w celu wyznaczenia $u^s$
-\end{itemize}  
-\end{enumerate}
-\end{enumerate}
-Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$
-
-
- 
-
-
-
-
+Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu NLCTV można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
 
 %-----------Koniec pracy magisterskiej-----------
 \newpage
