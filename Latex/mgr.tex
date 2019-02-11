@@ -9,6 +9,7 @@
 \usepackage{enumerate}
 \usepackage{hyperref}
 \usepackage{verbatim}
+\usepackage{longtable}
 \usepackage[MeX]{polski}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
@@ -412,7 +413,7 @@ Korzystając z \eqref{DiscreteSOR} wyznaczyć jasność każdego piksela $I_{i,j
 \item
 Do uzyskanego obrazu w punkcie 3 przepisać znane wartości z obrazu oryginalnego
 \end{enumerate}
-Powyższy algorytm przedstawiono dla obrazów w odcieniach szarości. W celu implementacji rozwiązania dla obrazów kolorowych, których funkcję definiuje się jako przekształcenie w pole wektorowe $[R,G,B]$, czyli $I:D\to R^3$  zgodnie z propozycją w \cite{fishelov2006image} można w pierwszym kroku przekształcić do współrzędnych sferycznych $\left[I_{1},I_{2},I_{3} \right]$ korzystając z zależności:
+Powyższy algorytm przedstawiono dla obrazów w odcieniach szarości. W celu implementacji rozwiązania dla obrazów kolorowych, których funkcję definiuje się jako przekształcenie w pole wektorowe $[R,G,B]$, czyli $I:D\to R^3$  zgodnie z propozycją w \cite{fishelov2006image} można w pierwszym kroku przekształcić do współrzędnych sferycznych (CIELab) $\left[I_{1},I_{2},I_{3} \right]$ korzystając z zależności:
 \begin{equation}
 {I_{1_{i,j}}=r}_{i,j}=\ \sqrt{R^2_{i,j}+G^2_{i,j}+B^2_{i,j}}
 \label{TIone}
@@ -445,9 +446,8 @@ Operację wmalowywania można wykonać na pierwotnych komponentach $[R,G,B]$ lec
 \end{equation}
 \chapter{Analiza funkcjonalna.}
 \section{Wmalowywanie struktury i tekstury obrazu.}\label{chap:StructureTextureNavierStokes}
-Metoda jednoczesnego wmalowywania struktur i tekstur stanowi połączenie wcześniej opisanych w pracy metod opartych o równania różniczkowe wyższego rzędu z metodami bazującymi na przykładowych źródłach kawałków obrazów stanowiących podstawę do wypełniania brakujących regionów. Pierwszy raz przedstawiona została przez Bertalmio i innych w 2003 roku w \cite{NavierStokesAndTexturePropagation}, a bardziej zaawansowany algorytm pojawia się w 2004 roku w [26]. Metoda w \cite{NavierStokesAndTexturePropagation} opiera się na wmalowywaniu struktury w oparciu o algorytm przedstawiony w \cite{bertalmio2000image} przy jednoczesnej propozycji prostej syntezy tekstury. 
-\par
-Niech obraz $I:R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
+\subsection{Segmentacja obrazu na strukturę i teksturę.}
+Metoda jednoczesnego wmalowywania struktur i tekstur pierwszy raz przedstawiona została przez Bertalmio i innych w 2003 roku w \cite{NavierStokesAndTexturePropagation}. Opiera się na wmalowywaniu struktury w oparciu o algorytm przedstawiony w \cite{bertalmio2000image} przy jednoczesnej propozycji prostej syntezy tekstury. Niech obraz $I:R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
 \begin{align}
 I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right) 
 \label{STRUCTURETEXTURE1}
@@ -568,30 +568,29 @@ c^n_4\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j-1\right)-u^n\le
 \end{aligned}
 \end{align}
 W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
-Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Zgodnie z ich charakterem najodpowiedniejszymi metodami wmalowywania struktur są metody oparte na równaniach różniczkowych, natomiast uzyskanie brakującej tekstury najlepiej wykonać metodą kopii kawałków obrazów z najlepszym dopasowaniem. W \cite{NavierStokesAndTexturePropagation} autorzy proponują następujący algorytm syntezy brakującej tekstury $\mathrm{\Omega }$:
+Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Autorzy w \cite{NavierStokesAndTexturePropagation} proponują do wmalowywania struktur zastosować algorytm przedstawiony w \cite{bertalmio2000image}, natomiast do uzyskania brakującej tekstury propuonują następujący algorytm syntezy obszaru $\mathrm{\Omega }$ \\:
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/5_fig1}
 	\caption{Prosty algorytm wmalowywania tekstury obrazu.}
 	\label{5_fig1}
-\end{figure}
-Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm można wykonywać pobierając piksele z granicy w kolejności zgodnej ze wskazówkami zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich pikseli. Odnalezienie okna najlepszego dopasowania można wykonać analogicznie do metody wykorzystanej w publikacji Criminisi'ego, w oparciu o zależności \eqref{FROBDIST} oraz \eqref{FROBENIUS}. 
-
- W przypadku obrazów kolorowych pierwszym krokiem wykonania operacji wmalowywania jest transformacja do współrzędnych sferycznych zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \cite{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie 3 uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
+\end{figure} \\
+Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm można wykonywać pobierając piksele z granicy w kolejności zgodnej ze wskazówkami zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich pikseli. 
+W przypadku obrazów kolorowych pierwszym krokiem wykonania operacji wmalowywania jest transformacja do współrzędnych sferycznych zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \eqref{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie 3 uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
 \begin{enumerate}
 \item
-Przekształcenie warstw $R,G,B$ obrazu na współrzędne sferyczne $I_1,I_2,I_3$
+Przekształcenie warstw $R,G,B$ obrazu na współrzędne sferyczne $I_1,I_2,I_3$.
 \item
-Wyznaczenie $u_1,v_1,\ u_2,v_2,u_3,v_3$ na podstawie $I_1,I_2,I_3$
+Wyznaczenie $u_1,v_1,\ u_2,v_2,u_3,v_3$ na podstawie $I_1,I_2,I_3$.
 \item
-Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ metodą adaptacji równania Navier-Stokes'a
+Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ dowolnie dobraną metodą.
 \item
-Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie prostego algorytmu syntezy tekstury najlepszymi dopasowaniami uzyskanymi na podstawie warstwy $v_1$
+Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego algorytmu syntezy tekstury $v_1$.
 \end{enumerate}
 \section{Wahanie funkcji.}
 Pojęcie wahania funkcji $TV$ w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin, Osher i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie lokalnych operatorów nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu nielokalnego modelu, który zostanie poddany analizie w niniejszej pracy. \\
-Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, w wyniku prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NL-CTV$ zaproponowanego w \cite{duan2015fast} należy uprzednio wprowadzić oznaczenia i zależności nielokalnych operatorów. 
-	Zgodnie z poprzednim działem niech $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako przekształcenie $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowaną dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji przedstawia się zależnością:
+Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, w wyniku prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NLCTV$ zaproponowanego w \cite{duan2015fast} należy uprzednio wprowadzić oznaczenia i zależności nielokalnych operatorów. 
+Zgodnie z poprzednim działem niech $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako przekształcenie $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowaną dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji przedstawia się zależnością:
 \begin{equation}
 {\mathrm{\nabla }}_{NL}I\left(x,y\right)\triangleq \left[I\left(y\right)-I\left(x\right)\right]\sqrt{w(x,y)}
 \label{NLGRAD}
@@ -609,10 +608,19 @@ w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\lef
 \end{figure}
 Wartość $r$ to uprzednio definiowana stała skalująca wartości podobieństwa pomiędzy pikselami. Podobieństwo wyznaczane jest na podstawie utworzonych okien scentrowanych względem piksela $x$ oraz $y$ oznaczanych operatorem "$\cdot$" zgodnie z \autoref{3_fig3}. Normę macierzową występującą w powyższej zależności można wyznaczyć korzystając z normy Frobeniusa:
 \begin{equation}
-{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2=\ \sum^n_{i=1}{\sum^n_{j=1}{{\left(I_{x+\ \cdot }\left(i,j\right)-I_{y+\ \cdot }\left(i,j\right)\right)}^2}}
+{\|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\|}=\ \sum^n_{i=1}{\sum^n_{j=1}{{\left(I_{(x+\ \cdot) }\left(i,j\right)-I_{(y+\ \cdot)}\left(i,j\right)\right)}^2}}
 \label{FROBENIUS}
 \end{equation}
-gdzie wartość $n$ odpowiada wielkości badanego okna i stanowi uprzednio definiowany parametr. Zmienna $G_\sigma$ reprezentuje macierz o rozmiarze zgodnym z operatorem otoczenia danego piksela "$\cdot$". Wartości wewnątrz macierzy pozwalają stopniować wpływ każdego z rozpatrywanych pikseli na uzyskiwany wynik poprzez przyznawanie większego priorytetu pikselom centralnym, przy deprecjonowaniu tych bardziej oddalonych od centrum. Podobnie jak w przypadku nielokalnego gradientu funkcja wagi stanowi mapowanie $DxD\longrightarrow R$. Kolejnymi ważnymi nielokalnymi operatorami wykonanymi w punkcie $x$ są: 
+gdzie wartość $n$ odpowiada wielkości badanego okna i stanowi uprzednio definiowany parametr. Zmienna $G_\sigma$ reprezentuje macierz o rozmiarze zgodnym z operatorem otoczenia danego piksela "$\cdot$". Wartości wewnątrz macierzy pozwalają stopniować wpływ każdego z rozpatrywanych pikseli na uzyskiwany wynik poprzez przyznawanie większego priorytetu pikselom centralnym, przy deprecjonowaniu tych bardziej oddalonych od centrum. Dla $G_\sigma$ zachodzi:
+\begin{align}
+\int_{D}G_{\sigma}(h)dh = 1
+\end{align}
+Rozważając okno Gauss'owskie $G_\sigma$ można opisać zależnością:
+\begin{align}
+G_\sigma(h)=\frac{1}{Z}\exp(-\frac{\|h\|}{2\sigma^2})
+\label{oknoGaussowskie}
+\end{align}
+gdzie $\sigma$ odpowiada odchyleniu standardowemu, a $Z$ współczynnikowi normalizującemu. Podobnie jak w przypadku nielokalnego gradientu funkcja wagi stanowi mapowanie $DxD\longrightarrow R$. Kolejnymi ważnymi nielokalnymi operatorami wykonanymi w punkcie $x$ są: 
 \begin{itemize}
 \item
 iloczyn skalarny dwóch nielokalnych mapowań $\overrightarrow{p}:DxD\longrightarrow R$ (mapowaniem $\overrightarrow{p}$ może być wspomniana funkcja wagi, bądź nielokalny gradient):
@@ -700,7 +708,7 @@ j\in N_i \\
 \end{equation}
 Warto zauważyć, iż indeksy $i,j$ wskazują na konkretny piksel w obrazie. Lokalizacji w przestrzeni $2D$ dokonuje się przez znajomość par: $i=(x_i,y_i)$ oraz $j=(x_j,y_j)$, gdzie $x$ oś rzędnych, odpowiednio $y$ oś odciętych.
 \par 
-Nielokalny model wahania funkcji oznaczany $NL-TV$ definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
+Nielokalny model wahania funkcji oznaczany $NLTV$ definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
 \begin{equation}
 {\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-f\right)}^2}dx\ \right\}\ }
 \label{NLTVGRAY}
@@ -742,7 +750,7 @@ W celu uzależnienia od siebie wszystkich warstw obrazu autorzy w \cite{duan2015
 {\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}\ }\ +\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-f_i\right)}^2}dx}\ \right\}\ }
 \label{ENLCTV}
 \end{align}
-gdzie $m$ odpowiada ilości warstw tworzących kolorowy obraz. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacznie obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NL-TV$ zastosowany zostanie heurystyczny algorytm rozbicia Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
+gdzie $m$ odpowiada ilości warstw tworzących kolorowy obraz. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacznie obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm rozbicia Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
 \begin{align}
 \begin{aligned}
 \mathop{\mathrm{min}}_{u}E\left(u\right) &= \mathop{\mathrm{min}}_{u}\Biggl\{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}\ }\\ 
@@ -813,7 +821,7 @@ gdzie:
 1\ x\ \epsilon \ D/\mathrm{\Omega } \end{array}
 \right\}
 \end{equation}
-Podsumowując algorytm wmalowywania w oparciu o model $NL-CTV$ z algorytmem rozbicia Bregman’a można przedstawić w następujących krokach:
+Podsumowując algorytm wmalowywania w oparciu o model $NLCTV$ z algorytmem rozbicia Bregman’a można przedstawić w następujących krokach:
 \begin{enumerate}
 \item  
 Inicjalizacja zmiennych $k=0,\ \overrightarrow{b^0_i}=0,\ \overrightarrow{v^0_i}=0,\ u^0_i=f^0_i$ 
@@ -838,7 +846,7 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
 \section{Wariacyjny, nielokalny model wmalowywania}
-Ostatnią z rozważanych metod będzie metoda zaproponowana przez autorów Fedorov, Facciolo i Arias w \cite{arias2011variational}. Autorzy w publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej od dwóch niewiadomych:
+Kolejną z rozważanych metod będzie metoda zaproponowana przez autorów Fedorov, Facciolo i Arias w \cite{arias2011variational}. Autorzy w publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej od dwóch niewiadomych:
 \begin{itemize}
 \item
 nieznanego obszaru obrazu $u(\mathcal{O})$
@@ -917,8 +925,8 @@ e(x, \hat{x}) &= g \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{u}) \big\| = g \ast \
 &= \int_{\Omega_{p}} g(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
 \label{minUs}
 \end{aligned}
-\end{align} 
-Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
+\end{align}
+gdzie zmienna $g$ jest odpowiednikiem zmiennej $G_{\sigma}$ w $NLCTV$ i opisywana jest zależnością \eqref{oknoGaussowskie}. Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
 \begin{align}
 \begin{aligned}
 E(u) &= \int_{\widetilde O}\int_{\Omega_{p}}g(h)e(u(x+h) - \hat{u}(\varphi(x)+h)dhdx
@@ -934,9 +942,10 @@ gdzie:
 \item
 $\chi(p)$ podobnie jak w modelu $NLCTV$ przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
 \item
-$\delta(p)$ podobnie jak w metodzie Criminisi określa pewność co do danego piksela wewnątrz maski i jest określone następującą zależnością:
+$\delta(p)$ określa pewność co do danego piksela wewnątrz maski i jest określone następującą zależnością:
 \begin{align}
-\delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0 
+\delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0
+\label{pewnoscVFI}
 \end{align}
 \end{enumerate}
 wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
@@ -1094,12 +1103,12 @@ Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znale
 {\varphi }_{q^{''}}={\mathrm{arg}\ \mathop{\mathrm{min}}_{q\ \epsilon \mathrm{\ }\phi } d(\ }{\varphi }_{p'},{\varphi }_{q'})
 \label{FROBDIST}
 \end{align}
-Dystans pomiędzy dwoma skrawkami $d({\varphi }_{p'},{\varphi }_{q'})$ definiowany jest jako suma kwadratów różnic wszystkich odpowiadających sobie pikseli ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$.
+Dystans pomiędzy dwoma skrawkami $d({\varphi }_{p'},{\varphi }_{q'})$ może być definiowany jako suma kwadratów różnic wszystkich odpowiadających sobie pikseli ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$.
 \begin{align}
 d(\varphi_{p'},\varphi_{q'})= \sum_{p\in \varphi_{p'}} \left( \varphi_{p^{'}}(p) - \varphi _{q^{'}} \left(p^{'}\right) \right)^2
 \label{FROBENIUS2} 
 \end{align}
-gdzie $\varphi \left(p\right)$ wartość jasności piksela $p$ z badanego okna. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
+gdzie $\varphi \left(p\right)$ wartość jasności piksela $p$ z badanego okna. Do wyznaczenia dystansu można również zastosować normy przytoczone dla \eqref{normNNF} w \cite{MathematicalModelsforNLTextureInpainting}. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
 Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania może prowadzić do akumulowanej przez algorytm niespójności obrazu.
 \begin{figure}[!h]
 	\centering
@@ -1122,7 +1131,8 @@ Ct\left(p\right)=\ \frac{\sum_{q\in {\varphi }_{p'}}{C(q)}}{\left|{\varphi }_p\r
 \end{align}
 gdzie $C(q)$ - funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu, $\left|{\varphi }_p\right|$ - liczba pikseli w analizowanym kawałku - rozmiar rozważanego okna. 
 \par
-Podczas inicjalizacji funkcja $C(q)$ dla każdego piksela stanowiącego oryginalny obraz przyjmuje wartość $1$, natomiast dla punktów maski przyjmuje 0. Matematycznie ${\forall }_{q\in D}\ C\left(q\right)=1$  i analogicznie ${\forall }_{q\in \mathrm{\Omega }}\ C\left(q\right)=0$. Wraz z wyznaczaniem kolejnych wartości pikseli z rejonu maski funkcja $C\left(q\right)$ jest aktualizowana, a zerowe wartości są nadpisywane. Funkcja $Ct\left(p\right)$ jest sumą wartości $C\left(p\right)\ $wszystkich pikseli z analizowanego skrawka scentrowanego względem piksela p, które znajdują się w przestrzeni wyznaczonego już obrazu podzielonej przez ilość pikseli w danym skrawku. Funkcję interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C\left(p\right)$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejsza wartość $C\left(p\right)$ w każdym kroku interpretuje się jako mniejszą pewność co do przepisanych wartości koloru w obrazie. Drugi krok w każdej wykonywanej iteracji związany jest z obliczenie wartości funkcji $D(p)$ definiowanej jako:
+Podczas inicjalizacji funkcja $C(q)$ dla każdego piksela stanowiącego oryginalny obraz przyjmuje wartość $1$, natomiast dla punktów maski przyjmuje 0. Matematycznie ${\forall }_{q\in D}\ C\left(q\right)=1$  i analogicznie ${\forall }_{q\in \mathrm{\Omega }}\ C\left(q\right)=0$. Wraz z wyznaczaniem kolejnych wartości pikseli z rejonu maski funkcja $C\left(q\right)$ jest aktualizowana, a zerowe wartości są nadpisywane. Funkcja $Ct\left(p\right)$ jest sumą wartości $C\left(p\right)\ $wszystkich pikseli z analizowanego skrawka scentrowanego względem piksela p, które znajdują się w przestrzeni wyznaczonego już obrazu podzielonej przez ilość pikseli w danym skrawku. Funkcję interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C\left(p\right)$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejsza wartość $C\left(p\right)$ w każdym kroku interpretuje się jako mniejszą pewność co do przepisanych wartości koloru w obrazie. Zmienna $C(q)$ można opisać wykorzystując przytoczoną już zależność \eqref{pewnoscVFI}.
+Drugi krok w każdej wykonywanej iteracji związany jest z obliczenie wartości funkcji $D(p)$ definiowanej jako:
 \begin{align}
 D(p)=\ \frac{\left|{\mathrm{\nabla }}^{\bot }I_P\cdot n_p\right|}{\alpha }
 \label{DataTerm}
@@ -1171,7 +1181,7 @@ C\left(p\right)=C\left(\dot{p}\right)
 \end{align} 
 gdzie $p\in \ {\varphi }_p\cap \ \mathrm{\Omega }$, a $C\left(\dot{p}\right)$ to deprecjonowana wartość w każdej kolejnej iteracji.
 \end{enumerate}
-Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual} \cite{malluvalasaimplementation} \cite{SalientStrucTexProp}. 
+Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
 Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie kawałków jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie. W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}. Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $\phi $ dla każdej kontynuowanej znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszej pary dopasowania ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$. Schemat wmalowywania w oparciu o powyższy schemat przedstawia poniższy rysunek.
 \begin{figure}[!h]
 	\centering
@@ -1284,7 +1294,7 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych skrawków $\psi $, czy też okien stanowiących podstawę do parowania danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy skrawków obrazu $\psi $ w wyznaczanym obszarze $\mathrm{\Omega }$.
 \chapter{Modyfikacje algorytmów}
 \section{Modyfikacja funkcji wagi.}
-Podczas testowania opisanego powyżej algorytmu wmalowywania jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
+Podczas testowania algorytmu $NLCTV$ jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu przy zniekształceniu struktury. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
 \begin{aligned}
 w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\} }\\
@@ -1294,16 +1304,16 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \
 \end{align}
 W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
 \section{Modyfikacja wyznaczania wartości obrazu $u$.}
-Złożoność obliczeniowa algorytmu skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
+Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
 {{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
 &+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr]
 \end{aligned}
 \end{align}
-W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu kroków, w których wyznaczane są przytoczone zmienne.
+W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu obliczeń, wyrugowanych zmiennych.
 \section{Połączenie metody Criminisi z funkcją wagi.}
-Kolejną z pozytywnych prób modyfikacji algorytmu NLCTV w pracy okazała się próba zastąpienia problemu minimalizacji energii \eqref{ENLCTV} opartej na funkcji wagi, metodą syntezy obrazu (bazującej na metodzie syntezy tekstury opisanej w dalszej części pracy w \autoref{chap:StructureTextureNavierStokes}). Kroki nowego algorytmu można przedstawić w następującym schemacie:
+Kolejną z pozytywnych prób modyfikacji algorytmu $NLCTV$ w pracy okazała się próba zastąpienia problemu minimalizacji energii \eqref{ENLCTV} opartej na funkcji wagi, metodą syntezy obrazu (bazującej na metodzie syntezy tekstury opisanej w \autoref{chap:StructureTextureNavierStokes}). Kroki nowego algorytmu można przedstawić w następującym schemacie:
 \begin{enumerate}
 \item
 Ustawienie argumentów algorytmu: obraz $u$, maska obrazu $\chi$, wielkość okna $SW$, wielkość skrawka obrazu $PS$ 
@@ -1325,8 +1335,586 @@ u(p) = u(d)
 Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
 \end{enumerate}
 \end{enumerate}
-Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu NLCTV można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
+Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu $NLCTV$ można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
+\chapter{Testy algorytmów}
+\section{Testy VFI.}
+\section{Analizowane obrazy.}
+W niniejszej pracy testom poddano następującą grupę obrazów:
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Obraz & Dane \\ \hline
 
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/kotmyszm}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 500 x 375 \\
+	Rozmiar maski: 28\%
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/maciek1m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 410 x 308 \\
+	Rozmiar maski: 28%\
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Obr1m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 614 x 461 \\
+	Rozmiar maski: 9%\
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=6cm]{imgmask/Obr4m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 576 x 360 \\
+	Rozmiar maski: 7%\
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Obr5m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 650 x 570 \\
+	Rozmiar maski: 28%\
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Obr6m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 246 x 302 \\
+	Rozmiar maski: 28%
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=6.5cm]{imgmask/Obr15m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 1772 x 1181 \\
+	Rozmiar maski: 4.5\%
+    \end{minipage} \\ \hline
+  
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Obr17m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 206 x 308 \\
+	Rozmiar maski: 14%\
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Obr19m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 461 x 615 \\
+	Rozmiar maski: 7%\
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Obr28km}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 820 x 615 \\
+	Rozmiar maski: 28%\
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=7cm]{imgmask/Osoba_drugam}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 2592 x 1944 \\
+	Rozmiar maski: 28%\
+    \end{minipage} \\ \hline
+  \caption{Obrazy poddane analizie.}
+ 
+  \label{imgmasks}
+\end{longtable}
+
+Wszystkie z przeprowadzanych testów wykonano w przestrzeni sferycznej konwertując obraz z przestrzeni $RGB$ do przestrzeni $CIELab$. Parametry związane z wielostopniowym wypełnianiem przyjęto jako stałe i równe:
+\begin{itemize}
+\item
+ilość stopni tworzonej piramidy $S=7$
+\item
+rozmiar obrazu dla najmniejszego ze stopnia w piramidzie 
+\begin{align}
+A_{S-1}=\frac{1.5 \cdot ps}{\mathrm{max}_{x \in \mathcal{O}}d(x,\mathcal{O}^{c})}
+\end{align}
+gdzie $ps = |\Omega|$ oznacza długość boku skrawka.
+\end{itemize}
+Parametry związane z "pewnością" co do pikseli wewnątrz maski przyjęto jako stałe i równe:
+\begin{itemize}
+\item
+sposób rozkładu funkcji w przestrzeni $t_{c}=5.0$
+\item
+asymptota, do której dąży funkcja $c_{0}=0.1$
+\end{itemize}
+Żaden z obrazów przed operacją wmalowywania nie był wstępnie inicjalizowany. \eqref{Poisson}.
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Obraz & Dane \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMeans/Obr4m.png_nlmeans_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t16.1821}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 3
+        \item Czas: 16.18s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMeans/Obr4mpng_nlmeans_sc7_025_initnone_ps7_10000_conf5_01_t100249}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 7
+        \item Czas: 100.24s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMeans/Obr4m.png_nlmeans_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t388.857}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 13
+        \item Czas: 388.85s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMedians/Obr4m.png_nlmedians_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t13.8929}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 3
+        \item Czas: 13.89s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMedians/Obr4m.png_nlmedians_sc7_0.25_initnone_ps7_10000_conf5_0.1_t54.8192}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 7
+        \item Czas: 54.81s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMedians/Obr4m.png_nlmedians_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t289.075}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 13
+        \item Czas: 289.07s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLPoisson/Obr4m.png_nlpoisson_l0.1_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t57.794}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 3
+        \item Czas: 57.79s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLPoisson/Obr4m.png_nlpoisson_l0.1_sc7_0.25_initnone_ps7_10000_conf5_0.1_t211.357}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 7
+        \item Czas: 211.35s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLPoisson/Obr4m.png_nlpoisson_l0.1_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t984.07}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 13
+        \item Czas: 984.07s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    
+    
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMeans/Obr19m.png_nlmeans_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t27.5199}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 3
+        \item Czas: 27.51s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMeans/Obr19m.png_nlmeans_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t124.534}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 7
+        \item Czas: 24.53s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMeans/Obr19m.png_nlmeans_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t460.877}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 13
+        \item Czas: 460.87s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMedians/Obr19m.png_nlmedians_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t25.5615}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 3
+        \item Czas: 25.56s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMedians/Obr19m.png_nlmedians_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t134.161}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 7
+        \item Czas: 134.16s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMedians/Obr19m.png_nlmedians_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t421.847}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 13
+        \item Czas: 421.84s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLPoisson/Obr19m.png_nlpoisson_l0.1_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t92.0033}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 3
+        \item Czas: 92.00s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLPoisson/Obr19m.png_nlpoisson_l0.1_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t326.351}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 7
+        \item Czas: 326.35s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLPoisson/Obr19m.png_nlpoisson_l0.1_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t1725.13}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 13
+        \item Czas: 1725.13s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    
+    
+    
+        \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMeans/Osoba_drugam.png_nlmeans_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t798.062}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 3
+        \item Czas: 798.06s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMeans/Osoba_drugam.png_nlmeans_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2517.66}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 7
+        \item Czas: 2517.66s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMeans/Osoba_drugam.png_nlmeans_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6857.42}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Means
+        \item ps: 13
+        \item Czas: 6857.42s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMedians/Osoba_drugam.png_nlmedians_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t777.282}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 3
+        \item Czas: 777.28s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMedians/Osoba_drugam.png_nlmedians_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2426.91}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 7
+        \item Czas: 2426.91s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMedians/Osoba_drugam.png_nlmedians_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6657.17}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Medians
+        \item ps: 13
+        \item Czas: 6657.17s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLPoisson/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t2004.3}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 3
+        \item Czas: 2004.3s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLPoisson/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t5618.33}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 7
+        \item Czas: 5618.33s
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLPoisson/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t16316.7}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Norma: NL-Poisson
+        \item ps: 13
+        \item Czas: 16316.7s
+    \end{itemize}
+    \end{minipage} \\ \hline
+  \caption{Porównanie norm wmalowywania}\label{VFITESTS}
+\end{longtable}
 %-----------Koniec pracy magisterskiej-----------
 \newpage
 \bibliographystyle{unsrt}
