@@ -21,6 +21,7 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \usepackage{palatino}
 \usepackage{array}
 \usepackage{pstricks}
+\usepackage{comment}
 \usepackage{textcomp}
 \theoremstyle{definition}
 \newtheorem{theorem}{Twierdzenie}[section]
@@ -43,6 +44,19 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \title{Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania}
 
 \begin{document}
+
+\def \kotmyszm{Obraz 1}
+\def \maciekIm{Obraz 2}
+\def \ObrIm{Obraz 3}
+\def \ObrIVm{Obraz 4}
+\def \ObrVm{Obraz 5}
+\def \ObrVIm{Obraz 6}
+\def \ObrXVm{Obraz 7}
+\def \ObrXVIIm{Obraz 8}
+\def \ObrXIXm{Obraz 9}
+\def \ObrXXVIIIkm{Obraz 10}
+\def \OsobaDrugam{Obraz 11}
+\def \Obr13m{Obraz 12}
 
 \begin{titlepage}
 \pagestyle{empty}
@@ -1067,6 +1081,7 @@ minimalizacja \eqref{minUs} w celu wyznaczenia $u^s$
 \end{enumerate}
 Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$
 \chapter{Uzupełnianie kawałkami obrazu.}
+\section{Metoda Criminisi.}
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie skrawkami pochodzącymi z ich otoczenia. W odróżnieniu od metod bazujących na równaniach różniczkowych metoda uzupełniania braków nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na poniższym rysunku.
 \begin{figure}[!h]
 	\centering
@@ -1079,7 +1094,8 @@ Zgodnie z \autoref{4_fig1} niech zbiór $D$ oznaczony kolorem jasnozielonym okre
 p\ \epsilon \ \partial \mathrm{\Omega }
 \end{align}
 \begin{align}
-q\ \epsilon \mathrm{\ }\phi 
+q\ \epsilon \mathrm{\ }\phi
+\label{qSource}
 \end{align}
 \begin{align}
 \phi \ \subset \ D
@@ -1181,14 +1197,16 @@ C\left(p\right)=C\left(\dot{p}\right)
 \end{align} 
 gdzie $p\in \ {\varphi }_p\cap \ \mathrm{\Omega }$, a $C\left(\dot{p}\right)$ to deprecjonowana wartość w każdej kolejnej iteracji.
 \end{enumerate}
+\section{Pojęcie głównych struktur.}
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
-Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie kawałków jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie. W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}. Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $\phi $ dla każdej kontynuowanej znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszej pary dopasowania ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$. Schemat wmalowywania w oparciu o powyższy schemat przedstawia poniższy rysunek.
+Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie kawałków jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie. W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}. Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $\phi $ dla każdej kontynuowanej znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszej pary dopasowania ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia poniższy rysunek.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.8]{rysunki/4_fig4}
 	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. Źródło \cite{StructurePropagationManual}}
 	\label{4_fig4} 
 \end{figure}
+\section{Automatyczne wykrywanie struktur.}
 W celu zaprojektowania w pełni automatycznego programu do procesu wmalowywania opierającego się na algorytmie wprowadzonym przez Criminisi zaproponowano dodatkową analizę obrazu ograniczającą interakcję użytkownika wyłącznie do wprowadzenia maski. Autorzy w \cite{SalientStrucTexProp} proponują wykonać 2 dodatkowe kroki:
 \begin{enumerate}
 \item
@@ -1293,6 +1311,8 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 \end{figure}
 Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych skrawków $\psi $, czy też okien stanowiących podstawę do parowania danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy skrawków obrazu $\psi $ w wyznaczanym obszarze $\mathrm{\Omega }$.
 \chapter{Modyfikacje algorytmów}
+\section{Modyfikacja algorytmu Criminisi.}
+Algorytm wypełniania skrawkami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $\psi_{q}$ do okna będącego otoczeniem o promieniu $s_r$ rozważanego piksela $p$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = (p + \cdot(r))$, gdzie $\cdot(s_r))$ oznacza rozmiar otaczającego okna. Zmiana odnosi się do uprzedniej definicji \eqref{qSource}.
 \section{Modyfikacja funkcji wagi.}
 Podczas testowania algorytmu $NLCTV$ jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu przy zniekształceniu struktury. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
@@ -1337,7 +1357,6 @@ Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
 \end{enumerate}
 Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu $NLCTV$ można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
 \chapter{Testy algorytmów}
-\section{Testy VFI.}
 \section{Analizowane obrazy.}
 W niniejszej pracy testom poddano następującą grupę obrazów:
 \begin{longtable}[h!]{|c|c|}
@@ -1347,140 +1366,535 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/kotmyszm}
+    \includegraphics[height=5.8cm]{imgmask/kotmyszm}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 500 x 375 \\
-	Rozmiar maski: 28\%
+	Rozmiar maski: 28\% \\
+	Nazwa: \kotmyszm
     \end{minipage} \\ \hline
     
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/maciek1m}
+    \includegraphics[height=5.8cm]{imgmask/maciek1m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 410 x 308 \\
-	Rozmiar maski: 28%\
+	Rozmiar maski: 28\% \\
+	Nazwa: \maciekIm
     \end{minipage} \\ \hline
     
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Obr1m}
+    \includegraphics[height=5.8cm]{imgmask/Obr1m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 614 x 461 \\
-	Rozmiar maski: 9%\
+	Rozmiar maski: 9\% \\
+	Nazwa: \ObrIm
     \end{minipage} \\ \hline
     
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=6cm]{imgmask/Obr4m}
+    \includegraphics[height=5.8cm]{imgmask/Obr4m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 576 x 360 \\
-	Rozmiar maski: 7%\
+	Rozmiar maski: 7\% \\
+	Nazwa: \ObrIVm
     \end{minipage} \\ \hline
-    
+
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Obr5m}
+    \includegraphics[height=5.8cm]{imgmask/Obr5m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 650 x 570 \\
-	Rozmiar maski: 28%\
+	Rozmiar maski: 28\% \\
+	Nazwa: \ObrVm
     \end{minipage} \\ \hline
-    
+
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Obr6m}
+    \includegraphics[height=5.8cm]{imgmask/Obr6m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-	Wymiar: 246 x 302 \\
-	Rozmiar maski: 28%
+	Wymiar: 655 x 491 \\
+	Rozmiar maski: 9\% \\
+	Nazwa: \ObrVIm
     \end{minipage} \\ \hline
     
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=6.5cm]{imgmask/Obr15m}
+    \includegraphics[height=5.8cm]{imgmask/Obr15m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 1772 x 1181 \\
-	Rozmiar maski: 4.5\%
+	Rozmiar maski: 4.5\% \\
+	Nazwa: \ObrXVm
     \end{minipage} \\ \hline
-  
+
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Obr17m}
+    \includegraphics[height=5.8cm]{imgmask/Obr17m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 206 x 308 \\
-	Rozmiar maski: 14%\
+	Rozmiar maski: 14\% \\
+	Nazwa: \ObrXVIIm
     \end{minipage} \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Obr19m}
+    \includegraphics[height=5.8cm]{imgmask/Obr19m}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 461 x 615 \\
-	Rozmiar maski: 7%\
+	Rozmiar maski: 7\% \\
+	Nazwa: \ObrXIXm
     \end{minipage} \\ \hline
-    
+
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Obr28km}
+    \includegraphics[height=5.8cm]{imgmask/Obr28km}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 820 x 615 \\
-	Rozmiar maski: 28%\
+	Rozmiar maski: 28\% \\
+	Nazwa: \ObrXXVIIIkm
     \end{minipage} \\ \hline
-    
+
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=7cm]{imgmask/Osoba_drugam}
+    \includegraphics[height=5.8cm]{imgmask/Osoba_drugam}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
 	Wymiar: 2592 x 1944 \\
-	Rozmiar maski: 28%\
+	Rozmiar maski: 28\% \\
+	Nazwa: \OsobaDrugam
     \end{minipage} \\ \hline
-  \caption{Obrazy poddane analizie.}
- 
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{imgmask/Obr13m}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 1181 x 1772 \\
+	Rozmiar maski: 4\% \\
+	Nazwa: \Obr13m
+    \end{minipage} \\ \hline
+    \caption{Obrazy poddane analizie.}
   \label{imgmasks}
 \end{longtable}
+\section{Testy uzupełniania kawałkami obrazów.}
+\subsection{Metoda Criminisi.}
+Wszystkie z przeprowadzonych testów wykonano w przestrzeni $RGB$. Dystans pomiędzy skrawkami wyznaczono według przytoczonej w poświęconym metodzie rozdziale normy Frobenius'a \eqref{FROBENIUS2}. Przykładowe wyniki przedstawia poniższa tabela:
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Obraz & Dane \\ \hline
 
-Wszystkie z przeprowadzanych testów wykonano w przestrzeni sferycznej konwertując obraz z przestrzeni $RGB$ do przestrzeni $CIELab$. Parametry związane z wielostopniowym wypełnianiem przyjęto jako stałe i równe:
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr17/{Obr17m.pngpr_3sr_8006alfa_0.2t_31.7202}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 3
+        \item Czas: 31.72s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr17/{Obr17m.pngpr_15sr_8006alfa_0.2t_22.4205}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 15
+        \item Czas: 22.42s
+    \end{itemize}
+    \end{minipage} \\ \hline  
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr17/{Obr17m.pngpr_23sr_8006alfa_0.2t_20.7783}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 23
+        \item Czas: 20.77s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_3sr_8010alfa_0.2t_213.2492}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 3
+        \item Czas: 213.25s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_15sr_8010alfa_0.2t_113.4021}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 15
+        \item Czas: 113.40s
+    \end{itemize}
+    \end{minipage} \\ \hline  
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_23sr_8010alfa_0.2t_134.3072}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 23
+        \item Czas: 134.31s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_3sr_8011alfa_0.2t_294.2353}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 3
+        \item Czas: 294.24s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_11sr_8011alfa_0.2t_181.0897}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 11
+        \item Czas: 181.10s
+    \end{itemize}
+    \end{minipage} \\ \hline  
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_23sr_8011alfa_0.2t_196.3067}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 23
+        \item Czas: 196.31s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_3sr_8012alfa_0.2t_565.4799}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 3
+        \item Czas: 565.48s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_11sr_8012alfa_0.2t_294.7297}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 11
+        \item Czas: 294.73s
+    \end{itemize}
+    \end{minipage} \\ \hline  
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_23sr_8012alfa_0.2t_328.5629}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 23
+        \item Czas: 328.56s
+    \end{itemize}
+    \end{minipage} \\ \hline
+    
+  \caption{Wyniki metody Criminisi.}\label{CRIMTEST}
+\end{longtable}
+Wyniki przedstawione w tabeli wyznaczono dla optymalnego ustawienia parametru $\alpha=0.2$. Zmiana wspomnianego parametru w ogólnym charakterze rozważanej metodyki nie wpływała na końcowe obrazy. W zależności od rozpatrywanego obrazu rozmiar skrawka może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIIm \ mały rozmiar skrawka skutkuje w odpowiedniej kontynuacji dachu budynku. W przypadku \ObrIVm \ średni wymiar skrawka pozwala na odpowiednią syntezę plaży. W przypadku obrazu \ObrVIm \ największy rozmiar skrawka zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. W ogólnym rozrachunku metoda w każdym z rezultatów wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu. 
+\subsection{Główne struktury obrazu.}
+W celu zminimalizowania efektu zgodnie z \cite{StructurePropagationManual} algorytm wmalowywania przebadano pod kątem priorytetowego wypełnienia głównych struktur obrazu zgodnie z wytycznymi wprowadzonymi manualnie przez użytkownika. Punkty linii głównej struktury znajdującej się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo.
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Obraz & Dane \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{5_9_Obr6m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 9
+        \item Główne struktury: 5
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{4_8_Obr13m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 8
+        \item Główne struktury: 4
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{3_4_Obr17m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 4
+        \item Główne struktury: 3
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{1_12_Obr19m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item pr: 12
+        \item Główne struktury: 1
+    \end{itemize}
+    \end{minipage} \\ \hline
+        
+	\caption{Główne struktury testowanych obrazów manualnie wprowadzone przez użytkownika.}
+\end{longtable}
+Linie granic głównych struktur przedstawiono kolorem czerwonym. Część wspólna obrazu oryginalnego poza maską wraz z linią stanowią zbiór, z którego pobierane jest najlepsze dopasowanie. Wartość $p_r$ manualnie ustawiono na minimalną wartość zdolną zachować właściwości charakterystyczne dla danej granicy w pełnym zakresie linii. Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Obraz & Dane \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr6/{5_9_Obr6m.pngpr_9sr_100000alfa_0.2t_0.49515}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.50s
+        \item Procent wyznaczonej maski: 32.1 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr13/{4_8_Obr13m.pngpr_8sr_100000alfa_0.2t_0.31031}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.31s
+        \item Procent wyznaczonej maski: 16.27 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr17/{3_4_Obr17m.pngpr_4sr_12alfa_0.2t_0.080489}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.08s
+        \item Procent wyznaczonej maski: 12.24 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr19/{1_12_Obr19m.pngpr_12sr_100000alfa_0.2t_0.36266}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.36s
+        \item Procent wyznaczonej maski: 22.85 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+        
+	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
+\end{longtable}
+Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało czasu obliczeniowego większego niż $1s$. W uproszeniu można przyjąć, algorytm pozwala oszczędzić czas potrzebny na proces wmalowywania równy procentowi wyznaczonej maski z całkowitego czasu oryginalnej metody Criminisi. Ostatecznie przykładowe wyniki określa tabela:
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Obraz & Dane \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr6/{5_9_Obr6m.pngpr_9sr_100000alfa_0.2t_0.49515}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.50s
+        \item Procent wyznaczonej maski: 32.1 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr13/{4_8_Obr13m.pngpr_8sr_100000alfa_0.2t_0.31031}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.31s
+        \item Procent wyznaczonej maski: 16.27 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr17/{3_4_Obr17m.pngpr_4sr_12alfa_0.2t_0.080489}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.08s
+        \item Procent wyznaczonej maski: 12.24 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr19/{1_12_Obr19m.pngpr_12sr_100000alfa_0.2t_0.36266}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+    \begin{itemize}
+        \item Czas: 0.36s
+        \item Procent wyznaczonej maski: 22.85 \%
+    \end{itemize}
+    \end{minipage} \\ \hline
+        
+	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
+\end{longtable}
+
+\section{Testy VFI.}
+Wszystkie z przeprowadzonych testów wykonano w przestrzeni sferycznej konwertując obraz z przestrzeni $RGB$ do przestrzeni $CIELab$. Parametry związane z wielostopniowym wypełnianiem przyjęto jako stałe i równe:
 \begin{itemize}
 \item
 ilość stopni tworzonej piramidy $S=7$
@@ -1495,7 +1909,7 @@ Parametry związane z "pewnością" co do pikseli wewnątrz maski przyjęto jako
 \begin{itemize}
 \item
 sposób rozkładu funkcji w przestrzeni $t_{c}=5.0$
-\item
+\item 
 asymptota, do której dąży funkcja $c_{0}=0.1$
 \end{itemize}
 Żaden z obrazów przed operacją wmalowywania nie był wstępnie inicjalizowany. \eqref{Poisson}.
@@ -1506,7 +1920,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMeans/Obr4m.png_nlmeans_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t16.1821}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmeans_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t16.1821}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1521,7 +1935,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMeans/Obr4mpng_nlmeans_sc7_025_initnone_ps7_10000_conf5_01_t100249}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4mpng_nlmeans_sc7_025_initnone_ps7_10000_conf5_01_t100249}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1536,7 +1950,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMeans/Obr4m.png_nlmeans_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t388.857}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmeans_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t388.857}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1551,7 +1965,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMedians/Obr4m.png_nlmedians_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t13.8929}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t13.8929}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1566,7 +1980,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMedians/Obr4m.png_nlmedians_sc7_0.25_initnone_ps7_10000_conf5_0.1_t54.8192}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.25_initnone_ps7_10000_conf5_0.1_t54.8192}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1581,7 +1995,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLMedians/Obr4m.png_nlmedians_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t289.075}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t289.075}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1596,7 +2010,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLPoisson/Obr4m.png_nlpoisson_l0.1_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t57.794}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t57.794}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1611,7 +2025,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLPoisson/Obr4m.png_nlpoisson_l0.1_sc7_0.25_initnone_ps7_10000_conf5_0.1_t211.357}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.25_initnone_ps7_10000_conf5_0.1_t211.357}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1626,7 +2040,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Lodka/NLPoisson/Obr4m.png_nlpoisson_l0.1_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t984.07}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t984.07}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1639,12 +2053,10 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \end{minipage} \\ \hline
     
     
-    
-    
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMeans/Obr19m.png_nlmeans_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t27.5199}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmeans_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t27.5199}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1659,7 +2071,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMeans/Obr19m.png_nlmeans_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t124.534}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmeans_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t124.534}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1674,7 +2086,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMeans/Obr19m.png_nlmeans_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t460.877}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmeans_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t460.877}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1689,7 +2101,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMedians/Obr19m.png_nlmedians_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t25.5615}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmedians_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t25.5615}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1704,7 +2116,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMedians/Obr19m.png_nlmedians_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t134.161}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmedians_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t134.161}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1719,7 +2131,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLMedians/Obr19m.png_nlmedians_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t421.847}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmedians_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t421.847}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1734,7 +2146,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLPoisson/Obr19m.png_nlpoisson_l0.1_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t92.0033}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlpoisson_l0.1_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t92.0033}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1749,7 +2161,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLPoisson/Obr19m.png_nlpoisson_l0.1_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t326.351}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlpoisson_l0.1_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t326.351}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1764,7 +2176,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{testy/vfit/Banan/NLPoisson/Obr19m.png_nlpoisson_l0.1_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t1725.13}.png}
+    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlpoisson_l0.1_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t1725.13}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1779,10 +2191,10 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     
     
     
-        \begin{minipage}{.65\textwidth}
+    \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMeans/Osoba_drugam.png_nlmeans_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t798.062}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t798.062}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1797,7 +2209,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMeans/Osoba_drugam.png_nlmeans_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2517.66}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2517.66}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1812,7 +2224,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMeans/Osoba_drugam.png_nlmeans_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6857.42}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6857.42}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1827,7 +2239,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMedians/Osoba_drugam.png_nlmedians_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t777.282}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t777.282}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1842,7 +2254,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMedians/Osoba_drugam.png_nlmedians_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2426.91}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2426.91}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1857,7 +2269,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLMedians/Osoba_drugam.png_nlmedians_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6657.17}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6657.17}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1872,7 +2284,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLPoisson/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t2004.3}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t2004.3}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1887,7 +2299,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLPoisson/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t5618.33}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t5618.33}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1902,7 +2314,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.1]{{testy/vfit/Autobus/NLPoisson/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t16316.7}.png}
+    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t16316.7}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
@@ -1915,6 +2327,8 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
     \end{minipage} \\ \hline
   \caption{Porównanie norm wmalowywania}\label{VFITESTS}
 \end{longtable}
+
+
 %-----------Koniec pracy magisterskiej-----------
 \newpage
 \bibliographystyle{unsrt}
@@ -1929,10 +2343,30 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
 \begin{center}
 \LARGE{Oświadczenie}
 \end{center}
-Ołwiadczam, że pracę magisterską pod tytułem: ,,Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania'', której promotorem jest dr Sławomir Skoneczny, wykonałem samodzielnie, co poświadczam własnoręcznym podpisem.
+Oświadczam, że pracę magisterską pod tytułem: ,,Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania'', której promotorem jest dr Sławomir Skoneczny, wykonałem samodzielnie, co poświadczam własnoręcznym podpisem.
 \vspace{2cm}
 \begin{flushright}
 ...........................................
 \end{flushright}
 
 \end{document}
+
+\begin{comment}
+
+-wprowadzenie stref martwych w obrazie -> przez użytkownika -> wartości, które maja się nie pojawić w masce
+-napisać o korekcji fotometrycznej do crim
+
+CRIM: mniejsza większa wartość nie wpływa na wadę obrazu w postaci nieprawidłowego elementu
+-samo ograniczenie search window nie pomaga, ale może bo sąsiad wcale nie musi być najlepszym
+
+koniecznie dodać banana- tam salient structure dobrze zadziałało. Łódka też. dopasowaniem.
+
+przy salient structure rozmiar dobrany do konkretnego przypadku
+
+w metodzie nlctv brak zminimalizowania wpływu głębokości piksela w masce.
+
+głowne struktury nie muszą stanowić najlepszego wzorca do czerpania - Obr6 przykładem -> stąd problem minimalizacji jest lepszym rozwiązaniem.
+
+dodać info o korekcji fotometrycznej w criminisi.
+
+\end{comment}
