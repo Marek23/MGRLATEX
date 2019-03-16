@@ -39,6 +39,8 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \renewcommand*{\figureautorefname}{Rysunek}
 \renewcommand*{\tableautorefname}{Tabela}
 \renewcommand*{\chapterautorefname}{Rozdział}
+\renewcommand*{\sectionautorefname}{Rozdział}
+
 
 \author{Marek Szweda}
 \title{Poprawa jakości obrazów cyfrowych poprzez metodę wmalowywania}
@@ -56,7 +58,7 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \def \ObrXIXm{Obraz 9}
 \def \ObrXXVIIIkm{Obraz 10}
 \def \OsobaDrugam{Obraz 11}
-\def \Obr13m{Obraz 12}
+\def \ObrXIIIm{Obraz 12}
 
 \begin{titlepage}
 \pagestyle{empty}
@@ -601,7 +603,7 @@ Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ dow
 \item
 Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego algorytmu syntezy tekstury $v_1$.
 \end{enumerate}
-\section{Wahanie funkcji.}
+\section{Model NLCTV.}
 Pojęcie wahania funkcji $TV$ w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin, Osher i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie lokalnych operatorów nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu nielokalnego modelu, który zostanie poddany analizie w niniejszej pracy. \\
 Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, w wyniku prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NLCTV$ zaproponowanego w \cite{duan2015fast} należy uprzednio wprowadzić oznaczenia i zależności nielokalnych operatorów. 
 Zgodnie z poprzednim działem niech $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako przekształcenie $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowaną dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji przedstawia się zależnością:
@@ -733,6 +735,7 @@ gdzie $f$ stanowi oryginalny obraz wejściowy $f\left(x\right):D\mathrm{\longrig
 0\ x\ \epsilon \ \mathrm{\Omega } \\ 
 1\ x\ \epsilon \ D/\mathrm{\Omega } \end{array}
 \right\}
+\label{maskFunction}
 \end{equation}
 Tak zdefiniowany model można przekształcić wykorzystując operację rozbicia Bregman’a. Rozbicie stosuje się w celu poprawienia wydajności obliczeniowej w przypadku dyskretnej implementacji problemu minimalizacji energii. Wprowadzenie pomocniczej zmiennej $\overrightarrow{v}=v\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }x\ \mathrm{\Omega }\longrightarrow R$ i parametru Bregman’a $\overrightarrow{b}=\overrightarrow{b}\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }x\ \mathrm{\Omega }\longrightarrow R$ pozwala przekształcić problem minimalizacji powyższej energii do następującej postaci iteracyjnej:
 \begin{align}
@@ -1312,6 +1315,7 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych skrawków $\psi $, czy też okien stanowiących podstawę do parowania danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy skrawków obrazu $\psi $ w wyznaczanym obszarze $\mathrm{\Omega }$.
 \chapter{Modyfikacje algorytmów}
 \section{Modyfikacja algorytmu Criminisi.}
+\label{ssec:crimMod}
 Algorytm wypełniania skrawkami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $\psi_{q}$ do okna będącego otoczeniem o promieniu $s_r$ rozważanego piksela $p$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = (p + \cdot(r))$, gdzie $\cdot(s_r))$ oznacza rozmiar otaczającego okna. Zmiana odnosi się do uprzedniej definicji \eqref{qSource}.
 \section{Modyfikacja funkcji wagi.}
 Podczas testowania algorytmu $NLCTV$ jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru skrawka i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu przy zniekształceniu struktury. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
@@ -1323,13 +1327,14 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \
 \end{aligned}
 \end{align}
 W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru skrawka do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
-\section{Modyfikacja wyznaczania wartości obrazu $u$.}
+\section{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
 Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
 {{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
 &+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr]
 \end{aligned}
+\label{NLH1}
 \end{align}
 W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu obliczeń, wyrugowanych zmiennych.
 \section{Połączenie metody Criminisi z funkcją wagi.}
@@ -1516,7 +1521,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{minipage}{.35\textwidth}
 	Wymiar: 1181 x 1772 \\
 	Rozmiar maski: 4\% \\
-	Nazwa: \Obr13m
+	Nazwa: \ObrXIIIm
     \end{minipage} \\ \hline
     \caption{Obrazy poddane analizie.}
   \label{imgmasks}
@@ -1696,7 +1701,8 @@ Wszystkie z przeprowadzonych testów wykonano w przestrzeni $RGB$. Dystans pomi�
     \end{itemize}
     \end{minipage} \\ \hline
     
-  \caption{Wyniki metody Criminisi.}\label{CRIMTEST}
+  \caption{Wyniki metody Criminisi.}
+  \label{CRIMTEST}
 \end{longtable}
 Wyniki przedstawione w tabeli wyznaczono dla optymalnego ustawienia parametru $\alpha=0.2$. Zmiana wspomnianego parametru w ogólnym charakterze rozważanej metodyki nie wpływała na końcowe obrazy. W zależności od rozpatrywanego obrazu rozmiar skrawka może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIIm \ mały rozmiar skrawka skutkuje w odpowiedniej kontynuacji dachu budynku. W przypadku \ObrIVm \ średni wymiar skrawka pozwala na odpowiednią syntezę plaży. W przypadku obrazu \ObrVIm \ największy rozmiar skrawka zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. W ogólnym rozrachunku metoda w każdym z rezultatów wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu. 
 \subsection{Główne struktury obrazu.}
@@ -1828,7 +1834,7 @@ Linie granic głównych struktur przedstawiono kolorem czerwonym. Część wspó
         
 	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
 \end{longtable}
-Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało czasu obliczeniowego większego niż $1s$. W uproszeniu można przyjąć, algorytm pozwala oszczędzić czas potrzebny na proces wmalowywania równy procentowi wyznaczonej maski z całkowitego czasu oryginalnej metody Criminisi. Ostatecznie przykładowe wyniki określa tabela:
+Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało czasu obliczeniowego większego niż $1s$. W uproszeniu można przyjąć, że algorytm pozwala oszczędzić czas potrzebny na proces wmalowywania równy procentowi wyznaczonej maski z całkowitego czasu oryginalnej metody Criminisi. Ostatecznie przykładowe wyniki przedstawia  tabela:
 
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -1837,62 +1843,90 @@ Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało cza
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr6/{5_9_Obr6m.pngpr_9sr_100000alfa_0.2t_0.49515}.png}
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr6/{5_9_Obr6m.pngpr_9sr_63alfa_0.2t_12.0559}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
     \begin{itemize}
-        \item Czas: 0.50s
-        \item Procent wyznaczonej maski: 32.1 \%
+    	\item pr: 9
+        \item Czas: 12.05s
     \end{itemize}
     \end{minipage} \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr13/{4_8_Obr13m.pngpr_8sr_100000alfa_0.2t_0.31031}.png}
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr13/{4_8_Obr13m.pngpr_8sr_56alfa_0.2t_16.2741}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
     \begin{itemize}
-        \item Czas: 0.31s
-        \item Procent wyznaczonej maski: 16.27 \%
+    	\item pr: 8
+        \item Czas: 16.27s
     \end{itemize}
     \end{minipage} \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr17/{3_4_Obr17m.pngpr_4sr_12alfa_0.2t_0.080489}.png}
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr17/{3_4_Obr17m.pngpr_4sr_12alfa_0.2t_1.5704}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
     \begin{itemize}
-        \item Czas: 0.08s
-        \item Procent wyznaczonej maski: 12.24 \%
+    	\item pr: 4
+        \item Czas: 1.57s
     \end{itemize}
     \end{minipage} \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr19/{1_12_Obr19m.pngpr_12sr_100000alfa_0.2t_0.36266}.png}
+    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr19/{1_12_Obr19m.pngpr_12sr_84alfa_0.2t_12.8458}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
     \begin{itemize}
-        \item Czas: 0.36s
-        \item Procent wyznaczonej maski: 22.85 \%
+    	\item pr: 12
+        \item Czas: 12.85s
     \end{itemize}
     \end{minipage} \\ \hline
         
 	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
+	\label{CrimSalStructRes}
 \end{longtable}
 
+Wszystkie z przedstawionych powyżej wyników wykonano ograniczając okno poszukiwań zgodnie z \autoref{ssec:crimMod} przyjmując jako parametr $s_r = 3 \cdot 	p_r$. W przypadku obrazów \ObrVIm , \ObrXVIIm \ i \ObrXIXm \ wyniki w porównaniu do \autoref{CRIMTEST} posiadają lepszą syntezę głównych struktur, a ograniczenie okna poszukiwania przyspiesza o rząd wielkości czas wyznaczenia głównego obrazu. W przypadku \ObrXVm \ i \ObrXIIIm \ pomimo wstępnej syntezy głównych struktur nie udało się uniknąć błędów w postaci obcych wartości w różnych strukturach obrazu. Ograniczenie okna poszukiwania może wprowadzać dodatkowe błędy w przypadku niejednoznaczności struktur w pobliżu granicy maski. Rozważając prawą część maski obrazu \ObrXVIIm \ algorytm wypełniania ogranicza źródło wzorca do będącego błędnym źródłem osoby pozostawionej w obrazie (postać z prawej strony obrazu traktowana jest jako niejednoznaczność).Wadą algorytmu wypełniania jest konieczność dodatkowej korekcji fotometrycznej uzyskanego wyniku zgodnie z \cite{StructurePropagationManual}. przedstawionym w \autoref{7_fig1}. 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{rysunki/7_fig1}
+	\caption{Korekcja fotometryczna obrazu w przypadku propagacji głównych struktur obrazu. Źródło \cite{StructurePropagationManual}.}
+	\label{7_fig1} 
+\end{figure}
+Ograniczenie błędów w postaci nieodpowiedniej syntezy struktur obrazu w badaniach korygowane jest wprowadzaniem modyfikacji normy \eqref{FROBENIUS2} uwzględniającej wartości posegmentowanego obrazu, bądź dodatkowej wyznaczanej wartości $\nabla I$. Błąd w największym stopniu ograniczyć można poprzez dodatkowy wejściowy parametr algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
+\begin{equation}
+{\lambda }'\left(x\right)=\left\{ \begin{array}{c}
+0\ x\ \epsilon \ \mathrm{\Omega } \\ 
+1\ x\ \epsilon \ D/\mathrm{\Omega } \end{array}
+\right\}
+\end{equation}
+Wtedy dla każdego ${\varphi }_q$ zachodzi warunek:
+\begin{align}
+\forall_{x \in {\varphi }_q}: {\lambda }'(x) = 1
+\end{align}
+\subsection{Automatyczne wykrywanie struktur.}
+Autorzy w \cite{SalientStrucTexProp} nie przedstawiają dokładnego sposobu wyznaczania głównych struktur, ich parowania, a następnie wyznaczania równań kontynuacji w obszar maski. Algorytm opisany w pracy zależy od wielu zmiennych definiowanych przez użytkownika mających wpływ na ostateczny wynik, takich jak:
+\begin{itemize}
+\item parametry filtru usuwającego mniej znaczące krawędzie obrazu
+\item ilość głównych kolorów na które zostanie posegmentowany obraz
+\item rozmiar okna otaczający główną strukturę brany pod uwagę podczas wyznaczania dystansu koloru
+\item waga poszczególnych członów w równaniu \eqref{SalientDistance} mające wpływ na parowanie struktur
+\end{itemize}
+Dobór każdego z parametrów nie jest uniwersalny i zależy od rozpatrywanego obrazu. Problematyczność doboru parametrów i dokładność uzyskiwanych wyników potwierdziły konieczność znacznie głębszej analizy problemu. Dokładność wyników uzyskanych w poprzednim podrozdziale (przy manualnym oznaczaniu głównych struktur) w stosunku do wymaganego stopnia analizy skłoniły do badań pozostałych algorytmów.
 \section{Testy VFI.}
 Wszystkie z przeprowadzonych testów wykonano w przestrzeni sferycznej konwertując obraz z przestrzeni $RGB$ do przestrzeni $CIELab$. Parametry związane z wielostopniowym wypełnianiem przyjęto jako stałe i równe:
 \begin{itemize}
@@ -2328,7 +2362,95 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
   \caption{Porównanie norm wmalowywania}\label{VFITESTS}
 \end{longtable}
 
+\section{Nielokalny model NLCTV.}
+\subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
+Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Wszystkie z testów wykonane zostały dla stałych parametrów $p_r=2$, $s_r=4$, $\lambda=0.01$, $\sigma=0.5$, przy zmiennym parametrze $h$. Podobieństwo obrazów mierzy się współczynnikiem:
+\begin{align}
+f = \frac{100}{256}\frac{1}{n| \Omega |} \sum^c_{k=1}{\sum^m_{i=1}{\sum^n_{j=1}{ | I_1(i,j,k)-I_2(i,j,k) |}}} %
+\end{align}
+gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obrazu, $|\Omega|$ pole obszaru maski.
+\begin{longtable}[h!]{| c | c |}
+    \hline
+    Oryginalny & Uproszczony \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=2$, Wyniki: $t_1=150.07$, $t_2=13.06$, $f=0.31$\%
+    } \\ \hline
 
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/bh_2t_150.07}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/bh_2_t_13.06}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=15$, Wyniki: $t_1=172.46$, $t_2=13.99$, $f=2.41$\%
+    } \\ \hline
+
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/bh_15_t_172.46}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/bh_15_t_13.99}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=2$, Wyniki: $t_1=219.95$ $t_2=12.96$ $f=0.8$\%
+    } \\ \hline
+
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/th_2_t_219.95}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/th_2t_12.96}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=15$, Wyniki: $t_1=227.01$ $t_2=13.13$ $f=2.2$\%
+    } \\ \hline    
+    
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/th_10_t_227.01}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.45\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/th_10_t_13.13}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+
+  \caption{Porównanie algorytmu $NLCTV$ z uproszczonym zgodnie z \eqref{NLH1}.}
+  \label{NLCTVVSNLHI}
+\end{longtable}
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Dostrzeżenie różnicy w obrazach obliczonych przez wspomniane algorytmy jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykłądowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1}.
+
+Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania obrazu stosowany jest do ich filtrowania, bądź usuwania elementów tekstury . Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ rozmycie obrazu i usunięcie szumów/tekstur obrazu staje się sprawniejsze. 
 %-----------Koniec pracy magisterskiej-----------
 \newpage
 \bibliographystyle{unsrt}
@@ -2353,15 +2475,7 @@ Oświadczam, że pracę magisterską pod tytułem: ,,Poprawa jakości obrazów c
 
 \begin{comment}
 
--wprowadzenie stref martwych w obrazie -> przez użytkownika -> wartości, które maja się nie pojawić w masce
--napisać o korekcji fotometrycznej do crim
-
-CRIM: mniejsza większa wartość nie wpływa na wadę obrazu w postaci nieprawidłowego elementu
--samo ograniczenie search window nie pomaga, ale może bo sąsiad wcale nie musi być najlepszym
-
-koniecznie dodać banana- tam salient structure dobrze zadziałało. Łódka też. dopasowaniem.
-
-przy salient structure rozmiar dobrany do konkretnego przypadku
+Do Naviera Stokesa po testach dodać informację o artykule, w którym jest dobrze przedstawiona dyfuzja anizotro
 
 w metodzie nlctv brak zminimalizowania wpływu głębokości piksela w masce.
 
