@@ -59,6 +59,9 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \def \ObrXXVIIIkm{Obraz 10}
 \def \OsobaDrugam{Obraz 11}
 \def \ObrXIIIm{Obraz 12}
+\def \XXVIII{Obraz 1}
+\def \TEST{Obraz 2}
+\def \Wood{Obraz 3}
 
 \begin{titlepage}
 \pagestyle{empty}
@@ -968,7 +971,7 @@ $\delta(p)$ określa pewność co do danego piksela wewnątrz maski i jest okre�
 wartość $t_c$ określa szybkość opadania funkcji ekspotencjalne, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
 \begin{enumerate}
 \item
-Nielokalnej uśrednionej:
+Nielokalnej uśredniającej:
 \begin{align}
 \begin{aligned}
 \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |^2
@@ -1526,7 +1529,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \caption{Obrazy poddane analizie.}
   \label{imgmasks}
 \end{longtable}
-\section{Testy uzupełniania kawałkami obrazów.}
+\section{Uzupełnianie kawałkami obrazu.}
 \subsection{Metoda Criminisi.}
 Wszystkie z przeprowadzonych testów wykonano w przestrzeni $RGB$. Dystans pomiędzy skrawkami wyznaczono według przytoczonej w poświęconym metodzie rozdziale normy Frobenius'a \eqref{FROBENIUS2}. Przykładowe wyniki przedstawia poniższa tabela:
 \begin{longtable}[h!]{|c|c|}
@@ -1927,8 +1930,536 @@ Autorzy w \cite{SalientStrucTexProp} nie przedstawiają dokładnego sposobu wyzn
 \item waga poszczególnych członów w równaniu \eqref{SalientDistance} mające wpływ na parowanie struktur
 \end{itemize}
 Dobór każdego z parametrów nie jest uniwersalny i zależy od rozpatrywanego obrazu. Problematyczność doboru parametrów i dokładność uzyskiwanych wyników potwierdziły konieczność znacznie głębszej analizy problemu. Dokładność wyników uzyskanych w poprzednim podrozdziale (przy manualnym oznaczaniu głównych struktur) w stosunku do wymaganego stopnia analizy skłoniły do badań pozostałych algorytmów.
-\section{Testy VFI.}
-Wszystkie z przeprowadzonych testów wykonano w przestrzeni sferycznej konwertując obraz z przestrzeni $RGB$ do przestrzeni $CIELab$. Parametry związane z wielostopniowym wypełnianiem przyjęto jako stałe i równe:
+\section{Nielokalny model NLCTV.}
+\subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
+Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Podobieństwo obrazów mierzy się współczynnikiem:
+\begin{align}
+f = \frac{100}{256}\frac{1}{n| \Omega |} \sum^c_{k=1}{\sum^m_{i=1}{\sum^n_{j=1}{ | I_1(i,j,k)-I_2(i,j,k) |}}} %
+\end{align}
+gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obrazu, $|\Omega|$ pole obszaru maski. Do porównania obrazów wykorzystano dodatkową grupę przedstawioną w \autoref{NLCTVVSNLHIIM}.
+
+\begin{longtable}[h!]{| c | c |}
+    \hline
+    Obraz & Dane \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=4cm]{TESTY/NLCTVNLH1/IM/bar}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 81 x 81 \\
+	Rozmiar maski: 10\% \\
+	Nazwa: \XXVIII
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=4cm]{TESTY/NLCTVNLH1/IM/TEST}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 113 x 66 \\
+	Rozmiar maski: 6\% \\
+	Nazwa: \TEST
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=4cm]{TESTY/NLCTVNLH1/IM/Wood}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.35\textwidth}
+	Wymiar: 134 x 81 \\
+	Rozmiar maski: 11\% \\
+	Nazwa: \Wood
+    \end{minipage} \\ \hline
+  \caption{Dodatkowa grupa obrazów testowych dla nielokalnego modelu $NLCTV$.}
+  \label{NLCTVVSNLHIIM}
+\end{longtable}
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    Oryginalny & Uproszczony \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=2$, $p_r=2$, $s_r=4$, $\lambda=0.01$, $\sigma=0.5$
+    } \\
+
+    \multicolumn{2}{|c|}{
+    	Wyniki: $t_1=150.07$, $t_2=13.06$, $f=0.31$\%
+    } \\ \hline
+    
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/bh_2t_150.07}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/bh_2_t_13.06}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=15$, $p_r=2$, $s_r=4$, $\lambda=0.01$, $\sigma=0.5$
+    } \\
+
+    \multicolumn{2}{|c|}{
+    	Wyniki: $t_1=172.46$, $t_2=13.99$, $f=2.41$\%
+    } \\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/bh_15_t_172.46}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/bh_15_t_13.99}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=2$, $p_r=2$, $s_r=4$, $\lambda=0.01$, $\sigma=0.5$
+    } \\ 
+
+    \multicolumn{2}{|c|}{
+    	Wyniki: $t_1=219.95$ $t_2=12.96$ $f=0.8$\%
+    } \\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/th_2_t_219.95}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/th_2t_12.96}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=15$, $p_r=2$, $s_r=4$, $\lambda=0.01$, $\sigma=0.5$
+    } \\   
+
+    \multicolumn{2}{|c|}{
+    	Wyniki: $t_1=227.01$ $t_2=13.13$ $f=2.2$\%
+    } \\ \hline    
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/th_10_t_227.01}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/th_10_t_13.13}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+
+    \multicolumn{2}{|c|}{
+    	Parametry:  $h=0.5$, $p_r=7$, $s_r=15$, $\lambda=0.01$, $\sigma=0.5$
+    } \\  
+
+    \multicolumn{2}{|c|}{
+    	Wyniki: $t_1=3870.58$ $t_2=122.32$ $f=0.13$\%
+    } \\ \hline    
+    
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=1]{{TESTY/NLCTVNLH1/ORIG/nlctvgs_r_15p_r7h_0.5sw_1_t_3870.584639}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[scale=1]{{TESTY/NLCTVNLH1/NLH1/nlh1ws_r_15p_r7h_0.5sw_1_t_122.321}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+  
+	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
+	\label{NLCTVVSNLHI}
+\end{longtable}
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach obliczonych przez wspomniane algorytmy jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykłądowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{
+    	Obrazy
+    } \\ \hline 
+    \multicolumn{2}{|c|}{
+		Wpływ parametru $h$ na odwzorowanie tekstur i struktur
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 25 \\
+    $p_r$: 10 \\
+    $h$: 2 \\
+    Wyniki: \\ 
+    Czas: 2041.85s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 25 \\
+    $p_r$: 10 \\
+    $h$: 5 \\
+    Wyniki: \\ 
+    Czas: 2299.78s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_2sw_1t_2041.8515}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_1t_2299.7753}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 25 \\
+    $p_r$: 10 \\
+    $h$: 2 \\
+    Wyniki: \\ 
+    Czas: 2041.85s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 25 \\
+    $p_r$: 10 \\
+    $h$: 5 \\
+    Wyniki: \\ 
+    Czas: 2299.78s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_2sw_1t_5032.0394}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_5sw_3t_21013.3605}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 9 \\
+    $p_r$: 3 \\
+    $h$: 10 \\
+    Wyniki: \\ 
+    Czas: 387.14s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 9 \\
+    $p_r$: 3 \\
+    $h$: 12 \\
+    Wyniki: \\ 
+    Czas: 395.05s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Obr6/Obr6m.pngs_r_9p_r3h_10sw_1t_387.1384}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Obr6/Obr6m.pngs_r_9p_r3h_12sw_1t_395.0529}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \multicolumn{2}{|c|}{
+		Wpływ parametrów $s_r$ i $p_r$ na odwzorowanie tekstur i struktur. \newline
+    } \\
+
+    \multicolumn{2}{|c|}{
+		($h$ dla małych $s_r$ i $p_r$ wyznaczone jako minimalne stabilne)
+    } \\ \hline 
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 24 \\
+    $p_r$: 8 \\
+    $h$: 3 \\
+    Wyniki: \\ 
+    Czas: 38923.738s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 5 \\
+    $p_r$: 3 \\
+    $h$: 10 \\
+    Wyniki: \\ 
+    Czas: 150.56s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/kotmyszm.bmps_r_24p_r8h_3sw_1t_38923.7386}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/KotMysz/kotmysz_m.pngs_r_5p_r3h_10sw_1t_150.5554}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 20 \\
+    $p_r$: 7 \\
+    $h$: 2 \\
+    Wyniki: \\ 
+    Czas: 16271.66s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 5 \\
+    $p_r$: 3 \\
+    $h$: 10 \\
+    Wyniki: \\ 
+    Czas: 150.56s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr1m.pngs_r_20p_r7h_2sw_1t_16271.6586}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Obr1/Obr1m.pngs_r_5p_r3h_10sw_1t_104.9599}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \caption{Wynikowe obrazu dla algorytmu $NLCTV$.}
+    \label{NLH1Tab}
+\end{longtable}
+
+Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania obrazów stosowany jest do filtracji, usuwania elementów tekstury i szumu, segmentacji na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje co skutkuje w dokładniejszym usunięciu szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $s_r$ i $p_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm w wyniku generuje kolory będące z poza gammy dostarczanej z obrazem bądź przechodzi w obszar niestabilności. W przypadku niskich wartości parametru  $s_r$ i $p_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $s_r$, $p_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkując w prawidłowej syntezie wyznaczanego obszaru. Wadą algorytmu jest znacznie rosnąca ilość czasu potrzebna na obliczenie obrazu maski w przypadku dużych wartości $s_r$ i $p_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $s_r <30$, $p_r$ dla obrazu o wymiarze $500x500$. Zalecane parametry algorytmu:
+\begin{enumerate}
+\item Obraz z ściśle powtarzającą się teksturą z maską w zakresie jednej struktury
+\begin{itemize}
+\item $s_r < 6$
+\item $p_r < 4$
+\item $h > 5$
+\end{itemize}
+\item Pozostałe obrazy
+\begin{itemize}
+\item $s_r > 15$
+\item $p_r > 5$
+\item $h < 5$
+\end{itemize}
+\end{enumerate}
+Wadą algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowością tekstury - \kotmyszm, \ObrIm .
+\subsection{Modyfikacja funkcji wagi.}
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{
+    	Obrazy
+    } \\ \hline 
+    \multicolumn{2}{|c|}{
+		Wpływ parametru $sw$ na odwzorowanie tekstur i struktur
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 23 \\
+    $p_r$: 10 \\
+    $h$: 3 \\
+    $sw$: 3 \\
+    Wyniki: \\ 
+    Czas: 27579.38s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 23 \\
+    $p_r$: 10 \\
+    $h$: 3 \\
+    $sw$: 1 \\
+    Wyniki: \\ 
+    Czas: 4987.13s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/maciek1m.pngs_r_23p_r10h_3sw_3t_27579.3828}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/maciek1m.pngs_r_23p_r10h_3sw_1t_4987.1313}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 25 \\
+    $p_r$: 10 \\
+    $h$: 5 \\
+    $sw$: 3 \\
+    Wyniki: \\ 
+    Czas: 12766.72s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 25 \\
+    $p_r$: 10 \\
+    $h$: 5 \\
+    $sw$: 1 \\
+    Wyniki: \\ 
+    Czas: 2299.78s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_3t_12766.7184}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_1t_2299.7753}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 20 \\
+    $p_r$: 7 \\
+    $h$: 3 \\
+    $sw$: 3 \\
+    Wyniki: \\ 
+    Czas: 21601.97s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    $s_r$: 20 \\
+    $p_r$: 7 \\
+    $h$: 3 \\
+    $sw$: 1 \\
+    Wyniki: \\ 
+    Czas: 5037.52s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_3sw_3t_21601.9746}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_3sw_1t_5037.5187}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \caption{Wynikowe obrazu dla algorytmu $NLCTV$ z modyfikacją wagi.}
+    \label{NLH1SWOVER1}
+\end{longtable}
+Wyniki uzyskane dla zmodyfikowanej funkcji wagi charakteryzują się zdolnością do dokładniejszej kontynuacji struktury, nie wpływając w znacznym stopniu na poprawę tekstury obrazu. Wadą algorytmu jest znaczne wydłużenie czasu wyznaczenia funkcji wagi, będącej najistotniejszym czynnikiem wpływającym na długość trwania obliczeń.  
+\subsection{Połączenie metody Criminisi z funkcją wagi.}
+
+
+\section{Wariacyjny, nielokalny model wmalowywania.}
+Wszystkie z przeprowadzonych testów wykonano dla stałych parametrów związanych z terminem "pewności" równych:
 \begin{itemize}
 \item
 ilość stopni tworzonej piramidy $S=7$
@@ -1949,508 +2480,463 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
 Żaden z obrazów przed operacją wmalowywania nie był wstępnie inicjalizowany. \eqref{Poisson}.
 \begin{longtable}[h!]{|c|c|}
     \hline
+    \multicolumn{2}{|c|}{
+    	Obrazy
+    } \\ \hline 
+    \multicolumn{2}{|c|}{
+    	Porównanie odwzorowania tekstur w zależności od normy
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: medianowa \\
+    Promień skrawka: 7 \\
+    Wyniki: \\ 
+    Czas: 234.16s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: uśredniająca \\
+    Promień skrawka: 7 \\
+    Wyniki: \\ 
+    Czas: 258.49s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/KotMysz/kotmyszm.png_nlmedians_sc7_0.124744_initnone_ps7_10000_conf5_0.1_t234.135}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/KotMysz/kotmyszm.png_nlmeans_sc7_0.124744_initnone_ps7_10000_conf5_0.1_t258.485}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: medianowa \\
+    Promień skrawka: 7 \\
+    Wyniki: \\ 
+    Czas: 234.16s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: Poisson'a \\
+    Promień skrawka: 7 \\
+    Wyniki: \\ 
+    Czas: 763.77s  
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/KotMysz/kotmyszm.png_nlmedians_sc7_0.124744_initnone_ps7_10000_conf5_0.1_t234.135}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/KotMysz/kotmyszm.png_nlpoisson_l0.1_sc7_0.124744_initnone_ps7_10000_conf5_0.1_t763.773}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+
+    \multicolumn{2}{|c|}{
+    	Porównanie uzyskanej spójności struktur i tekstur w zależności od normy
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  Poisson'a $(L^2)$\\
+    Promień skrawka: 9 \\
+    Wyniki: \\ 
+    Czas: 391.50s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: medianowa $(L^1)$ \\
+    Promień skrawka: 9 \\
+    Wyniki: \\ 
+    Czas: 146.55s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.321429_initnone_ps9_10000_conf5_0.1_t391.501}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.321429_initnone_ps9_10000_conf5_0.1_t146.551}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  Uśredniająca $(L^2)$\\
+    Promień skrawka: 9 \\
+    Wyniki: \\ 
+    Czas: 150.99s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: medianowa $(L^1)$ \\
+    Promień skrawka: 9 \\
+    Wyniki: \\ 
+    Czas: 146.55s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr4/Obr4m.png_nlmeans_sc7_0.321429_initnone_ps9_10000_conf5_0.1_t150.992}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.321429_initnone_ps9_10000_conf5_0.1_t146.551}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    
+    \multicolumn{2}{|c|}{
+    	Porównanie uzyskanej spójności struktur i tekstur w zależności rozmiaru skrawka
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  Poisson'a\\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 711.47s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: Poisson'a\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 81.19s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Maciek1/maciek1m.png_nlpoisson_l0.1_sc7_0.414894_initnone_ps13_10000_conf5_0.1_t711.471}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Maciek1/maciek1m.png_nlpoisson_l0.1_sc7_0.0957447_initnone_ps3_10000_conf5_0.1_t81.1885}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  medianowa\\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 259.07s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: medianowa\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 16.24s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Maciek1/maciek1m.png_nlmedians_sc7_0.414894_initnone_ps13_10000_conf5_0.1_t259.072}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Maciek1/maciek1m.png_nlmedians_sc7_0.0957447_initnone_ps3_10000_conf5_0.1_t16.2396}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  uśredniająca\\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 370.96s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: uśredniająca\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 20.50s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Maciek1/maciek1m.png_nlmeans_sc7_0.414894_initnone_ps13_10000_conf5_0.1_t370.964}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Maciek1/maciek1m.png_nlmeans_sc7_0.0957447_initnone_ps3_10000_conf5_0.1_t20.4957}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  Poisson'a\\
+    Promień skrawka: 11 \\
+    Wyniki: \\ 
+    Czas: 715.38s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: Poisson'a\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 37.36s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr17/Obr17m.png_nlpoisson_l0.1_sc7_0.771837_initnone_ps11_10000_conf5_0.1_t715.376}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr17/Obr17m.png_nlpoisson_l0.1_sc7_0.210501_initnone_ps3_10000_conf5_0.1_t37.3627}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  medianowa\\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 374.35s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: medianowa\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 12.14s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr17/Obr17m.png_nlmedians_sc7_0.912172_initnone_ps13_10000_conf5_0.1_t374.347}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr17/Obr17m.png_nlmedians_sc7_0.210501_initnone_ps3_10000_conf5_0.1_t12.1388}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  uśredniająca\\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 585.15s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: uśredniająca\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 18.08s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr17/Obr17m.png_nlmeans_sc7_0.912172_initnone_ps13_10000_conf5_0.1_t585.154}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr17/Obr17m.png_nlmeans_sc7_0.210501_initnone_ps3_10000_conf5_0.1_t18.0773}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \multicolumn{2}{|c|}{
+    	Rozmycie tekstur w zależności od rozmiaru skrawka dla normy Poisson'a $(\lambda=.1)$
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma:  Poisson'a\\
+    Promień skrawka: 3 \\
+    Wyniki: \\ 
+    Czas: 57.79s 
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+    Norma: Poisson'a\\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 984.07s  
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t57.794}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t984.07}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    
+  \caption{Porównanie norm wmalowywania}\label{VFITESTS}
+\end{longtable}
+
+\begin{longtable}[h!]{|c|c|}
+    \hline
     Obraz & Dane \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmeans_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t16.1821}.png}
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t16316.7}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 3
-        \item Czas: 16.18s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4mpng_nlmeans_sc7_025_initnone_ps7_10000_conf5_01_t100249}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 7
-        \item Czas: 100.24s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmeans_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t388.857}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 13
-        \item Czas: 388.85s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t13.8929}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 3
-        \item Czas: 13.89s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.25_initnone_ps7_10000_conf5_0.1_t54.8192}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 7
-        \item Czas: 54.81s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlmedians_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t289.075}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 13
-        \item Czas: 289.07s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.107143_initnone_ps3_10000_conf5_0.1_t57.794}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 3
-        \item Czas: 57.79s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.25_initnone_ps7_10000_conf5_0.1_t211.357}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 7
-        \item Czas: 211.35s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr4/Obr4m.png_nlpoisson_l0.1_sc7_0.464286_initnone_ps13_10000_conf5_0.1_t984.07}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 13
-        \item Czas: 984.07s
-    \end{itemize}
+    Parametry: \\
+    Norma: Poisson'a \\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 16316.70s  
     \end{minipage} \\ \hline
     
-    
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmeans_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t27.5199}.png}
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6857.42}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 3
-        \item Czas: 27.51s
-    \end{itemize}
+    Parametry: \\
+    Norma: uśredniająca \\
+    Promień skrawka: 13 \\
+    Wyniki: \\ 
+    Czas: 6857.42s  
     \end{minipage} \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmeans_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t124.534}.png}
+    \includegraphics[height=3.8cm]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.0536029_initnone_ps5_10000_conf5_0.1_t1381.94}.png}
     \vspace{0.5cm}
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 7
-        \item Czas: 24.53s
-    \end{itemize}
+    Parametry: \\
+    Norma: uśredniająca \\
+    Promień skrawka: 5 \\
+    Wyniki: \\ 
+    Czas: 1381.94s
     \end{minipage} \\ \hline
 
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmeans_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t460.877}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 13
-        \item Czas: 460.87s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmedians_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t25.5615}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 3
-        \item Czas: 25.56s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmedians_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t134.161}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 7
-        \item Czas: 134.16s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlmedians_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t421.847}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 13
-        \item Czas: 421.84s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlpoisson_l0.1_sc7_0.08055_initnone_ps3_10000_conf5_0.1_t92.0033}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 3
-        \item Czas: 92.00s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlpoisson_l0.1_sc7_0.18795_initnone_ps7_10000_conf5_0.1_t326.351}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 7
-        \item Czas: 326.35s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.45]{{TESTY/VFI/Obr19/Obr19m.png_nlpoisson_l0.1_sc7_0.34905_initnone_ps13_10000_conf5_0.1_t1725.13}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 13
-        \item Czas: 1725.13s
-    \end{itemize}
-    \end{minipage} \\ \hline
-    
-    
-    
-    
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t798.062}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 3
-        \item Czas: 798.06s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2517.66}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 7
-        \item Czas: 2517.66s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmeans_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6857.42}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Means
-        \item ps: 13
-        \item Czas: 6857.42s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t777.282}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 3
-        \item Czas: 777.28s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t2426.91}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 7
-        \item Czas: 2426.91s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlmedians_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t6657.17}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Medians
-        \item ps: 13
-        \item Czas: 6657.17s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.0321617_initnone_ps3_10000_conf5_0.1_t2004.3}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 3
-        \item Czas: 2004.3s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.075044_initnone_ps7_10000_conf5_0.1_t5618.33}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 7
-        \item Czas: 5618.33s
-    \end{itemize}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.1]{{TESTY/VFI/Osoba_druga/Osoba_drugam.png_nlpoisson_l0.1_sc7_0.139368_initnone_ps13_10000_conf5_0.1_t16316.7}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.35\textwidth}
-    \begin{itemize}
-        \item Norma: NL-Poisson
-        \item ps: 13
-        \item Czas: 16316.7s
-    \end{itemize}
-    \end{minipage} \\ \hline
-  \caption{Porównanie norm wmalowywania}\label{VFITESTS}
+	\caption{Nielokalny charakter algorytmu }
+	\label{NONLOCALITYVFI}
 \end{longtable}
 
-\section{Nielokalny model NLCTV.}
-\subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
-Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Wszystkie z testów wykonane zostały dla stałych parametrów $p_r=2$, $s_r=4$, $\lambda=0.01$, $\sigma=0.5$, przy zmiennym parametrze $h$. Podobieństwo obrazów mierzy się współczynnikiem:
-\begin{align}
-f = \frac{100}{256}\frac{1}{n| \Omega |} \sum^c_{k=1}{\sum^m_{i=1}{\sum^n_{j=1}{ | I_1(i,j,k)-I_2(i,j,k) |}}} %
-\end{align}
-gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obrazu, $|\Omega|$ pole obszaru maski.
-\begin{longtable}[h!]{| c | c |}
-    \hline
-    Oryginalny & Uproszczony \\ \hline
-    
-    \multicolumn{2}{|c|}{
-    	Parametry:  $h=2$, Wyniki: $t_1=150.07$, $t_2=13.06$, $f=0.31$\%
-    } \\ \hline
-
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/bh_2t_150.07}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/bh_2_t_13.06}.png}
-    \vspace{0.5cm}
-    \end{minipage} \\ \hline
-    
-    \multicolumn{2}{|c|}{
-    	Parametry:  $h=15$, Wyniki: $t_1=172.46$, $t_2=13.99$, $f=2.41$\%
-    } \\ \hline
-
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/bh_15_t_172.46}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/bh_15_t_13.99}.png}
-    \vspace{0.5cm}
-    \end{minipage} \\ \hline
-    
-    \multicolumn{2}{|c|}{
-    	Parametry:  $h=2$, Wyniki: $t_1=219.95$ $t_2=12.96$ $f=0.8$\%
-    } \\ \hline
-
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/th_2_t_219.95}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/th_2t_12.96}.png}
-    \vspace{0.5cm}
-    \end{minipage} \\ \hline
-    
-    \multicolumn{2}{|c|}{
-    	Parametry:  $h=15$, Wyniki: $t_1=227.01$ $t_2=13.13$ $f=2.2$\%
-    } \\ \hline    
-    
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/ORIG/th_10_t_227.01}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.45\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[scale=0.5]{{TESTY/NLCTVNLH1/NLH1/th_10_t_13.13}.png}
-    \vspace{0.5cm}
-    \end{minipage} \\ \hline
-
-  \caption{Porównanie algorytmu $NLCTV$ z uproszczonym zgodnie z \eqref{NLH1}.}
-  \label{NLCTVVSNLHI}
-\end{longtable}
-Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Dostrzeżenie różnicy w obrazach obliczonych przez wspomniane algorytmy jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykłądowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1}.
-
-Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania obrazu stosowany jest do ich filtrowania, bądź usuwania elementów tekstury . Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ rozmycie obrazu i usunięcie szumów/tekstur obrazu staje się sprawniejsze. 
+Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą skrawków. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacznie ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru skrawka, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar skrawka w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do zastosowania mechaniki płynów w obrazie. Dla każdego z przypadków zwiększenie rozmiaru skrawka przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}. 
 %-----------Koniec pracy magisterskiej-----------
 \newpage
 \bibliographystyle{unsrt}
@@ -2476,11 +2962,24 @@ Oświadczam, że pracę magisterską pod tytułem: ,,Poprawa jakości obrazów c
 \begin{comment}
 
 Do Naviera Stokesa po testach dodać informację o artykule, w którym jest dobrze przedstawiona dyfuzja anizotro
+Brak nielokalnego podejścia do sprawy wmalowywania
 
-w metodzie nlctv brak zminimalizowania wpływu głębokości piksela w masce.
+Pomniejszanie obrazu w VFI ma sens bo stosowana jest minimalizacja po lokalizacji, nie ma sensu tego robić dla pozostałych metąd podążających do środka maski.
 
-głowne struktury nie muszą stanowić najlepszego wzorca do czerpania - Obr6 przykładem -> stąd problem minimalizacji jest lepszym rozwiązaniem.
+https://github.com/shangma/Fast-Anisotropic-Curvature-Preserving-Smoothing/blob/master/CalcImageStructureTensors.m
 
-dodać info o korekcji fotometrycznej w criminisi.
+Dla NLCTV znaczna część czasu przeznaczona jest na pierwsze obliczenie wagi.
 
+Pomysł na współczynnik. Segmentacja i sprawdzenie wariacji na piksel liczonej paczami 
+
+Multiscale ma sens tylko przy metodach wykorzystujących minimalizację lokalizacji(np. patchmatch)
+
+Norma faworyzuje ostrzejsze przekształcenia L^1 
+
+Bardzo ograniczone zasoby pamięciowe przy NLCTV
+
+W porównaniu NLCTV i VFI nie ma aż takiego znacznia dobór rozmiaru patcha.
+
+Odnośnie VFI:
+Na maćku widać, że większy patch przy nlmeans pozwala na połąćzenie wysepki
 \end{comment}
