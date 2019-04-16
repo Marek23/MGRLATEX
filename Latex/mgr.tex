@@ -63,6 +63,11 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \def \TEST{Obraz 2}
 \def \Wood{Obraz 3}
 
+\def \SNRI{Obraz 1}
+\def \SNRII{Obraz 2}
+\def \SNRIII{Obraz 3}
+\def \SNRIV{Obraz 4}
+
 \begin{titlepage}
 \pagestyle{empty}
 
@@ -1529,6 +1534,264 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \caption{Obrazy poddane analizie.}
   \label{imgmasks}
 \end{longtable}
+\section{Równania mechaniki płynu.}
+Wszystkie z przeprowadzonych testów wykonano w przestrzeni $CIELab$. Przykładowe wyniki  przedstawia \autoref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  badane w pracy  schematy dyskretyzacji pozostawiają wyniki ze zjawiskiem rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Na rozmycie obrazu ma również dokładność rozwiązania równania \eqref{Poisson}. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Stabilność algorytmu jest zachowana przy wartości $h~1$, $h \geq1$ w przypadku wartości $dt <0.1$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie mechaniki płynów nie dostarcza nielokalnego charakteru uzupełniania braków w obrazie co ogranicza kontynuację tekstury i nie pozwala odtworzyć powtarzających się szablonów.
+\begin{longtable}[h!]{|c|c|}
+	\hline
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/NavierStokes/{Obr4m.pngITER_10000dt_0.015h_3pr_2tns_2021.6256}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.3\textwidth}
+	Parametry:		
+		\begin{enumerate}
+			\item $dt = 0.01$
+			\item $h = 3$
+			\item $t = 2021.63s$
+		\end{enumerate}	
+    \end{minipage}  \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/NavierStokes/{Obr17m.pngITER_10000dt_0.015h_3pr_2tns_3225.3982}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.3\textwidth}
+	Parametry:		
+		\begin{enumerate}
+			\item $dt = 0.01$
+			\item $h = 3$
+			\item $t = 3225.40s$
+		\end{enumerate}	
+    \end{minipage}  \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/NavierStokes/{maciek1m.pngITER_10000dt_0.015h_3pr_2tns_1736.7717}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{.3\textwidth}
+	Parametry:		
+		\begin{enumerate}
+			\item $dt = 0.01$
+			\item $h = 3$
+			\item $t = 1736.77s$
+		\end{enumerate}	
+    \end{minipage}  \\ \hline
+	\caption{Wmalowywanie obrazów bazujące na metodzie mechaniki płynów.}
+	\label{TabNavierStokes}
+\end{longtable}
+
+
+\begin{longtable}[h!]{|c|}
+    \hline
+    \begin{minipage}{.65\textwidth}
+		Obraz oryginalny
+    \end{minipage}  \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SOR/{SOR}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+    \begin{minipage}{.65\textwidth}
+		Rozwiązanie \eqref{Poisson} metodą SOR. Parametr: $h=1$
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SOR/{SORITER_1h_1}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+		Rozwiązanie \eqref{Poisson} metodą SOR. Parametr: $h=10$
+    \end{minipage} \\ \hline
+
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5.8cm]{TESTY/SOR/{SORITER_1h_10}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline
+    
+	\caption{Wyniki obrazów uzyskane metodą $SOR$.}
+	\label{SORMethod}
+\end{longtable}
+Dla większej wartości parametru $h$ uzyskuje się większą dokładność wyznaczonego obrazu. Niezależnie od dobrania parametru wynik generuje zjawisko rozmycia ostrych krawędzi obrazu.
+\section{Segmentacja obrazu na strukturę i teksturę.}
+Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{
+    	Segmentacja obrazu
+    } \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \centering
+	Obraz oryginalny
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \centering
+	Struktura obrazu
+    \end{minipage}\\ \hline
+    \multicolumn{2}{|c|}{
+    \centering
+    	$\lambda = 0.005$, $t=2.67s$
+    } \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{imgmask/kotmyszm}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/kotmyszm.bmpUlambda_0.005ts_2.6707}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    
+    \multicolumn{2}{|c|}{
+    \centering
+    	$\lambda = 0.03$, $t=0.52s$
+    } \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{imgmask/Obr17m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr17m.pngUlambda_0.03ts_0.52276}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    
+    \multicolumn{2}{|c|}{
+    \centering
+    	$\lambda = 0.03$, $t=2.99s$
+    } \\ \hline
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{imgmask/Obr4m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr4m.pngUlambda_0.03ts_2.9892}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+	\caption{Segmentacja obrazu na strukturę i teksturę.}
+	\label{TabSegmentation}
+\end{longtable}
+Czas trwania segmentacji obrazu nie przekracza kilku sekund. Zmniejszając parametr $\lambda$ zwiększa się gładkość wynikowej struktury obrazu. Algorytm segmentacji obrazu wykorzystywany jest jako poprzedzający proces wmalowywania oparty na oddzielnej syntezie tekstury i struktury, przykładem metody \cite{NavierStokesAndTexturePropagation}. Wyniki algorytmu wykorzystującego metodę Criminisi do wyznaczenia tekstury oraz równania Naviera-Stokesa wyznaczenia struktury przedstawia \autoref{TabNavierStokesSegm}. W tabeli dokonano porównania z algorytmem bez segmentacji obrazu.
+\begin{longtable}[h!]{|c|c|}
+    \hline
+    \begin{minipage}{0.5\textwidth}
+    \centering
+	Metoda bez segmentacji
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \centering
+	Metoda z segmentacją
+    \end{minipage}\\ \hline
+    
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+	$dt = 0.01$ \\
+	$h = 3$ \\
+	$t = 2021.63s$ \\
+	Iteracje: 10000 \\
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+	$dt = 0.01$ \\
+	$h = 1$ \\
+	$t_{NS} = 3310.80s$ \\
+	$t_{CRIM} = 58.26s$ \\
+	Iteracje: 16000 \\
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{TESTY/NavierStokes/{Obr4m.pngITER_10000dt_0.015h_3pr_2tns_2021.6256}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/NavierStokes/Obr4m.pngITER_16000dt_0.01h_1pr_2ts_0.37671tns_3310.8032tt_58.261}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+	$dt = 0.01$ \\
+	$h = 3$ \\
+	$t = 3225.40s$ \\
+	Iteracje: 10000 \\
+    \vspace{0.5cm}
+    \end{minipage}
+    &
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    Parametry: \\
+	$dt = 0.01$ \\
+	$h = 1$ \\
+	$t_{NS} = 526.76s$ \\
+	$t_{CRIM} = 26.03s$ \\
+	Iteracje: 10000
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{TESTY/NavierStokes/{Obr17m.pngITER_10000dt_0.015h_3pr_2tns_3225.3982}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{TESTY/NavierStokes/{Obr17m.pngdt_0.01h_1pr_3ts_0.49582tns_526.7624tt_26.033}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+	\caption{Porównanie wyników uzyskanych metodą rozwiązania równania Navier'a-Stokes'a do metody z algorytmem segmentacji.}
+	\label{TabNavierStokesSegm}
+\end{longtable}
+Oddzielna synteza tekstury pozwala na jej kontynuację wgłąb maski. Efekt rozmycia głównego algorytmu odrestaurowania struktury negatywnie wpływa na jakość wynikowego obszaru. Proces dodania tekstury może prowadzić do powstania nieprawidłowych wyników w postaci nowych kolorów obrazu w przypadku wstawiania tekstur pochodzących z innych struktur danego obrazu. Wadą jest również obcy element tekstury w danej strukturze.
 \section{Uzupełnianie kawałkami obrazu.}
 \subsection{Metoda Criminisi.}
 Wszystkie z przeprowadzonych testów wykonano w przestrzeni $RGB$. Dystans pomiędzy skrawkami wyznaczono według przytoczonej w poświęconym metodzie rozdziale normy Frobenius'a \eqref{FROBENIUS2}. Przykładowe wyniki przedstawia poniższa tabela:
@@ -2101,7 +2364,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obra
 	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
 	\label{NLCTVVSNLHI}
 \end{longtable}
-Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach obliczonych przez wspomniane algorytmy jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykłądowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach obliczonych przez wspomniane algorytmy jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
 
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2937,250 +3200,192 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
 \end{longtable}
 
 Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą skrawków. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacznie ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru skrawka, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar skrawka w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do zastosowania mechaniki płynów w obrazie. Dla każdego z przypadków zwiększenie rozmiaru skrawka przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
-
-\section{Równania mechaniki płynu.}
-Wszystkie z przeprowadzonych testów wykonano w przestrzeni $CIELab$. Przykładowe wyniki  przedstawia \autoref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  badane w pracy  schematy dyskretyzacji pozostawiają wyniki ze zjawiskiem rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Na rozmycie obrazu ma również dokładność rozwiązania równania \eqref{Poisson}. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Stabilność algorytmu jest zachowana przy wartości $h~1$, $h \geq1$ w przypadku wartości $dt <0.1$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie mechaniki płynów nie dostarcza nielokalnego charakteru uzupełniania braków w obrazie co ogranicza kontynuację tekstury i nie pozwala odtworzyć powtarzających się szablonów.
+\section{Porównanie algorytmów wmalowywania.}
+\subsection{Obrazy wykorzystane do porównania.}
+Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstawione w \autoref{COMPAREIMAGES}. Jako obraz idealnie wypełniony traktowany jest obraz oryginalny bez nałożonej maski.
 \begin{longtable}[h!]{|c|c|}
-	\hline
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=5.8cm]{TESTY/NavierStokes/{Obr4m.pngITER_10000dt_0.015h_3pr_2tns_2021.6256}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-    &
-    \begin{minipage}{.3\textwidth}
-	Parametry:		
-		\begin{enumerate}
-			\item $dt = 0.01$
-			\item $h = 3$
-			\item $t = 2021.63s$
-		\end{enumerate}	
-    \end{minipage}  \\ \hline
+    \hline
+    Obraz z maską & Obraz oryginalny \\ \hline
 
-    \begin{minipage}{.65\textwidth}
+    \multicolumn{2}{|c|}{
+		\SNRI
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/NavierStokes/{Obr17m.pngITER_10000dt_0.015h_3pr_2tns_3225.3982}.png}
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/MASK/SNR1m}.png}
     \vspace{0.5cm}
     \end{minipage}
-    &
-    \begin{minipage}{.3\textwidth}
-	Parametry:		
-		\begin{enumerate}
-			\item $dt = 0.01$
-			\item $h = 3$
-			\item $t = 3225.40s$
-		\end{enumerate}	
-    \end{minipage}  \\ \hline
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/ORIG/SNR1}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
 
-    \begin{minipage}{.65\textwidth}
+    \multicolumn{2}{|c|}{
+		\SNRII
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/NavierStokes/{maciek1m.pngITER_10000dt_0.015h_3pr_2tns_1736.7717}.png}
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/MASK/SNR2m}.png}
     \vspace{0.5cm}
     \end{minipage}
-    &
-    \begin{minipage}{.3\textwidth}
-	Parametry:		
-		\begin{enumerate}
-			\item $dt = 0.01$
-			\item $h = 3$
-			\item $t = 1736.77s$
-		\end{enumerate}	
-    \end{minipage}  \\ \hline
-	\caption{Wmalowywanie obrazów bazujące na metodzie mechaniki płynów.}
-	\label{TabNavierStokes}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/ORIG/SNR2}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \multicolumn{2}{|c|}{
+		\SNRIII
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/MASK/SNR3m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/ORIG/SNR3}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+
+    \multicolumn{2}{|c|}{
+		\SNRIV
+    } \\ \hline 
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/MASK/SNR4m}.png}
+    \vspace{0.5cm}
+    \end{minipage}
+	&
+    \begin{minipage}{0.5\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=3.8cm]{{TESTY/SSIM/ORIG/SNR4}.png}
+    \vspace{0.5cm}
+    \end{minipage}\\ \hline
+    \caption{Obrazy wykorzystane do porównania algorytmów wmalowywania.}
+	\label{COMPAREIMAGES}
 \end{longtable}
+\subsection{Wskaźnik podobieństwa.}
+Stopień poprawności odrestaurowanego obszaru określa współczynnik $SSIM \in \langle -1,1 \rangle$. Wartość 1 odpowiada idealnemu odtworzeniu obrazu, -1 idealnemu niedopasowaniu. Współczynnik wyznaczany jest na podstawie statystyki bazując na porównywaniu ze sobą grupy pikseli. Przy wykorzystaniu histogramu, wartości średniej, rozłożenia pikseli pozwala holistycznie określić różnicę pomiędzy rozpatrywanymi obrazami, w sposób podobny do postrzegania przez człowieka. Współczynnik wyznacza się z zależności:
+\begin{align}
+\begin{aligned}
+SSIM = l(x,y) + c(x,y) + s(x,y)
+\end{aligned}
+\end{align}
+gdzie $x,y$ stanowią grupy pikseli, $l(x,y)$ określa natężenie światła, $c(x,y)$ kontrast i $s(x,y)$ strukturę obrazu.
+\begin{align}
+\begin{aligned}
+l(x,y) = \frac{2 \mu_x \mu_y + C_1}{\mu^2_x + \mu^2_y + C_1}
+\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+l(x,y) = \frac{2 \sigma_x \sigma_y + C_2}{\sigma^2_x + \sigma^2_y + C_1}
+\end{aligned}
+\end{align}
+\begin{align}
+\begin{aligned}
+s(x,y) = \frac{\sigma_{xy} + C_3}{\sigma_{x}\sigma_{y}+C_3}
+\end{aligned}
+\end{align}
+Zmienne $\mu_x$, $\mu_y$, $\sigma_{x}$, $\sigma_{y}$, $\sigma_{xy}$ stanowią lokalne średnie, standardowe odchylenia i kowariancję.
+\subsection{Porównanie i podsumowanie algorytmów.}
+Algorytmy zostały zbadane dla różnych parametrów wypełniania. Zestawienie w tabelach wykonane jest biorąc pod uwagę najlepszy wyniki dla każdej z grupy. Porównanie przedstawia \autoref{TabCompare} i \autoref{TabTimeCompare}.
+\begin{table}[!h]
+\centering
+ \begin{tabular}{||c | c | c | c | c | c | c | c||} 
+ \hline
+Obraz &
+NV     & ST NS & Crim  & Sal Crim & NLCTV & NLCTV MOD & VF \\ [0.5ex] \hline \hline
+1  &
+12345  & .4571 & .4363 & .5572    & .5807 & .5512     & .6222 \\ \hline
+2  &
+12345  & .5604 & .5292 & .5247    & .6841 & .6560     & .5964 \\ \hline
+3  &
+12345  & .4092 & .4244 & .4437    & .5461 & .5129     & .5717 \\ \hline
+4  &
+12345  & .1502 & .7188 & .6939    & .3119 & .5571     & .5730 \\ \hline
+\end{tabular}
+\caption{Porównanie algorytmów wmalowywania współczynnikiem $SSIM$.}
+\label{TabCompare}
+\end{table}
 
-
+\begin{table}[!h]
+\centering
+ \begin{tabular}{||c | c | c | c | c | c | c | c||} 
+ \hline
+Obraz &
+NV     & ST NS   & Crim  & Sal Crim & NLCTV   & NLCTV MOD & VF \\ [0.5ex] \hline \hline
+1  &
+12345  & 3028.77 & 2.91  & 5.91     & 4984.39 & 23892.85  & 310.71 \\ \hline
+2  &
+12345  & 5395.65 & 2.70  & 1.49     & 5174.46 & 26790.64  & 165.53 \\ \hline
+3  &
+12345  & 853.36  & 2.84  & 0.64    & 1798.84 & 10708.95  & 54.95 \\ \hline
+4  &
+12345  & 5600.51 & 4.30  & 1.18    & 6783.83 & 26084.11  & 136.01 \\ \hline
+\end{tabular}
+\caption{Porównanie algorytmów wmalowywania względem czasu wypełniania.}
+\label{TabTimeCompare}
+\end{table}
+Stopień podobieństwa wyników uzyskanych metodą bazującą na równaniu Naviera Stokesa jest najniższy. Segmentacja i oddzielne wypełnianie tekstury nie poprawia wyniku ze względu na znaczne rozmycie odtworzonej struktury. Niesprzyjającym jest również pojawianie się obcych tekstur w danej strukturze. Lepszymi wynikami od poprzednika charakteryzuje się metoda Criminisi. Metoda ta wraz ze wstępną kontynuacją głównych struktur stanowią najszybszy algorytm. Najlepsze wyniki uzyskiwane są dla algorytmów bazujących na minimalizacji energii. W ogólnym rozrachunku metoda $VF$ w porównaniu z $NLCTV$ lepiej odwzorowuje braki w obrazie. Wyniki te można uznać za odpowiadające wrażeniom obserwatora. Metoda $VF$ jest szybsza i zużywa mniej zasobów obliczeniowych niż $NLCTV$. Metoda $VF$ w swoich wynikach jest najmniej wrażliwa na manipulacje wejściowych parametrów. W przypadku pozostałych algorytmów ich zmiana ma znaczny wpływ na ostateczną syntezę wyznaczanego obszaru. Zaletą algorytmu $VF$ jest zastosowanie kroku  minimalizacji mapy położenia pikseli, pozwalającej zastosować wypełnianie wielostopniowe. Każdy z pozostałych algorytmów badanych w pracy wyznacza obraz postępując od granicy maski do jej wnętrza w pewnym stopniu ograniczając charakter nie-lokalności. Przykładem błędnego wypełniania może być kontynuacja plaży wgłąb morza \autoref{nonLocalFail}. 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{{TESTY/NLCTVORIG/LODKA/Obr4m.pngs_r_9p_r5h_11sw_1t_282.0586}.png}
+	\caption{Nieprawidłowa kontynuacja struktury. Przykłądowy wynik algorytmu $NLCTV$.}
+	\label{nonLocalFail}
+\end{figure}
+Wadą każdego z algorytmów jest brak głębszej analizy figur geometrycznych pojawiających się w wypełnianych obrazach. Przykładem może być \autoref{TabGeometryFail}. w której tarcza nie została odrestaurowana.
 \begin{longtable}[h!]{|c|}
-    \hline
-    \begin{minipage}{.65\textwidth}
-		Obraz oryginalny
-    \end{minipage}  \\ \hline
-
+    \hline \hline
+    Obraz oryginalny \\ \hline
     \begin{minipage}{.65\textwidth}
     \vspace{0.5cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SOR/{SOR}.png}
+    \includegraphics[height=5cm]{TESTY/GEOM/ZNAK.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline \hline
+    Obraz z maską \\ \hline
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5cm]{TESTY/GEOM/ZNAKm.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline \hline
+    Metoda Criminisi \\ \hline
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5cm]{TESTY/GEOM/CRIM/{ZNAKm.pngpr_9sr_37alfa_0.2t_17.8991}.png}
+    \vspace{0.5cm}
+    \end{minipage} \\ \hline \hline
+    Metoda $VF$ \\ \hline
+    \begin{minipage}{.65\textwidth}
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[height=5cm]{TESTY/GEOM/VF/{ZNAKm.png_nlmedians_sc7_0.0737705_initnone_ps3_10000_conf5_0.1_t118.217}.png}
     \vspace{0.5cm}
     \end{minipage} \\ \hline
-    
-    \begin{minipage}{.65\textwidth}
-		Rozwiązanie \eqref{Poisson} metodą SOR. Parametr: $h=1$
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=5.8cm]{TESTY/SOR/{SORITER_1h_1}.png}
-    \vspace{0.5cm}
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-		Rozwiązanie \eqref{Poisson} metodą SOR. Parametr: $h=10$
-    \end{minipage} \\ \hline
-
-    \begin{minipage}{.65\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=5.8cm]{TESTY/SOR/{SORITER_1h_10}.png}
-    \vspace{0.5cm}
-    \end{minipage} \\ \hline
-    
-	\caption{Wyniki obrazów uzyskane metodą $SOR$.}
-	\label{SORMethod}
-\end{longtable}
-Dla większej wartości parametru $h$ uzyskuje się większą dokładność wyznaczonego obrazu. Niezależnie od dobrania parametru wynik generuje zjawisko rozmycia ostrych krawędzi obrazu.
-\section{Segmentacja obrazu na strukturę i teksturę.}
-Przykłądy obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
-\begin{longtable}[h!]{|c|c|}
-    \hline
-    \multicolumn{2}{|c|}{
-    	Segmentacja obrazu
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \centering
-	Obraz oryginalny
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \centering
-	Struktura obrazu
-    \end{minipage}\\ \hline
-    \multicolumn{2}{|c|}{
-    \centering
-    	$\lambda = 0.005$, $t=2.67s$
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{imgmask/kotmyszm}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/kotmyszm.bmpUlambda_0.005ts_2.6707}.png}
-    \vspace{0.5cm}
-    \end{minipage}\\ \hline
-    
-    \multicolumn{2}{|c|}{
-    \centering
-    	$\lambda = 0.03$, $t=0.52s$
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{imgmask/Obr17m}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr17m.pngUlambda_0.03ts_0.52276}.png}
-    \vspace{0.5cm}
-    \end{minipage}\\ \hline
-    
-    \multicolumn{2}{|c|}{
-    \centering
-    	$\lambda = 0.03$, $t=2.99s$
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{imgmask/Obr4m}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr4m.pngUlambda_0.03ts_2.9892}.png}
-    \vspace{0.5cm}
-    \end{minipage}\\ \hline
-	\caption{Segmentacja obrazu na strukturę i teksturę.}
-	\label{TabSegmentation}
-\end{longtable}
-Czas trwania segmentacji obrazu nie przekracza kilku sekund. Zmniejszając parametr $\lambda$ zwiększa się gładkość wynikowej struktury obrazu. Algorytm segmentacji obrazu wykorzystywany jest jako poprzedzający proces wmalowywania oparty na oddzielnej syntezie tekstury i struktury, przykładem metody \cite{NavierStokesAndTexturePropagation}. Wyniki algorytmu wykorzystującego metodę Criminisi do wyznaczenia tekstury oraz równania Naviera-Stokesa wyznaczenia struktury przedstawia \autoref{TabNavierStokesSegm} 
-\begin{longtable}[h!]{|c|c|}
-    \hline
-    \multicolumn{2}{|c|}{
-    	Segmentacja obrazu
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \centering
-	Obraz oryginalny
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \centering
-	Struktura obrazu
-    \end{minipage}\\ \hline
-    \multicolumn{2}{|c|}{
-    \centering
-    	$\lambda = 0.005$, $t=2.67s$
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{imgmask/kotmyszm}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/kotmyszm.bmpUlambda_0.005ts_2.6707}.png}
-    \vspace{0.5cm}
-    \end{minipage}\\ \hline
-    
-    \multicolumn{2}{|c|}{
-    \centering
-    	$\lambda = 0.03$, $t=0.52s$
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{imgmask/Obr17m}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr17m.pngUlambda_0.03ts_0.52276}.png}
-    \vspace{0.5cm}
-    \end{minipage}\\ \hline
-    
-    \multicolumn{2}{|c|}{
-    \centering
-    	$\lambda = 0.03$, $t=2.99s$
-    } \\ \hline
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{imgmask/Obr4m}.png}
-    \vspace{0.5cm}
-    \end{minipage}
-	&
-    \begin{minipage}{0.5\textwidth}
-    \vspace{0.5cm}
-    \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr4m.pngUlambda_0.03ts_2.9892}.png}
-    \vspace{0.5cm}
-    \end{minipage}\\ \hline
-	\caption{Porównanie wyników uzyskanych metodą rozwiązania równania Navier'a-Stokes'a do metody oddzielnej syntezy tekstury.}
-	\label{TabNavierStokesSegm}
+\caption{Przykładowe algorytmy błędnie odtwarzające znak drogowy.}    
+\label{TabGeometryFail}
 \end{longtable}
 %-----------Koniec pracy magisterskiej-----------
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{bibliografia}
-
+Wszystkie z algorytmów pozbawione są możliwośći restauracji kształtów geometrycznych.
  
 \tableofcontents
 \clearpage
@@ -3203,30 +3408,14 @@ Oświadczam, że pracę magisterską pod tytułem: ,,Poprawa jakości obrazów c
 Do Naviera Stokesa po testach dodać informację o artykule, w którym jest dobrze przedstawiona dyfuzja anizotro
 Brak nielokalnego podejścia do sprawy wmalowywania
 
-Segmentacja tekstury przy rozmytej strukturze nic nie da.
-
 Pomniejszanie obrazu w VFI ma sens bo stosowana jest minimalizacja po lokalizacji, nie ma sensu tego robić dla pozostałych metąd podążających do środka maski.
 
 https://github.com/shangma/Fast-Anisotropic-Curvature-Preserving-Smoothing/blob/master/CalcImageStructureTensors.m
 
-Dla NLCTV znaczna część czasu przeznaczona jest na pierwsze obliczenie wagi.
-
-Pomysł na współczynnik. Segmentacja i sprawdzenie wariacji na piksel liczonej paczami 
-
 Multiscale ma sens tylko przy metodach wykorzystujących minimalizację lokalizacji(np. patchmatch)
 
-Bardzo ograniczone zasoby pamięciowe przy NLCTV
-
-W porównaniu NLCTV i VFI nie ma aż takiego znacznia dobór rozmiaru patcha.
-
 Synteza tekstury normą przy TSNV oddzielnie dla każdej warstwy miesza i wprowadza nowe kolory, lepsza wspólna norma.
-Do syntezy tekstury lekko wyniki poprawiłaby metoda Criminisi... Info, że można zastosować
-
-zwykły schemat nadaje się do mega
 
 Zaden z algorytmów nie odrestauruje np. gwiazdy albo znaku -> tu potrzebny algorytm do badania kształtów struktur.
-
-Odnośnie VFI:
-Na maćku widać, że większy patch przy nlmeans pozwala na połąćzenie wysepki
 
 \end{comment}
