@@ -38,8 +38,8 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 
 \renewcommand*{\figureautorefname}{Rys.}
 \renewcommand*{\tableautorefname}{Tab.}
-\renewcommand*{\chapterautorefname}{Rozdział}
-\renewcommand*{\sectionautorefname}{Rozdział}
+\renewcommand*{\chapterautorefname}{rozdz.}
+\renewcommand*{\sectionautorefname}{rozdz.}
 
 \usepackage{graphicx}
 
@@ -989,7 +989,7 @@ $\delta(p)$ określa pewność co do danego piksela wewnątrz maski i jest okre�
 \label{pewnoscVFI}
 \end{align}
 \end{enumerate}
-przy czym wartość $t_c$ określa szybkość opadania funkcji ekspotencjalnej, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
+przy czym wartość $t_c$ określa szybkość opadania funkcji wykładniczej, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
 \begin{enumerate}
 \item
 Normy nielokalnej uśredniającej:
@@ -1018,7 +1018,7 @@ Normy nielokalnej Poissona:
 \end{aligned}
 \end{align}
 \end{enumerate}
-Suma różnic pikseli w przypadku normy Poissona dodatkowo wymaga wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny z członów będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla norm uzyskuje się odpowiednio rozwiązania w postaci:
+Indeksy dolne $g, 1, 2, \nabla$ przy zapisach nielokalnych norm oznaczają odpowiednio: uwzględnienie zmiennej \eqref{oknoGaussowskie} w wyznaczaniu odległości, normę wektorową $\ell_{1}$, normę wektorową $\ell_{2}$, obliczanie dystansu na podstawie dywergencji rozmażanego pola. Stąd suma różnic pikseli w przypadku normy Poissona wymaga dodatkowo wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny z członów będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla norm uzyskuje się odpowiednio rozwiązania w postaci:
 \begin{enumerate}
 \item
 równanie:
@@ -1040,7 +1040,7 @@ równania Eulera rozwiązane względem zmiennej $u$:
 \begin{aligned}
 \begin{cases}
 \nabla \cdot [k(z)\nabla u(z)] - \frac{\lambda}{1-\lambda}]k(z)u(z) = \\ 
-\ \ \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \mathcal{O} \\
+\ \ \ \ \ \ \ \ \ \ \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \mathcal{O} \\
 u(z)=\hat{u}(z) , & z \in \partial \mathcal{O} \setminus \partial \Omega \\
 \nabla u(z) \cdot n_{\Omega}(z) = 0 , & z \in \partial \mathcal{O} \cap \partial \Omega
 \end{cases}
@@ -1053,31 +1053,31 @@ v(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\nabla\hat{u}(\hat{z})d\hat{z}
 \begin{align}
 f(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
 \end{align}
-Człon $n_{\Omega}(z)$ oznacza wektor normalny do $\Omega$ dla $z \in \partial \Omega$.
+Symbol $n_{\Omega}(z)$ oznacza wektor normalny do $\Omega$ dla $z \in \partial \Omega$.
 \end{enumerate}
 Dokładne wyprowadzenia zależności można znaleść w \cite{arias2011variational}.
 \subsection{Wielostopniowy schemat wypełniania.}
-W wielu algorytmach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm polega na utworzeniu serii pomniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu uprzednio wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
+W wielu metodach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm ten polega na utworzeniu serii mniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu uprzednio wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
 \begin{itemize}
 \item
 losowo wyznaczone wartości obrazu pobierane z obszaru $\mathcal{O}^c$
 \item
 rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR zgodnie z zależnością \eqref{DiscreteSOR}.
 \end{itemize}
-Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy w \cite{arias2011variational} proponują model Gauss'owskiej piramidy.\\
-W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę stopni piramidy, a oryginalny wymiar jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{s-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
+Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gaussa.\\
+W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{s-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Jako rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako stały uprzednio definiowany. Niech indeks górny s odnosi się do zmiennych i obszarów w zakresie rozważanego stopnia piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\mathcal{O}^s$ i $\mathcal{O}^{s+1}$:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowana z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\mathcal{O}^s$ i $\mathcal{O}^{s+1}$:
 \begin{align}
 \chi_{\mathcal{O}^{s+1}}=(\downarrow_rg_{\sigma(r)}\ast\chi_{\mathcal{O}^s})> T_{0}.
 \end{align}
-Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
+Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis ten oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{g \ast \chi_{(O^s)^c} u^s(x)}{g \ast \chi_{(O^s)^c}(x) }
 \end{align}
-Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania do góry, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego w poprzednim stopniu oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania w górę, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego na poprzednim poziomie oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \subsection{Podsumowanie algorytmu}
 Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
 \begin{enumerate}
@@ -1100,23 +1100,23 @@ Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepi
 Powtarzanie $I$-tą ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF}
 \begin{itemize}
 \item
-minimalizacja \eqref{minNNF} w celu wyznaczenia $\varphi^s$
+przeprowadzenie \eqref{minNNF} w celu wyznaczenia $\varphi^s$
 \item
-minimalizacja \eqref{minUs} w celu wyznaczenia $u^s$
+przeprowadzenie \eqref{minUs} w celu wyznaczenia $u^s$
 \end{itemize}  
 \end{enumerate}
 \end{enumerate}
 Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$
 \chapter{Uzupełnianie kawałkami obrazu.}
 \section{Metoda Criminisi.}
-Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie fragmentami pochodzącymi z ich otoczenia. W odróżnieniu od metod bazujących na równaniach różniczkowych metoda uzupełniania braków nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na poniższym rysunku.
+Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie fragmentami pochodzącymi z ich otoczenia. W odróżnieniu od różnych algorytmów bazujących na równaniach różniczkowych metoda ta nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na \autoref{4_fig1}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.5]{rysunki/4_fig1}
 	\caption{Schemat wmalowywania obrazu.}
 	\label{4_fig1}
 \end{figure}
-Zgodnie z \autoref{4_fig1} niech zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\omega $ oznaczony kolorem fioletowym określa obszar do odrestaurowania. Niech obraz wejściowy stanowi funkcję $\mathrm{\Omega }$. Niech ${\varphi}_p$ stanowi podzbiór punktów tworzących skrawek o uprzednio zdefiniowanej wielkości, scentrowany względem piksela $p$ znajdującego się na granicy maski $\partial \mathrm{\Omega }$. Niech ${\varphi}_q$ stanowi podzbiór punktów tworzących skrawek o rozmiarze równym rozmiarowi ${\varphi}_p$, scentrowany względem piksela $q$ dla którego żaden z punktów wyznaczonego skrawka nie znajduje się w obszarze maski. Niech ${\varphi}_{p'}$ oznaczone kolorem żółtym stanowi podzbiór punktów znajdujących się w ${\varphi}_p$, które nie znajdują się w obrębie maski. Wtedy ${\varphi}_{q'}$ oznaczone kolorem pomarańczowym stanowi grupę pikseli zlokalizowanych odpowiednio według pikseli z podzbioru ${\varphi}_{p'}$. Zgodnie z nomenklaturą matematyczną:
+Niech zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\omega $ oznaczony kolorem fioletowym określa obszar do odrestaurowania. Niech obraz wejściowy stanowi funkcję na obszarze $D$. Niech ${\varphi}_p$ stanowi podzbiór punktów tworzących fragment obrazu o zdefiniowanej z góry wielkości, scentrowany względem piksela $p$ znajdującego się na granicy maski inpaintingowej $\partial \mathrm{\Omega }$. Niech ${\varphi}_q$ stanowi podzbiór punktów tworzących fragment o rozmiarze równym rozmiarowi ${\varphi}_p$, scentrowany względem piksela $q$ dla którego żaden z punktów wyznaczonego skrawka nie znajduje się w obszarze maski. Niech ${\varphi}_{p'}$ oznaczone kolorem żółtym stanowi podzbiór punktów znajdujących się w ${\varphi}_p$, które nie znajdują się w obrębie maski. Wtedy ${\varphi}_{q'}$ oznaczone kolorem pomarańczowym stanowi grupę pikseli zlokalizowanych odpowiednio według pikseli z podzbioru ${\varphi}_{p'}$. Zgodnie z nomenklaturą matematyczną:
 \begin{align}
 p\ \epsilon \ \partial \mathrm{\Omega }
 \end{align}
@@ -1141,18 +1141,26 @@ q\ \epsilon \mathrm{\ }\phi
 \end{align}
 gdzie $W$ przedstawia zbiór wmalowanych pikseli uprzednio znajdujących się w rejonie maski.
 \par
-Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znalezienie najpodobniejszej pary $\left\langle {\ \varphi }_{p'},\ {\varphi }_{q''}\right\rangle $ oraz zgodnie z powyższym rysunkiem przepisanie wartości odpowiednich pikseli z wyznaczonego zbioru $({\varphi }_{(q^{''})}/{\varphi }_{(q^{''})'})$ do odpowiadających im pikseli w zbiorze $({\varphi }_p/{\varphi }_{p'})$ oznaczonych kolorem ciemnozielonym. Zapisując matematycznie:
+Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znalezienie pary najbardziej podobnych do siebie $\left\langle {\ \varphi }_{p'},\ {\varphi }_{q''}\right\rangle $ oraz zgodnie z \autoref{4_fig1} przepisanie wartości odpowiednich pikseli z wyznaczonego zbioru $({\varphi }_{(q^{''})}/{\varphi }_{(q^{''})'})$ do odpowiadających im pikseli w zbiorze $({\varphi }_p/{\varphi }_{p'})$ oznaczonych kolorem ciemnozielonym. Zapisując to w sposób formalny mamy:
 \begin{align}
 {\varphi }_{q^{''}}={\mathrm{arg}\ \mathop{\mathrm{min}}_{q\ \epsilon \mathrm{\ }\phi } d(\ }{\varphi }_{p'},{\varphi }_{q'})
 \label{FROBDIST}
 \end{align}
-Dystans pomiędzy dwoma fragmentami $d({\varphi }_{p'},{\varphi }_{q'})$ może być definiowany jako suma kwadratów różnic wszystkich odpowiadających sobie pikseli ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$.
+Odległość pomiędzy dwoma fragmentami $d({\varphi }_{p'},{\varphi }_{q'})$ może być definiowana jako suma kwadratów różnic wszystkich odpowiadających sobie pikseli ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$.
 \begin{align}
 d(\varphi_{p'},\varphi_{q'})= \sum_{p\in \varphi_{p'}} \left( \varphi_{p^{'}}(p) - \varphi _{q^{'}} \left(p^{'}\right) \right)^2
 \label{FROBENIUS2} 
 \end{align}
-gdzie $\varphi \left(p\right)$ wartość jasności piksela $p$ z badanego okna. Do wyznaczenia dystansu można również zastosować normy przytoczone dla \eqref{normNNF} w \cite{MathematicalModelsforNLTextureInpainting}. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
-Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania może prowadzić do akumulowanej przez algorytm niespójności obrazu.
+gdzie $\varphi \left(p\right)$ oznacza wartość jasności piksela $p$ z badanego okna. Do wyznaczenia odlegości można również zastosować normy przytoczone dla \eqref{normNNF} w \cite{MathematicalModelsforNLTextureInpainting}. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
+Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania względem zdefiniowanej odległośc
+i może prowadzić do niespójności obrazu, przykład na \autoref{5_fig2}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.3]{rysunki/5_fig2}
+	\caption{Niespójność obrazu przy najlepszym dopasowaniu. $A$ - odrestaurowywany obraz, $B$ - wynik algorytmu, $C$ - oczekiwany wynik.}
+	\label{5_fig2} 
+\end{figure}
+\par
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/4_fig2}
