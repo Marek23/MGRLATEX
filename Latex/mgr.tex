@@ -14,6 +14,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \usepackage{listings}
+\usepackage[symbols,nogroupskip,sort=none]{glossaries-extra}
 \geometry{left=25mm,right=25mm,%
 bindingoffset=10mm, top=25mm, bottom=25mm}
 \usepackage{amssymb, latexsym}
@@ -50,6 +51,13 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
 \newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
 \makeatother
+
+%---lista oznaczeń
+\glsxtrnewsymbol[description={position}]{x}{$\mathbf{x}$}
+\glsxtrnewsymbol[description={velocity}]{v}{\ensuremath{v}}
+\glsxtrnewsymbol[description={acceleration}]{a}{\ensuremath{a}}
+\glsxtrnewsymbol[description={time}]{t}{\ensuremath{t}}
+\glsxtrnewsymbol[description={force}]{F}{\ensuremath{F}}
 
 \begin{document}
 
@@ -140,17 +148,8 @@ Tu będzie jakieś streszczenie
 
 %-----------Oznaczenia-----------
 \newpage
-{\large \textbf{Wykaz ważniejszych skrótów i oznaczeń} \par}
-\begin{itemize}
-    \leftskip=1cm
-
-    \item[$f$]        częstotliwość źródeł sieci elektroenergetycznej
-    \item[$\omega$]   pulsacja źródeł sieci elektroenergetycznej
-    \item[$\omega_0$] pulsacja drgań własnych obwodu drgającego
-    \item[$U_n$]      napięcie znamionowe sieci elektroenergetycznej, wartość skuteczna napięcia międzyfazowego sieci
-    \item[$E$]        wartość skuteczna fazowego napięcia znamionowego sieci
-\end{itemize}
-
+\printunsrtglossary[type=symbols, style=long, title={Wykaz oznaczeń i symboli}]
+    
 %-----------Poczłtek człłci zasadniczej-----------
 
 \chapter{Wprowadzenie do przetwarzania obrazów.}
