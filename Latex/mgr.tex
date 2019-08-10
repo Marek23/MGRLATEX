@@ -53,26 +53,26 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 
 \begin{document}
 
-\def \kotmyszm{Obraz 1}
-\def \maciekIm{Obraz 2}
-\def \ObrIm{Obraz 3}
-\def \ObrIVm{Obraz 4}
-\def \ObrVm{Obraz 5}
-\def \ObrVIm{Obraz 6}
-\def \ObrXVm{Obraz 7}
-\def \ObrXVIIm{Obraz 8}
-\def \ObrXIXm{Obraz 9}
-\def \ObrXXVIIIkm{Obraz 10}
-\def \OsobaDrugam{Obraz 11}
-\def \ObrXIIIm{Obraz 12}
-\def \XXVIII{Obraz 1}
-\def \TEST{Obraz 2}
-\def \Wood{Obraz 3}
+\def \kotmyszm{obr. nr 1}
+\def \maciekIm{obr. nr 2}
+\def \ObrIm{obr. nr 3}
+\def \ObrIVm{obr. nr 4}
+\def \ObrVm{obr. nr 5}
+\def \ObrVIm{obr. nr 6}
+\def \ObrXVm{obr. nr 7}
+\def \ObrXVIIm{obr. nr 8}
+\def \ObrXIXm{obr. nr 9}
+\def \ObrXXVIIIkm{obr. nr 10}
+\def \OsobaDrugam{obr. nr 11}
+\def \ObrXIIIm{obr. nr 12}
+\def \XXVIII{obr. nr 1}
+\def \TEST{obr. nr 2}
+\def \Wood{obr. nr 3}
 
-\def \SNRI{Obraz 1}
-\def \SNRII{Obraz 2}
-\def \SNRIII{Obraz 3}
-\def \SNRIV{Obraz 4}
+\def \SNRI{obr. nr 1}
+\def \SNRII{obr. nr 2}
+\def \SNRIII{obr. nr 3}
+\def \SNRIV{obr. nr 4}
 
 \begin{titlepage}
 \pagestyle{empty}
@@ -137,6 +137,19 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \begin{abstract}
 Tu będzie jakieś streszczenie
 \end{abstract}
+
+%-----------Oznaczenia-----------
+\newpage
+{\large \textbf{Wykaz ważniejszych skrótów i oznaczeń} \par}
+\begin{itemize}
+    \leftskip=1cm
+
+    \item[$f$]        częstotliwość źródeł sieci elektroenergetycznej
+    \item[$\omega$]   pulsacja źródeł sieci elektroenergetycznej
+    \item[$\omega_0$] pulsacja drgań własnych obwodu drgającego
+    \item[$U_n$]      napięcie znamionowe sieci elektroenergetycznej, wartość skuteczna napięcia międzyfazowego sieci
+    \item[$E$]        wartość skuteczna fazowego napięcia znamionowego sieci
+\end{itemize}
 
 %-----------Poczłtek człłci zasadniczej-----------
 
@@ -1273,6 +1286,7 @@ Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wy
 Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zostaje punkt środkowy. Względem środka tego punktu tworzone jest okno  $f^i$ o wcześniej zdefiniowanym obszarze. Pierwszym członem w równaniu \eqref{SalientDistance} wyznaczonym na podstawie utworzonego okna $f^i$ jest $D_1\left(f^i_C,f^j_C\right)$. Symbole $f^i_C$ oraz $f^j_C$ stanowią posegmentowane fragmenty obrazu względem wcześniej zdefiniowanej liczby głównych, dominujących kolorów w obrazie $M$. Dla każdego wycinka $f^i_C$ można zdefiniować zbiór punktów $(c_k,p_k)$, gdzie $c_k$ odpowiada danemu kolorowi, natomiast $p_k$ jego procentowemu udziałowi we fragmencie $f^i$, przy $k=1,\dots ,M$. Dysponując zbiorami punktów dla okien $f^i_C$,$\ f^j_C$ można liczbowo przedstawić ich poziom podobieństwa obliczając: 
 \begin{align}
 D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j
+\label{colDistance}
 \end{align}
 Dokładna analiza oraz sposób wyznaczania podobieństwa okien $f^i$ przedstawiony jest w\cite{chen2005adaptive}.
 Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\right)$ określający stopień podobieństwa tekstur znajdujących się w utworzonych oknach $f$. Dla każdego obszaru $f^i$ wyznaczana jest macierz $MR8(f^i)$. Macierz uzyskiwana jest na podstawie odpowiedzi wybranego fragmentu obrazu na grupę 38 filtrów przedstawionych na \autoref{4_fig6}.
@@ -1361,7 +1375,7 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \
 \end{align}
 W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
 \section{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
-Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje w względnie długim czasie wypełniania obrazu. W celu skrócenia czasu wyznaczania wynikowego obrazu zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać przybliżone wyniki do oryginalnego algorytmu:
+Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje stosunkowo długim czasem wypełniania obrazu. W celu skrócenia czasu wyznaczania obrazu wynikowego zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać wyniki przybliżone do wyników oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
 {{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
@@ -1369,7 +1383,7 @@ Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje w względnie długim czasi
 \end{aligned}
 \label{NLH1}
 \end{align}
-W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć potrzeby pamięciowe programu oraz przyspieszyć działanie dzięki pominięciu obliczeń, wyrugowanych zmiennych.
+W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywaną pamięć przez programu oraz przyspieszyć działanie dzięki pominięciu obliczeń, wyrugowanych zmiennych.
 \section{Połączenie metody Criminisi z funkcją wagi.}
 Kolejną z pozytywnych prób modyfikacji algorytmu $NLCTV$ w pracy okazała się próba zastąpienia problemu minimalizacji energii \eqref{ENLCTV} opartej na funkcji wagi, metodą syntezy obrazu (bazującej na metodzie syntezy tekstury opisanej w \autoref{chap:StructureTextureNavierStokes}). Kroki nowego algorytmu można przedstawić w następującym schemacie:
 \begin{enumerate}
@@ -1378,13 +1392,15 @@ Ustawienie argumentów algorytmu: obraz $u$, maska obrazu $\chi$, wielkość okn
 \item
 Wyznaczenie funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT} dla parametrów $SW$ i $PS$ i $\chi$
 \item
-Powtarzanie do uzyskania zbioru $\Omega = \emptyset$
+Powtarzanie aż do uzyskania zbioru $\Omega = \emptyset$
 \begin{enumerate}[a)]
 \item
 Znalezienie dla każdego piksela $p \in \partial\Omega$ najlepszego dopasowania $d \in D \cap N_p$, gdzie $N_p$ zbiór pikseli z okna utworzonego dla piksela $p$, dla którego zachodzi:
+\begin{large}
 \begin{align}
 d = \mathop{\mathrm{arg \ max}}_{t \in D \cap N_p} w(p,t)
 \end{align}
+\end{large}
 a następnie przepisanie:
 \begin{align}
 u(p) = u(d)
@@ -1393,7 +1409,7 @@ u(p) = u(d)
 Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
 \end{enumerate}
 \end{enumerate}
-Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu $NLCTV$ można zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
+Zastosowana modyfikacja pozwala na szybkie wyznaczenie wartości obrazu w szukanym obszarze $\Omega$. Przedstawiony sposób  pozwala uniknąć sytuacji, w której tworzony jest obcy kolor będący z poza gamy dostępnych kolorów w obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd wyznaczania wartości koloru z poza dostępnej gamy w kolejnych iteracjach dla $\partial \Omega$. Podobnie jak dla modelu $NLCTV$ można tutaj  zastosować modyfikację funkcji wagi $w$ zgodnie z \eqref{NLWEIGHTMODIFIED}, w celu uzyskania podobnego efektu.
 \chapter{Testy algorytmów}
 \section{Analizowane obrazy.}
 W niniejszej pracy testom poddano następującą grupę obrazów:
@@ -1560,7 +1576,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
   \label{imgmasks}
 \end{longtable}
 \section{Równania mechaniki płynu.}
-Wszystkie z przeprowadzonych testów wykonano w przestrzeni $CIELab$. Przykładowe wyniki  przedstawia \autoref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  badane w pracy  schematy dyskretyzacji pozostawiają wyniki ze zjawiskiem rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Na rozmycie obrazu ma również dokładność rozwiązania równania \eqref{Poisson}. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Stabilność algorytmu jest zachowana przy wartości $h~1$, $h \geq1$ w przypadku wartości $dt <0.1$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie mechaniki płynów nie dostarcza nielokalnego charakteru uzupełniania braków w obrazie co ogranicza kontynuację tekstury i nie pozwala odtworzyć powtarzających się szablonów.
+Wszystkie z przeprowadzonych testów wykonano w przestrzeni $CIELab$. Przykładowe wyniki  przedstawia \autoref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  badane w pracy  schematy dyskretyzacji pozostawiają wyniki ze zjawiskiem rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Na rozmycie obrazu ma również wpływ dokładność rozwiązania równania \eqref{Poisson}. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Stabilność algorytmu jest zachowana przy wartości $h~1$, $h \geq1$ w przypadku wartości $dt <0.1$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie dostarcza nielokalnego charakteru uzupełniania braków w obrazie co ogranicza kontynuację tekstury i nie pozwala odtworzyć powtarzających się szablonów.
 \begin{longtable}[h!]{|c|c|}
 	\hline
     \begin{minipage}{.65\textwidth}
@@ -1610,7 +1626,7 @@ Wszystkie z przeprowadzonych testów wykonano w przestrzeni $CIELab$. Przykłado
 			\item $t = 1736.77s$
 		\end{enumerate}	
     \end{minipage}  \\ \hline
-	\caption{Wmalowywanie obrazów bazujące na metodzie mechaniki płynów.}
+	\caption{Wmalowywanie obrazów bazujące na metodzie zaczerpniętej z równań występujących w mechanice płynów.}
 	\label{TabNavierStokes}
 \end{longtable}
 
@@ -1726,7 +1742,7 @@ Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
 	\caption{Segmentacja obrazu na strukturę i teksturę.}
 	\label{TabSegmentation}
 \end{longtable}
-Czas trwania segmentacji obrazu nie przekracza kilku sekund. Zmniejszając parametr $\lambda$ zwiększa się gładkość wynikowej struktury obrazu. Algorytm segmentacji obrazu wykorzystywany jest jako poprzedzający proces wmalowywania oparty na oddzielnej syntezie tekstury i struktury, przykładem metody \cite{NavierStokesAndTexturePropagation}. Wyniki algorytmu wykorzystującego metodę Criminisi do wyznaczenia tekstury oraz równania Naviera-Stokesa wyznaczenia struktury przedstawia \autoref{TabNavierStokesSegm}. W tabeli dokonano porównania z algorytmem bez segmentacji obrazu.
+Czas trwania segmentacji obrazu nie przekracza kilku sekund. Zmniejszając parametr $\lambda$ otrzymujemy większą gładkość wynikowej struktury obrazu. Algorytm segmentacji obrazu wykorzystywany jest jako poprzedzający proces wmalowywania oparty na oddzielnej syntezie tekstury i struktury, przykładem są metody przedstawione w \cite{NavierStokesAndTexturePropagation}. Wyniki algorytmu wykorzystującego metodę Criminisi do wyznaczenia tekstury oraz równania Naviera-Stokesa wyznaczenia struktury przedstawia \autoref{TabNavierStokesSegm}. W tabeli dokonano porównania z algorytmem bez wcześniejszej segmentacji obrazu.
 \begin{longtable}[h!]{|c|c|}
     \hline
     \begin{minipage}{0.5\textwidth}
@@ -1995,7 +2011,7 @@ Wszystkie z przeprowadzonych testów wykonano w przestrzeni $RGB$. Dystans pomi�
   \caption{Wyniki metody Criminisi.}
   \label{CRIMTEST}
 \end{longtable}
-Wyniki przedstawione w tabeli wyznaczono dla optymalnego ustawienia parametru $\alpha=0.2$. Zmiana wspomnianego parametru w ogólnym charakterze rozważanej metodyki nie wpływała na końcowe obrazy. W zależności od rozpatrywanego obrazu rozmiar fragmentu obrazu może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIIm \ mały rozmiar fragmentu obrazu skutkuje w odpowiedniej kontynuacji dachu budynku. W przypadku \ObrIVm \ średni wymiar fragmentu obrazu pozwala na odpowiednią syntezę plaży. W przypadku obrazu \ObrVIm \ największy rozmiar fragmentu obrazu zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. W ogólnym rozrachunku metoda w każdym z rezultatów wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu. 
+Wyniki przedstawione w tabeli wyznaczono dla optymalnego ustawienia parametru $\alpha=0.2$. Biorąc pod uwagę charakter działania algorytmu i błędy jakie powstają przy jego zastosowaniu zmiana wspomnianego parametru w ogólnym rozważaniu nie wpływa na końcowe obrazy. W zależności od rozpatrywanego obrazu rozmiar fragmentu obrazu może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIIm \ mały rozmiar fragmentu obrazu skutkuje w odpowiedniej kontynuacji dachu budynku. W przypadku \ObrIVm \ średni wymiar fragmentu obrazu pozwala na odpowiednią syntezę plaży. W przypadku obrazu \ObrVIm \ największy rozmiar fragmentu obrazu zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. W ogólnym rozrachunku metoda w każdym z wyników wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu. 
 \subsection{Główne struktury obrazu.}
 W celu zminimalizowania efektu zgodnie z \cite{StructurePropagationManual} algorytm wmalowywania przebadano pod kątem priorytetowego wypełnienia głównych struktur obrazu zgodnie z wytycznymi wprowadzonymi manualnie przez użytkownika. Punkty linii głównej struktury znajdującej się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo.
 
@@ -2061,7 +2077,7 @@ W celu zminimalizowania efektu zgodnie z \cite{StructurePropagationManual} algor
         
 	\caption{Główne struktury testowanych obrazów manualnie wprowadzone przez użytkownika.}
 \end{longtable}
-Linie granic głównych struktur przedstawiono kolorem czerwonym. Część wspólna obrazu oryginalnego poza maską wraz z linią stanowią zbiór, z którego pobierane jest najlepsze dopasowanie. Wartość $p_r$ manualnie ustawiono na minimalną wartość zdolną zachować właściwości charakterystyczne dla danej granicy w pełnym zakresie linii. Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
+Linie granic głównych struktur przedstawiono kolorem czerwonym. Część wspólna obrazu oryginalnego poza maską wraz z linią głównej struktury stanowią zbiór, z którego pobierane jest najlepsze dopasowanie. Wartość $p_r$ manualnie ustawiono na minimalną wartość zdolną zachować właściwości charakterystyczne dla danej granicy w pełnym zakresie linii. Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
 
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2125,7 +2141,7 @@ Linie granic głównych struktur przedstawiono kolorem czerwonym. Część wspó
         
 	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
 \end{longtable}
-Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało czasu obliczeniowego większego niż $1s$. W uproszeniu można przyjąć, że algorytm pozwala oszczędzić czas potrzebny na proces wmalowywania równy procentowi wyznaczonej maski z całkowitego czasu oryginalnej metody Criminisi. Ostatecznie przykładowe wyniki przedstawia  tabela:
+Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało czasu obliczeniowego dłuższego niż $1s$. W uproszeniu można przyjąć, że algorytm pozwala oszczędzić czas potrzebny na proces wmalowywania równy procentowi wyznaczonej maski z całkowitego czasu oryginalnej metody Criminisi. Ostatecznie przykładowe wyniki przedstawia  tabela:
 
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2191,14 +2207,14 @@ Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało cza
 	\label{CrimSalStructRes}
 \end{longtable}
 
-Wszystkie z przedstawionych powyżej wyników wykonano ograniczając okno poszukiwań zgodnie z \autoref{ssec:crimMod} przyjmując jako parametr $s_r = 3 \cdot 	p_r$. W przypadku obrazów \ObrVIm , \ObrXVIIm \ i \ObrXIXm \ wyniki w porównaniu do \autoref{CRIMTEST} posiadają lepszą syntezę głównych struktur, a ograniczenie okna poszukiwania przyspiesza o rząd wielkości czas wyznaczenia głównego obrazu. W przypadku \ObrXVm \ i \ObrXIIIm \ pomimo wstępnej syntezy głównych struktur nie udało się uniknąć błędów w postaci obcych wartości w różnych strukturach obrazu. Ograniczenie okna poszukiwania może wprowadzać dodatkowe błędy w przypadku niejednoznaczności struktur w pobliżu granicy maski. Rozważając prawą część maski obrazu \ObrXVIIm \ algorytm wypełniania ogranicza źródło wzorca do będącego błędnym źródłem osoby pozostawionej w obrazie (postać z prawej strony obrazu traktowana jest jako niejednoznaczność).Wadą algorytmu wypełniania jest konieczność dodatkowej korekcji fotometrycznej uzyskanego wyniku zgodnie z \cite{StructurePropagationManual}. przedstawionym w \autoref{7_fig1}. 
+Wszystkie przedstawione wyniki otrzymano ograniczając okno poszukiwań zgodnie z \autoref{ssec:crimMod} przyjmując jako parametr $s_r = 3 \cdot 	p_r$. W przypadku obrazów: \ObrVIm , \ObrXVIIm \ i \ObrXIXm \ wyniki w porównaniu do \autoref{CRIMTEST} posiadają lepszą syntezę głównych struktur, a ograniczenie okna poszukiwania przyspiesza o rząd wielkości czas wyznaczenia głównego obrazu. W przypadku \ObrXVm \ i \ObrXIIIm \ pomimo wstępnej syntezy głównych struktur nie udało się uniknąć błędów w postaci obcych wartości w różnych strukturach obrazu. Ograniczenie okna poszukiwania może wprowadzać dodatkowe błędy w przypadku niejednoznaczności struktur znajdujących się w pobliżu granicy maski. Rozważając prawą część maski \ObrXVIIm \ algorytm wypełniania ogranicza źródło wzorca do błędnego źródła zawierającego część pozostawionej w obrazie postaci (postać z prawej strony obrazu traktowana jest jako niejednoznaczność). Wadą algorytmu wypełniania jest konieczność dodatkowej korekcji fotometrycznej uzyskanego wyniku zgodnie z \cite{StructurePropagationManual} przedstawionym na \autoref{7_fig1}. 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.5]{rysunki/7_fig1}
 	\caption{Korekcja fotometryczna obrazu w przypadku propagacji głównych struktur obrazu. Źródło \cite{StructurePropagationManual}.}
 	\label{7_fig1} 
 \end{figure}
-Ograniczenie błędów w postaci nieodpowiedniej syntezy struktur obrazu w badaniach korygowane jest wprowadzaniem modyfikacji normy \eqref{FROBENIUS2} uwzględniającej wartości posegmentowanego obrazu, bądź dodatkowej wyznaczanej wartości $\nabla I$. Błąd w największym stopniu ograniczyć można poprzez dodatkowy wejściowy parametr algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
+Ograniczenie błędów w postaci nieodpowiedniej syntezy struktur obrazu w badaniach korygowane jest poprzez wprowadzanie modyfikacji normy \eqref{FROBENIUS2} uwzględniającej wartości posegmentowanego obrazu, bądź dodatkowej wyznaczanej wartości $\nabla I$. Błąd w największym stopniu ograniczyć można poprzez dodatkowy wejściowy parametr algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
 \begin{equation}
 {\lambda }'\left(x\right)=\left\{ \begin{array}{c}
 0\ x\ \epsilon \ \mathrm{\Omega } \\ 
@@ -2210,21 +2226,21 @@ Wtedy dla każdego ${\varphi }_q$ zachodzi warunek:
 \forall_{x \in {\varphi }_q}: {\lambda }'(x) = 1
 \end{align}
 \subsection{Automatyczne wykrywanie struktur.}
-Autorzy w \cite{SalientStrucTexProp} nie przedstawiają dokładnego sposobu wyznaczania głównych struktur, ich parowania, a następnie wyznaczania równań kontynuacji w obszar maski. Algorytm opisany w pracy zależy od wielu zmiennych definiowanych przez użytkownika mających wpływ na ostateczny wynik, takich jak:
+Autorzy w \cite{SalientStrucTexProp} nie przedstawiają dokładnego sposobu wyznaczania głównych struktur, łączenia w pary, a następnie wyznaczania równań kontynuacji w obszar maski. Algorytm opisany w pracy zależy od wielu zmiennych definiowanych przez użytkownika mających wpływ na ostateczny wynik, takich jak:
 \begin{itemize}
 \item parametry filtru usuwającego mniej znaczące krawędzie obrazu
 \item ilość głównych kolorów na które zostanie posegmentowany obraz
-\item rozmiar okna otaczający główną strukturę brany pod uwagę podczas wyznaczania dystansu koloru
+\item rozmiar okna otaczający główną strukturę brany pod uwagę podczas wyznaczania podobieństwa kolorów \eqref{colDistance}
 \item waga poszczególnych członów w równaniu \eqref{SalientDistance} mające wpływ na parowanie struktur
 \end{itemize}
-Dobór każdego z parametrów nie jest uniwersalny i zależy od rozpatrywanego obrazu. Problematyczność doboru parametrów i dokładność uzyskiwanych wyników potwierdziły konieczność znacznie głębszej analizy problemu. Dokładność wyników uzyskanych w poprzednim podrozdziale (przy manualnym oznaczaniu głównych struktur) w stosunku do wymaganego stopnia analizy skłoniły do badań pozostałych algorytmów.
+Dobór żadnego z parametrów nie jest automatyczny i zależy on rozpatrywanego obrazu. Problematyczność doboru parametrów i dokładność uzyskiwanych wyników potwierdziły konieczność znacznie głębszej analizy problemu. Dokładność wyników uzyskanych w poprzednim podrozdziale (przy manualnym oznaczaniu głównych struktur) w stosunku do wymaganego stopnia analizy skłoniły autora tej pracy magisterskiej do badań pozostałych algorytmów.
 \section{Nielokalny model NLCTV.}
 \subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
 Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Podobieństwo obrazów mierzy się współczynnikiem:
 \begin{align}
 f = \frac{100}{256}\frac{1}{n| \Omega |} \sum^c_{k=1}{\sum^m_{i=1}{\sum^n_{j=1}{ | I_1(i,j,k)-I_2(i,j,k) |}}} %
 \end{align}
-gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obrazu, $|\Omega|$ pole obszaru maski. Do porównania obrazów wykorzystano dodatkową grupę przedstawioną w \autoref{NLCTVVSNLHIIM}.
+gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary obrazu, $|\Omega|$ to pole obszaru maski. Do porównania algorytmów wykorzystano dodatkowo badaną grupę obrazów przedstawioną w \autoref{NLCTVVSNLHIIM}.
 
 \begin{longtable}[h!]{| c | c |}
     \hline
@@ -2238,7 +2254,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obra
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-	Wymiar: 81 x 81 \\
+	Wymiary obrazu: 81 x 81 \\
 	Rozmiar maski: 10\% \\
 	Nazwa: \XXVIII
     \end{minipage} \\ \hline
@@ -2389,7 +2405,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ rozmiar obra
 	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
 	\label{NLCTVVSNLHI}
 \end{longtable}
-Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach obliczonych przez wspomniane algorytmy jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
 
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2596,9 +2612,9 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \label{NLH1Tab}
 \end{longtable}
 
-Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania obrazów stosowany jest do filtracji, usuwania elementów tekstury i szumu, segmentacji na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje co skutkuje w dokładniejszym usunięciu szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $s_r$ i $p_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm w wyniku generuje kolory będące z poza gammy dostarczanej z obrazem bądź przechodzi w obszar niestabilności. W przypadku niskich wartości parametru  $s_r$ i $p_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $s_r$, $p_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkując w prawidłowej syntezie wyznaczanego obszaru. Wadą algorytmu jest znacznie rosnąca ilość czasu potrzebna na obliczenie obrazu maski w przypadku dużych wartości $s_r$ i $p_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $s_r <30$, $p_r$ dla obrazu o wymiarze $500x500$. Zalecane parametry algorytmu:
+Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania obrazów stosowany jest do filtracji, usuwania elementów tekstury i szumu, segmentacji na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $s_r$ i $p_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące z poza palety dostarczanej z obrazem bądź przechodzi w obszar niestabilności. W przypadku niskich wartości parametru  $s_r$ i $p_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $s_r$, $p_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru. Wadą algorytmu jest znacznie rosnąca ilość czasu potrzebna na obliczenie obrazu maski w przypadku dużych wartości $s_r$ i $p_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $s_r <30$, $p_r$ dla obrazu o wymiarze $500x500$. Zalecane parametry algorytmu są następujące:
 \begin{enumerate}
-\item Obraz z ściśle powtarzającą się teksturą z maską w zakresie jednej struktury
+\item Obraz ze ściśle powtarzającą się teksturą z maską w zakresie jednej struktury
 \begin{itemize}
 \item $s_r < 6$
 \item $p_r < 4$
@@ -2611,7 +2627,7 @@ Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania
 \item $h < 5$
 \end{itemize}
 \end{enumerate}
-Wadą algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowością tekstury - \kotmyszm, \ObrIm .
+Wadą tego algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowością tekstury - \kotmyszm, \ObrIm .
 \subsection{Modyfikacja funkcji wagi.}
 
 \begin{longtable}[h!]{|c|c|}
@@ -2744,15 +2760,15 @@ Wadą algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowo�
 \end{longtable}
 Wyniki uzyskane dla zmodyfikowanej funkcji wagi charakteryzują się zdolnością do dokładniejszej kontynuacji struktury, nie wpływając w znacznym stopniu na poprawę tekstury obrazu. Wadą algorytmu jest znaczne wydłużenie czasu wyznaczenia funkcji wagi, będącej najistotniejszym czynnikiem wpływającym na długość trwania obliczeń.  
 \subsection{Połączenie metody Criminisi z funkcją wagi.}
-
+//BRAK ROZDZIAŁU, UPS - dorobić program, licencja do MATLABA
 
 \section{Wariacyjny, nielokalny model wmalowywania.}
-Wszystkie z przeprowadzonych testów wykonano dla stałych parametrów związanych z terminem "pewności" równych:
+Wszystkie przeprowadzone testy wykonano dla stałych parametrów związanych z terminem "pewności" równych:
 \begin{itemize}
 \item
 ilość stopni tworzonej piramidy $S=7$
 \item
-rozmiar obrazu dla najmniejszego ze stopnia w piramidzie 
+rozmiar obrazu dla najwyższego poziomu w piramidzie 
 \begin{align}
 A_{S-1}=\frac{1.5 \cdot ps}{\mathrm{max}_{x \in \mathcal{O}}d(x,\mathcal{O}^{c})}
 \end{align}
@@ -3224,10 +3240,10 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
 	\label{NONLOCALITYVFI}
 \end{longtable}
 
-Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacznie ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do zastosowania mechaniki płynów w obrazie. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
+Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacznie ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
 \section{Porównanie algorytmów wmalowywania.}
 \subsection{Obrazy wykorzystane do porównania.}
-Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstawione w \autoref{COMPAREIMAGES}. Jako obraz idealnie wypełniony traktowany jest obraz oryginalny bez nałożonej maski.
+Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstawione w \autoref{COMPAREIMAGES}. Za obraz idealnie wypełniony uznajemy obraz oryginalny bez nałożonej maski.
 \begin{longtable}[h!]{|c|c|}
     \hline
     Obraz z maską & Obraz oryginalny \\ \hline
@@ -3303,7 +3319,7 @@ Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstaw
 	\label{COMPAREIMAGES}
 \end{longtable}
 \subsection{Wskaźnik podobieństwa.}
-Stopień poprawności odrestaurowanego obszaru określa współczynnik $SSIM \in \langle -1,1 \rangle$. Wartość 1 odpowiada idealnemu odtworzeniu obrazu, -1 idealnemu niedopasowaniu. Współczynnik wyznaczany jest na podstawie statystyki bazując na porównywaniu ze sobą grupy pikseli. Przy wykorzystaniu histogramu, wartości średniej, rozłożenia pikseli pozwala holistycznie określić różnicę pomiędzy rozpatrywanymi obrazami, w sposób podobny do postrzegania przez człowieka. Współczynnik wyznacza się z zależności:
+Stopień poprawności odrestaurowanego obszaru określa współczynnik $SSIM \in \langle -1,1 \rangle$. Wartość 1 odpowiada idealnemu odtworzeniu obrazu, -1 idealnemu niedopasowaniu. Współczynnik wyznaczany jest na podstawie statystyki bazując na porównywaniu ze sobą grupy pikseli. Przy wykorzystaniu histogramu, wartości średniej, rozłożenia pikseli pozwala holistycznie określić różnicę pomiędzy rozpatrywanymi obrazami, w sposób podobny do sposobu  postrzegania przez człowieka. Współczynnik wyznacza się z zależności:
 \begin{align}
 \begin{aligned}
 SSIM = l(x,y) + c(x,y) + s(x,y)
