@@ -53,12 +53,22 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \makeatother
 
 %---lista oznaczeń
-\glsxtrnewsymbol[description={position}]{x}{$\mathbf{x}$}
-\glsxtrnewsymbol[description={velocity}]{v}{\ensuremath{v}}
-\glsxtrnewsymbol[description={acceleration}]{a}{\ensuremath{a}}
-\glsxtrnewsymbol[description={time}]{t}{\ensuremath{t}}
-\glsxtrnewsymbol[description={force}]{F}{\ensuremath{F}}
-
+\glsxtrnewsymbol[description={przyporządkowanie elementom ze zbioru $a$ elementów ze zbioru $b$}]{rarrow}{$a \rightarrow b$}
+\glsxtrnewsymbol[description={prędkość lokalna płynu}]{V}{$V$}
+\glsxtrnewsymbol[description={gęstość lokalna płynu}]{q}{$q$}
+\glsxtrnewsymbol[description={ciśnienie płynu}]{p}{$p$}
+\glsxtrnewsymbol[description={siła lokalna działająca na płyn}]{F}{$F$}
+\glsxtrnewsymbol[description={lepkość kinematyczna}]{Ni}{$\nu$}
+\glsxtrnewsymbol[description={linia prądu będącą ciągłą linią w polu prędkości płynu}]{Psi}{$\Psi$}
+\glsxtrnewsymbol[description={wirowość płynu}]{omega}{$\omega$}
+\glsxtrnewsymbol[description={współczynnik dyfuzji anizotropowej}]{g}{$g$}
+\glsxtrnewsymbol[description={parametry, reprezentacja parametryzowanej liczby rzeczywistej}]{wsp}{$\alpha, \beta$}
+\glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$}]{Iij}{$I_{i,j}$}
+\glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$ w chwili czasu $n+1$}]{Iijn}{$I_{i,j}^{n+1}$}
+\glsxtrnewsymbol[description={iloczyn kartezjański zbiorów $a$ i $b$}]{times}{$a \times b$}
+\glsxtrnewsymbol[description={pochodna cząstkowa funkcji wielu zmiennych $f$ względem zmiennej $x$}]{frac}{$\frac{\partial f}{\partial x},\partial{f}_x$}
+\glsxtrnewsymbol[description={wartość dyskretnej pochodnej cząstkowej funkcji wielu zmiennych $f$ względem zmiennej $x$ w punkcie o współrzędnych dyskretnych $i, j$}]{fracd}{$\frac{\partial f}{\partial x}\big|_{i,j}, \ \partial f_x \big|_{i,j}$}
+\glsxtrnewsymbol[description={pochodna względem czasu $t$}]{fract}{$\frac{\partial }{\partial t}$}
 \begin{document}
 
 \def \kotmyszm{obr. nr 1}
@@ -193,7 +203,7 @@ Większość metod wmalowywania opisanych w literaturze opiera się na algorytma
 \section{Rozwiązanie równania Naviera-Stokesa }
 W celu dokładnego zaprezentowania idei wmalowywania w oparciu o równanie Naviera-Stokesa należy rozważyć poniższe równanie przepływu cieczy Newtonowskiej:
 \begin{equation}
-V\nabla V\mathrm{+}\frac{dV}{dt}\mathrm{=-}\frac{\mathrm{1}}{q}\nabla p\mathrm{+}F\mathrm{+}\nu {\nabla }^{\mathrm{2}}V
+\mathbf{V}\nabla \mathbf{V}\mathrm{+}\frac{d\mathbf{V}}{dt}\mathrm{=-}\frac{\mathrm{1}}{q}\nabla \mathbf{p}\mathrm{+}\mathbf{F}\mathrm{+}\nu {\nabla }^{\mathrm{2}}\mathbf{V}
 \label{NavierStokesEquation}
 \end{equation}
 \begin{equation}
@@ -218,7 +228,7 @@ przy czym wirowość określa się wzorem:
 \end{equation}
 Niech $I$ reprezentuje obraz cyfrowy będący macierzą o rozmiarze$m \mathrm{\times} n$, \cite{ebrahimi2012navier}. Wtedy $I_{i,j}$ zawiera wartość dodatnią całkowitą z przedziału od 0 do 255, stanowiącą informację o poziomie jasności danego piksela z obrazu. Wartość 0 opowiada odcieniowi czarnemu, natomiast 255 odcieniowi czystemu białemu. Niech D stanowi zbiór indeksów $(i,j)\ \in \ \left\{1,2\dots ,m\right\} \mathrm{\times}$ $\left\{1,2\dots ,n\right\}$. Obraz $I$ wtedy można traktować jako funkcję $I:D\to R$.
 \par
-W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomiędzy wirowością a gładkością obrazu. Dokładniej przedstawia to \autoref{tab1}:
+W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomiędzy wirowością a gładkością obrazu. Dokładniej przedstawia to \autoref{tab1}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|cc|c|}
@@ -255,7 +265,7 @@ W równaniu \eqref{NavierStokesInpainting} człon odpowiedzialny za tarcie pomi�
 g\left(s\right)=\frac{1}{1+\alpha \left|s\right|}
 \end{equation}
 gdzie $\alpha\ $, $K$ wcześniej zdefiniowane parametry dyfuzji (stałe), ${\mathrm{\nabla }}^{\bot }=({-\partial }_y,{\partial }_x)$. 
-Dyskretne rozwiązanie równania \eqref{NavierStokesInpainting} jest analogiczne do dyskretnego rozwiązania przepływu płynu w przestrzeni $2D$. W tym celu należy wprowadzić chwile w czasie $t=n\bullet \Delta t$, gdzie $n=\left\{1,2,3,\dots ,N\right\}$, $\Delta t$ wartość przyrostu czasu pomiędzy dyskretnymi chwilami $n$ i $n+1$, $N$ moment osiągnięcia stanu ustalonego, matematycznie przedstawianego jako:
+Dyskretne rozwiązanie równania \eqref{NavierStokesInpainting} jest analogiczne do dyskretnego rozwiązania przepływu płynu w przestrzeni $2D$. W tym celu należy wprowadzić chwile w czasie $t=n\cdot \Delta t$, gdzie $n=\left\{1,2,3,\dots ,N\right\}$, $\Delta t$ wartość przyrostu czasu pomiędzy dyskretnymi chwilami $n$ i $n+1$, $N$ moment osiągnięcia stanu ustalonego, matematycznie przedstawianego jako:
 \begin{equation}
 \frac{\partial I}{\partial t}\mathrm{+}{\mathrm{\nabla }}^{\mathrm{\bot }}I\mathrm{\nabla }\mathrm{\Delta }I\mathrm{\ }\mathrm{\cong }\mathrm{0}
 \label{NavierStokesStability}
@@ -311,34 +321,35 @@ Przy czym:
 Stosując pięciopunktowy analog różnicowy w metodzie różnic skończonych operator Laplace’a dla przyjętej siatki Eulera można przybliżyć wzorem (przy założeniu, że $\Delta x=\ \Delta y$):
 \begin{align}
 \begin{aligned}
-{\mathrm{\nabla }}^2f_{i,j} &= \Delta f_{i,j} \\[1ex]
-&={\frac{{\partial }^2f}{\partial x^2}|}_{i,j}+{\frac{{\partial }^2f}{\partial y^2}|}_{i,j} \\
+{\mathrm{\nabla }}^2f_{i,j} &= \Delta f_{i,j}=\\[1ex]
+&={\frac{{\partial }^2f}{\partial x^2}}\bigg|_{i,j}+{\frac{{\partial }^2f}{\partial y^2}}\bigg|_{i,j}=\\
 &=\frac{f_{i+1,j+1}+f_{i-1,j+1}+f_{i+1,j-1}+f_{i-1,j-1}-4f_{i,j}}{\Delta x^2}\ 
 \end{aligned}
 \label{LaplaceOpr}
 \end{align}
 Korzystając z wyznaczonych powyżej zależności na wartości $u$ oraz $v$ wartość gładkości obrazu $\omega =\ {\mathrm{\nabla }}^2I$ można przedstawić w postaci: 
 \begin{equation}
-\Delta {I|}_{i,j}=\ {\frac{\partial v}{\partial x}|}_{i,j,}-\ {\frac{\partial u}{\partial y}|}_{i,j}
+\Delta {I}\big|_{i,j}=\ {\frac{\partial v}{\partial x}}\bigg|_{i,j,}-\ {\frac{\partial u}{\partial y}}\bigg|_{i,j}
 \label{discreteVorticity}
 \end{equation}
 Podobnie jak w przypadku liczenia pochodnej w dziedzinie obrazu pierwszą pochodną w dziedzinie czasu przybliża się rozwinięciem w szereg Taylora. Niech indeks górny oznacza konkretną chwilę czasową. Wtedy wartość pochodnej wynosi:
 \begin{equation}
-\ {{\frac{\partial f}{\partial t}|}^n_{i,j}=\ \frac{f^{n+1}_{i,j}-\ f^n_{i,j}}{\Delta t}}
+\ {{\frac{\partial f}{\partial t}}\bigg|^n_{i,j}=\ \frac{f^{n+1}_{i,j}-\ f^n_{i,j}}{\Delta t}}
 \label{dfdt}
 \end{equation}
 Ostatecznie rozwiązanie dyskretnego równania parabolicznego \eqref{NavierDiffAdv} , gdzie $\Delta x= \Delta y=h$, z wykorzystaniem schematu centralnego ma postać:
 \begin{align}
 {\omega }^{n+1}_{i,j} &= {\omega }^n_{i,j}+\Delta t\biggl[
 -\left(\frac{I_{i,j+1}+I_{i,j-1}}{2h}\right)\left(\frac{{\omega }_{i+1,j}
-+{\omega }_{i-1,j}}{2h}\right)  \notag\\ 
++{\omega }_{i-1,j}}{2h}\right)+\notag\\ 
 &\qquad+ \left(\frac{I_{i+1,j}+I_{i-1,j}}{2h}\right)\left(\frac{{\omega }_{i,j+1}+{\omega }_{i,j-1}}{2h}\right)+{\left\{ad\right\}}_{i,j} \biggr]
 \label{NavierDiffAdvCen}
 \end{align}
 Rozwiązanie równania \eqref{NavierDiffAdv} można przedstawić również w drugiej postaci wykorzystującej schemat „do przodu”, charakteryzujący się wyznaczaniem wartości pochodnej wirowości w zależności od wyznaczonego kierunku ${\mathrm{(}\mathrm{\nabla }}^{\bot }I)$.  Wtedy równanie \eqref{NavierDiffAdvCen} przyjmuje postać:
 \begin{align}
+\fontsize{11}
 {\omega }^{n+1}_{i,j} &= {\omega }^n_{i,j}+\Delta t\biggl[
--\left(\frac{I_{i,j+1}+I_{i,j-1}}{2h}\right)\left(\frac{{\omega }_{k,j}+{\omega }_{i,j}}{2h}\right)  \notag\\ 
+-\left(\frac{I_{i,j+1}+I_{i,j-1}}{2h}\right)\left(\frac{{\omega }_{k,j}+{\omega }_{i,j}}{2h}\right)+ \notag\\ 
 &\qquad+ \left(\frac{I_{i+1,j}+I_{i-1,j}}{2h}\right)\left(\frac{{\omega }_{i,l}+{\omega }_{i,j}}{2h}\right)+{\left\{ad\right\}}_{i,j} \biggr]
 \label{NavierDiffAdvFor}
 \end{align}
@@ -352,8 +363,8 @@ Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej
 \begin{align}
 \begin{aligned}
 \left\{ad\right\} 
-&= \nu \mathrm{\nabla }(g(\nabla {\mathrm{(}\mathrm{\nabla }}^2I))\nabla {\mathrm{(}\mathrm{\nabla }}^2I) \\[1ex]
-&= \nu \mathrm{\nabla }\mathrm{\cdot}(g(|\nabla \omega |)\nabla \omega )   \\[1ex]
+&= \nu \mathrm{\nabla }(g(\nabla {\mathrm{(}\mathrm{\nabla }}^2I))\nabla {\mathrm{(}\mathrm{\nabla }}^2I)= \\[1ex]
+&= \nu \mathrm{\nabla }\mathrm{\cdot}(g(|\nabla \omega |)\nabla \omega )=\\[1ex]
 &= {\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)+{\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)
 \end{aligned}
 \label{Anisotropic}
@@ -361,44 +372,44 @@ Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej
 \eqref{Anisotropic}
 gdzie: ${\partial }_x=\frac{\partial }{\partial x}$ oraz analogicznie: ${\partial }_y=\frac{\partial }{\partial y}$.
 Zgodnie z \cite{ebrahimi2012navier} powyższe równanie można rozwiązać w poniższych krokach:
-Korzystając z zależności \eqref{dfdx} i \eqref{dfdy} należy wyznaczyć wartości $({\frac{d\omega }{dx})}_{i,j}$ oraz $({\frac{d\omega }{dy})}_{i,j}$
+Korzystając z zależności \eqref{dfdx} i \eqref{dfdy} należy wyznaczyć wartości ${\frac{d\omega }{dx}}\big|_{i,j}$ oraz ${\frac{d\omega }{dy}}\big|_{i,j}$
 Na podstawie wartości z punktu 1 należy obliczyć moduł wektora w przestrzeni Euklidesowej:
 \begin{equation}
-{\left|\mathrm{\nabla }\omega \right|}_{i,j}=\ \sqrt{\mathrm{\ }({\frac{\partial \omega }{\partial x})}^2_{i,j}+{\left(\frac{\partial \omega }{\partial y}\right)}^2_{i,j}\ }\
+{\left|\mathrm{\nabla }\omega \right|}_{i,j}=\ \sqrt{\frac{\partial \omega }{\partial x}\bigg|^2_{i,j}+\frac{\partial \omega }{\partial y}\bigg|^2_{i,j}}
 \label{magnitudedw}
 \end{equation}
-Na podstawie wartości z punktu 2 należy wyznaczyć wartość $$\ g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}_{i,j}$$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} trzeba obliczyć:
+Na podstawie wartości z punktu 2 należy wyznaczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} trzeba obliczyć:
 \begin{align}
-{\left\{ad\right\}}_{i,j} &= {\left({\partial }_x\left(g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}_{i,j}{\left({\frac{d\omega }{dx})}_{i,j}\right)}_{i,j}\right)\right)}_{i,j} \notag \\[1ex]
-&+ {\left({\partial }_y\left(g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}_{i,j}{\left({\frac{d\omega }{dx})}_{i,j}\right)}_{i,j}\right)\right)}_{i,j}
+\{ad_{i,j}\} &= \partial_x \left( g(\left| \nabla\omega \right|_{i,j}) \cdot \partial_x \omega \big|_{i,j} \right) \bigg|_{i,j} \notag +\\[1ex]
+&+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}
 \label{discreteAnisotropic}
 \end{align}
 \par
 Innym sposobem dyskretyzacji równania \eqref{NavierAdv} może być metoda przedstawiona w \cite{van2005algorithms}, wykorzystująca asymetryczny schemat liczenia pierwszej pochodnej funkcji. Pierwsze pochodne lewostronne przyjmują postać:
 \begin{equation}
-{\frac{{\partial }^-f}{\partial x}|}_{i,j}=\frac{f_{i,j}+f_{i-1,j}}{\Delta x}
+\frac{\partial^-f}{\partial x}\bigg|_{i,j}=\frac{f_{i,j}+f_{i-1,j}}{\Delta x}
 \label{leftdfdx}
 \end{equation}
 \begin{equation}
-{\frac{{\partial }^-f}{\partial y}|}_{i,j}=\frac{f_{i,j}+f_{i,j-1}}{\Delta y}
+{\frac{{\partial }^-f}{\partial y}}\bigg|_{i,j}=\frac{f_{i,j}+f_{i,j-1}}{\Delta y}
 \label{leftdfdy}
 \end{equation}
 Analogicznie prawostronne:
 \begin{equation}
-{\frac{{\partial }^+f}{\partial x}|}_{i,j}=\frac{f_{i+1,j}+f_{i,j}}{\Delta x} 
+{\frac{{\partial }^+f}{\partial x}}\bigg|_{i,j}=\frac{f_{i+1,j}+f_{i,j}}{\Delta x} 
 \label{rightdfdx}
 \end{equation}
 \begin{equation}
-{\frac{{\partial }^+f}{\partial y}|}_{i,j}=\frac{f_{i,j+1}+f_{i,j}}{\Delta y}
+{\frac{{\partial }^+f}{\partial y}}\bigg|_{i,j}=\frac{f_{i,j+1}+f_{i,j}}{\Delta y}
 \label{rightdfdy}
 \end{equation}
 Następnie powyższe zależności znajdują zastosowanie w wyznaczeniu wyrażeń\\ ${\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)$ oraz ${\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)+{\partial }_y$. Stosując naprzemiennie schemat lewostronny i prawostronny do liczenia wartości pochodnych wewnętrznych i zewnętrznych w wyniku otrzymuje się ogólny schemat centralny. Stosując powyższe ostatecznie równanie \eqref{NavierAdv} można przedstawić w następującej postaci dyskretnej:
 \begin{align}
 \begin{aligned}
 {\left\{ad\right\}}_{i,j}
-&= \frac{1}{2}\biggl[\left(g_{i,j}+g_{i+1,j}\right)\left({\omega }_{i+1,j}-{\omega }_{i,j}\right) \\[1ex]
-&- \left(g_{i-1,j}+g_{i,j}\right)\left({\omega }_{i,j}-{\omega }_{i-1,j}\right)   \\[1ex]
-&+ \left(g_{i,j}+g_{i,j+1}\right)\left({\omega }_{i,j+1}-{\omega }_{i,j}\right) \\[1ex]
+&= \frac{1}{2}\biggl[\left(g_{i,j}+g_{i+1,j}\right)\left({\omega }_{i+1,j}-{\omega }_{i,j} -\right) \\[1ex]
+&- \left(g_{i-1,j}+g_{i,j}\right)\left({\omega }_{i,j}-{\omega }_{i-1,j}\right) +  \\[1ex]
+&+ \left(g_{i,j}+g_{i,j+1}\right)\left({\omega }_{i,j+1}-{\omega }_{i,j}\right) -\\[1ex]
 &- \left(g_{i,j-1}+g_{i,j}\right)\left({\omega }_{i,j}-{\omega }_{i,j-1}\right)\biggl]
 \end{aligned}
 \label{discreteAnisotropic2}
@@ -415,12 +426,12 @@ Dla przestrzeni dwuwymiarowej równanie przyjmuje postać:
 \end{equation}
 W celu przybliżenia drugiej pochodnej funkcji $f$ w punkcie $(i,j)$ należy rozwinąć funkcję $f$ w dwa szeregi Taylora względem punktu $(i+1,j)$ oraz $(i-1,j)$. Po rozwiązaniu sumy dwóch rozwinięć względem $\frac{{\partial }^2f}{\partial x^2}$ otrzymuje się poniższy sposób dyskretyzacji drugiej pochodnej:
 \begin{equation}
-{\frac{{\partial }^2f}{\partial x^2}\mathrm{|}}_{i,j}\mathrm{=}\frac{f_{i+1,j}-2f_{i,j}+f_{i-1,j}}{\Delta x^2}
+{\frac{{\partial }^2f}{\partial x^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i+1,j}-2f_{i,j}+f_{i-1,j}}{\Delta x^2}
 \label{d2fdx2}
 \end{equation}
 Analogicznie:
 \begin{equation}
-{\frac{{\partial }^2f}{\partial y^2}\mathrm{|}}_{i,j}\mathrm{=}\frac{f_{i,j+1}-2f_{i,j}+f_{i,j-1}}{\Delta y^2}
+{\frac{{\partial }^2f}{\partial y^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i,j+1}-2f_{i,j}+f_{i,j-1}}{\Delta y^2}
 \label{d2fdy2}
 \end{equation}
 Korzystając z \eqref{d2fdx2} oraz \eqref{d2fdy2} równanie \eqref{Poisson} w punkcie $(i,j)$ przyjmuje postać pięciopunktowego analogu różnicowego operatora $\Delta $ ($\Delta x=\ \Delta y=h)$:
@@ -432,7 +443,7 @@ Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe pos
 \begin{align}
 \begin{aligned}
 I^{n+1}_{i,j}
-&= \left(1-\ \beta \right)I^n_{i,j}+\beta \cdot \frac{1}{2}{\left(\frac{1}{\Delta x^2}+\frac{1}{\Delta y^2}\right)}^{-1}\\[1ex]
+&= \left(1-\ \beta \right)I^n_{i,j}+\beta \cdot \frac{1}{2}{\left(\frac{1}{\Delta x^2}+\frac{1}{\Delta y^2}\right)}^{-1} \cdot \\[1ex]
 &\cdot \left[\frac{1}{\Delta x^2}{(I}^n_{i+1,j}+I^{n+1}_{i-1,j})+\frac{1}{\Delta y^2}{(I}^n_{i,j+1}+I^{n+1}_{i,j-1})+{\omega }^n_{i,j}\right]
 \end{aligned}
 \label{DiscreteSOR}
@@ -444,9 +455,9 @@ Metoda w swoim równaniu przyjmuje parametr wagowy $\beta$ odpowiadający za zbi
 \end{equation}
 gdzie $N$ to liczba kolumn przyjętej siatki obliczeniowej. 
 \par
-Operacje wmalowywania bardzo często wykonywane są w punktach maski tworzących nieregularne kształty, mogących znajdować się w różnych częściach obrazu. Stąd powyżej przedstawiony schemat obliczeń wykonywany jest dla wszystkich pikseli obrazu. Po każdej iteracji uzyskane wartości $I^{n+1}$ w znanych punktach przepisywane są z oryginalnego obrazu $I_{o}$, zgodnie z zależnością poniżej.
+Operacje wmalowywania bardzo często wykonywane są w punktach maski tworzących nieregularne kształty, mogących znajdować się w różnych częściach obrazu. Stąd powyżej przedstawiony schemat obliczeń wykonywany jest dla wszystkich pikseli obrazu. Po każdej iteracji uzyskane wartości $I^{n+1}$ w znanych punktach przepisywane są z oryginalnego obrazu $I^{0}$, zgodnie z zależnością poniżej.
 \begin{equation}
-I^{n+1}(D/\mathrm{\Omega }\mathrm{)\ }\ ={\ I}_o(D/\mathrm{\Omega }\mathrm{)}
+I^{n+1}(D/\mathrm{\Omega }\mathrm{)\ }\ ={\ I}^0(D/\mathrm{\Omega }\mathrm{)}
 \label{retrieveMask}
 \end{equation}
 \par
