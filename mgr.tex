@@ -62,15 +62,27 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \glsxtrnewsymbol[description={linia prądu będącą ciągłą linią w polu prędkości płynu}]{Psi}{$\Psi$}
 \glsxtrnewsymbol[description={wirowość płynu}]{omega}{$\omega$}
 \glsxtrnewsymbol[description={współczynnik dyfuzji anizotropowej}]{g}{$g$}
-\glsxtrnewsymbol[description={parametr, liczba rzeczywista}]{wsp}{$\alpha, \beta, \lambda, \mu$}
+\glsxtrnewsymbol[description={}]{wsp1}{$\alpha, \beta, \lambda, \mu$}
+\glsxtrnewsymbol[description={parametr, liczba rzeczywista}]{wsp2}{$\varepsilon, r, p_s, r, Z$}
 \glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$}]{Iij}{$I_{i,j}$}
 \glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$ w chwili czasu $n+1$}]{Iijn}{$I_{i,j}^{n+1}$}
 \glsxtrnewsymbol[description={iloczyn kartezjański zbiorów $a$ i $b$}]{times}{$a \times b$}
 \glsxtrnewsymbol[description={pochodna cząstkowa funkcji wielu zmiennych $f$ względem zmiennej $x$}]{frac}{$\frac{\partial f}{\partial x},\frac{\partial f}{\partial_x},\partial{f}_x$}
 \glsxtrnewsymbol[description={wartość dyskretnej pochodnej cząstkowej funkcji wielu zmiennych $f$ względem zmiennej $x$ w punkcie o współrzędnych dyskretnych $i, j$}]{fracd}{$\frac{\partial f}{\partial x}\big|_{i,j}, \ \partial f_x \big|_{i,j}$}
 \glsxtrnewsymbol[description={pochodna względem czasu $t$}]{fract}{$\frac{\partial }{\partial t}$}
-\glsxtrnewsymbol[description={zbiór funkcji kwadratowo całkowalnych}]{squareint}{$I\in L^2(R^2)$}
-\glsxtrnewsymbol[description={dywergencja funkcji f}]{divf}{$div\left( f \right)$}
+\glsxtrnewsymbol[description={zbiór funkcji kwadratowo całkowalnych}]{squareint}{$L^2(R^2)$}
+\glsxtrnewsymbol[description={dywergencja funkcji $f$}]{divf}{$div\left( f \right)$}
+\glsxtrnewsymbol[description={wahanie funkcji (ang. total variation)}]{tv}{$TV$}
+\glsxtrnewsymbol[description={z ang. non-local color total variation}]{nlctv}{$NLCTV$}
+\glsxtrnewsymbol[description={punkt $(i,j)$ obrazu $I$ }]{points}{$x,y,z$}
+\glsxtrnewsymbol[description={funkcja wagi, podobieństwo punktów $x,y$ obrazu $I$}]{weight}{$w(x,y)$}
+\glsxtrnewsymbol[description={podmacierz obrazu $I$ utworzonych z punktów będących otoczeniem punktu $x$}]{surround}{$I(x+\cdot)$}
+\glsxtrnewsymbol[description={macierz reprezentująca rozkład Gauss'a o odchyleniu standardowym $\sigma$}]{matgauss}{$G_\sigma$}
+\glsxtrnewsymbol[description={iloczyn po współrzędnych macierzy $A$ i $B$}]{hadarmatrix}{$A * B$}
+\glsxtrnewsymbol[description={dziedzina obrazu $I$ nie podlegająca modyfikacji}]{dziedzina}{$D$}
+\glsxtrnewsymbol[description={wypełniana część obrazu $I$}]{wmalowane}{$\Omega$}
+\glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$}]{nlreop}{$p_1$}
+
 \begin{document}
 
 \def \kotmyszm{obr. nr 1}
@@ -586,7 +598,7 @@ Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{df
 możemy równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} przedstawić w następującej postaci dyskretnej:
 \begin{align}
 \begin{aligned}
-u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + {\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\big|_{(i,j}+c_2\big|_{i,j}+c_3\big|_{i,j}+c_4\big|_{i,j}\right)}\right]\bigcdot \\ 
+u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\big|_{i,j}+c_2\big|_{i,j}+c_3\big|_{i,j}+c_4\big|_{i,j}\right)}\right]\bigcdot \\ 
 &\bigcdot \biggl[I\big|_{i,j}- \left(\frac{g^n_1\big|_{i+1,j}\cdot g^n_1\big|_{i-1,j}}{2h}\right)- \left(\frac{g^n_2\big|_{i,j+1}-g^n_2\big|_{i,j-1}}{2h}\right) +\\ 
 &+\ \left(\frac{1}{2\lambda h^2}\right)\bigcdot \Bigl[c_1\big|_{i,j}\cdot u^n\big|_{i+1,j}+c_2\big|_{i,j}\cdot u^n\big|_{i-1,j} +\\
 &+c_3\big|_{i,j}\cdot \lambda \cdot {u}^n\big|_{i,j+1}+c_4\big|_{i,j}\cdot u^n\big|_{i,j-1}\Bigr]\biggr]
@@ -594,38 +606,38 @@ u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + {\frac{1}{2\lambda h^2}\right)\cdot \le
 \end{align}
 \begin{align}
 \begin{aligned}
-g^{n+1}_1\left(i,j\right) &= \left[\frac{2\lambda }{\mu \sqrt{2\lambda }+\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\left(i+1,j\right)-u^n\left(i-1,j\right)}{2h}-\frac{I\left(i+1,j\right)-I\left(i-1,j\right)}{2h} \\
-&+\frac{g_1\left(i+1,j\right)+g_1\left(i-1,j\right)}{h^2}\frac{1}{2h^2}\cdot \Bigl[2g^n_2\left(i,j\right)+\ g^n_2\left(i-1,j-1\right) \\ 
-&+ g^n_2\left(i+1,j+1\right)
-g^n_2\left(i,j-1\right)-\ g^n_2\left(i-1,j\right)+\ g^n_2\left(i+1,j\right) \\
-&-g^n_2\left(i,j+1\right)\Bigr]\Biggr]
+g^{n+1}_1\big|_{i,j} &= \left[\frac{2\lambda }{\mu \sqrt{2\lambda }+\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\big|_{i+1,j}-u^n\big|_{i-1,j}}{2h}-\frac{I\big|_{i+1,j}-I\big|_{i-1,j}}{2h}+\\
+&+\frac{g_1\big|_{i+1,j}+g_1\big|_{i-1,j}}{h^2}\frac{1}{2h^2}\cdot \Bigl[2g^n_2\big|_{i,j}+ g^n_2\big|_{i-1,j-1} +\\ 
+&+ g^n_2\big|_{i+1,j+1}+
+g^n_2\big|_{i,j-1}-g^n_2\big|_{i-1,j}+g^n_2\big|_{i+1,j}-\\
+&-g^n_2\big|_{i,j+1}\Bigr]\Biggr]
 \end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-g^{n+1}_2\left(i,j\right) &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\left(i,j+1\right)-u^n\left(i,j-1\right)}{2h}-\frac{I\left(i,j+1\right)-I\left(i,j-1\right)}{2h} \\ 
-&+\frac{g_2\left(i,j+1\right)+g_2\left(i,j-1\right)}{h^2}+\frac{1}{2h^2}\cdot \Bigl[2g^n_1\left(i,j\right)+\ g^n_1\left(i-1,j-1\right)+ g^n_1\left(i+1,j+1\right) \\
-&-\ g^n_1\left(i,j-1\right)-\ g^n_1\left(i-1,j\right)+\ g^n_1\left(i+1,j\right)-\ g^n_1\left(i,j+1\right)\Bigr]\Biggr]
+g^{n+1}_2\left(i,j\right) &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}-\frac{I\big|_{i,j+1}-I\big|_{i,j-1}}{2h}+\\ 
+&+\frac{g_2\big|_{i,j+1}+g_2\big|_{i,j-1}}{h^2}+\frac{1}{2h^2}\cdot \Bigl[2g^n_1\big|_{i,j}+ g^n_1\big|_{i-1,j-1}+ g^n_1\big|_{i+1,j+1} -\\
+&-\ g^n_1\big|_{i,j-1}-g^n_1\big|_{i-1,j}+g^n_1\big|_{i+1,j}- g^n_1\big|_{i,j+1}\Bigr]\Biggr]
 \end{aligned}
 \end{align}
 przy czym:
 \begin{align}
 \begin{aligned}
-c^n_1\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j\right)-u^n\left(i,j\right)}{h}\right)}^2+\ {\left(\frac{u^n\left(i,j+1\right)-u^n\left(i,j-1\right)}{2h}\right)}^2+\ \varepsilon }}
+c^n_1\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}\right)}^2+\ \varepsilon }}
 \end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-c^n_2\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i,j\right)-u^n\left(i-1,j\right)}{h}\right)}^2+\ {\left(\frac{u^n\left(i-1,j+1\right)-u^n\left(i-1,j-1\right)}{2h}\right)}^2+\ \varepsilon }}
+c^n_2\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i,j}-u^n\big|_{i-1,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i-1,j+1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ \varepsilon }}
 \end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-c^n_3\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j\right)-u^n\left(i-1,j\right)}{2h}\right)}^2+\ {\left(\frac{u^n\left(i,j+1\right)-u^n\left(i,j\right)}{h}\right)}^2+\ \varepsilon }}\end{aligned}
+c^n_3\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i-1,j}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j}}{h}\right)}^2+\ \varepsilon }}\end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-c^n_4\left(i,j\right)=\frac{1}{\sqrt{{\left(\frac{u^n\left(i+1,j-1\right)-u^n\left(i-1,j-1\right)}{2h}\right)}^2+\ {\left(\frac{u^n\left(i,j\right)-u^n\left(i,j-1\right)}{h}\right)}^2+\ \varepsilon }}
+c^n_4\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j-1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j}-u^n\big|_{i,j-1}}{h}\right)}^2+\ \varepsilon }}
 \end{aligned}
 \end{align}
 W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
@@ -637,7 +649,7 @@ Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i 
 	\label{5_fig1}
 \end{figure} \\
 Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce poszukiwanego piksela. Algorytm ten można wykonywać pobierając piksele z granicy w kolejności zgodnej z kolejnością obrotu wskazówek zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich brakujących pikseli. 
-W przypadku obrazów kolorowych $I$ w przestrzeni $[R, G, B]$ wypełnianie można poprzedzić wykonaniem przekształcenia I zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \eqref{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie trzy warstwy uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
+W przypadku obrazów kolorowych $I$ w przestrzeni $[R, G, B]$ wypełnianie można poprzedzić wykonaniem przekształcenia $I$ zgodnie z zależnościami \eqref{TIone}, \eqref{TItwo} i \eqref{TIthree} ze względu na ich lepsze właściwości. Następnie każda z trzech uzyskanych warstw jest rozbijana na własną teksturę i strukturę. W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z 3-ech segmentowanych warstw uzyskiwane wyniki charakteryzują się pojawiającymi się niespójnościami kolorów. Stąd w przypadku odrestaurowywania uzyskanych części $v$, zlokalizowanie piksela będącego najlepszym dopasowaniem aktualnie badanego, nieznanego piksela, odbywa się na podstawie pierwszej warstwy, a wszystkie trzy warstwy uzupełniane są analogicznie do obliczeń uzyskanych na podstawie pierwszej warstwy. Kroki algorytmu można przedstawić następująco:
 \begin{enumerate}
 \item
 Przekształcenie warstw $R,G,B$ obrazu na współrzędne sferyczne $I_1,I_2,I_3$.
@@ -649,8 +661,8 @@ Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ dow
 Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego algorytmu syntezy tekstury $v_1$.
 \end{enumerate}
 \section{Model NLCTV. (Non-local color total variation)}
-Pojęcie wahania funkcji $TV$ w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin, Osher i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie lokalnych operatorów nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
-Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NLCTV$ zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
+Pojęcie wahania funkcji $TV$ (total variation)w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin, Osher i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie operatorów lokalnych nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
+Klasyczny nielokalny model wahania funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wahania funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
 Zgodnie z poprzednim działem niech $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako wynik przekształcenia $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowaną dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji możemy wyrazić zależnością:
 \begin{equation}
 {\mathrm{\nabla }}_{NL}I\left(x,y\right)\triangleq \left[I\left(y\right)-I\left(x\right)\right]\sqrt{w(x,y)}
@@ -669,16 +681,16 @@ w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\lef
 \end{figure}
 Wartość $r$ to zdefiniowana wcześniej stała skalująca wartości podobieństwa pomiędzy pikselami. Podobieństwo wyznaczane jest na podstawie utworzonych okien scentrowanych względem piksela $x$ oraz $y$ oznaczanych operatorem "$\cdot$" zgodnie z \autoref{3_fig3}. Normę macierzową występującą w powyższej zależności można wyznaczyć korzystając z normy Frobeniusa:
 \begin{equation}
-{\|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\|}=\ \sum^n_{i=1}{\sum^n_{j=1}{{\left(I_{(x+\ \cdot) }\left(i,j\right)-I_{(y+\ \cdot)}\left(i,j\right)\right)}^2}}
+{\|I\left(x+\cdot \right)-I\left(y+\cdot \right)\|}=\ \sum^{p_s}_{i=1}{\sum^{p_s}_{j=1}{{\left(I(x+\cdot)\big|_{i,j}-I(y+\cdot)\big|_{i,j}\right)}^2}}
 \label{FROBENIUS}
 \end{equation}
-gdzie wartość $n$ odpowiada wielkości badanego okna i stanowi wcześniej definiowany parametr. Zmienna $G_\sigma$ reprezentuje macierz o rozmiarze zgodnym z operatorem otoczenia danego piksela $\cdot$. Wartości macierzy pozwalają stopniować wpływ każdego z rozpatrywanych pikseli na uzyskiwany wynik poprzez przyznawanie większego priorytetu pikselom centralnym, przy deprecjonowaniu tych bardziej oddalonych od centrum. Dla $G_\sigma$ zachodzi:
+gdzie wartość $p_s$ odpowiada wielkości badanego fragmentu i stanowi wcześniej definiowany parametr. Zmienna $G_\sigma$ reprezentuje macierz o rozmiarze zgodnym z operatorem otoczenia danego piksela "$\cdot$" - $p_s$. Wartości macierzy pozwalają stopniować wpływ każdego z rozpatrywanych pikseli na uzyskiwany wynik poprzez przyznawanie większego priorytetu pikselom centralnym, przy deprecjonowaniu tych bardziej oddalonych od centrum. Dla $G_\sigma$ zachodzi:
 \begin{align}
-\int_{D}G_{\sigma}(h)dh = 1
+\int_{I(x+\cdot)}G_{\sigma}(y)dy = 1
 \end{align}
 Rozważając okno Gauss'owskie $G_\sigma$ możemy je opisać zależnością:
 \begin{align}
-G_\sigma(h)=\frac{1}{Z}\exp(-\frac{\|h\|}{2\sigma^2})
+G_\sigma(z)=\frac{1}{Z}\exp(-\frac{\|z\|}{2\sigma^2})
 \label{oknoGaussowskie}
 \end{align}
 gdzie $\sigma$ odpowiada odchyleniu standardowemu, a $Z$ współczynnikowi normalizującemu. Podobnie jak w przypadku gradientu nielokalnego funkcja wagi stanowi przekształcenie $D \times D\longrightarrow R$. Kolejnymi ważnymi nielokalnymi operatorami wykonanymi w punkcie $x$ są: 
@@ -710,8 +722,8 @@ laplasjan przekształcenia
 \end{itemize}
 Warto zauważyć, iż w przypadku przekształceń w postaci nielokalnego gradientu \eqref{NLGRAD} oraz wagi \eqref{NLWEIGHT} zachodzą odpowiednio zależności:
 \begin{align}
-\left(p\left(x,y\right)-p\left(y,x\right)\right) &= \left({\mathrm{\nabla }}_{NL}I\left(x,y\right)-{\mathrm{\nabla }}_{NL}I\left(y,x\right)\right)  \notag \\ 
-&= \left({\mathrm{\nabla }}_{NL}I\left(x,y\right)+{\mathrm{\nabla }}_{NL}I\left(x,y\right)\right) \notag \\
+\left(p\left(x,y\right)-p\left(y,x\right)\right) &= \left({\mathrm{\nabla }}_{NL}I\left(x,y\right)-{\mathrm{\nabla }}_{NL}I\left(y,x\right)\right)  \notag =\\ 
+&= \left({\mathrm{\nabla }}_{NL}I\left(x,y\right)+{\mathrm{\nabla }}_{NL}I\left(x,y\right)\right) \notag =\\
 &=2{\mathrm{\nabla }}_{NL}I\left(x,y\right)\
 \label{NLPOM}
 \end{align}
