@@ -62,13 +62,15 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \glsxtrnewsymbol[description={linia prądu będącą ciągłą linią w polu prędkości płynu}]{Psi}{$\Psi$}
 \glsxtrnewsymbol[description={wirowość płynu}]{omega}{$\omega$}
 \glsxtrnewsymbol[description={współczynnik dyfuzji anizotropowej}]{g}{$g$}
-\glsxtrnewsymbol[description={parametry, reprezentacja parametryzowanej liczby rzeczywistej}]{wsp}{$\alpha, \beta$}
+\glsxtrnewsymbol[description={parametr, liczba rzeczywista}]{wsp}{$\alpha, \beta, \lambda, \mu$}
 \glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$}]{Iij}{$I_{i,j}$}
 \glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$ w chwili czasu $n+1$}]{Iijn}{$I_{i,j}^{n+1}$}
 \glsxtrnewsymbol[description={iloczyn kartezjański zbiorów $a$ i $b$}]{times}{$a \times b$}
-\glsxtrnewsymbol[description={pochodna cząstkowa funkcji wielu zmiennych $f$ względem zmiennej $x$}]{frac}{$\frac{\partial f}{\partial x},\partial{f}_x$}
+\glsxtrnewsymbol[description={pochodna cząstkowa funkcji wielu zmiennych $f$ względem zmiennej $x$}]{frac}{$\frac{\partial f}{\partial x},\frac{\partial f}{\partial_x},\partial{f}_x$}
 \glsxtrnewsymbol[description={wartość dyskretnej pochodnej cząstkowej funkcji wielu zmiennych $f$ względem zmiennej $x$ w punkcie o współrzędnych dyskretnych $i, j$}]{fracd}{$\frac{\partial f}{\partial x}\big|_{i,j}, \ \partial f_x \big|_{i,j}$}
 \glsxtrnewsymbol[description={pochodna względem czasu $t$}]{fract}{$\frac{\partial }{\partial t}$}
+\glsxtrnewsymbol[description={zbiór funkcji kwadratowo całkowalnych}]{squareint}{$I\in L^2(R^2)$}
+\glsxtrnewsymbol[description={dywergencja funkcji f}]{divf}{$div\left( f \right)$}
 \begin{document}
 
 \def \kotmyszm{obr. nr 1}
@@ -407,7 +409,7 @@ Następnie powyższe zależności znajdują zastosowanie w wyznaczeniu wyrażeń
 \begin{align}
 \begin{aligned}
 {\left\{ad\right\}}_{i,j}
-&= \frac{1}{2}\biggl[\left(g_{i,j}+g_{i+1,j}\right)\left({\omega }_{i+1,j}-{\omega }_{i,j} -\right) \\[1ex]
+&= \frac{1}{2}\biggl[\left(g_{i,j}+g_{i+1,j}\right)\left({\omega }_{i+1,j}-{\omega }_{i,j}\right) -\\[1ex]
 &- \left(g_{i-1,j}+g_{i,j}\right)\left({\omega }_{i,j}-{\omega }_{i-1,j}\right) +  \\[1ex]
 &+ \left(g_{i,j}+g_{i,j+1}\right)\left({\omega }_{i,j+1}-{\omega }_{i,j}\right) -\\[1ex]
 &- \left(g_{i,j-1}+g_{i,j}\right)\left({\omega }_{i,j}-{\omega }_{i,j-1}\right)\biggl]
@@ -500,7 +502,7 @@ G_{i,j}=\ r_{i,j}{\mathrm{sin} {\theta }_{\mathrm{i,j}}\ }
 \end{equation}
 Operację wmalowywania można wykonać na pierwotnych składowych $[R,G,B]$ lecz matematyczna transformacja przestrzeni charakteryzuje się lepszymi właściwościami związanymi z postrzeganiem różnicy barw $\delta E$ przez ludzkie oko:
 \begin{equation}
-\Delta E=\ \sqrt{{\left(\Delta I_1\right)}^2+{\left(\Delta I_2\right)}^2+{\left(\Delta I_3\right)}^2}
+\Delta E=\ \sqrt{{\Delta I_1}^2+{\Delta I_2}^2+{\Delta I_3}^2}
 \label{deltaE}
 \end{equation}
 \chapter{Analiza funkcjonalna.}
@@ -520,15 +522,15 @@ gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni 
 \begin{align}
 \begin{aligned} 
 \mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right|+\lambda \int{{\left|I-u-{\partial }_xg_1-{\partial }_yg_2\right|}^2dxdy}} \\
-&+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^pdxdy}\right]}^{\frac{1}{p}}\Biggr\}
+&+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^\beta dxdy}\right]}^{\frac{1}{\beta}}\Biggr\}
 \end{aligned}
 \end{align}
 gdzie:
 \begin{align}
-v=div\left(\mathop{g}\limits^{\rightharpoonup}\right),\ \mathop{g}\limits^{\rightharpoonup}=\left(g_1,g_2\right),\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
+v=div\left(\mathop{g}\right),\ \mathop{g}=\left[g_1,g_2\right],\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
 \label{VG1G2}
 \end{align}
-oraz $p\to \mathrm{\infty }$. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange'a uzyskuje się odpowiadające mu postacie funkcji wykorzystywane do minimalizacji energii:
+oraz $\beta \to \mathrm{\infty }$. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange'a uzyskuje się odpowiadające mu postacie funkcji wykorzystywane do minimalizacji energii:
 \begin{align}
 u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
 \end{align}
@@ -540,9 +542,9 @@ u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathr
 \end{align}
 gdzie $\mu$ stanowi wcześniej definiowany parametr dyskretyzacji, natomiast $H\left(g_1,g_2\right)$ opisane jest wzorem:
 \begin{align}
-H\left(g_1,g_2\right)={{{\left|\left|\sqrt{g^2_1+g^2_2}\right|\right|}_p}^{1-p}}{\left(\sqrt{g^2_1+g^2_2}\right)}^{p-2}
+H\left(g_1,g_2\right)={{{\left|\left|\sqrt{g^2_1+g^2_2}\right|\right|}_\beta}^{1-\beta}}{\left(\sqrt{g^2_1+g^2_2}\right)}^{\beta-2}
 \end{align}
-Zgodnie z zaleceniami podanymi w \cite{vese2003modeling} w celach dyskretyzacji parametr $p$ przyjęto równy 1, ze względu na brak znaczących różnic wyniku w przypadku stosowania większych wartości. Wtedy:
+Zgodnie z zaleceniami podanymi w \cite{vese2003modeling} w celach dyskretyzacji parametr $\beta$ przyjęto równy 1, ze względu na brak znaczących różnic wyniku w przypadku stosowania większych wartości. Wtedy:
 \begin{align}
 H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}}
 \end{align}
@@ -577,17 +579,17 @@ u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\ri
 Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz poniższą metodę aproksymacji pochodnej drugiego stopnia:
 \begin{align}
 \begin{aligned} 
-{\partial }_{xy}g_1\left(i,j\right) &\cong \frac{1}{2h^2}\ \bigg[2g_1\left(i,\ j\right)+g_1\left(i-1,\ j-1\right)+g_1\left(i+1,\ j+1\right)-g_1\left(i,\ j-1\right) \\ 
-&-g_1\left(i-1,\ j\right)-g_1\left(i+1,\ j\right)-g_1\left(i,\ j+1\right)\bigg]
+{\partial }_{xy}g_1 \big|_{i,j} &\cong \frac{1}{2h^2} \bigg[2g_1\big|_{i,j}+g_1\big|_{i-1,j-1}+g_1\big|_{i+1,j+1}-g_1\big|_{i,\ j-1} -\\ 
+&-g_1\big|_{i-1,j}-g_1\big|_{i+1,j}-g_1\big|_{i,j+1}\bigg]
 \end{aligned}
 \end{align}
 możemy równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} przedstawić w następującej postaci dyskretnej:
 \begin{align}
 \begin{aligned}
-u^{n+1}\left(i,j\right) &= \left[\frac{1}{\ 1\ +\ \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\left(i,j\right)+c_2\left(i,j\right)+c_3\left(i,j\right)+c_4\left(i,j\right)\right)\ }\right] \\ 
-&\bigcdot \biggl[I\left(i,j\right)-\ \left(\frac{g^n_1\left(i+1,j\right)\cdot g^n_1\left(i-1,j\right)}{2h}\right)-\ \left(\frac{g^n_2\left(i,j+1\right)-g^n_2\left(i,j-1\right)}{2h}\right) \\ 
-&+\ \left(\frac{1}{2\lambda h^2}\right)\bigcdot \Bigl[c_1\left(i,j\right)\cdot u^n\left(i+1,j\right)+c_2\left(i,j\right)\cdot u^n\left(i-1,j\right) \\
-&+c_3\left(i,j\right)\cdot \lambda {\cdot u}^n\left(i,j+1\right)+c_4\left(i,j\right)\cdot u^n\left(i,j-1\right)\Bigr]\biggr]
+u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + {\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\big|_{(i,j}+c_2\big|_{i,j}+c_3\big|_{i,j}+c_4\big|_{i,j}\right)}\right]\bigcdot \\ 
+&\bigcdot \biggl[I\big|_{i,j}- \left(\frac{g^n_1\big|_{i+1,j}\cdot g^n_1\big|_{i-1,j}}{2h}\right)- \left(\frac{g^n_2\big|_{i,j+1}-g^n_2\big|_{i,j-1}}{2h}\right) +\\ 
+&+\ \left(\frac{1}{2\lambda h^2}\right)\bigcdot \Bigl[c_1\big|_{i,j}\cdot u^n\big|_{i+1,j}+c_2\big|_{i,j}\cdot u^n\big|_{i-1,j} +\\
+&+c_3\big|_{i,j}\cdot \lambda \cdot {u}^n\big|_{i,j+1}+c_4\big|_{i,j}\cdot u^n\big|_{i,j-1}\Bigr]\biggr]
 \end{aligned}
 \end{align}
 \begin{align}
