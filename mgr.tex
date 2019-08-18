@@ -54,17 +54,10 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 
 %---lista oznaczeń
 \glsxtrnewsymbol[description={przyporządkowanie elementom ze zbioru $a$ elementów ze zbioru $b$}]{rarrow}{$a \rightarrow b$}
-\glsxtrnewsymbol[description={prędkość lokalna płynu}]{V}{$V$}
-\glsxtrnewsymbol[description={gęstość lokalna płynu}]{q}{$q$}
-\glsxtrnewsymbol[description={ciśnienie płynu}]{p}{$p$}
-\glsxtrnewsymbol[description={siła lokalna działająca na płyn}]{F}{$F$}
-\glsxtrnewsymbol[description={lepkość kinematyczna}]{Ni}{$\nu$}
-\glsxtrnewsymbol[description={linia prądu będącą ciągłą linią w polu prędkości płynu}]{Psi}{$\Psi$}
-\glsxtrnewsymbol[description={wirowość płynu}]{omega}{$\omega$}
-\glsxtrnewsymbol[description={współczynnik dyfuzji anizotropowej}]{g}{$g$}
 \glsxtrnewsymbol[description={}]{wsp1}{$\alpha, \beta, \lambda, \mu$}
-\glsxtrnewsymbol[description={parametr, liczba rzeczywista}]{wsp2}{$\varepsilon, r, p_s, r, Z$}
-\glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$}]{Iij}{$I_{i,j}$}
+\glsxtrnewsymbol[description={}]{wsp2}{$Z, \varepsilon, r, p_s, r$}
+\glsxtrnewsymbol[description={parametr, liczba rzeczywista}]{wsp3}{$\Theta$}
+\glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $(i ,j), x$}]{Iij}{$I_{i,j}, I_{x}$}
 \glsxtrnewsymbol[description={wartość piksela obrazu $I$ w punkcie o współrzędnych $i ,j$ w chwili czasu $n+1$}]{Iijn}{$I_{i,j}^{n+1}$}
 \glsxtrnewsymbol[description={iloczyn kartezjański zbiorów $a$ i $b$}]{times}{$a \times b$}
 \glsxtrnewsymbol[description={pochodna cząstkowa funkcji wielu zmiennych $f$ względem zmiennej $x$}]{frac}{$\frac{\partial f}{\partial x},\frac{\partial f}{\partial_x},\partial{f}_x$}
@@ -81,7 +74,7 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \glsxtrnewsymbol[description={iloczyn po współrzędnych macierzy $A$ i $B$}]{hadarmatrix}{$A * B$}
 \glsxtrnewsymbol[description={dziedzina obrazu $I$ nie podlegająca modyfikacji}]{dziedzina}{$D$}
 \glsxtrnewsymbol[description={wypełniana część obrazu $I$}]{wmalowane}{$\Omega$}
-\glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$}]{nlreop}{$p_1$}
+\glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$}]{nlreop}{$p$}
 
 \begin{document}
 
@@ -737,69 +730,69 @@ w(x,y) = w(y,x)
 \label{SMARTWEIGHT}
 \end{equation}
 Nielokalna dywergencja stanowi przekształcenie $D \times D \longrightarrow D$.
-W celu dyskretyzacji powyższych równań należy zgodnie z \cite{gilboa2008nonlocal} wprowadzić pojęcie okna poszukiwania ${\mathrm{N}}_i$, gdzie $i\in D,\ j\in {\mathrm{N}}_i$. Rozmiar okna stanowi wcześniej definiowany parametr. Dla wszystkich pikseli w oknie zachodzi zależność ${\mathrm{N}}_i\coloneqq \left\{j:w_{i,j}>0\right\}$. Wprowadzenie okna skutkuje ograniczeniem wcześniej wprowadzonego przekształcenia $D \times D\longrightarrow R$ do $\mathrm{N} \times D\longrightarrow R$.
+W celu dyskretyzacji powyższych równań należy zgodnie z \cite{gilboa2008nonlocal} wprowadzić pojęcie okna poszukiwania ${\mathrm{N}}_x$, gdzie $x\in D,\ y\in {\mathrm{N}}_x$. ${\mathrm{N}}_x$ jest podzbiorem obrazu składającym się z punktów będących otoczeniem punktu $x$. Rozmiar okna stanowi wcześniej definiowany parametr. Dla wszystkich pikseli w oknie zachodzi zależność ${\mathrm{N}}_x\coloneqq \left\{y:w_{x,y}>0\right\}$. Wprowadzenie okna skutkuje ograniczeniem wcześniej wprowadzonego przekształcenia $D \times D\longrightarrow R$ do $\mathrm{N} \times D\longrightarrow R$.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.5]{rysunki/3_fig4.png}
+	\includegraphics[scale=0.4]{rysunki/3_fig4.png}
 	\caption{Przykładowe okna ${\boldsymbol{\mathrm{N}}}_{\boldsymbol{x}}\boldsymbol{,\ }{\boldsymbol{\mathrm{N}}}_{\boldsymbol{y}}$ utworzone dla pikseli $\boldsymbol{x},\boldsymbol{y}$.}
 	\label{3_fig4}
 \end{figure}
 \par
-Niech indeksy dolne wskazują na dyskretną lokalizację w przestrzeni obrazu $D$. Wtedy nielokalne operatory przedstawić można za pomocą zdyskretyzowanych równań:
+Nielokalne operatory można przedstawić za pomocą zdyskretyzowanych równań:
 \begin{equation}
-{\mathrm{\nabla }}_{NLd}I_{i,j}\triangleq \left(I_j-I_i\right)\sqrt{w_{i,j}}
+{\mathrm{\nabla }}_{NLd}I|_{x,y}\triangleq \left(I_y-I_x\right)\sqrt{w_{x,y}}
 \label{DNLGRAD}
 \end{equation}
 \begin{equation}
-w_{i,j}={\mathrm{exp} \left\{-\sum_{l\in G_{\sigma },j\in N_i,k\in N_j \\
-}{{G_{\sigma }}_l\ast {\left|I_j-I_k\right|}^2}\right\}\ }
+w_{x,y}={\mathrm{exp} \left\{-\sum_{y\in N_x,k\in N_y \\
+}{{G_{\sigma}}_y \ast {\left|I_y-I_k\right|}^2}\right\}\ }
 \label{DNLWEIGHT}
 \end{equation}
 \begin{equation}
-{\left|\overrightarrow{p}\right|}_i\triangleq \sqrt{\sum_{j\in N_i \\ 
-}{{\left(p_{i,j}\right)}^2}}
+{\left|\overrightarrow{p}\right|}_x\triangleq \sqrt{\sum_{y\in N_x \\ 
+}{{\left(p_{x,y}\right)}^2}}
 \label{DNLMAG}
 \end{equation}
 \begin{equation}
-{\mathrm{\nabla }}_{NLd}\cdot \overrightarrow{p_i}\ \triangleq \sum_{ 
-j\in N_i \\ 
-}{\left(p_{i,j}-p_{j,i}\right)}\sqrt{w_{i,j}}
+{\mathrm{\nabla }}_{NLd}\cdot \overrightarrow{p}\big|_x \triangleq \sum_{ 
+y\in N_x \\ 
+}{\left(p_{x,y}-p_{y,x}\right)}\sqrt{w_{x,y}}
 \label{DNLDIV}
 \end{equation}
 \begin{equation}
-{\mathrm{\Delta }}_{NL}{\overrightarrow{p}}_i\ \triangleq \sum_{
-j\in N_i \\ 
-}{\left(I_j-I_i\right)}w_{i,j}
+{\mathrm{\Delta }}_{NL}{\overrightarrow{p}}\big|_x \triangleq \sum_{
+y\in N_x \\ 
+}{\left(I_y-I_x\right)}w_{x,y}
 \label{DNLLAP}
 \end{equation}
 W szczególnym przypadku dla \eqref{NLDIVSMART} można zapisać:
 \begin{equation}
-{\mathrm{\nabla }}_{NLd}\cdot \overrightarrow{p_i}\ \triangleq \sum_{ 
-j\in N_i \\ 
-}{2p_{i,j}}\sqrt{w_{i,j}}
+{\mathrm{\nabla }}_{NLd}\cdot \overrightarrow{p}\big|_x \triangleq \sum_{ 
+y\in N_x \\ 
+}{2p_{x,y}}\sqrt{w_{x,y}}
 \label{DNLDIVSMART}
 \end{equation}
-Warto zauważyć, iż indeksy $i,j$ wskazują na konkretny piksel w obrazie. Lokalizacji w przestrzeni $2D$ dokonuje się przez znajomość par: $i=(x_i,y_i)$ oraz $j=(x_j,y_j)$, gdzie $x$ oznacza oś rzędnych, odpowiednio $y$ oznacza oś odciętych.
+Warto zauważyć, iż indeksy $x,y$ wskazują na konkretny piksel w obrazie. Lokalizacji w przestrzeni $2D$ dokonuje się przez znajomość par: $x=(i_x,j_x)$ oraz $y=(i_y,j_y)$.
 \par 
 Nielokalny model wahania funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
 \begin{equation}
-{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-f\right)}^2}dx\ \right\}\ }
+{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-I^0\right)}^2}dx\ \right\}\ }
 \label{NLTVGRAY}
 \end{equation}
-gdzie $f$ stanowi oryginalny obraz wejściowy $f\left(x\right):D\mathrm{\longrightarrow }\mathrm{R}$, natomiast $u\left(x\right):D\mathrm{\longrightarrow }\mathrm{R}$ obraz wynikowy, będący obrazem wmalowanym, bądź w przypadku pierwotnych założeń obrazem z usuniętym szumem. W przypadku zagadnienia wmalowywania zmienna ${\lambda }_d$ to funkcja definiowana na podstawie maski obrazu przyjmująca następujące wartości:
+gdzie $I^0$ stanowi oryginalny obraz wejściowy, natomiast $u\left(x\right):D\mathrm{\longrightarrow }\mathrm{R}$ obraz wynikowy, będący obrazem wmalowanym, bądź w przypadku pierwotnych założeń obrazem z usuniętym szumem. W przypadku zagadnienia wmalowywania zmienna ${\lambda }_d$ to funkcja definiowana na podstawie maski obrazu przyjmująca następujące wartości:
 \begin{equation}
 {\lambda }_d\left(x\right)=\left\{ \begin{array}{c}
-0\ x\ \epsilon \ \mathrm{\Omega } \\ 
-1\ x\ \epsilon \ D/\mathrm{\Omega } \end{array}
+0\ x \in \Omega \\ 
+\ \ \ \ \ 1\ x \in D/ \Omega \end{array}
 \right\}
 \label{maskFunction}
 \end{equation}
 Tak zdefiniowany model można przekształcić wykorzystując operację podziału Bregman’a. Podział stosuje się w celu poprawienia wydajności obliczeniowej w przypadku dyskretnej implementacji problemu minimalizacji energii. Wprowadzenie pomocniczej zmiennej $\overrightarrow{v}=v\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }x\ \mathrm{\Omega }\longrightarrow R$ i parametru Bregman’a $\overrightarrow{b}=\overrightarrow{b}\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }x\ \mathrm{\Omega }\longrightarrow R$ pozwala przekształcić problem minimalizacji powyższej energii do następującej postaci iteracyjnej:
 \begin{align}
 \begin{aligned}
-\left(u^{k+1},{\overrightarrow{v}}^{k+1}\right) &= arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}} E\left(u,\overrightarrow{v}\right)\\ 
+\left(u^{k+1},{\overrightarrow{v}}^{k+1}\right) &= arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}} E\left(u,\overrightarrow{v}\right)=\\ 
 &= \biggl\{arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}}
-\int_D{|\overrightarrow{v}|\left(x\right)}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-f\right)}^2}dx \\
+\int_D{|\overrightarrow{v}|\left(x\right)}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-I^0\right)}^2}dx+\\
 &+  \frac{\mathrm{\Theta }}{2}\int_D{{\left|\overrightarrow{v}-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right|}^2(x)}dx\ \biggr\}
 \end{aligned}
 \label{NLTVGRAYMINPROB}
@@ -810,7 +803,7 @@ Tak zdefiniowany model można przekształcić wykorzystując operację podziału
 \end{align}
 gdzie $\Theta$ stanowi wcześniej definiowany parametr algorytmu. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange’a, metodę przedstawioną w \cite{tai2011fast} oraz schemat iteracyjny Gauss’a-Seidel’a powyższe równania można sprowadzić do problemu iteracyjnego rozwiązania poniższych zależności:
 \begin{align}
-{\lambda }_D\left(u-f\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0
+{\lambda }_D\left(u-I^0\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0
 \label{ELNLTV1}
 \end{align}
 \begin{align}
@@ -821,15 +814,15 @@ Zależności te można stosować do obrazów w odcieniach szarości, bądź obra
 \par
 W celu uzależnienia od siebie wszystkich warstw obrazu autorzy w \cite{duan2015fast} proponują zastosowanie funkcjonału MTV przedstawionego w \cite{yang2009fast}, funkcjonału $CTV$ przedstawionego w \cite{blomgren1998color}, bądź model Mumford-Shah’a dokładnie opisanego w \cite{jung2011nonlocal}. Ze względu na wydajniejszą implementację oraz najlepsze wyniki uzyskiwane w przypadku modelu $CTV$ został on wybrany do badań w niniejszej pracy. Wykorzystując wspomniany funkcjonał energia przyjmuje postać:
 \begin{align}
-{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}\ }\ +\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-f_i\right)}^2}dx}\ \right\}\ }
+{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}}+\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-I^0_i\right)}^2}dx}\ \right\}\ }
 \label{ENLCTV}
 \end{align}
 gdzie $m$ odpowiada ilości warstw tworzących kolorowy obraz. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacznie obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm podziału Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
 \begin{align}
 \begin{aligned}
-\mathop{\mathrm{min}}_{u}E\left(u\right) &= \mathop{\mathrm{min}}_{u}\Biggl\{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}\ }\\ 
-&+\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-f_i\right)}^2}dx} 
-+\frac{\theta }{2}\sum^m_{i=1}{\int_D{{\left|\overrightarrow{v_i}-{\mathrm{\nabla }}_{NL}u_i-\ {\overrightarrow{b_i}}^{k+1}\right|}^2\left(x\right)}dx}\Biggr\}
+\mathop{\mathrm{min}}_{u}E\left(u\right) &= \mathop{\mathrm{min}}_{u}\Biggl\{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}}+\\ 
+&+\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-I^0_i\right)}^2}dx} 
++\frac{\theta }{2}\sum^m_{i=1}{\int_D{{\left|\overrightarrow{v_i}-{\mathrm{\nabla }}_{NL}u_i- {\overrightarrow{b_i}}^{k+1}\right|}^2\left(x\right)}dx}\Biggr\}
 \end{aligned}
 \label{ENLCTV1}
 \end{align}
@@ -839,24 +832,24 @@ gdzie $m$ odpowiada ilości warstw tworzących kolorowy obraz. Zastosowanie rów
 \end{align}
 Przyjmując naprzemienną strategię minimalizacji energii można uzyskać równania Eulera-Lagrange’a wyznaczone oddzielnie względem zmiennych $u$ oraz $v$:
 \begin{align}
-{\lambda }_D\left(u_i-f_i\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v_i}}^k-{\mathrm{\nabla }}_{NL}u_i-{{\overrightarrow{b}}_i}^{k+1}\right)=0
+{\lambda }_D\left(u_i-I^0_i\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v_i}}^k-{\mathrm{\nabla }}_{NL}u_i-{{\overrightarrow{b}}_i}^{k+1}\right)=0
 \label{ELNLCTV1}
 \end{align}
 \begin{align}
 \mathrm{\Theta }\left(\overrightarrow{v_i}\mathrm{-}{\mathrm{\nabla }}_{NL}u^{k+1}_i\mathrm{-}{{\overrightarrow{b}}_i}^{k+1}\right)\mathrm{+}\frac{\int_D{\left|\overrightarrow{v_i}\right|(x)}dx}{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}\ }}\frac{\overrightarrow{v_i}}{\left|\overrightarrow{v_i}\right|(x)}\mathrm{=0}
 \label{ELNLCTV2}
 \end{align}
-W celu przedstawienia dyskretnej formy równań \eqref{ELNLCTV1} i  \eqref{ELNLCTV2} i \eqref{ELNLCTV2} wygodnym będzie zapis dla konkretnego piksela $l\in D$ w obrazie. W przypadku \eqref{ELNLCTV1}: 
+W celu przedstawienia dyskretnej formy równań \eqref{ELNLCTV1} i  \eqref{ELNLCTV2} i \eqref{ELNLCTV2} wygodnym będzie zapis dla konkretnego piksela $z\in D$ w obrazie. W przypadku \eqref{ELNLCTV1}: 
 \begin{align}
-{\left({\lambda }_D\right)}_l\ \ \left[{\left(u_i\right)}_l-{\left(f_i\right)}_l\right]+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left[{\left({\overrightarrow{v_i}}^k\right)}_l-{\left({\mathrm{\nabla }}_{NL}u_i\right)}_l-{\left({{\overrightarrow{b}}_i}^{k+1}\right)}_l\right]=0
+{{\lambda }_D}_z \left[u_{i_z}-{I^0_i}_z\right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left({{\overrightarrow{v_i}}^k}_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{{{\overrightarrow{b}}_i}^{k+1}}_z\right)=0
 \label{DELNLCTV1}
 \end{align}
 Korzystając z dyskretnych postaci równań \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{NLPRODUCT} i \eqref{NLDIV} równanie \eqref{ELNLCTV1} można przedstawić w postaci:
 \begin{align}
 \begin{aligned}
-{{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
-&+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l \\
-&-\mathrm{\Theta} \Biggl( \sum_{j\in N_i} \left( \left({ v^k_i}\right)_{l,j} - (\left({ v^k_i}\right)_{l,j} - (\left({ v^k_i}\right)_{l,j} + (\left({ v^k_i}\right)_{l,j}\right) \sqrt{{\left(w_i\right)}_{l,j}} \Biggr]
+{u^{k+1}_i}_{z} &= \frac{1}{\lambda_{D_z}+2\mathrm{\Theta} \sum\limits_{y\in N_i} w_{i_{z,y}}} \Biggl[2\mathrm{\Theta }\sum_{y\in N_i} {{{u^k_i}_y w_i}_{z,y}}+\\
+&+ {\lambda_D}_z \ {I^0_i}_z -\\
+&-\mathrm{\Theta} \Biggl[\sum_{y\in N_z} \left({ v^k_i}_{z,y} - { v^k_i}_{z,y} - { v^k_i}_{z,y} + { v^k_i}_{z,y}\right) \sqrt{{w_i}_{z,y}} \Biggr]
 \end{aligned}
 \label{uNLCTV}
 \end{align}
@@ -870,20 +863,20 @@ W przypadku równania \eqref{ELNLCTV1} Eulera-Lagrange’a należy przekształci
 \end{align}
 Podobnie, korzystając z dyskretnych form \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{FROBENIUS}, \eqref{NLPRODUCT} i \eqref{NLDIV} równanie \eqref{DELNLCTV2} można przedstawić w postaci:
 \begin{align}
-{\left({\overrightarrow{v_i}}^{k+1}\right)}_l\cong {\mathrm{max} \left({\left|A^{k+1}_i\right|}_l-\frac{B^k_i}{\mathrm{\Theta }\sqrt{\sum^m_{i=1}{{\left(B^k_i\right)}^2}\ }},0\right)\frac{{\left(A^{k+1}_i\right)}_l}{{\left|A^{k+1}_i\right|}_l}\ }
+{{\overrightarrow{v_i}}^{k+1}}_z \cong {\mathrm{max} \left({\left|A^{k+1}_i\right|}_z-\frac{B^k_i}{\mathrm{\Theta }\sqrt{\sum^m_{i=1}{{\left(B^k_i\right)}^2}\ }},0\right)\frac{{A^{k+1}_i}_z}{{\left|A^{k+1}_i\right|}_z}\ }
 \label{VNLCTVITER}
 \end{align}
 gdzie:
 \begin{align}
-{\left(A^{k+1}_i\right)}_l=\left({\left(u^{k+1}_i\right)}_j-{\left(u^{k+1}_i\right)}_l\right)\sqrt{{\left(w_i\right)}_{l,j}}+{\left(b^{k+1}_i\right)}_{l,j}
+{A^{k+1}_i}_z=\left({u^{k+1}_i}_y-{u^{k+1}_i}_z\right)\sqrt{w_{i_{z,y}}}+{b^{k+1}_i}_{z,y}
 \end{align} 
 \begin{align}
-{\left|A^{k+1}_i\right|}_l=\sqrt{\sum_j{{\left(\left({\left(u^{k+1}_i\right)}_j-{\left(u^{k+1}_i\right)}_l\right)\sqrt{{\left(w_i\right)}_{l,j}}+{\left(b^{k+1}_i\right)}_{l,j}\right)}^2}\ }
+{\left|A^{k+1}_i\right|}_z=\sqrt{\sum_y{{\left[\left({u^{k+1}_i}_y-{u^{k+1}_i}_z\right)\sqrt{{w_i}_{z,y}}+{b^{k+1}_i}_{z,y}\right]}^2}\ }
 \end{align}
 \begin{align}
-B^k_i=\sum_l{\sqrt{\sum_j{{{\left(v^k_i\right)}^2}_{l,j}}}}
+B^k_i=\sum_z{\sqrt{\sum_y{{{v^k_i}^2}_{z,y}}}}
 \end{align}
-Warto przypomnieć, iż w przytoczonych wzorach $j$ odpowiada pikselom znajdującym się oknie poszukiwania ${\mathrm{N}}_l$ scentrowanym względem piksela $l$, natomiast $i$ odpowiada $i$-tej warstwie spośród warstw tworzących obraz kolorowy. Autorzy w \cite{jung2011nonlocal} proponują zmodyfikowany sposób wyznaczania wagi uwzględniający kształt maski w obrazie:
+Warto przypomnieć, iż w przytoczonych wzorach $y$ odpowiada pikselom znajdującym się oknie poszukiwania ${\mathrm{N}}_z$ scentrowanym względem piksela $z$, natomiast $i$ odpowiada $i$-tej warstwie spośród warstw tworzących obraz kolorowy. Autorzy w \cite{jung2011nonlocal} proponują zmodyfikowany sposób wyznaczania wagi uwzględniający kształt maski w obrazie:
 \begin{align}
 w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\chi }_R\left(x+\ \cdot \right){\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\}\ }
 \label{NLWEIGHTMASK}
@@ -891,8 +884,8 @@ w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\chi }_R\le
 gdzie:
 \begin{equation}
 {\chi }_d\left(x\right)=\left\{ \begin{array}{c}
-0\ x\ \epsilon \ \mathrm{\Omega } \\ 
-1\ x\ \epsilon \ D/\mathrm{\Omega } \end{array}
+0 \ x \in  \mathrm{\Omega} \\ 
+\ \ \ \ \ 1 \ x \in  D/\mathrm{\Omega} \end{array}
 \right\}
 \end{equation}
 Podsumowując algorytm wmalowywania w oparciu o model $NLCTV$ z algorytmem podziału Bregman’a można przedstawić w następujących krokach:
@@ -908,14 +901,14 @@ Powtarzanie do spełnienia kryterium końcowego:
 \item
 \noindent Wyznaczenie ${\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k$
 \item
-\noindent Wyznaczenie $u^{k+1}$ na podstawie \eqref{DELNLCTV1} dla każdego piksela $l$
+\noindent Wyznaczenie $u^{k+1}$ na podstawie \eqref{DELNLCTV1} dla każdego piksela $z$
 \item
-\noindent Wyznaczenie $v^{k+1}$ na podstawie \eqref{VNLCTVITER} dla każdego piksela $l$
+\noindent Wyznaczenie $v^{k+1}$ na podstawie \eqref{VNLCTVITER} dla każdego piksela $z$
 \end{itemize}
 \item  
 Aktualizacja wagi $w^2_i$ w obszarze $\mathrm{\Omega }$
 \end{enumerate}
-Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej wartości różnicy wcześniej zdefiniowanej energii $\epsilon$ pomiędzy wykonywanymi iteracjami:
+Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej wartości różnicy wcześniej zdefiniowanej energii $\varepsilon$ pomiędzy wykonywanymi iteracjami:
 \begin{equation}
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
