@@ -15,8 +15,7 @@
 \usepackage{geometry}
 \usepackage{listings}
 \usepackage[symbols,nogroupskip,sort=none]{glossaries-extra}
-\geometry{left=25mm,right=25mm,%
-bindingoffset=10mm, top=25mm, bottom=25mm}
+\geometry{left=25mm,right=25mm,bindingoffset=10mm, top=25mm, bottom=25mm}
 \usepackage{amssymb, latexsym}
 \usepackage{amsthm}
 \usepackage{palatino}
@@ -69,13 +68,13 @@ bindingoffset=10mm, top=25mm, bottom=25mm}
 \glsxtrnewsymbol[description={z ang. non-local color total variation}]{nlctv}{$NLCTV$}
 \glsxtrnewsymbol[description={punkt $(i,j)$ obrazu $I$ }]{points}{$x,y,z$}
 \glsxtrnewsymbol[description={funkcja wagi, podobieństwo punktów $x,y$ obrazu $I$}]{weight}{$w(x,y)$}
-\glsxtrnewsymbol[description={podmacierz obrazu $I$ utworzonych z punktów będących otoczeniem punktu $x$}]{surround}{$I(x+\cdot)$}
+\glsxtrnewsymbol[description={podmacierz wartości obrazu $I$ utworzonych z punktów będących otoczeniem punktu $x$}]{surround}{$I(x+\cdot), p_I(x)$}
 \glsxtrnewsymbol[description={macierz reprezentująca rozkład Gauss'a o odchyleniu standardowym $\sigma$}]{matgauss}{$G_\sigma$}
 \glsxtrnewsymbol[description={iloczyn po współrzędnych macierzy $A$ i $B$}]{hadarmatrix}{$A * B$}
 \glsxtrnewsymbol[description={dziedzina obrazu $I$ nie podlegająca modyfikacji}]{dziedzina}{$D$}
 \glsxtrnewsymbol[description={wypełniana część obrazu $I$}]{wmalowane}{$\Omega$}
 \glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$}]{nlreop}{$p$}
-
+\glsxtrnewsymbol[description={normy wektorowe}]{normywektor}{$\ell_{1},\ell_{2}$}
 \begin{document}
 
 \def \kotmyszm{obr. nr 1}
@@ -776,12 +775,12 @@ Warto zauważyć, iż indeksy $x,y$ wskazują na konkretny piksel w obrazie. Lok
 \par 
 Nielokalny model wahania funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
 \begin{equation}
-{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-I^0\right)}^2}dx\ \right\}\ }
+{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{\chi{\left(u-I^0\right)}^2}dx\ \right\}\ }
 \label{NLTVGRAY}
 \end{equation}
-gdzie $I^0$ stanowi oryginalny obraz wejściowy, natomiast $u\left(x\right):D\mathrm{\longrightarrow }\mathrm{R}$ obraz wynikowy, będący obrazem wmalowanym, bądź w przypadku pierwotnych założeń obrazem z usuniętym szumem. W przypadku zagadnienia wmalowywania zmienna ${\lambda }_d$ to funkcja definiowana na podstawie maski obrazu przyjmująca następujące wartości:
+gdzie $I^0$ stanowi oryginalny obraz wejściowy, natomiast $u\left(x\right):D\mathrm{\longrightarrow }\mathrm{R}$ obraz wynikowy, będący obrazem wmalowanym, bądź w przypadku pierwotnych założeń obrazem z usuniętym szumem. W przypadku zagadnienia wmalowywania zmienna ${\chi }$ to funkcja definiowana na podstawie maski obrazu przyjmująca następujące wartości:
 \begin{equation}
-{\lambda }_d\left(x\right)=\left\{ \begin{array}{c}
+\chi \left(x\right)=\left\{ \begin{array}{c}
 0\ x \in \Omega \\ 
 \ \ \ \ \ 1\ x \in D/ \Omega \end{array}
 \right\}
@@ -792,7 +791,7 @@ Tak zdefiniowany model można przekształcić wykorzystując operację podziału
 \begin{aligned}
 \left(u^{k+1},{\overrightarrow{v}}^{k+1}\right) &= arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}} E\left(u,\overrightarrow{v}\right)=\\ 
 &= \biggl\{arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}}
-\int_D{|\overrightarrow{v}|\left(x\right)}dx+\frac{1}{2}\int_D{{\lambda }_d{\left(u-I^0\right)}^2}dx+\\
+\int_D{|\overrightarrow{v}|\left(x\right)}dx+\frac{1}{2}\int_D{{\chi }{\left(u-I^0\right)}^2}dx+\\
 &+  \frac{\mathrm{\Theta }}{2}\int_D{{\left|\overrightarrow{v}-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right|}^2(x)}dx\ \biggr\}
 \end{aligned}
 \label{NLTVGRAYMINPROB}
@@ -803,7 +802,7 @@ Tak zdefiniowany model można przekształcić wykorzystując operację podziału
 \end{align}
 gdzie $\Theta$ stanowi wcześniej definiowany parametr algorytmu. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange’a, metodę przedstawioną w \cite{tai2011fast} oraz schemat iteracyjny Gauss’a-Seidel’a powyższe równania można sprowadzić do problemu iteracyjnego rozwiązania poniższych zależności:
 \begin{align}
-{\lambda }_D\left(u-I^0\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0
+\chi \left(u-I^0\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0
 \label{ELNLTV1}
 \end{align}
 \begin{align}
@@ -814,14 +813,14 @@ Zależności te można stosować do obrazów w odcieniach szarości, bądź obra
 \par
 W celu uzależnienia od siebie wszystkich warstw obrazu autorzy w \cite{duan2015fast} proponują zastosowanie funkcjonału MTV przedstawionego w \cite{yang2009fast}, funkcjonału $CTV$ przedstawionego w \cite{blomgren1998color}, bądź model Mumford-Shah’a dokładnie opisanego w \cite{jung2011nonlocal}. Ze względu na wydajniejszą implementację oraz najlepsze wyniki uzyskiwane w przypadku modelu $CTV$ został on wybrany do badań w niniejszej pracy. Wykorzystując wspomniany funkcjonał energia przyjmuje postać:
 \begin{align}
-{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}}+\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-I^0_i\right)}^2}dx}\ \right\}\ }
+{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}}+\frac{1}{2}\sum^m_{i=1}{\int_D{\chi{\left(u_i-I^0_i\right)}^2}dx}\ \right\}\ }
 \label{ENLCTV}
 \end{align}
 gdzie $m$ odpowiada ilości warstw tworzących kolorowy obraz. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacznie obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm podziału Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
 \begin{align}
 \begin{aligned}
 \mathop{\mathrm{min}}_{u}E\left(u\right) &= \mathop{\mathrm{min}}_{u}\Biggl\{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}}+\\ 
-&+\frac{1}{2}\sum^m_{i=1}{\int_D{{\lambda }_d{\left(u_i-I^0_i\right)}^2}dx} 
+&+\frac{1}{2}\sum^m_{i=1}{\int_D{ \chi {\left(u_i-I^0_i\right)}^2}dx} 
 +\frac{\theta }{2}\sum^m_{i=1}{\int_D{{\left|\overrightarrow{v_i}-{\mathrm{\nabla }}_{NL}u_i- {\overrightarrow{b_i}}^{k+1}\right|}^2\left(x\right)}dx}\Biggr\}
 \end{aligned}
 \label{ENLCTV1}
@@ -832,7 +831,7 @@ gdzie $m$ odpowiada ilości warstw tworzących kolorowy obraz. Zastosowanie rów
 \end{align}
 Przyjmując naprzemienną strategię minimalizacji energii można uzyskać równania Eulera-Lagrange’a wyznaczone oddzielnie względem zmiennych $u$ oraz $v$:
 \begin{align}
-{\lambda }_D\left(u_i-I^0_i\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v_i}}^k-{\mathrm{\nabla }}_{NL}u_i-{{\overrightarrow{b}}_i}^{k+1}\right)=0
+\chi \left(u_i-I^0_i\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v_i}}^k-{\mathrm{\nabla }}_{NL}u_i-{{\overrightarrow{b}}_i}^{k+1}\right)=0
 \label{ELNLCTV1}
 \end{align}
 \begin{align}
@@ -841,14 +840,14 @@ Przyjmując naprzemienną strategię minimalizacji energii można uzyskać równ
 \end{align}
 W celu przedstawienia dyskretnej formy równań \eqref{ELNLCTV1} i  \eqref{ELNLCTV2} i \eqref{ELNLCTV2} wygodnym będzie zapis dla konkretnego piksela $z\in D$ w obrazie. W przypadku \eqref{ELNLCTV1}: 
 \begin{align}
-{{\lambda }_D}_z \left[u_{i_z}-{I^0_i}_z\right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left({{\overrightarrow{v_i}}^k}_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{{{\overrightarrow{b}}_i}^{k+1}}_z\right)=0
+\chi_z \left[u_{i_z}-{I^0_i}_z\right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left({{\overrightarrow{v_i}}^k}_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{{{\overrightarrow{b}}_i}^{k+1}}_z\right)=0
 \label{DELNLCTV1}
 \end{align}
 Korzystając z dyskretnych postaci równań \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{NLPRODUCT} i \eqref{NLDIV} równanie \eqref{ELNLCTV1} można przedstawić w postaci:
 \begin{align}
 \begin{aligned}
-{u^{k+1}_i}_{z} &= \frac{1}{\lambda_{D_z}+2\mathrm{\Theta} \sum\limits_{y\in N_i} w_{i_{z,y}}} \Biggl[2\mathrm{\Theta }\sum_{y\in N_i} {{{u^k_i}_y w_i}_{z,y}}+\\
-&+ {\lambda_D}_z \ {I^0_i}_z -\\
+{u^{k+1}_i}_{z} &= \frac{1}{\chi_z+2\mathrm{\Theta} \sum\limits_{y\in N_i} w_{i_{z,y}}} \Biggl[2\mathrm{\Theta }\sum_{y\in N_i} {{{u^k_i}_y w_i}_{z,y}}+\\
+&+ \chi_z \ {I^0_i}_z -\\
 &-\mathrm{\Theta} \Biggl[\sum_{y\in N_z} \left({ v^k_i}_{z,y} - { v^k_i}_{z,y} - { v^k_i}_{z,y} + { v^k_i}_{z,y}\right) \sqrt{{w_i}_{z,y}} \Biggr]
 \end{aligned}
 \label{uNLCTV}
@@ -883,7 +882,7 @@ w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\chi }_R\le
 \end{align}
 gdzie:
 \begin{equation}
-{\chi }_d\left(x\right)=\left\{ \begin{array}{c}
+{\chi }\left(x\right)=\left\{ \begin{array}{c}
 0 \ x \in  \mathrm{\Omega} \\ 
 \ \ \ \ \ 1 \ x \in  D/\mathrm{\Omega} \end{array}
 \right\}
@@ -913,12 +912,12 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
 \section{Wariacyjny, nielokalny model wmalowywania}
-Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\mathcal{O}))$ zależnej:
+Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\Omega))$ zależnej:
 \begin{itemize}
 \item
-od nieznanego obszaru obrazu $u(\mathcal{O})$
+od nieznanego obszaru obrazu $u(\Omega)$
 \item
-od mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z nieznanego obszaru jego konkretnego odpowiednika z obszaru znajdującego się poza maską $\varphi(\hat{x})$
+od mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z nieznanego obszaru jego konkretnego odpowiednika z obszaru znajdującego się poza maską $\varphi(x)$
 \end{itemize}
 \begin{figure}[!h]
 	\centering
@@ -926,11 +925,16 @@ od mapy podobieństwa będącej funkcją przypisującą każdemu puntowi z niezn
 	\caption{Określenie charakterystycznych obszarów obrazu.}
 	\label{6_fig1}
 \end{figure}
-Zgodnie z \autoref{6_fig1} niech obraz stanowi wynik przekształcenia, a $u : {\Omega} \rightarrow R$, $\mathcal{O}$ oznacza obszar do uzupełnienia, $\mathcal{O}^c$ oryginalną część obrazu nie ulegającego modyfikacji, $\mathrm{\Omega }_p$ podzbiór pikseli scentrowanych względem  piksela $p \in \Omega$, gdzie $\Omega = \mathcal{O}^c + \mathcal{O}$, $\widetilde{\mathcal{O}} := \mathcal{O} + \mathrm{\Omega }_{ps}$, gdzie $\mathrm{\Omega }_{ps}$ oznacza sumę wszystkich zbiorów punktów $x \in \mathcal{O}$. Podobnie jak w \cite{arias2011variational} przekształcenie $u(x)$ jest zarezerwowane dla obszaru maski (wmalowywanego), a $\hat{u}(\hat{x})$ odpowiada przekształceniu w przestrzeni stałej obrazu $\widetilde{\mathcal{O}}$ ( $\hat{x} \in \mathcal{O}$). Przekształcenie funkcji podobieństwa $\varphi(x)$ przedstawia \autoref{6_fig2}.
+Oznaczmy funkcję $u(x)$ na zbiorze $\Omega$, dla której zachodzi $u:\Omega \rightarrow R$, gdzie $\Omega$ oznacza obszar do uzupełnienia.
+Oznaczmy funkcję $\hat{u}(\hat{x})$ na zbiorze $D$, dla której zachodzi $\hat{u} : D \rightarrow R$, gdzie $D$ oznacza obszar oryginalnego obrazu nie podlegający modyfikacji.
+Niech $\mathrm{N}_x$ i $\mathrm{N}_{\hat{x}}$ oznaczają podzbiory punktów obrazu scentrowane względem odpowiednio punktów $x$ i $\hat{x}$.
+Wtedy zbiór $\widetilde{\Omega}$ definiuje się jako $\widetilde{\Omega} := \Omega + \sum {\mathrm{N}}_x$, gdzie $\sum {\mathrm{N}}_x$ to suma wszystkich podzbiorów utworzonych względem punktów $x \in \Omega$. Ostatecznie $D^c = D / \widetilde{\Omega}$.
+Zgodnie z \cite{arias2011variational} przekształcenie $u(x)$ jest zarezerwowane dla obszaru maski (obszaru wmalowywanego), a $\hat{u}(\hat{x})$ odpowiada przekształceniu w niezmienianym obszarze obrazu $D$). 
+Przekształcenie funkcji podobieństwa $\varphi(x)$ przedstawia \autoref{6_fig2}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.9]{rysunki/6_fig2}
-	\caption{Funkcja podobieństwa $\varphi(\hat{x})$ : $x_1 = \varphi(\hat{x_1}), x_2 = \varphi(\hat{x_2}), x_3 = \varphi(\hat{x_3})$.}
+	\caption{Funkcja podobieństwa $\varphi(x)$ : $\varphi(x_1)=\hat{x_1}, \varphi(x_2)=\hat{x_2}, \varphi(x_3)=\hat{x_3}$.}
 	\label{6_fig2}
 \end{figure}
 Energię poddawaną minimalizacji można wyrazić zależnością:
@@ -941,25 +945,25 @@ Energię poddawaną minimalizacji można wyrazić zależnością:
 \end{align}
 Funkcja ta jest niewypukła i pozwala obliczyć jedynie lokalne minima. W pracy wykorzystano iteracyjny algorytm naprzemiennej minimalizacji polegający na wyznaczaniu w każdym kroku $u(x)$ względem stałej wartości $\varphi(x)$, a następnie $\varphi(x)$ względem stałej wartości $u(x)$.
 \subsection{Wyznaczenia mapy podobieństwa.}
-Proces minimalizacji funkcji przyjmując ustaloną wartości 
+Proces minimalizacji funkcji przyjmując ustaloną wartości
 \begin{equation}
 u(x) = \text{const}
 \end{equation}
 można opisać zależnością:
 \begin{align}
 \begin{aligned}
-\mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\left( p_{u}(x) - p_{\hat{u}}(x+t)\right),\operatorname{gdzie} \ \forall_t : x+t \in \mathcal{O}^c
+\mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\biggl( u(x+\cdot) - {\hat{u}}\bigl((x+t)+\cdot\bigr)\biggr),\operatorname{gdzie} \ \forall_t : x+t \in D^c
 \label{minNNF}
 \end{aligned}
 \end{align}
-Zmienna $t$ w tym zagadnieniu przyjmuje takie wartości ze zbioru wektorów przemieszczeń, których suma z danym wektorem położenia $x$ lokalizuje go w obszarze $\mathcal{O}^c$. Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $\mathcal{O}^c$, $\Theta(x) :\mathcal{O} \ \rightarrow \ \mathcal{O}^c$. Warto zaznaczyć, że przez pojęcie najbliższego sąsiada punktu $x$ rozumiemy nie punkt znajdujący się najbliżej, ale ten piksel dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
+Zmienna $t$ w tym zagadnieniu przyjmuje takie wartości ze zbioru wektorów przemieszczeń, których suma z danym wektorem położenia $x$ lokalizuje go w obszarze $D^c$. Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $D^c$, $\varphi :\Omega \rightarrow D^c$. Warto zaznaczyć, że przez pojęcie najbliższego sąsiada punktu $x$ rozumiemy nie punkt znajdujący się najbliżej, ale ten piksel dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
 \begin{align}
 \begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\| 
+\big\| u(x + \cdot) - \hat{u}(\hat{x}+\cdot) \big\| 
 \label{normNNF}
 \end{aligned}
 \end{align}
-Norma ta może być wyznaczana zgodnie z zależnością \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Autorzy w \cite{MathematicalModelsforNLTextureInpainting} proponują dodatkowe definicje norm, które zostaną opisane w dalszej części pracy. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i wymagać znacznych nakładów obliczeniowych. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu PatchMatch dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm ten oparty jest na dwóch krokach (punkt $x$ oznaczany będzie zamiennie ze współrzędną $(i, j)$ w obrazie):
+Norma ta może być wyznaczana zgodnie z zależnością \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Autorzy w \cite{MathematicalModelsforNLTextureInpainting} proponują dodatkowe definicje norm, które zostaną opisane w dalszej części pracy. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i wymagać znacznych nakładów obliczeniowych. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu PatchMatch dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm ten oparty jest na dwóch krokach. Niech punkt $x$ odpowiada współrzędnym $i, j$ obrazu, natomiast dla uproszczenia zapisu oznaczmy $u(x+\cdot)$ jako $p_u(i,j)$. Wtedy kroki można opisać następująco:
 \begin{enumerate}
 \item
 Losowej inicjalizacji pikseli
@@ -968,7 +972,7 @@ Ograniczonej wcześniej definiowaną liczbą iteracji powtarzanej czynności:
 \begin{enumerate}[a)]
 \item
 propagacja: w przypadku parzystej iteracji dla sprawdzenia wszystkich pikseli $x$ z maski w kierunku rastrowym przedstawionym na \autoref{6_fig3}, czy 
-wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i+1,j)) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j+1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
+wartość $\big\| p_u(i,j) - p_{\hat{u}}(\varphi(i+1,j)) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j+1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
 w przypadku nieparzystej iteracji należy sprawdzić dla wszystkich pikseli $x$ w kierunku odwrotnym do rastrowego przedstawionym na \autoref{6_fig3}, czy 
 wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i-1,j)) \big\|$ bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j-1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej i w takim przypadku trzeba zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i-1,j)$, lub $\varphi(i,j) = \varphi(i,j-1)$
 \item
@@ -989,37 +993,37 @@ Kroki algorytmu PatchMatch zostały przedstawione graficznie na \autoref{6_fig4}
 	\label{6_fig4}
 \end{figure}
 \subsection{Wyznaczenie wartości obrazu.}
-Niech funkcja $e: \Omega_{p} \rightarrow {\rm I\!R}^{+}$ będzie sumą ważonych błędów pomiędzy dwoma fragmentami obrazu scentrowanymi względem punktów $x$ i $\hat{x}$.
+Niech funkcja $e$  będzie przekształceniem $e: \mathrm{N}_x \rightarrow {\rm I\!R}^{+}$ której wartość reprezentuje sumę ważonych błędów pomiędzy dwoma fragmentami obrazu scentrowanymi względem punktów $x$ i $\hat{x}$, korzystając z wcześniej wprowadzonych oznaczeń:
 \begin{align}
 \begin{aligned}
-e(x, \hat{x}) &= g \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{u}) \big\| = g \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| \\ 
-&= \int_{\Omega_{p}} g(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
+e(x, \hat{x}) &= G_\sigma \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| = G_\sigma \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\| = \\ 
+&= \int_{\mathrm{N}_x} G_\sigma(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
 \label{minUs}
 \end{aligned}
 \end{align}
-gdzie zmienna $g$ jest odpowiednikiem zmiennej $G_{\sigma}$ w $NLCTV$ i opisywana jest zależnością \eqref{oknoGaussowskie}. Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
+gdzie zmienna $G_{\sigma}$ została wprowadzona dla algorytmu $NLCTV$ i opisywana jest zależnością \eqref{oknoGaussowskie}. Autorzy w \cite{arias2011variational} proponują minimalizację następującej energii będącej akumulacją błędów pikseli:
 \begin{align}
 \begin{aligned}
-E(u) &= \int_{\widetilde O}\int_{\Omega_{p}}g(h)e(u(x+h) - \hat{u}(\varphi(x)+h)dhdx
+E(u) &= \int_{\widetilde D}\int_{\mathrm{N}_x}G_\sigma(h)\cdot e \bigl( u(x+h) - \hat{u}(\varphi(x)+h\bigr)dhdx
 \label{patchMatchEnergy}
 \end{aligned}
 \end{align} 
 Niech $z := x+h$ i $\hat{z} := \hat{x}+h$. Wprowadzamy zależność:
 \begin{align}
-m(z,\hat{z}) = \int_{\Omega_{p}}g(h)\chi_{\widetilde O}(z-h)\delta_{\varphi(z-h)}(\hat{z}-h)dh
+m(z,\hat{z}) = \int_{\mathrm{N}_x}G_\sigma(h)\chi_{z-h}\delta_{\varphi(z-h)}(\hat{z}-h)dh
 \end{align}
 gdzie:
 \begin{enumerate}
 \item
-$\chi(p)$ podobnie jak w modelu $NLCTV$ przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
+zmienna $\chi$ została już zdefiniowana w modelu $NLCTV$ \eqref{maskFunction} i przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
 \item
 $\delta(p)$ określa pewność co do danego piksela wewnątrz maski i jest określone następującą zależnością:
 \begin{align}
-\delta(x)=(1-c_0)exp\bigg(\frac{-d(x,\partial\mathcal{O})}{t_c}\bigg) + c_0
+\delta(x)=(1-c_0)exp\bigg(\frac{-\mathrm{d}\bigl(x,\partial\Omega\bigr)}{t_c}\bigg) + c_0
 \label{pewnoscVFI}
 \end{align}
 \end{enumerate}
-przy czym wartość $t_c$ określa szybkość opadania funkcji wykładniczej, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-d(x,\partial\mathcal{O})}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
+przy czym wartość $t_c$ określa szybkość opadania funkcji wykładniczej, natomiast $c_0$ asymptotę, do której to funkcja zmierza. Odległość punktu od granicy maski określona jest zależnością $\frac{-\mathrm{d}(x,\partial\Omega)}{t_c}$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących norm:
 \begin{enumerate}
 \item
 Normy nielokalnej uśredniającej:
@@ -1057,12 +1061,12 @@ u(z) = \frac{1}{k(z)}\int_{\widetilde O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
 \end{align}
 gdzie
 \begin{align}
-k(z) := \int_{\widetilde O^c}m(z,\hat{z})d\hat{z}
+k(z) := \int_{\widetilde D}^c m(z,\hat{z})d\hat{z}
 \end{align}
 \item
 równanie Eulera:
 \begin{align}
-[\delta_{u}\mathcal{E}(u)](z) = \int_{\mathcal{O}^c}sign[u(z)-\hat{u}(\hat{z})]m(z,\hat{z})d\hat{z} \ni \mathcal{O} 
+[\delta_{u}\mathcal{E}(u)](z) = \int_{D^c}sign[u(z)-\hat{u}(\hat{z})]m(z,\hat{z})d\hat{z} \ni \Omega 
 \end{align}
 \item
 równania Eulera rozwiązane względem zmiennej $u$:
@@ -1070,54 +1074,53 @@ równania Eulera rozwiązane względem zmiennej $u$:
 \begin{aligned}
 \begin{cases}
 \nabla \cdot [k(z)\nabla u(z)] - \frac{\lambda}{1-\lambda}]k(z)u(z) = \\ 
-\ \ \ \ \ \ \ \ \ \ \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \mathcal{O} \\
-u(z)=\hat{u}(z) , & z \in \partial \mathcal{O} \setminus \partial \Omega \\
-\nabla u(z) \cdot n_{\Omega}(z) = 0 , & z \in \partial \mathcal{O} \cap \partial \Omega
+\ \ \ \ \ = \nabla \cdot [k(z)\nabla v(z)] - \frac{\lambda}{1-\lambda}]k(z)f(z) , & z \in \Omega \\
+u(z)=\hat{u}(z) , & z \in \partial \Omega \setminus \partial \mathrm{N} \\
+\nabla u(z) \cdot n_{\mathrm{N}}(z) = 0 , & z \in \partial \Omega \cap \partial \mathrm{N}
 \end{cases}
 \end{aligned}
 \end{align}
 gdzie:
 \begin{align}
-v(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\nabla\hat{u}(\hat{z})d\hat{z}
+v(z) := \frac{1}{k(z)}\int_{D^c}m(z,\hat{z})\nabla\hat{u}(\hat{z})d\hat{z}
 \end{align}
 \begin{align}
-f(z) := \frac{1}{k(z)}\int_{O^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
+f(z) := \frac{1}{k(z)}\int_{D^c}m(z,\hat{z})\hat{u}(\hat{z})d\hat{z}
 \end{align}
-Symbol $n_{\Omega}(z)$ oznacza wektor normalny do $\Omega$ dla $z \in \partial \Omega$.
 \end{enumerate}
 Dokładne wyprowadzenia zależności można znaleść w \cite{arias2011variational}.
 \subsection{Wielostopniowy schemat wypełniania.}
 W wielu metodach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm ten polega na utworzeniu serii mniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu wcześniej wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
 \begin{itemize}
 \item
-losowo wyznaczone wartości obrazu pobierane z obszaru $\mathcal{O}^c$
+losowo wyznaczone wartości obrazu pobierane z obszaru $D^c$
 \item
-rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR zgodnie z zależnością \eqref{DiscreteSOR}.
+rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR ( z ang. succesive over relaxation method) zgodnie z zależnością \eqref{DiscreteSOR}.
 \end{itemize}
 Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gaussa.\\
-W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{s-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
+W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{S-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowana z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\mathcal{O}^s$ i $\mathcal{O}^{s+1}$:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowana z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\Omega^s$ i $\Omega^{s+1}$:
 \begin{align}
-\chi_{\mathcal{O}^{s+1}}=(\downarrow_rg_{\sigma(r)}\ast\chi_{\mathcal{O}^s})> T_{0}.
+\chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s})> T_{0}.
 \end{align}
 Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis ten oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
 \begin{align}
-u^{s+1}(x)= \downarrow_r \frac{g \ast \chi_{(O^s)^c} u^s(x)}{g \ast \chi_{(O^s)^c}(x) }
+u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{(D^s)}^c u^s(x)}{G \ast \chi_{{(D^s)}^c}(x)}
 \end{align}
-Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $\mathcal{O}^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $g \ast \chi_{(O^s)^c}(x)$. W przypadku próbkowania w górę, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego na poprzednim poziomie oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $D^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $G \ast \chi_{(D^s)^c}(x)$. W przypadku próbkowania w górę, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego na poprzednim poziomie oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \subsection{Podsumowanie algorytmu}
 Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
 \begin{enumerate}
 \item
-Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $I$
+Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $K$
 \item
 Wyznaczenie piramidy maski stanowiącej zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
 Wyznaczenie piramidy obrazu stanowiącej zbiór: $\{u^s\}_{s=0,...,S-1}$
 \item
-Inicjalizacja obrazu $u^{S-1}$ w obszarze $\mathcal{O}$ \\
+Inicjalizacja obrazu $u^{S-1}$ w obszarze $\Omega$ \\
 Wyznaczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$
 \item
 Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
@@ -1125,7 +1128,7 @@ Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
 \item
 Przeskalowanie mapy podobieństwa z zastosowaniem algorytmu interpolacji najbliższego sąsiada $\varphi^s=r \cdot (\uparrow_r \varphi^{s+1})$
 \item
-Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\mathcal{O})=u^s_0(\mathcal{O})$ w celu inicjalizacji
+Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\Omega)=u^s_0(\Omega)$ w celu inicjalizacji
 \item
 Powtarzanie $I$-tą ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF}
 \begin{itemize}
@@ -1146,7 +1149,12 @@ Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierają
 	\caption{Schemat wmalowywania obrazu.}
 	\label{4_fig1}
 \end{figure}
-Niech zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\omega $ oznaczony kolorem fioletowym określa obszar do odrestaurowania. Niech obraz wejściowy stanowi funkcję na obszarze $D$. Niech ${\varphi}_p$ stanowi podzbiór punktów tworzących fragment obrazu o zdefiniowanej z góry wielkości, scentrowany względem piksela $p$ znajdującego się na granicy maski inpaintingowej $\partial \mathrm{\Omega }$. Niech ${\varphi}_q$ stanowi podzbiór punktów tworzących fragment o rozmiarze równym rozmiarowi ${\varphi}_p$, scentrowany względem piksela $q$ dla którego żaden z punktów wyznaczonego fragmentu obrazu nie znajduje się w obszarze maski. Niech ${\varphi}_{p'}$ oznaczone kolorem żółtym stanowi podzbiór punktów znajdujących się w ${\varphi}_p$, które nie znajdują się w obrębie maski. Wtedy ${\varphi}_{q'}$ oznaczone kolorem pomarańczowym stanowi grupę pikseli zlokalizowanych odpowiednio według pikseli z podzbioru ${\varphi}_{p'}$. Zapisując formalnie:
+Podobnie jak w poprzednich działach niech zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\Omega$ oznaczony kolorem fioletowym określa obszar do odrestaurowania.
+Niech oznaczenie $\hat{u}(\hat{x})$ stanowi funkcję na obszarze $D^c$, $\hat{x}  \in D^c$.
+Niech $q_{\hat{x}}$ stanowi podzbiór wartości punktów obrazu scentrowanych względem piksela $\hat{x}$ o zdefiniowanej z góry wielkości.
+Dla $q_{\hat{x}}$ zachodzi $\forall_{p \in q_{\hat{x}}} : \chi(p) \neq 0$, $tu skąd chi$.
+Niech $p(x)$ stanowi podzbiór punktów tworzących fragment obrazu o rozmiarze równym rozmiarowi $q_{\hat{x}}$, scentrowany względem piksela $x$, gdzie $x \in \partial \Omega$. $TU DONE$.
+Niech ${\varphi}_{p'}$ oznaczone kolorem żółtym stanowi podzbiór punktów znajdujących się w ${\varphi}_p$, które nie znajdują się w obrębie maski. Wtedy ${\varphi}_{q'}$ oznaczone kolorem pomarańczowym stanowi grupę pikseli zlokalizowanych odpowiednio według pikseli z podzbioru ${\varphi}_{p'}$. Zapisując formalnie:
 \begin{align}
 p\ \epsilon \ \partial \mathrm{\Omega }
 \end{align}
