@@ -68,12 +68,12 @@
 \glsxtrnewsymbol[description={z ang. non-local color total variation}]{nlctv}{$NLCTV$}
 \glsxtrnewsymbol[description={punkt $(i,j)$ obrazu $I$ }]{points}{$x,y,z$}
 \glsxtrnewsymbol[description={funkcja wagi, podobieństwo punktów $x,y$ obrazu $I$}]{weight}{$w(x,y)$}
-\glsxtrnewsymbol[description={podmacierz wartości obrazu $I$ utworzonych z punktów będących otoczeniem punktu $x$}]{surround}{$I(x+\cdot), p_I(x)$}
+\glsxtrnewsymbol[description={podmacierz wartości obrazu $I$ utworzonych z punktów będących otoczeniem punktu $x$}]{surround}{$I(x+\cdot), p_I(x), p_x, q_x$}
 \glsxtrnewsymbol[description={macierz reprezentująca rozkład Gauss'a o odchyleniu standardowym $\sigma$}]{matgauss}{$G_\sigma$}
 \glsxtrnewsymbol[description={iloczyn po współrzędnych macierzy $A$ i $B$}]{hadarmatrix}{$A * B$}
 \glsxtrnewsymbol[description={dziedzina obrazu $I$ nie podlegająca modyfikacji}]{dziedzina}{$D$}
 \glsxtrnewsymbol[description={wypełniana część obrazu $I$}]{wmalowane}{$\Omega$}
-\glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$}]{nlreop}{$p$}
+\glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$} w modelu $NLCTV$]{nlreop}{$p$}
 \glsxtrnewsymbol[description={normy wektorowe}]{normywektor}{$\ell_{1},\ell_{2}$}
 \begin{document}
 
@@ -1150,47 +1150,36 @@ Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierają
 	\label{4_fig1}
 \end{figure}
 Podobnie jak w poprzednich działach niech zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\Omega$ oznaczony kolorem fioletowym określa obszar do odrestaurowania.
-Niech oznaczenie $\hat{u}(\hat{x})$ stanowi funkcję na obszarze $D^c$, $\hat{x}  \in D^c$.
-Niech $q_{\hat{x}}$ stanowi podzbiór wartości punktów obrazu scentrowanych względem piksela $\hat{x}$ o zdefiniowanej z góry wielkości.
-Dla $q_{\hat{x}}$ zachodzi $\forall_{p \in q_{\hat{x}}} : \chi(p) \neq 0$, $tu skąd chi$.
-Niech $p(x)$ stanowi podzbiór punktów tworzących fragment obrazu o rozmiarze równym rozmiarowi $q_{\hat{x}}$, scentrowany względem piksela $x$, gdzie $x \in \partial \Omega$. $TU DONE$.
-Niech ${\varphi}_{p'}$ oznaczone kolorem żółtym stanowi podzbiór punktów znajdujących się w ${\varphi}_p$, które nie znajdują się w obrębie maski. Wtedy ${\varphi}_{q'}$ oznaczone kolorem pomarańczowym stanowi grupę pikseli zlokalizowanych odpowiednio według pikseli z podzbioru ${\varphi}_{p'}$. Zapisując formalnie:
+Niech oznaczenie $\hat{u}(\hat{x})$ stanowi funkcję na obszarze $D^c$, $\hat{x}  \in D^c$ (\autoref{6_fig1}).
+Niech $q_{\hat{x}}$ stanowi podzbiór wartości punktów obrazu scentrowanych względem piksela $\hat{x}$ o zdefiniowanym z góry promieniu otoczenia.
+Dla $q_{\hat{x}}$ zachodzi $\forall p \in q_{\hat{x}} : \chi(p) \neq 0$, gdzie $\chi$ odpowiada funkcji maski \eqref{maskFunction}.
+Niech $p_{x}$ stanowi podzbiór punktów tworzących fragment obrazu o rozmiarze równym rozmiarowi $q_{\hat{x}}$, scentrowanych względem piksela $x$, gdzie $x \in \partial \Omega$.
+Zdefiniujmy dwa podzbiory punktów:
 \begin{align}
-p\ \epsilon \ \partial \mathrm{\Omega }
+\begin{aligned}
+p_{x} = s_x + i_x
+\end{aligned}
 \end{align}
+gdzie $\forall p \in s_x : \chi(p) = 1$ i $s_x$ oznacza wypełnioną część fragmentu oraz $\forall p \in i : \chi(p) = 0$ czyli $i_x$ jako brakująca część fragmentu obrazu.  
+Oznaczmy odpowiednio zbiory $\hat{s}_{\hat{x}}$ i $\hat{i}_{\hat{x}}$ będące przekształceniem zbiorów $s_x$ i $i_x$ o wektor $\overrightarrow{|x \hat{x}|}$:
 \begin{align}
-q\ \epsilon \mathrm{\ }\phi
-\label{qSource}
+\begin{aligned}
+q_{\hat{x}} = \hat{s}_{\hat{x}} + \hat{i}_{\hat{x}}
+\end{aligned}
 \end{align}
+Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znalezienie pary
+ najbardziej podobnych do siebie fragmentów $\left\langle p_{x}, q_{\hat{x}} \right\rangle $ oraz zgodnie z \autoref{4_fig1} przepisanie wartości odpowiednich pikseli z wyznaczonego zbioru $\hat{i}_{\hat{x}}$ do odpowiadających im pikseli w zbiorze $i_x$ oznaczonych kolorem ciemnozielonym. Zapisując to w sposób formalny szukamy:
 \begin{align}
-\phi \ \subset \ D
-\end{align}
-\begin{align}
-{\varphi }_p=\mathrm{(p+\ }\mathrm{\cdot }\mathrm{)}
-\end{align}
-\begin{align}
-{\varphi }_q=(q+\ \cdot )\ 
-\end{align}
-\begin{align}
-{\varphi }_{p'}=\ {\varphi }_p\cap (D\cup W) 
-\end{align}
-\begin{align}
-{\varphi }_{q'}\ \subset \ {\varphi }_q
-\end{align}
-gdzie $W$ przedstawia zbiór wmalowanych pikseli wcześniej znajdujących się w rejonie maski.
-\par
-Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znalezienie pary najbardziej podobnych do siebie $\left\langle {\ \varphi }_{p'},\ {\varphi }_{q''}\right\rangle $ oraz zgodnie z \autoref{4_fig1} przepisanie wartości odpowiednich pikseli z wyznaczonego zbioru $({\varphi }_{(q^{''})}/{\varphi }_{(q^{''})'})$ do odpowiadających im pikseli w zbiorze $({\varphi }_p/{\varphi }_{p'})$ oznaczonych kolorem ciemnozielonym. Zapisując to w sposób formalny mamy:
-\begin{align}
-{\varphi }_{q^{''}}={\mathrm{arg}\ \mathop{\mathrm{min}}_{q\ \epsilon \mathrm{\ }\phi } d(\ }{\varphi }_{p'},{\varphi }_{q'})
+\mathrm{arg} \mathop{\mathrm{min}}_{\hat{y} \in D^c} \big\| u(p_x) - \hat{u} (q_{\hat{y}} ) \big\| 
 \label{FROBDIST}
 \end{align}
-Odległość pomiędzy dwoma fragmentami $d({\varphi }_{p'},{\varphi }_{q'})$ może być definiowana jako suma kwadratów różnic wszystkich odpowiadających sobie pikseli ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$.
+Najprościej odległość pomiędzy dwoma fragmentami $d\left( u(p_x), \hat{u} (q_{\hat{y}}) \right)$ może być definiowana jako suma kwadratów różnic odpowiadających sobie pikseli ze zbiorów $s_x$ i ${\hat{s}}_{\hat{y}}$:
 \begin{align}
-d(\varphi_{p'},\varphi_{q'})= \sum_{p\in \varphi_{p'}} \left( \varphi_{p^{'}}(p) - \varphi _{q^{'}} \left(p^{'}\right) \right)^2
+d\left( u(s_x) - \hat{u}( \hat{s}_{\hat{y}} )\right)= \sum_{z \in s_x} \left( \hat{u}(z + \overrightarrow{|x \hat{x}|}) - u(z) \right)^2
 \label{FROBENIUS2} 
 \end{align}
-gdzie $\varphi \left(p\right)$ oznacza wartość jasności piksela $p$ z badanego okna. Do wyznaczenia odlegości można również zastosować normy przytoczone dla \eqref{normNNF} w \cite{MathematicalModelsforNLTextureInpainting}. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
-Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania względem zdefiniowanej odległości może prowadzić do niespójności obrazu, przykład na \autoref{5_fig2}
+Do wyznaczenia odległości można również posłuszyć się wcześniej wprowadzonymi normami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} czy \eqref{nonLocalpoisson}. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
+Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Tak przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania względem zdefiniowanej odległości może prowadzić do niespójności obrazu, przykład na \autoref{5_fig2}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.3]{rysunki/5_fig2}
@@ -1204,17 +1193,18 @@ Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie za
 	\caption{Wpływ prostego schematu wypełniania braków na wynikową teksturę obrazu. Źródło \cite{criminisi2004region}.}
 	\label{4_fig2} 
 \end{figure}
-\par
 W 2004 roku Criminisi w \cite{criminisi2004region} skorzystał z koncepcji próbkowania fragmentów obrazu proponując nowe podejście do wyznaczania kolejności ich wmalowywania.  Kolejność wypełniania wyznaczana jest na podstawie izolinii poziomu jasności obrazu. W każdej iteracji algorytmu dla pikseli sąsiadujących z maską wyznaczane są wartości priorytetu wypełniania. Następnie wypełnienie odbywa się dla piksela o największym priorytecie. Dzięki nowemu podejściu izolinie będące granicami struktur obrazu są kontynuowane w miejscach odrestaurowywanych.
-\par
-Algorytm przedstawiony w \cite{criminisi2004region} opiera się na powtarzaniu trzech głównych kroków w każdej iteracji wykonywanej do momentu wypełnienia wszystkich pikseli ze zbioru $\mathrm{\Omega }$. Każda kolejna iteracja prowadzi do przesunięcia granicy maski w jej głąb. W trakcie próbkowania fragmentów obrazu zbiór $\phi $ będący źródłem próbkowania nie zmienia się. Pierwsze dwa kroki w pojedynczej iteracji służą do wyznaczenia priorytetu $P\left(p\right)$ dla każdego piksela obrazu znajdującego się na granicy maski $\partial \mathrm{\Omega }$, natomiast trzeci krok służy znalezieniu najlepszego dopasowania ${\varphi }_{q^{''}}$. Priorytet $P\left(p\right)$ każdego piksela $p$ znajdującego się na granicy maski wyznaczany jest z zależności:
+Algorytm przedstawiony w \cite{criminisi2004region} opiera się na powtarzaniu trzech głównych kroków w każdej iteracji wykonywanej do momentu wypełnienia wszystkich pikseli ze zbioru $\mathrm{\Omega }$.
+Każda kolejna iteracja prowadzi do przesunięcia granicy maski $\partial \Omega$ w jej głąb.
+ Pierwsze dwa kroki w pojedynczej iteracji służą do wyznaczenia priorytetu $P \left( x \right)$ dla każdego piksela obrazu znajdującego się na granicy maski $\partial \mathrm{\Omega}$, natomiast trzeci krok służy znalezieniu najlepszego punktu dopasowania $\hat{x}$.
+Priorytet $P \left( x \right)$ każdego piksela $x$ wyznaczany jest z zależności:
 \begin{align}
-P\left(p\right)=Ct(p)\cdot Dt(p)
+P\left( x \right)=Ct(x)\cdot Dt(x)
 \label{PRIORITY}
 \end{align}
-Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczenie wartości funkcji $Ct(p)$ definiowanej:
+Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczenie wartości funkcji $Ct(x)$ definiowanej:
 \begin{align}
-Ct\left(p\right)=\ \frac{\sum_{q\in {\varphi }_{p'}}{C(q)}}{\left|{\varphi }_p\right|}
+Ct\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|}
 \label{confidenceTerm}
 \end{align}
 gdzie $C(q)$ to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu, $\left|{\varphi }_p\right|$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna. 
