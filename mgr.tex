@@ -1178,7 +1178,7 @@ Najprościej odległość pomiędzy dwoma fragmentami $d\left( u(p_x), \hat{u} (
 d\left( u(s_x) - \hat{u}( \hat{s}_{\hat{y}} )\right)= \sum_{z \in s_x} \left( \hat{u}(z + \overrightarrow{|x \hat{x}|}) - u(z) \right)^2
 \label{FROBENIUS2} 
 \end{align}
-Do wyznaczenia odległości można również posłuszyć się wcześniej wprowadzonymi normami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} czy \eqref{nonLocalpoisson}. W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
+W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
 Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie zakłada żadnego priorytetu ani kolejności wypełniania braków ustalanej na podstawie otoczenia maski. Tak przeprowadzana synteza obrazu pomimo wyznaczenia dla danego piksela trafnego dopasowania względem zdefiniowanej odległości może prowadzić do niespójności obrazu, przykład na \autoref{5_fig2}
 \begin{figure}[!h]
 	\centering
@@ -1186,7 +1186,6 @@ Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie za
 	\caption{Niespójność obrazu przy najlepszym dopasowaniu. $A$ - odrestaurowywany obraz, $B$ - wynik algorytmu, $C$ - oczekiwany wynik.}
 	\label{5_fig2} 
 \end{figure}
-\par
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/4_fig2}
@@ -1195,55 +1194,47 @@ Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie za
 \end{figure}
 W 2004 roku Criminisi w \cite{criminisi2004region} skorzystał z koncepcji próbkowania fragmentów obrazu proponując nowe podejście do wyznaczania kolejności ich wmalowywania.  Kolejność wypełniania wyznaczana jest na podstawie izolinii poziomu jasności obrazu. W każdej iteracji algorytmu dla pikseli sąsiadujących z maską wyznaczane są wartości priorytetu wypełniania. Następnie wypełnienie odbywa się dla piksela o największym priorytecie. Dzięki nowemu podejściu izolinie będące granicami struktur obrazu są kontynuowane w miejscach odrestaurowywanych.
 Algorytm przedstawiony w \cite{criminisi2004region} opiera się na powtarzaniu trzech głównych kroków w każdej iteracji wykonywanej do momentu wypełnienia wszystkich pikseli ze zbioru $\mathrm{\Omega }$.
-Każda kolejna iteracja prowadzi do przesunięcia granicy maski $\partial \Omega$ w jej głąb.
- Pierwsze dwa kroki w pojedynczej iteracji służą do wyznaczenia priorytetu $P \left( x \right)$ dla każdego piksela obrazu znajdującego się na granicy maski $\partial \mathrm{\Omega}$, natomiast trzeci krok służy znalezieniu najlepszego punktu dopasowania $\hat{x}$.
+Każda kolejna iteracja prowadzi do przesunięcia granicy maski $\partial \Omega$ w jej głąb. Pierwsze dwa kroki w pojedynczej iteracji służą do wyznaczenia priorytetu $P\left(x\right)$ dla każdego piksela obrazu znajdującego się na granicy maski $x \in \partial \Omega$, natomiast trzeci krok służy znalezieniu najlepszego punktu dopasowania $\hat{x}$.
 Priorytet $P \left( x \right)$ każdego piksela $x$ wyznaczany jest z zależności:
 \begin{align}
-P\left( x \right)=Ct(x)\cdot Dt(x)
+P\left( x \right)=C_t(x)\cdot D_t(x)
 \label{PRIORITY}
 \end{align}
-Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczenie wartości funkcji $Ct(x)$ definiowanej:
+Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $C_t(x)$ definiowanej (z ang. $C_t$ - confidence term, $D_t$ - data term):
 \begin{align}
-Ct\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|}
+C_t\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|}
 \label{confidenceTerm}
 \end{align}
-gdzie $C(q)$ to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu, $\left|{\varphi }_p\right|$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna. 
-\par
-Podczas inicjalizacji funkcja $C(q)$ dla każdego piksela stanowiącego oryginalny obraz przyjmuje wartość $1$, natomiast dla punktów maski przyjmuje ona wartość $0$. Matematycznie ${\forall }_{q\in D}\ C\left(q\right)=1$  i analogicznie ${\forall }_{q\in \mathrm{\Omega }}\ C\left(q\right)=0$. Wraz z wyznaczaniem kolejnych wartości pikseli z obszaru maski funkcja $C\left(q\right)$ jest aktualizowana, a zerowe wartości są odpowiednio przeliczane. Funkcja $Ct\left(p\right)$ jest sumą wartości $C\left(p\right)\ $wszystkich pikseli z analizowanego fragmentu obrazu scentrowanego względem piksela p, które znajdują się w przestrzeni wyznaczonego już obrazu podzielonej przez ilość pikseli w danym skrawku. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C\left(p\right)$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C\left(p\right)$ w każdym kroku interpretuje się jako mniejszą pewność co do przepisanych wartości koloru w obrazie. Zmienną $C(q)$ można opisać wykorzystując przytoczoną już zależność \eqref{pewnoscVFI}.
-Drugi krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $D(p)$ definiowanej jako:
+gdzie $C(x)$ to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu, $\left| p_x\right |$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna. 
+Podczas inicjalizacji funkcja $C$ dla każdego piksela stanowiącego oryginalny obraz przyjmuje wartość $1$, natomiast dla punktów maski przyjmuje wartość $0$. Matematycznie ${\forall }_{z \in D}\ C\left( z \right)=1$  i analogicznie ${\forall }_{z\in \mathrm{\Omega }}\ C\left( z \right)=0$. Wraz z wyznaczaniem kolejnych wartości pikseli należących do obszaru maski funkcja $C$ jest aktualizowana, a zerowe wartości są odpowiednio przeliczane. Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym skrawku. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
+Drugi krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $D_t(x)$ definiowanej jako:
 \begin{align}
-D(p)=\ \frac{\left|{\mathrm{\nabla }}^{\bot }I_P\cdot n_p\right|}{\alpha }
+D_t(x)= \frac{\left|\nabla^{\bot}u_x \cdot n_x\right|}{\alpha }
 \label{DataTerm}
 \end{align}
-gdzie człon ${\mathrm{\nabla }}^{\bot }I_P$ podobnie jak w przypadku równania Naviera-Stokes'a odpowiada kierunkowi rozchodzenia się izolinii obrazu, natomiast  $n_p$ to wektor normalny (prostopadły) do granicy maski $\partial \mathrm{\Omega }$ w punkcie piksela $p$.  
+gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania Naviera-Stokes'a odpowiada kierunkowi rozchodzenia się izolinii obrazu, natomiast  $n_x$ to wektor normalny (prostopadły) do granicy maski $\partial \mathrm{\Omega }$ w punkcie piksela $x$.
+TODO \\
+poprawić rysunek 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/4_fig3}
-	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $\boldsymbol{D}\left(\boldsymbol{p}\right)$.}
+	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$.}
 	\label{4_fig3} 
 \end{figure}
-Zgodnie z \autoref{4_fig3} funkcja $D\left(p\right)$ w sposób liczbowy określa z jaką siłą izolinia obrazu uderza granicę maski. Siła ta zależna jest od gradientu jasności obrazu ${\mathrm{\nabla }}^{\bot }I_P$ oraz od orientacji względem gradientu wektora normalnego do granicy maski. Funkcja przyjmuje największą wartość w momencie, w którym wektor normalny oraz wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} 0^0\ }=1)$, a człon ${\mathrm{\nabla }}^{\bot }I_P$ ma największą wartość. W przeciwieństwie do definicji terminu $Ct(p)$ funkcję $D(p)$ można zinterpretować jako człon odpowiedzialny za przyznanie wyższego priorytetu pikselowi, stanowiącemu część struktury, która według psychologii widzenia powinna być kontynuowana w głąb odrestaurowywanego obszaru. Funkcja $D(p)$ wpływa ma zmniejszenie pojawiającego się w metodzie zjawiska wprowadzania niespójności obrazu. Niech funkcja $M$ w punktach oryginalnego obrazu $D$ przyjmuje wartość 0 oraz w punktach maski $\mathrm{\Omega }$ wartość 1, $I:D\to \{0,1\}$.  Wtedy korzystając z zależności \eqref{dfdx} i \eqref{dfdy} wektor normalny do granicy maski można wyznaczyć z zależności:
+Zgodnie z \autoref{4_fig3} funkcja $D_t$ w sposób liczbowy określa z jaką siłą izolinia obrazu uderza granicę maski. Siła ta zależna jest od gradientu jasności obrazu ${\mathrm{\nabla }}^{\bot }u_x$ oraz od orientacji względem gradientu wektora normalnego do granicy maski. Funkcja przyjmuje największą wartość w momencie, w którym wektor normalny oraz wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} \ 0^0\ }=1)$, a człon ${\mathrm{\nabla }}^{\bot }u_x$ ma największą wartość. W przeciwieństwie do definicji terminu $C_t$ funkcję $D_t$ można zinterpretować jako człon odpowiedzialny za przyznanie wyższego priorytetu pikselowi, stanowiącemu część struktury, która według psychologii widzenia powinna być kontynuowana w głąb odrestaurowywanego obszaru. Funkcja $D_t$ wpływa ma zmniejszenie pojawiającego się w metodzie zjawiska wprowadzania niespójności obrazu. Niech funkcja $f(p)$ w punkcie obrazu $p \in D \cup \Omega$, gdzie $C(p) > 0$ przyjmuje wartość 0, a w punktach $C(p) = 0$ wartość 1, $f : (\Omega \cup D \to {0,1}$.  Wtedy korzystając z zależności \eqref{dfdx} i \eqref{dfdy} wektor normalny do granicy maski można wyznaczyć z zależności:
 \begin{align}
-n_p=\ \ \left[-n_x\frac{1}{L}\ ,\ -n_y\frac{1}{L}\right]\ =\ \left[-\frac{M_{i+1,j}+M_{i-1,j}}{2h}\cdot \frac{1}{L}\ ,\ -\frac{M_{i,j+1}+M_{i,j-1}}{2h}\cdot \frac{1}{L}\right]
+n_p= \left[-n_{p_x}\frac{1}{l}\ ,\ -n_{p_y} \frac{1}{l}\right] =\left[-\frac{f_{i+1,j}+f_{i-1,j}}{2h}\cdot \frac{1}{l}, -\frac{f_{i,j+1} + f_{i,j-1}}{2h} \cdot \frac{1}{l}\right]
 \label{KIERUNEK}
 \end{align}
 \begin{align}
-L=\ \sqrt{n^2_x+\ n^2_y}
+l= \sqrt{n^2_{p_x} + n^2_{p_y}}
 \label{POMKIERUNEK}
 \end{align}
 Dyskretyzacja równania \eqref{DataTerm} zgodnie z \eqref{u}, \eqref{v}, \eqref{KIERUNEK} i \eqref{POMKIERUNEK} w wyniku przyjmuje postać:
 \begin{align}
 D(p)=\ \left|u{\cdot n}_x\frac{1}{L}-v\cdot n_y\frac{1}{L}\right|
 \end{align}
-Znając wartości $Ct\left(p\right)$ oraz $D(p)$ dla każdego piksela z granicy maski można wyznaczyć wartość priorytetów $P(p)$. Na ich podstawie wybierane jest okno ${\varphi }_p$, a następnie najlepsze odwzorowanie ${\varphi }_{q^{''}}$. Ze względu na nieregularny kształt większości masek wyznaczenie jej granicy $\partial \mathrm{\Omega }$ można wykonać poprzez operację erozji i dylacji na funkcji $M$. Innym sposobem może być zastosowanie dyskretnego splotu maski $M$ z macierzą $mL\ $reprezentującą Laplasjan dla siatki 8-spójnej: 
-\begin{equation}
-mL=\left| \begin{array}{ccc}
-1 & 1 & 1 \\ 
-1 & -8 & 1 \\ 
-1 & 1 & 1 \end{array}
-\right|	
-\label{LAPLASJAN}
-\end{equation}
+Znając wartości $C_t\left(x\right)$ oraz $D_t(x)$ dla każdego piksela z granicy maski można wyznaczyć wartość priorytetów $P(x)$. Na ich podstawie wybierane jest okno $p(x)$, a następnie najlepsze odwzorowanie $q_{\hat{x}}$.
 Podsumowując operację wmalowywania obrazu można przedstawić w postaci następującego algorytmu. Algorytm ten należy powtarzać aż do wypełnienia wszystkich pikseli z $\mathrm{\Omega }$:
 \begin{enumerate}
 \item
@@ -1253,17 +1244,17 @@ Na podstawie \eqref{PRIORITY} wyznaczyć priorytety wszystkich pikseli z granicy
 \item
 Na podstawie \eqref{FROBENIUS} wyznaczyć najlepsze dopasowanie dla okna utworzonego na podstawie punktu 2 
 \item
-Zgodnie z \autoref{4_fig1} przepisać wartości z okna najlepszego dopasowania w restaurowywany obszar, jednocześnie aktualizując wartości $C(p)$ zgodnie z zależnością:
+Zgodnie z \autoref{4_fig1} przepisać wartości z okna najlepszego dopasowania w restaurowany obszar, jednocześnie aktualizując wartości $C(p)$ zgodnie z zależnością:
 \begin{align}
-C\left(p\right)=C\left(\dot{p}\right)
+C_t\left(p\right)=C\left(\dot{p}\right)
 \end{align} 
-gdzie $p\in \ {\varphi }_p\cap \ \mathrm{\Omega }$, a $C\left(\dot{p}\right)$ to malejąca wartość w każdej kolejnej iteracji.
+gdzie $p \in s_x$, a $C \left(\dot{p} \right)$ to malejąca wartość w każdej kolejnej iteracji.
 \end{enumerate}
 \section{Pojęcie głównych struktur.}
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
 Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie fragmentów jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie.
 \textbf{W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}.}
-Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $\phi $ dla każdej kontynuowanej krzywej (a najczęściej pary łączonych krzywych) znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania ${\varphi }_{p'}$ oraz ${\varphi }_{q'}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
+Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej pary łączonych krzywych) znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.9]{rysunki/4_fig4}
@@ -1288,17 +1279,17 @@ Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \math
 \end{enumerate}
 Analiza powyższych równań wykonana zostanie w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Uprzednim krokiem do powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
 \begin{align}
-G\left(x,y\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{x^2+y^2}{2{\sigma }^2}}
+G\left(i,j\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{i^2+j^2}{2{\sigma }^2}}
 \label{rozmycieGaussa}
 \end{align}
-Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wygenerowaną macierzą wyznaczoną na podstawie powyższego równania. Operacja rozmycia pozwala pozbyć się mniej znaczących krawędzi z obrazu zostawiając tylko najistotniejsze cechy, które powinny być kontynuowane w niewyznaczonym obszarze. Po operacji rozmycia autorzy w \cite{SalientStrucTexProp} proponują wykrycie głównych struktur na podstawie transformacji falkowej oraz odpowiednio wyznaczonych lokalnych maksimów dla funkcji powstałych na podstawie wspomnianej transformacji. Na podstawie przeprowadzonej operacji uzyskuje się wszystkie główne struktury obrazu. Zbiorem krawędzi poddanych analizie są ostatecznie struktury, dla których dochodzi do przecięcia ze zdefiniowaną maską $\mathrm{\Omega }$ zgodnie z \autoref{4fig_5} (jako maska traktowany jest samochód).
+Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wygenerowaną macierzą wyznaczoną na podstawie powyższego równania. Operacja rozmycia pozwala pozbyć się mniej znaczących krawędzi z obrazu zostawiając tylko najistotniejsze cechy, które powinny być kontynuowane w niewyznaczonym obszarze. Po operacji rozmycia autorzy w \cite{SalientStrucTexProp} proponują wykrycie głównych struktur na podstawie transformacji falkowej oraz odpowiednio wyznaczonych lokalnych maksimów dla funkcji powstałych na podstawie wspomnianej transformacji. Na podstawie przeprowadzonej operacji uzyskuje się wszystkie główne struktury obrazu. Zbiorem krawędzi poddanych analizie są ostatecznie struktury, dla których dochodzi do przecięcia ze zdefiniowaną maską $\mathrm{\Omega }$ zgodnie z \autoref{4_fig5} (jako maska traktowany jest samochód).
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.8]{rysunki/4_fig5}
 	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. źródło \cite{StructurePropagationManual}.}
 	\label{4_fig5} 
 \end{figure}
-Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zostaje punkt środkowy. Względem środka tego punktu tworzone jest okno  $f^i$ o wcześniej zdefiniowanym obszarze. Pierwszym członem w równaniu \eqref{SalientDistance} wyznaczonym na podstawie utworzonego okna $f^i$ jest $D_1\left(f^i_C,f^j_C\right)$. Symbole $f^i_C$ oraz $f^j_C$ stanowią posegmentowane fragmenty obrazu względem wcześniej zdefiniowanej liczby głównych, dominujących kolorów w obrazie $M$. Dla każdego wycinka $f^i_C$ można zdefiniować zbiór punktów $(c_k,p_k)$, gdzie $c_k$ odpowiada danemu kolorowi, natomiast $p_k$ jego procentowemu udziałowi we fragmencie $f^i$, przy $k=1,\dots ,M$. Dysponując zbiorami punktów dla okien $f^i_C$,$\ f^j_C$ można liczbowo przedstawić ich poziom podobieństwa obliczając: 
+Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zostaje punkt środkowy. Względem środka tego punktu tworzone jest okno  $f^i$ o wcześniej zdefiniowanym obszarze. Pierwszym członem w równaniu \eqref{SalientDistance} wyznaczonym na podstawie utworzonego okna $f^i$ jest $D_1\left(f^i_C,f^j_C\right)$. Symbole $f^i_C$ oraz $f^j_C$ stanowią posegmentowane fragmenty obrazu względem wcześniej zdefiniowanej liczby głównych, dominujących kolorów w obrazie. Dla każdego wycinka $f^i_C$ można zdefiniować zbiór punktów $(c_k,p_k)$, gdzie $c_k$ odpowiada danemu kolorowi, natomiast $p_k$ jego procentowemu udziałowi we fragmencie $f^i$, przy $k=1,\dots ,M$. Dysponując zbiorami punktów dla okien $f^i_C$,$\ f^j_C$ można liczbowo przedstawić ich poziom podobieństwa obliczając: 
 \begin{align}
 D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j
 \label{colDistance}
@@ -1319,10 +1310,7 @@ gdzie $p$ - piksel obrazu poddanego filtracji, $p\in I$, $I_{fi}$ - odpowiedź o
 \begin{align}
 D_2{\left(f^i_T,f^j_T\right)}_i=\frac{{\left|MR8\left(f^i\right)-MR8\left(f^j\right)\right|}_F}{250}=\frac{{\left|f^i_T-f^j_T\right|}_F}{250}
 \end{align}
-W powyższej zależności norma oznaczona literą $F$ oznacza normę Frobenius'a liczoną następująco:
-\begin{align}
-\left|I\right|=\ \sqrt{\sum_{p\in I}{{\left|I\left(p\right)\right|}^2}}=\sqrt{{\sum^m_{i=1}{\sum^n_{j=1}{\left(f^i_T(i,j)-f^j_T(i,j)\right)}}}^2}
-\end{align}
+W powyższej zależności norma oznaczona literą $F$ oznacza normę Frobenius'a liczoną zgodnie z \eqref{FROBENIUS}.
 Dokładny algorytm klasyfikacji tekstur przedstawiony został przez Manika Varma'e i Adrew Zisserman'a w \cite{varma2009statistical}. Ostatnim członem w równaniu \eqref{SalientDistance} jest człon $D_3\left(f^i_{cur},f^j_{cur}\right)$ odpowiadający liczbowej reprezentacji podobieństwa krzywizn ze zbioru głównych struktur. Autorzy w \cite{SalientStrucTexProp} nie podają sposobu wyznaczenia normy:
 \begin{align}
 D_3\left(f^i_{cur},f^j_{cur}\right)=\ \left|curvature_i-curvature_j\right|
@@ -1352,7 +1340,7 @@ Według wyznaczonych równań, pary głównych struktur uzyskane w dalszych krok
 y=\ -\frac{{\mathrm{cos} \theta \ }}{{\mathrm{sin} \theta \ }}x+\frac{r}{{\mathrm{sin} \theta \ }}
 \label{HOUGHTRANSFORM}
 \end{align}
-Posługiwanie się parametrami $\theta $ oraz $r$ pozwala uniknąć niejednoznaczności, w przypadku opisu pionowych linii oraz umożliwia przedstawienie prostej w postaci jednego punktu w przestrzeni Hough'a. Przekształcenie z przestrzeni $D$ można przedstawić następująco:
+Posługiwanie się parametrami $\theta $ oraz $r$ pozwala uniknąć niejednoznaczności, w przypadku opisu pionowych linii oraz umożliwia przedstawienie prostej w postaci jednego punktu w przestrzeni Hough'a. Przekształcenie z przestrzeni $D^c$ można przedstawić następująco:
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/4_fig7}
@@ -1374,11 +1362,27 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru $\boldsymbol{\mathrm{\Omega }}$. źródło \cite{StructurePropagationManual}.}
 \label{4_fig9}
 \end{figure}
-Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych fragmentów $\psi $, czy też okien stanowiących podstawę do dobierania w pary danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy fragmentów obrazu $\psi $ w wyznaczanym obszarze $\mathrm{\Omega }$.
+Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych fragmentów $\psi $, czy też okien stanowiących podstawę do dobierania w pary danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy fragmentów obrazu $q_{\hat{x}}$ w wyznaczanym obszarze $\mathrm{\Omega }$.
 \chapter{Modyfikacje algorytmów}
 \section{Modyfikacja algorytmu Criminisi.}
 \label{ssec:crimMod}
-Algorytm wypełniania fragmentami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $\psi_{q}$ do okna będącego otoczeniem o promieniu $s_r$ rozważanego piksela $p$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = (p + \cdot(r))$, gdzie $\cdot(s_r))$ oznacza rozmiar otaczającego okna. Zmiana odnosi się do uprzedniej definicji \eqref{qSource}.
+Algorytm wypełniania fragmentami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $q_{\hat{x}}$ do okna będącego otoczeniem o promieniu $s_r$ rozważanego piksela $p$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = (p + \cdot(r))$, gdzie $\cdot(s_r))$ oznacza rozmiar otaczającego okna. Zmiana odnosi się do uprzedniej definicji \eqref{qSource}.
+\subsection{Modyfikacja funkcji $C_t$ }
+TODO \\
+Połączenie to co w VF z Crim. Zmienną $C_t$ można opisać wykorzystując przytoczoną już zależność \eqref{pewnoscVFI}.
+\subsection{Modyfikacja norm.}
+TODO \\
+Można się również posłużyć\eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} czy \eqref{nonLocalpoisson}
+TODO \\
+Ze względu na nieregularny kształt większości masek wyznaczenie jej granicy $\partial \mathrm{\Omega }$ można wykonać poprzez operację erozji i dylacji na funkcji $f$. Innym sposobem może być zastosowanie dyskretnego splotu funkcji $f$ z macierzą $mL$ reprezentującą Laplasjan dla siatki 8-spójnej: 
+\begin{equation}
+mL=\left| \begin{array}{ccc}
+1 & 1 & 1 \\ 
+1 & -8 & 1 \\ 
+1 & 1 & 1 \end{array}
+\right|
+\label{LAPLASJAN}
+\end{equation}
 \section{Modyfikacja funkcji wagi.}
 Podczas testowania algorytmu $NLCTV$ jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru fragmentu obrazu i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu przy zniekształceniu struktury. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
