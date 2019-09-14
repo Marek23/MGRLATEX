@@ -175,7 +175,7 @@ W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększaj�
 	\includegraphics{rysunki/1_fig1.png}
 \end{figure}
 \\
-Jest wiele rodzajów analizy obrazu takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest ulepszenie uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
+Jest  wiele rodzajów analizy obrazu takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest ulepszenie uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
 \section{Obraz cyfrowy.}
 Dwuwymiarowy obraz jest reprezentacją skończonej ilości dyskretnych wartości zwanych pikselami. Każdy z pikseli przypisany jest do konkretnego położenia w dwuwymiarowej przestrzeni $x = {i,j} \in D=\mathcal{R}^2$, gdzie $D$ oznacza przestrzeń obrazu. Wartość piksela $f(x)$ stanowi informację o natężeniu oraz nasyceniu kolorów w danym punkcie $x$. Najczęściej obraz przechowywany jest jako zbiór wartości $f(x) \in \langle 0,255 \rangle$, gdzie 0 oznacza najmniejszą wartość intensywności, a 255 największą wartość intensywności. Obraz w odcieniach szarości stanowi przekształcenie $f: D \rightarrow \mathcal{R}$. W przypadku obrazów kolorowych obraz stanowi przekształcenie $f: D \rightarrow \mathcal{R}^n$, gdzie $n$ określa ilość przestrzeni barw. Przykładem przestrzeni może być przestrzeń $RGB$, gdzie przy wykorzystaniu trzech kolorów $(n=3)$ uzyskuję się skończoną gammę innych kolorów. Biorąc pod uwagę trzy podstawowe kolory oraz 256 wartości ich intensywności obraz może modelować $256^3=16777216$ różnych kolorów. Jakość obrazu zależy od jego rozdzielczości. Rozdzielczość określa się jako liczbę wierszy i kolumn przypadających na obraz. Obrazy o dużej rozdzielczości charakteryzują się znikomą zdolnością do odróżnienia poszczególnego z pikseli obrazu, dzięki czemu w ogólnym wrażeniu tworzy gładki obraz.
 \section{Wmalowywanie obrazów.}
@@ -1145,7 +1145,7 @@ Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobień
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie fragmentami pochodzącymi z ich otoczenia. W odróżnieniu od różnych algorytmów bazujących na równaniach różniczkowych metoda ta nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na \autoref{4_fig1}.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.5]{rysunki/4_fig1}
+	\includegraphics[scale=0.4]{rysunki/4_fig1}
 	\caption{Schemat wmalowywania obrazu.}
 	\label{4_fig1}
 \end{figure}
@@ -1213,11 +1213,9 @@ D_t(x)= \frac{\left|\nabla^{\bot}u_x \cdot n_x\right|}{\alpha }
 \label{DataTerm}
 \end{align}
 gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania Naviera-Stokes'a odpowiada kierunkowi rozchodzenia się izolinii obrazu, natomiast  $n_x$ to wektor normalny (prostopadły) do granicy maski $\partial \mathrm{\Omega }$ w punkcie piksela $x$.
-TODO \\
-poprawić rysunek 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1]{rysunki/4_fig3}
+	\includegraphics[scale=0.7]{rysunki/4_fig3}
 	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$.}
 	\label{4_fig3} 
 \end{figure}
@@ -1366,24 +1364,23 @@ Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algor
 \chapter{Modyfikacje algorytmów}
 \section{Modyfikacja algorytmu Criminisi.}
 \label{ssec:crimMod}
-Algorytm wypełniania fragmentami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $q_{\hat{x}}$ do okna będącego otoczeniem o promieniu $s_r$ rozważanego piksela $p$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = (p + \cdot(r))$, gdzie $\cdot(s_r))$ oznacza rozmiar otaczającego okna. Zmiana odnosi się do uprzedniej definicji \eqref{qSource}.
+Algorytm wypełniania fragmentami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $q_{\hat{x}}$ do okna będącego otoczeniem o promieniu $r$ rozważanego piksela $x$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = r_x$, gdzie $r_x$ jest oznaczeniem analogicznym do $p_x$, z jedyną różnicą rozmiaru wyznaczanego fragmentu obszaru. Matematycznie zmiana odnosi się do dynamicznej zmiany pola $D^c$ jako zależność od rozważanego piksela $x$.
 \subsection{Modyfikacja funkcji $C_t$ }
-TODO \\
-Połączenie to co w VF z Crim. Zmienną $C_t$ można opisać wykorzystując przytoczoną już zależność \eqref{pewnoscVFI}.
+Podczas badań sprawdzono zmianę definicji oryginalnej dla algorytmu funkcji $C_t$ z zależności \eqref{confidenceTerm} na \eqref{pewnoscVFI}.
 \subsection{Modyfikacja norm.}
-TODO \\
-Można się również posłużyć\eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} czy \eqref{nonLocalpoisson}
-TODO \\
-Ze względu na nieregularny kształt większości masek wyznaczenie jej granicy $\partial \mathrm{\Omega }$ można wykonać poprzez operację erozji i dylacji na funkcji $f$. Innym sposobem może być zastosowanie dyskretnego splotu funkcji $f$ z macierzą $mL$ reprezentującą Laplasjan dla siatki 8-spójnej: 
+Podczas badania algorytmu przetestowano różne rodzaje norm zastępując oryginalną \eqref{FROBENIUS2} normami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} czy \eqref{nonLocalpoisson}.
+\subsection{Modyfikacja funkcji $D_t$.}
+Ze względu na nieregularny kształt większości masek wyznaczenie granicy $\partial \mathrm{\Omega }$ można wykonać wykorzystując operację erozji i dylacji na wspomnianej masce. Innym sposobem może być zastosowanie dyskretnego splotu maski z macierzą będącej laplasjanem dla siatki 8-spójnej: 
 \begin{equation}
-mL=\left| \begin{array}{ccc}
+\left| \begin{array}{ccc}
 1 & 1 & 1 \\ 
 1 & -8 & 1 \\ 
 1 & 1 & 1 \end{array}
 \right|
 \label{LAPLASJAN}
 \end{equation}
-\section{Modyfikacja funkcji wagi.}
+W celu uzyskania efektu dokładniejszego odwzorowania wektorów granic struktur wnikających wgłąb nieznanego obszaru, co za tym idzie poprawienia dokładności algorytmu, kolorowy obraz należy przekształcić do przestrzeni $CIELAB$ a następnie korzystając z warstwy jasności wyznaczyć wektor na podstawie wartości z przyjętego uprzednio rozmiaru skrawka obrazu. 
+\section{Model NLCTV - modyfikacja funkcji wagi.}
 Podczas testowania algorytmu $NLCTV$ jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru fragmentu obrazu i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu przy zniekształceniu struktury. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
 \begin{aligned}
