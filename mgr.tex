@@ -172,17 +172,19 @@ Tu będzie jakieś streszczenie
 %-----------Poczłtek człłci zasadniczej-----------
 
 \chapter{Wprowadzenie do przetwarzania obrazów.}
-W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększając swój obszar w dziedzinie badań. Ogólnie proces analizy obrazu można przedstawić następującym modelem: \\
+W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększając swój obszar w dziedzinie badań. Ogólnie proces analizy obrazu można przedstawić za pomocą następującego modelu: \\
 \begin{figure}[!h]
 	\centering
 	\includegraphics{rysunki/1_fig1.png}
 \end{figure}
 \\
-Jest  wiele rodzajów analizy obrazu takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest ulepszenie uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
+Do przetwarzania (analizy) obrazów możemy używać wiele różnych narzędzi takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest rekonstrukcja uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
 \section{Obraz cyfrowy.}
-Dwuwymiarowy obraz jest reprezentacją skończonej ilości dyskretnych wartości zwanych pikselami. Każdy z pikseli przypisany jest do konkretnego położenia w dwuwymiarowej przestrzeni $x = {i,j} \in D=\mathcal{R}^2$, gdzie $D$ oznacza przestrzeń obrazu. Wartość piksela $f(x)$ stanowi informację o natężeniu oraz nasyceniu kolorów w danym punkcie $x$. Najczęściej obraz przechowywany jest jako zbiór wartości $f(x) \in \langle 0,255 \rangle$, gdzie 0 oznacza najmniejszą wartość intensywności, a 255 największą wartość intensywności. Obraz w odcieniach szarości stanowi przekształcenie $f: D \rightarrow \mathcal{R}$. W przypadku obrazów kolorowych obraz stanowi przekształcenie $f: D \rightarrow \mathcal{R}^n$, gdzie $n$ określa ilość przestrzeni barw. Przykładem przestrzeni może być przestrzeń $RGB$, gdzie przy wykorzystaniu trzech kolorów $(n=3)$ uzyskuję się skończoną gammę innych kolorów. Biorąc pod uwagę trzy podstawowe kolory oraz 256 wartości ich intensywności obraz może modelować $256^3=16777216$ różnych kolorów. Jakość obrazu zależy od jego rozdzielczości. Rozdzielczość określa się jako liczbę wierszy i kolumn przypadających na obraz. Obrazy o dużej rozdzielczości charakteryzują się znikomą zdolnością do odróżnienia poszczególnego z pikseli obrazu, dzięki czemu w ogólnym wrażeniu tworzy gładki obraz.
+Dwuwymiarowy obraz jest reprezentacją skończonej ilości dyskretnych wartości zwanych pikselami. Każdy z pikseli przypisany jest do konkretnego położenia w dwuwymiarowej przestrzeni $x = {i,j} \in D=\mathcal{R}^2$, gdzie $D$ oznacza przestrzeń obrazu. Wartość piksela $f(x)$ stanowi informację o natężeniu oraz nasyceniu kolorów w danym punkcie $x$. Najczęściej obraz przechowywany jest jako zbiór wartości $f(x) \in \langle 0,255 \rangle$, gdzie 0 oznacza najmniejszą wartość intensywności, a 255 największą wartość intensywności. Obraz w odcieniach szarości stanowi przekształcenie $f: D \rightarrow \mathcal{R}$. W przypadku obrazów kolorowych obraz stanowi przekształcenie $f: D \rightarrow \mathcal{R}^n$, gdzie $n$ określa ilość barw w danej przestrzeni. Przykładem przestrzeni może być przestrzeń $RGB$, gdzie przy wykorzystaniu trzech kolorów $(n=3)$ uzyskuję się skończoną gamę innych kolorów. Biorąc pod uwagę trzy podstawowe kolory oraz 256 wartości ich intensywności obraz może modelować $256^3=16777216$ różnych kolorów. Jakość obrazu zależy od jego rozdzielczości. Rozdzielczość określa się jako liczbę wierszy i kolumn przypadających na obraz. Obrazy o dużej rozdzielczości charakteryzują się znikomą zdolnością do odróżnienia poszczególnego z pikseli obrazu, dzięki czemu w ogólnym wrażeniu tworzy gładki obraz.
+
 \section{Wmalowywanie obrazów.}
-Cyfrowe wmalowywanie obrazu jest artystycznym synonimem zapożyczonym z techniki wykorzystywanej przez profesjonalnych restauratorów odnawiających dzieła sztuki w muzeach. Niech $D$ oznacza całą przestrzeń obrazu będącego przekształceniem $f: D \rightarrow R^{n}$. Problem wmalowania obrazu polega na wypełnieniu pustej części zbioru $\Omega \subset D$ na podstawie informacji znajdującej się na zewnątrz $\Omega$. Do tak zdefiniowanego problemu istnieje wiele rozwiązań przedstawianych w literaturze. Wmalowywanie obrazów definiuje się jako automatyczne wypełnianie braków w obrazie na podstawie otoczenia, w sposób uniemożliwiający obserwatorowi znalezienie pierwotnie wybrakowanych miejsc. Przykłady obrazów poddanych operacji wmalowywania przedstawia \autoref{1_fig1} 
+
+Cyfrowe wmalowywanie obrazu jest artystycznym synonimem zapożyczonym z techniki wykorzystywanej przez profesjonalnych restauratorów odnawiających dzieła sztuki w muzeach. Niech $D$ oznacza całą przestrzeń obrazu będącego przekształceniem $f: D \rightarrow R^{n}$. Problem wmalowania obrazu polega na wypełnieniu pustej części zbioru $\Omega \subset D$ na podstawie informacji znajdującej się na zewnątrz zbioru $\Omega$. Do tak zdefiniowanego problemu istnieje wiele rozwiązań przedstawianych w literaturze. Wmalowywanie obrazów definiuje się jako automatyczne wypełnianie braków w obrazie na podstawie otoczenia, w sposób uniemożliwiający obserwatorowi znalezienie pierwotnie uszkodzonych miejsc. Przykłady obrazów poddanych operacji wmalowywania przedstawia \autoref{1_fig1} 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.7]{rysunki/fig1}
@@ -190,8 +192,8 @@ Cyfrowe wmalowywanie obrazu jest artystycznym synonimem zapożyczonym z techniki
 	\label{1_fig1}
 \end{figure}
 \par
-Obrazy przedstawiono w parze: po lewej obraz wejściowy, po prawej wynikowy obraz poddany operacji wmalowywania. Mogą nimi być uszkodzenia jak w przypadku a oraz b, napisy znajdujące się na obrazie - c, czy też obiekty, którym w konkretnym przypadku d jest postać. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według niego zostać usunięty. Program automatycznie nie jest w stanie wyznaczyć części, która powinna zostać przearanżowana. 
-Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany region na scenie musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze. Głównym celem pracy jest osiągniecie algorytmu skutecznie odbudowującego wcześniej zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi operacjami wykorzystywanymi w bardziej złożonych algorytmach rekonstrukcji są:
+Obrazy przedstawiono parami: po lewej obraz wejściowy, po prawej wynikowy obraz poddany operacji wmalowywania. Mogą nimi być uszkodzenia jak w przypadku (a) oraz (b), napisy znajdujące się na obrazie (c), czy też obiekty, którym w konkretnym przypadku (d) jest postać. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według niego zostać usunięty. Program automatycznie nie jest w stanie wyznaczyć części, która powinna zostać zastąpiona. 
+Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany region sceny wizyjnej musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze. Głównym celem pracy jest osiągniecie algorytmu skutecznie odbudowującego wcześniej zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi operacjami wykorzystywanymi w bardziej złożonych algorytmach rekonstrukcji są:
 \begin{enumerate}
 \item
 Rozwiązanie cząstkowych równań różniczkowych wyższego rzędu bazujących na kontynuacji tekstur, geometrii, struktur obrazu.
@@ -200,12 +202,12 @@ Analiza funkcjonalna, problem minimalizacji energii o szerokim zakresie sposobó
 \item
 Wyznaczenie podobieństwa pomiędzy obszarami w obrazie za pomocą wprowadzonej metryki 
 \end{enumerate}
-W pracy opisano przedstawione powyżej algorytmy, porównano oraz zaproponowano nowy model uzupełniania brakujących danych. Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
+W niniejszej pracy opisano przedstawione powyżej algorytmy, porównano oraz zaproponowano nowy model uzupełniania brakujących danych. Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
 \chapter{Przegląd istniejących algorytmów.}
 Pierwszą gałęzią algorytmów zgodnie z rozróżnieniem wprowadzonym w  \cite{SalientStrucTexProp} są metody opierające się na rozwiązaniu równań różniczkowych wyższego rzędu. Wśród nich pojawia się próba przystosowania procesu dyfuzji do wypełniania braków w obrazie (źródła \cite{bertalmio2000image} lub \cite{BertalmioNavierStokes}), dzięki której przy wykorzystaniu zależności z działu mechaniki płynu można dokonać próby kontynuacji informacji z otoczenia w brakujące obszary. \\
-Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu kawałek po fragmencie skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. Na przestrzeni czasu pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. \cite{StructurePropagationManual}. \\
-Innym sposobem wyznaczenia braków jest analiza funkcjonalna definiująca problem minimalizacji energii stanowiąca największą grupę zdefiniowanych rozwiązań wmalowywania. Przykładem mogą być \cite{MathematicalModelsforNLTextureInpainting}, \cite{ColorTextureInpaintingNLCTVModel}, czy też \cite{arias2011variational}. W przytoczonych przykładach rozwiązanie problemu minimalizacji stanowi wynik w postaci wmalowanego obrazu. Innym przykładem może być problem minimalizacji zdefiniowany w \cite{SalientStrucTexProp} stanowiący pośredni proces w wypełnianiu obrazu. Tu problem minimalizacji, będący segmentacją obrazu, pozwala oddzielić strukturę i teksturę, pozwalając w następstwie na przeprowadzenie oddzielnej syntezy dwóch zbiorów danych, za pomocą róznych algorytmów. \\
-Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem grupy może być przytoczone wcześniej \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najbliższego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują nielokalny model wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi fragmentami obrazu. \\
+Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu fragment po fragmencie skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz taka metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. Na przestrzeni czasu pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. metoda opisana w  \cite{StructurePropagationManual}. \\
+Innym sposobem wyznaczenia braków jest zastosowanie analizy funkcjonalnej definiującej problem minimalizacji energii stanowiącej największą grupę zdefiniowanych rozwiązań wmalowywania. Przykładem mogą być \cite{MathematicalModelsforNLTextureInpainting}, \cite{ColorTextureInpaintingNLCTVModel}, czy też \cite{arias2011variational}. W przytoczonych przykładach rozwiązanie problemu minimalizacji stanowi wynik w postaci wmalowanego obrazu. Innym przykładem może być problem minimalizacji zdefiniowany w \cite{SalientStrucTexProp} stanowiący pośredni proces w wypełnianiu obrazu. Tu problem minimalizacji, będący segmentacją obrazu, pozwala oddzielić strukturę i teksturę, pozwalając w następstwie na przeprowadzenie oddzielnej syntezy dwóch zbiorów danych, za pomocą róznych algorytmów. \\
+Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem z tej grupy może algorytm opisany w \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najlepszego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują nielokalny model wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi fragmentami obrazu. \\
 Większość metod wmalowywania opisanych w literaturze opiera się na algorytmach kontynuujących strukturę, geometrię bądź teksturę obrazu. Modele bazujące na geometrii i strukturze w uogólnieniu generują efekt uboczny w postaci braku kontynuacji tekstur, sprawiających wrażenie rozmytego obrazu. Do algorytmów broniących się przed efektem rozmycia można zaliczyć takie, w których wyznaczeniu konkretnego miejsca w nieznanym obszarze może towarzyszyć przebadanie całego zbioru punktów niemodyfikowanej części obrazu. Stąd metody kontynuujące tekstury w większości uważa się za metody nielokalne.
 \chapter{Równania mechaniki płynu.}
 \label{chap:navierstokes}
@@ -220,12 +222,12 @@ V \nabla V \mathrm{+} \frac{dV}{dt} = - \frac{\mathrm{1}}{q}\nabla p\mathrm{+}F 
 \label{LiquidVelociy}
 \end{equation}
 gdzie $V$ oznacza prędkość lokalną, $t$ chwilę czasu, $q$ gęstość lokalną, $p$ ciśnienie lokalne, $F$ siłę zewnętrzną działającą lokalnie na ciecz, $\nu$ lepkość kinematyczną lokalną. $\mathit{\Psi}$ oznacza linię prądu będącą ciągłą linią w polu prędkości płynu, poprowadzoną
-stycznie do wektorów prędkości w danej chwili. Człon $V\nabla V$ odpowiada konwekcji lokalnego pędu wraz z ruchem cieczy, $\frac{1}{q}\nabla p$ wpływowi sił ciśnieniowych na zmianę pędu (kompensuje niezerową konwekcję),  $F$ odpowiada sile zewnętrznej działającej na ciecz (np. grawitację) natomiast $\nu {\nabla }^2V\ $ odpowiada dyssypacji pędu cieczy od tarcia pomiędzy cząstkami. Traktując płyn jako nieściśliwy ($q \leftarrow \infty $)  oraz pomijając działanie sił zewnętrznych ($F=0$)  równanie możemy uprościć do postaci:
+stycznie do wektorów prędkości w danej chwili. Człon $V\nabla V$ odpowiada konwekcji lokalnego pędu wraz z ruchem cieczy, $\frac{1}{q}\nabla p$ wpływowi sił ciśnieniowych na zmianę pędu (kompensuje niezerową konwekcję),  $F$ odpowiada sile zewnętrznej działającej na ciecz (np. grawitację) natomiast $\nu {\nabla }^2V\ $ odpowiada dyssypacji pędu cieczy od tarcia pomiędzy cząstkami. Traktując płyn jako nieściśliwy ($q \leftarrow \infty $)  oraz pomijając działanie sił zewnętrznych ($F=0$)  równanie \eqref{NavierStokesEquation} możemy uprościć do postaci:
 \begin{equation}
  V\nabla V+\frac{dV}{dt}=\nu {\nabla }^2V
 \label{NavierStokesEquationShort}
 \end{equation}
-Dokonując obustronnej rotacji równania \cite{StreamfuntionVorticityForm} otrzymujemy równanie w zależności od wirowości:
+Dokonując obustronnej rotacji równania \eqref{NavierStokesEquation} otrzymujemy równanie w zależności od wirowości (zgodnie z \cite{StreamfuntionVorticityForm})
 \begin{equation}
 V\nabla \omega \mathrm{+}\frac{d\omega }{dt}\mathrm{=}\nu {\nabla }^{\mathrm{2}}V
 \label{NavierStokesEquationVorticity}
@@ -235,7 +237,7 @@ przy czym wirowość określa się wzorem:
 \omega =\nabla \times V
 \label{Vorticity}
 \end{equation}
-Niech $I$ reprezentuje obraz cyfrowy będący macierzą o rozmiarze$m \mathrm{\times} n$, \cite{ebrahimi2012navier}. Wtedy $I_{i,j}$ zawiera wartość dodatnią całkowitą z przedziału od 0 do 255, stanowiącą informację o poziomie jasności danego piksela z obrazu. Wartość 0 opowiada odcieniowi czarnemu, natomiast 255 odcieniowi czystemu białemu. Niech D stanowi zbiór indeksów $(i,j)\ \in \ \left\{1,2\dots ,m\right\} \mathrm{\times}$ $\left\{1,2\dots ,n\right\}$. Obraz $I$ wtedy można traktować jako funkcję $I:D\to R$. \\
+Niech $I$ reprezentuje obraz cyfrowy będący macierzą o rozmiarze $m \mathrm{\times} n$, \cite{ebrahimi2012navier}. Wtedy $I_{i,j}$ zawiera wartość dodatnią całkowitą z przedziału od 0 do 255, stanowiącą informację o poziomie jasności danego piksela z obrazu. Wartość 0 opowiada odcieniowi czarnemu, natomiast 255 odcieniowi czystemu białemu. Niech D stanowi zbiór indeksów $(i,j)\ \in \ \left\{1,2\dots ,m\right\} \mathrm{\times}$ $\left\{1,2\dots ,n\right\}$. Obraz $I$ wtedy można traktować jako funkcję $I:D\to R$. \\
 W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomiędzy wirowością a gładkością obrazu. Dokładniej przedstawia to \autoref{tab1}
 \begin{table}[!h]
 	\centering
@@ -272,13 +274,13 @@ W równaniu \eqref{NavierStokesInpainting} człon odpowiedzialny za tarcie pomi�
 \begin{equation}
 g\left(s\right)=\frac{1}{1+\alpha \left|s\right|}
 \end{equation}
-gdzie $\alpha\ $, $K$ wcześniej zdefiniowane parametry dyfuzji (stałe), ${\mathrm{\nabla }}^{\bot }=({-\partial }_y,{\partial }_x)$. 
-Dyskretne rozwiązanie równania \eqref{NavierStokesInpainting} jest analogiczne do dyskretnego rozwiązania przepływu płynu w przestrzeni $2D$. W tym celu należy wprowadzić chwile w czasie $t=n\cdot \Delta t$, gdzie $n=\left\{1,2,3,\dots ,N\right\}$, $\Delta t$ wartość przyrostu czasu pomiędzy dyskretnymi chwilami $n$ i $n+1$, $N$ moment osiągnięcia stanu ustalonego, matematycznie przedstawianego jako:
+gdzie $\alpha\ $, $K$ oznacza wcześniej zdefiniowane parametry dyfuzji (stałe), ${\mathrm{\nabla }}^{\bot }=({-\partial }_y,{\partial }_x)$. 
+Dyskretne rozwiązanie równania \eqref{NavierStokesInpainting} jest analogiczne do dyskretnego rozwiązania przepływu płynu w przestrzeni $2D$. W tym celu należy wprowadzić chwile dyskretne $t=n\cdot \Delta t$, gdzie $n=\left\{1,2,3,\dots ,N\right\}$, $\Delta t$ wartość przyrostu czasu pomiędzy dyskretnymi chwilami $n$ i $n+1$, $N$ moment osiągnięcia stanu ustalonego, matematycznie przedstawianego jako:
 \begin{equation}
 \frac{\partial I}{\partial t}\mathrm{+}{\mathrm{\nabla }}^{\mathrm{\bot }}I\mathrm{\nabla }\mathrm{\Delta }I\mathrm{\ }\mathrm{\cong }\mathrm{0}
 \label{NavierStokesStability}
 \end{equation}
-Warto zauważyć, że człon ${\mathrm{\nabla }}^{\bot }I$ w równaniu \eqref{NavierStokesStability} odpowiada kierunkowi rozchodzenia się punktów o podobnej jasności, natomiast $\mathrm{\nabla }\Delta I$ to kierunek największej zmiany gładkości obrazu. Jeśli wektory są do siebie prostopadłe  iloczyn skalarny wynosi 0 i przedstawia stan stabilny. 
+Warto zauważyć, że człon ${\mathrm{\nabla }}^{\bot }I$ w równaniu \eqref{NavierStokesStability} odpowiada kierunkowi linii tworzonej przez punkty o podobnej jasności, natomiast $\mathrm{\nabla }\Delta I$ to kierunek największej zmiany gładkości obrazu. Jeśli wektory są do siebie prostopadłe  iloczyn skalarny wynosi 0 i przedstawia stan stabilny. 
 W celu dokładnej analizy dyskretyzacji równanie \eqref{NavierStokesEquationVorticity} zostanie rozdzielone na dwa podrównania:
 \begin{equation}
 \frac{d{\mathrm{(}\mathrm{\nabla }}^2I)}{dt}=-{\mathrm{(}\mathrm{\nabla }}^{\bot }I)\cdot \nabla {\mathrm{(}\mathrm{\nabla }}^2I)+\left\{ad\right\}
@@ -286,19 +288,19 @@ W celu dokładnej analizy dyskretyzacji równanie \eqref{NavierStokesEquationVor
 \end{equation}
 oraz
 \begin{equation}
-ad=\nu \mathrm{\nabla }(g(\nabla {\mathrm{(}\mathrm{\nabla }}^2I))\nabla {\mathrm{(}\mathrm{\nabla }}^2I))
+{ad}=\nu \mathrm{\nabla }(g(\nabla {\mathrm{(}\mathrm{\nabla }}^2I))\nabla {\mathrm{(}\mathrm{\nabla }}^2I))
 \label{NavierAdv}
 \end{equation}
-Rozwiązanie powyższych równań dokonywane będzie na siatce obliczeniowej typu Eulera, a wszystkie wartości wyznaczanych zmiennych będą znajdować się w centrach komórki zdefiniowanej jako konkretny piksel obrazu, zgodnie z \autoref{3_fig1} 
+Rozwiązanie powyższych równań dokonywane będzie na siatce obliczeniowej typu Eulera, a wszystkie wartości wyznaczanych zmiennych będą znajdować się w centrach komórek zdefiniowanych jako konkretne piksele obrazu, zgodnie z \autoref{3_fig1} 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1.2]{rysunki/fig2}
 	\caption{Przykłady obrazów poddanych operacji wmalowywania.}
 	\label{3_fig2}
 \end{figure}
-Równanie \eqref{NavierDiffAdv} to równanie różniczkowe cząstkowe typu parabolicznego. Równanie to  można rozwiązać w sposób przybliżony używając schematu centralnego bądź schematu do przodu. W przypadku równania parabolicznego oba schematy dają stabilne rozwiązanie. W celu ułatwienia dalszych rozważań wprowadzono funkcję $f$ określoną w centrach siatki, z dolnymi indeksami wskazującymi na konkretne miejsce w siatce. Korzystając z rozwinięcia w szereg Taylora możemy gradient funkcji $f$ w punkcie $(i,j)$ przybliżyć następującym wzorem:
+Równanie \eqref{NavierDiffAdv} to równanie różniczkowe cząstkowe typu parabolicznego. Równanie to  można rozwiązać w sposób przybliżony używając schematu różnicy centralnej bądź schematu różnicy do przodu. W przypadku równania parabolicznego oba schematy dają stabilne rozwiązanie. W celu ułatwienia dalszych rozważań wprowadzono funkcję $f$ określoną w centrach siatki, z dolnymi indeksami wskazującymi na konkretne miejsce w siatce. Korzystając z rozwinięcia w szereg Taylora możemy gradient funkcji $f$ w punkcie $(i,j)$ przybliżyć następującym wzorem:
 \begin{equation}
-\nabla f_{i,j}=\left[\ {\frac{\partial f}{\partial x}|}_{i,j,}{\frac{\partial f}{\partial y}|}_{i,j}\right]
+\nabla f_{i,j}=\left[\ {\frac{\partial f}{\partial x}\bigg |}_{i,j,} \ {\frac{\partial f}{\partial y}\bigg |}_{i,j}\right]
 \label{gradF}
 \end{equation}
 gdzie:
@@ -311,7 +313,7 @@ Analogicznie:
 {\frac{\partial f}{\partial y}} {\bigg |}_{i,j}=\frac{f_{i,j+1}+f_{i,j-1}}{2\Delta y}
 \label{dfdy}
 \end{equation}
-Na podstawie powyższych wzorów składowe wektora ${\mathrm{\nabla }}^{\bot }I$, czyli kierunku, w którym należy propagować gładkość obrazu ${\mathrm{\nabla }}^2I$ wyznacza się z zależności:
+Na podstawie wzorów \eqref{gradF} - \eqref{dfdy} składowe wektora ${\mathrm{\nabla }}^{\bot }I$, czyli kierunku, w którym należy propagować gładkość obrazu ${\mathrm{\nabla }}^2I$ wyznacza się z zależności:
 \begin{equation}
 u_{i,j}=\frac{I_{i,j+1}+I_{i,j-1}}{2\Delta y} 
 \label{u}
@@ -321,12 +323,12 @@ Oraz
  v_{i,j}=-\frac{I_{i+1,j}+I_{i-1,j}}{2\Delta x}
 \label{v}
 \end{equation}
-Przy czym:
+przy czym:
 \begin{equation}\\
 {\mathrm{\nabla }}^{\bot }I=|-u,v|
 \label{gradI}
 \end{equation}
-Stosując pięciopunktowy analog różnicowy w metodzie różnic skończonych operator Laplace’a dla przyjętej siatki Eulera można przybliżyć wzorem (przy założeniu, że $\Delta x=\ \Delta y$):
+Jeśli zastosujemy pięciopunktowy analog różnicowy w metodzie różnic skończonych to operator Laplace’a dla przyjętej siatki Eulera można przybliżyć następującym wzorem (przy założeniu, że $\Delta x=\ \Delta y$):
 \begin{align}
 \begin{aligned}
 {\mathrm{\nabla }}^2f_{i,j} &= \Delta f_{i,j}=\\[1ex]
@@ -367,7 +369,7 @@ k = i+sgn\left(u^n\right) \\
 l = j+sgn(u^n)
 \end{align}
 \par
-Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej dyfuzji $\nu {\nabla }^2V$ wymaga uważniejszego potraktowania ze względu na większą podatność na niestabilność implementowanych metod dyskretyzacji. Równanie to można przedstawić w postaci dywergencji pola wektorowego uzyskanego w wyniku wyliczenia gradientu wirowości z uwzględnionym współczynnikiem dyfuzji anizotropowej:
+Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej dyfuzji przez wyrażenie $\nu {\nabla }^2V$ wymaga uważniejszego potraktowania ze względu na większą podatność na niestabilność implementowanych metod dyskretyzacji. Równanie to można przedstawić w postaci dywergencji pola wektorowego uzyskanego w wyniku wyliczenia gradientu wirowości z uwzględnionym współczynnikiem dyfuzji anizotropowej:
 \begin{align}
 \begin{aligned}
 \left\{ad\right\} 
@@ -379,14 +381,14 @@ Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej
 \end{align}
 \eqref{Anisotropic}
 gdzie: ${\partial }_x=\frac{\partial }{\partial x}$ oraz analogicznie: ${\partial }_y=\frac{\partial }{\partial y}$.
-Zgodnie z \cite{ebrahimi2012navier} powyższe równanie można rozwiązać w poniższych krokach:
+Zgodnie z \cite{ebrahimi2012navier} równanie można rozwiązać w poniższych krokach:
 Korzystając z zależności \eqref{dfdx} i \eqref{dfdy} należy wyznaczyć wartości ${\frac{d\omega }{dx}}\big|_{i,j}$ oraz ${\frac{d\omega }{dy}}\big|_{i,j}$
-Na podstawie wartości z punktu 1 należy obliczyć moduł wektora w przestrzeni Euklidesowej:
+Korzystając z obliczonych wartości należy następnie obliczyć moduł wektora w przestrzeni Euklidesowej:
 \begin{equation}
 {\left|\mathrm{\nabla }\omega \right|}_{i,j}=\ \sqrt{\frac{\partial \omega }{\partial x}\bigg|^2_{i,j}+\frac{\partial \omega }{\partial y}\bigg|^2_{i,j}}
 \label{magnitudedw}
 \end{equation}
-Na podstawie wartości z punktu 2 należy wyznaczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} trzeba obliczyć:
+Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} trzeba obliczyć:
 \begin{align}
 \{ad_{i,j}\} &= \partial_x \left( g(\left| \nabla\omega \right|_{i,j}) \cdot \partial_x \omega \big|_{i,j} \right) \bigg|_{i,j} \notag +\\[1ex]
 &+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}
