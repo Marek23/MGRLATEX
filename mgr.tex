@@ -388,7 +388,7 @@ Korzystając z obliczonych wartości należy następnie obliczyć moduł wektora
 {\left|\mathrm{\nabla }\omega \right|}_{i,j}=\ \sqrt{\frac{\partial \omega }{\partial x}\bigg|^2_{i,j}+\frac{\partial \omega }{\partial y}\bigg|^2_{i,j}}
 \label{magnitudedw}
 \end{equation}
-Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} trzeba obliczyć:
+Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} możemy wyliczyć wartość $\{ad_{i,j}\} $:
 \begin{align}
 \{ad_{i,j}\} &= \partial_x \left( g(\left| \nabla\omega \right|_{i,j}) \cdot \partial_x \omega \big|_{i,j} \right) \bigg|_{i,j} \notag +\\[1ex]
 &+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}
@@ -399,7 +399,7 @@ Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla 
 \Delta I^n={\omega }^n
 \label{Poisson}
 \end{equation}
-Dla przestrzeni dwuwymiarowej równanie przyjmuje postać:
+Dla przestrzeni dwuwymiarowej równanie to przyjmuje następującą postać:
 \begin{equation}
 \frac{{\partial }^2I}{\partial x^2}+\frac{{\partial }^2I}{\partial y^2}=\ \omega
 \label{Poisson2D}
@@ -414,13 +414,13 @@ Analogicznie:
 {\frac{{\partial }^2f}{\partial y^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i,j+1}-2f_{i,j}+f_{i,j-1}}{\Delta y^2}
 \label{d2fdy2}
 \end{equation}
-Korzystając z \eqref{d2fdx2} oraz \eqref{d2fdy2} równanie \eqref{Poisson} w punkcie $(i,j)$ przyjmuje postać pięciopunktowego analogu różnicowego operatora $\Delta $ ($\Delta x=\ \Delta y=h)$:
+Jeśli skorzystamy z zależności \eqref{d2fdx2} oraz \eqref{d2fdy2} to równanie \eqref{Poisson} w punkcie $(i,j)$ przyjmuje postać pięciopunktowego analogu różnicowego operatora $\Delta $ ($\Delta x=\ \Delta y=h)$:
 \begin{equation}
 I_{i+1,j}+I_{i-1,j}+I_{i,j+1}+I_{i,j-1}-4I_{i,j}=h^2{\omega }_{i,j}
 \label{Laplace}
 \end{equation}
-Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje obraz $I$, $B$ gładkość obrazu, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy 
-a-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując metodę SOR – sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
+Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje nasz obraz $I$, $B$ gładkość obrazu, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele różnych metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy 
+a-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując podejście SOR – czyli metodę sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
 \begin{align}
 \begin{aligned}
 I^{n+1}_{i,j}
@@ -429,20 +429,20 @@ I^{n+1}_{i,j}
 \end{aligned}
 \label{DiscreteSOR}
 \end{align}
-Metoda w swoim równaniu przyjmuje parametr wagowy $\beta$ odpowiadający za zbieżność algorytmu. Dobór parametrów nie jest losowy i $\beta$ zawiera się w przedziale $(0,2)$. Zgodnie z \cite{blacksuccessive} parametr ten powinno przyjmować się zgodnie z zależnością \cite{ancona2002computational}:
+Metoda ta w swoim równaniu przyjmuje parametr wagowy $\beta$ odpowiadający za zbieżność algorytmu i musi zawierać się w przedziale $(0,2)$ \cite{neumann1981kahan}. Według informacji podanych w  \cite{blacksuccessive} parametr ten powinno przyjmować się zgodnie z zależnością:
 \begin{equation}
 {\omega }_{opt}=2{\left(1+\frac{\pi }{N}\right)}^{-1}
 \label{BetaChoose}
 \end{equation}
 gdzie $N$ to liczba kolumn przyjętej siatki obliczeniowej. 
 \par
-Operacje wmalowywania bardzo często wykonywane są w punktach maski tworzących nieregularne kształty, mogących znajdować się w różnych częściach obrazu. Stąd powyżej przedstawiony schemat obliczeń wykonywany jest dla wszystkich pikseli obrazu. Po każdej iteracji uzyskane wartości $I^{n+1}$ w znanych punktach przepisywane są z oryginalnego obrazu $I^{0}$, zgodnie z zależnością poniżej.
+Operacje wmalowywania bardzo często wykonywane są w punktach maski tworzących nieregularne kształty, mogących znajdować się w różnych częściach obrazu. Stąd powyżej przedstawiony schemat obliczeń wykonywany jest dla wszystkich pikseli obrazu. Po każdej iteracji uzyskane wartości $I^{n+1}$ w znanych punktach przepisywane są z oryginalnego obrazu $I^{0}$, zgodnie z zależnością:
 \begin{equation}
 I^{n+1}(D/\mathrm{\Omega }\mathrm{)\ }\ ={\ I}^0(D/\mathrm{\Omega }\mathrm{)}
 \label{retrieveMask}
 \end{equation}
 \par
-Podsumowując w celu wyznaczenia nieznanych wartości obrazu w punktach zdefiniowanych przez maskę należy powtarzać następujące kroki do uzyskania stanu ustalonego:
+Podsumowując, w celu wyznaczenia nieznanych wartości obrazu w punktach zdefiniowanych przez maskę należy powtarzać następujące kroki do uzyskania stanu ustalonego:
 \begin{enumerate}
 \item
 Rozwiązać równanie \eqref{discreteAnisotropic} 
@@ -466,7 +466,7 @@ I_{2_{i,j}}=\ {\mathrm{sin} {\mathrm{\Theta }}_{i,j}\ }=\ {\mathrm{sin} {{\mathr
 I_{3_{i,j}}=\ {\mathrm{sin} {\phi }_{i,j}\ }=\ {\mathrm{sin} {{\mathrm{cos}}^{-1} \frac{B_{i,j}}{r_{i,j}}\ }\ } 
 \label{TIthree}
 \end{equation}
-Następnie dysponując składowymi $I_1$, $I_2$, $I_3$ wyznaczonymi z powyższych zależności, dla każdego z nich oddzielnie należy wykonać wcześniej opisane iteracje. W celu odwrotnego przekształcenia $\left[I_1,I_2,I_3 \right]\to\left[R,G,B\right]$ wystarczy wykonać poniższe obliczenia:
+Następnie dysponując składowymi $I_1$, $I_2$, $I_3$ wyznaczonymi z powyższych zależności, dla każdego z nich oddzielnie wykonujemy wcześniej opisane iteracje. W celu odwrotnego przekształcenia $\left[I_1,I_2,I_3 \right]\to\left[R,G,B\right]$ wystarczy przeprowadzić poniższe obliczenia:
 \begin{equation}
  B_{i,j}=\ r_{i,j}{\mathrm{cos} {\mathrm{\Theta }}_{\mathrm{i,j}}\ }{\mathrm{cos} {\phi }_{\mathrm{i,j}}\ }
 \label{TInvIone}
@@ -484,10 +484,10 @@ Operację wmalowywania można wykonać na pierwotnych składowych $[R,G,B]$ lecz
 \Delta E=\ \sqrt{{\Delta I_1}^2+{\Delta I_2}^2+{\Delta I_3}^2}
 \label{deltaE}
 \end{equation}
-\chapter{Analiza funkcjonalna.}
+\chapter{Metody oparte na procesie minimalizacji energii.}
 \section{Wmalowywanie struktury i tekstury obrazu.}\label{chap:StructureTextureNavierStokes}
 \subsection{Segmentacja obrazu na strukturę i teksturę.}
-Metoda jednoczesnego wmalowywania struktur i tekstur pierwszy raz przedstawiona została przez Bertalmio i innych w 2003 roku w \cite{NavierStokesAndTexturePropagation}. Opiera się ona na wmalowywaniu struktury w oparciu o algorytm przedstawiony w artykule przy jednoczesnej propozycji prostej syntezy tekstury. Niech $I$ oznacza obraz $R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
+Metoda jednoczesnego wmalowywania struktur i tekstur pierwszy raz przedstawiona została przez Bertalmio w 2003 roku w \cite{NavierStokesAndTexturePropagation}. Opiera się ona na wmalowywaniu struktury w oparciu o algorytm przedstawiony w artykule przy jednoczesnej propozycji prostej syntezy tekstury. Niech $I$ oznacza obraz $R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
 \begin{align}
 I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right) 
 \label{STRUCTURETEXTURE1}
@@ -497,48 +497,62 @@ uzyskaną na podstawie rozwiązania problemu minimalizacji energii:
 {\mathop{\mathrm{min}}_{u} \Biggl\{E\left(u\right)=\int{\left|\mathrm{\nabla }u\right|+\lambda {\left|\left|v\right|\right|}^2_{L^2}}\Biggr\}\ }
 \label{STRUCTURETEXTURE2}
 \end{align}
-gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni o ograniczonym wahaniu $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i powtarzające się w małej skali detale, przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ to człon odpowiadający dokładności odwzorowania, $\lambda $ stanowi wcześniej zdefiniowany parametr. Dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania jednorodnego komponentu $u$ reprezentującego odfiltrowany obraz oraz komponentu $v$ reprezentującego wahania w postaci szumu oraz tekstur. Zgodnie z dowodem Mayera w przypadku gdy pożądany jest wspomniany kształt funkcji $v$, można udowodnić jej  przynależność do przestrzeni Banacha oznaczanej przez $G$. W związku z tym (pomijając wyprowadzenia) problem minimalizacji można przedstawić w ostatecznej postaci minimalizacji energii:
+gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni o ograniczonym wahaniu oznaczanej $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i teksturę przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ to człon odpowiadający dokładności odwzorowania, a $\lambda $ stanowi wcześniej zdefiniowany parametr. Zgodnie z dowodem Mayera \cite{meyer2001oscillating} dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania składowej zmiennej $u$ reprezentującej odfiltrowany obraz oraz składowej zmiennej $v$ reprezentującej szumy i tekstury obrazu. Nasz problem segmentacji można przedstawić jako zagadnienie minimalizacji energii \cite{vese2003modeling}:
 \begin{align}
 \begin{aligned} 
-\mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right|+\lambda \int{{\left|I-u-{\partial }_xg_1-{\partial }_yg_2\right|}^2dxdy}} \\
+\mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right| } \ + \\
+&+\lambda \int{\left|I-u-\partial_x g_1- \partial_y g_2 \right|}^2dxdy \ +\\
 &+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^\beta dxdy}\right]}^{\frac{1}{\beta}}\Biggr\}
 \end{aligned}
 \end{align}
 gdzie:
 \begin{align}
-v=div\left(\mathop{g}\right),\ \mathop{g}=\left[g_1,g_2\right],\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
+v=div(g),\ g=\left[ g_1,g_2 \right],\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
 \label{VG1G2}
 \end{align}
-oraz $\beta \to \mathrm{\infty }$. Stosując podstawowe równanie rachunku wariacyjnego postaci równania Eulera-Lagrange'a uzyskuje się odpowiadające mu postacie funkcji wykorzystywane do minimalizacji energii:
+Minimalizacja względem $u, g_1$ i $g_2$ w rezultacie prowadzi do równań Eulera-Lagrange'a \cite{vese2003modeling}:
 \begin{align}
-u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+u=I-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+\label{EL1}
 \end{align}
 \begin{align}
 {\mu H\left(g_1,g_2\right)g}_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
+\label{EL2}
 \end{align}
 \begin{align}
 \mu H\left(g_1,g_2\right)g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
+\label{EL3}
 \end{align}
-gdzie $\mu$ stanowi wcześniej definiowany parametr dyskretyzacji, natomiast $H\left(g_1,g_2\right)$ opisane jest wzorem:
-\begin{align}
-H\left(g_1,g_2\right)={{{\left|\left|\sqrt{g^2_1+g^2_2}\right|\right|}_\beta}^{1-\beta}}{\left(\sqrt{g^2_1+g^2_2}\right)}^{\beta-2}
-\end{align}
-Zgodnie z zaleceniami podanymi w \cite{vese2003modeling} w celach dyskretyzacji parametr $\beta$ przyjęto równy 1, ze względu na brak znaczących różnic wyniku w przypadku stosowania większych wartości. Wtedy:
+gdzie $\mu$ stanowi predefiniowany parametr dyskretyzacji, natomiast $H\left(g_1,g_2\right)$ opisane jest wzorem:
 \begin{align}
 H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}}
 \end{align}
-Formalnie, jedno z równań Eulera-Lagrange'a uzyskiwanych podczas minimalizacji wspomnianej energii $E$ ma postać:
+Formalnie, równanie Eulera-Lagrange'a uzyskane podczas minimalizacji energii \eqref{STRUCTURETEXTURE2} przyjmuje postać \cite{vese2003modeling}:
 \begin{align}
 u=I+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+\label{uToInsert}
 \end{align}
-Stąd można wywnioskować, że:
+Pamiętając, że:
+\begin{align}
+v = I -u
+\end{align}
+i podstawiając w miejsce $u$ zależność \eqref{uToInsert} otrzymujemy zależność
 \begin{align}
 v=-\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
 \end{align}
-Korzystając z zależności występujących jako \eqref{VG1G2} możemy łatwo zauważyć, że spełnione jest $g^2_1+g^2_2=\frac{1}{2\lambda }$. Stąd:
+Korzystając z zależności \eqref{VG1G2} możemy łatwo zauważyć, że:
 \begin{align}
-H\left(g_1,g_2\right)=\sqrt{2\lambda }
+\begin{aligned}
+g^2_1+g^2_2 & = 
+\left(-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|}\right)^2 +  \left(-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\right)^2 &=\\
+&= \frac{1}{2\lambda} \frac{u_x^2 + u_y^2 }{|\nabla u|^2} = \frac{1}{2\lambda} \frac{|\nabla u|^2}{|\nabla u|^2} = \frac{1}{2\lambda}
+\end{aligned}
 \end{align}
+Stąd:
+\begin{align}
+H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}} = \frac{1}{\sqrt{\frac{1}{2\lambda}}} = \sqrt{2\lambda}
+\end{align}
+Zatem równania \eqref{EL1}, \eqref{EL2} i \eqref{EL3} przyjmą postać: 
 \begin{align}
 u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
 \label{EU}
@@ -566,7 +580,7 @@ możemy równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} przedstawić w następuj
 \begin{align}
 \begin{aligned}
 u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\big|_{i,j}+c_2\big|_{i,j}+c_3\big|_{i,j}+c_4\big|_{i,j}\right)}\right]\bigcdot \\ 
-&\bigcdot \biggl[I\big|_{i,j}- \left(\frac{g^n_1\big|_{i+1,j}\cdot g^n_1\big|_{i-1,j}}{2h}\right)- \left(\frac{g^n_2\big|_{i,j+1}-g^n_2\big|_{i,j-1}}{2h}\right) +\\ 
+&\bigcdot \biggl[I\big|_{i,j}- \left(\frac{g^n_1\big|_{i+1,j} - g^n_1\big|_{i-1,j}}{2h}\right)- \left(\frac{g^n_2\big|_{i,j+1}-g^n_2\big|_{i,j-1}}{2h}\right) +\\ 
 &+\ \left(\frac{1}{2\lambda h^2}\right)\bigcdot \Bigl[c_1\big|_{i,j}\cdot u^n\big|_{i+1,j}+c_2\big|_{i,j}\cdot u^n\big|_{i-1,j} +\\
 &+c_3\big|_{i,j}\cdot \lambda \cdot {u}^n\big|_{i,j+1}+c_4\big|_{i,j}\cdot u^n\big|_{i,j-1}\Bigr]\biggr]
 \end{aligned}
@@ -582,7 +596,7 @@ g^n_2\big|_{i,j-1}-g^n_2\big|_{i-1,j}+g^n_2\big|_{i+1,j}-\\
 \end{align}
 \begin{align}
 \begin{aligned}
-g^{n+1}_2\left(i,j\right) &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}-\frac{I\big|_{i,j+1}-I\big|_{i,j-1}}{2h}+\\ 
+g^{n+1}_2|_{i,j} &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}-\frac{I\big|_{i,j+1}-I\big|_{i,j-1}}{2h}+\\ 
 &+\frac{g_2\big|_{i,j+1}+g_2\big|_{i,j-1}}{h^2}+\frac{1}{2h^2}\cdot \Bigl[2g^n_1\big|_{i,j}+ g^n_1\big|_{i-1,j-1}+ g^n_1\big|_{i+1,j+1} -\\
 &-\ g^n_1\big|_{i,j-1}-g^n_1\big|_{i-1,j}+g^n_1\big|_{i+1,j}- g^n_1\big|_{i,j+1}\Bigr]\Biggr]
 \end{aligned}
@@ -608,7 +622,7 @@ c^n_4\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j-1}-u^n\big|_{i-1,j-
 \end{aligned}
 \end{align}
 W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
-Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Autorzy w \cite{NavierStokesAndTexturePropagation} proponują aby do wmalowywania struktur zastosować algorytm przedstawiony w \cite{bertalmio2000image}, natomiast do uzyskania brakującej tekstury sugerują użycie następującego algorytmu syntezy obszaru $\mathrm{\Omega }$: \\
+Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Autorzy w \cite{NavierStokesAndTexturePropagation} proponują aby do wmalowywania struktur zastosować algorytm przedstawiony w \cite{bertalmio2000image}, natomiast do uzyskania brakującej tekstury sugerują użycie następującego algorytmu syntezy obszaru $\mathrm{\Omega }$.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/5_fig1}
@@ -1348,7 +1362,7 @@ sposobach dyskretyzacji. Dla \eqref{NavierAdv} jednym z nich może być metoda p
 {\frac{{\partial }^-f}{\partial y}}\bigg|_{i,j}=\frac{f_{i,j}+f_{i,j-1}}{\Delta y}
 \label{leftdfdy}
 \end{equation}
-Analogicznie prawostronne:
+Analogicznie pochodne prawostronne można zapisać jako:
 \begin{equation}
 {\frac{{\partial }^+f}{\partial x}}\bigg|_{i,j}=\frac{f_{i+1,j}+f_{i,j}}{\Delta x} 
 \label{rightdfdx}
@@ -1358,7 +1372,7 @@ Analogicznie prawostronne:
 \label{rightdfdy}
 \end{equation}
 Następnie powyższe zależności znajdują zastosowanie w wyznaczeniu wyrażeń \\
-${\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)$ oraz ${\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)$. Stosując naprzemiennie schemat lewostronny i prawostronny do liczenia wartości pochodnych wewnętrznych i zewnętrznych w wyniku otrzymuje się ogólny schemat centralny. Stosując przytoczone zależności ostatecznie równanie \eqref{NavierAdv} można przedstawić w następującej postaci dyskretnej:
+${\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)$ oraz ${\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)$. Stosując naprzemiennie schemat lewostronny i prawostronny do liczenia wartości pochodnych wewnętrznych i zewnętrznych w wyniku otrzymujemy ogólny schemat centralny. Zatem ostatecznie równanie \eqref{NavierAdv} można przedstawić w następującej postaci dyskretnej:
 \begin{align}
 \begin{aligned}
 {\left\{ad\right\}}_{i,j}
