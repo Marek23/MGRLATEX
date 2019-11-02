@@ -66,6 +66,7 @@
 \glsxtrnewsymbol[description={dywergencja funkcji $f$}]{divf}{$div\left( f \right)$}
 \glsxtrnewsymbol[description={całkowita wariacja funkcji (ang. total variation)}]{tv}{$TV$}
 \glsxtrnewsymbol[description={z ang. non-local color total variation}]{nlctv}{$NLCTV$}
+\glsxtrnewsymbol[description={z ang. variational framework for non-local inpainting}]{vfi}{$VFI$}
 \glsxtrnewsymbol[description={punkt $(i,j)$ obrazu $I$ }]{points}{$x,y,z$}
 \glsxtrnewsymbol[description={funkcja wagi, podobieństwo punktów $x,y$ obrazu $I$}]{weight}{$w(x,y)$}
 \glsxtrnewsymbol[description={}]{surround}{$I(x+\cdot), p_I(x)$}
@@ -896,7 +897,7 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \begin{equation}
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
-\section{Wariacyjny, nielokalny model wmalowywania}
+\section{Wariacyjny, nielokalny model wmalowywania VFI}
 Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy tej publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\Omega))$ zależnej:
 \begin{itemize}
 \item
@@ -1037,7 +1038,7 @@ Normy nielokalnej Poissona:
 \end{aligned}
 \end{align}
 \end{enumerate}
-Indeksy dolne $g, 1, 2, \nabla$ przy zapisach nielokalnych norm oznaczają odpowiednio: uwzględnienie zmiennej \eqref{oknoGaussowskie} w wyznaczaniu odległości, normę wektorową $\ell_{1}$, normę wektorową $\ell_{2}$, obliczanie dystansu na podstawie dywergencji rozważanego pola. Stąd suma różnic pikseli w przypadku normy Poissona wymaga dodatkowo wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny człon będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla trzech wspomnianych norm uzyskuje się trzy różne rozwiązania dokładnie przedstawione w \cite{arias2011variational}.
+Indeksy dolne $g, 1, 2, \nabla$ przy zapisach nielokalnych norm oznaczają odpowiednio: uwzględnienie zmiennej \eqref{oknoGaussowskie} w wyznaczaniu odległości, normę wektorową $\ell_{1}$, normę wektorową $\ell_{2}$, obliczanie dystansu na podstawie dywergencji rozważanego pola. Stąd suma różnic pikseli w przypadku normy Poissona wymaga dodatkowo wyznaczenia dywergencji obrazu. Współczynnik $\lambda$ określa w jakim stopniu poszczególny człon będzie miał wpływ na ostatecznie uzyskiwany wynik. Dla trzech wspomnianych norm uzyskuje się trzy różne rozwiązania dokładnie przedstawione w pracy \cite{arias2011variational}.
 \subsection{Wielostopniowy schemat wypełniania.}
 W wielu metodach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm ten polega na utworzeniu serii mniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu wcześniej wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
 \begin{itemize}
@@ -1046,20 +1047,19 @@ losowo wyznaczone wartości obrazu pobierane z obszaru $D^c$
 \item
 rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR ( z ang. succesive over relaxation method) zgodnie z zależnością \eqref{DiscreteSOR}.
 \end{itemize}
-Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gaussa.\\
-W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{S-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania do tworzenia coraz mniejszych obrazów wynosi:
+Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gaussa. W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{S-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania wykorzystywany do tworzenia coraz mniejszych obrazów wynosi:
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowana z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. W przypadku tworzenia kolejnych masek wykorzystywane jest próbkowanie w dół z ograniczeniem w postaci zależności między funkcjami charakterystycznymi wmalowywanych obszarów $\Omega^s$ i $\Omega^{s+1}$:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Oznaczmy $\chi_{\Omega^{s}}$ jako funkcję \eqref{maskFunction} tworzoną dla maski obrazu na stopniu $s$. Wtedy funkcję tą dla maski na stopniu $s+1$ wyznaczamy z zależności:
 \begin{align}
-\chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s})> T_{0}.
+\chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0}.
 \end{align}
-Autorzy w \cite{arias2011variational} proponują wartość $T_0=0.4$. Niech $f$ stanowi wynik próbkowania w dół z filtrem Gauss'a. Zapis ten oznacza, iż w przypadku gdy $f(x)>0.4$ punkt w przekształceniu traktowany jest jako punkt źródłowy obrazu nie wymagający wmalowania. W przypadku obrazu wykorzystywana jest zależność
+Nierówność stanowi ograniczenie próbkowania w dół, dzięki któremu obszar $\Omega^s$ na każdym kolejnym stopniu $s$ nieznacznie się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}$. Zapis ten oznacza, iż w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ wykorzystywana jest zależność
 \begin{align}
-u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{(D^s)}^c u^s(x)}{G \ast \chi_{{(D^s)}^c}(x)}
+u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{\Omega^s} u^s(x)}{G \ast \chi_{\Omega^s}(x)}
 \end{align}
-Powyższe równanie przedstawia ograniczenie w postaci nieuwzględniania wartości znajdujących się w obszarze $D^c$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, następnie dokonywana jest operacja splotu obrazu z utworzonym filtrem Gauss'a normalizowany członem $G \ast \chi_{(D^s)^c}(x)$. W przypadku próbkowania w górę, wyznaczane są dwie piramidy: obraz w ograniczeniu do obszaru wmalowanego na poprzednim poziomie oraz pomocnicza funkcja przedstawiająca mapę podobieństwa. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+Powyższe równanie przedstawia ograniczenie próbkowania w dół w postaci nieuwzględniania wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gauss'a. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ wymusza oprócz przeskalowania obrazu przeskalowanie także funkcji mapy podobieństwa. Obraz i mapa stanowią na każdym kolejnym poziome $s-1$ warunki początkowe algorytmu. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \subsection{Podsumowanie algorytmu}
 Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
 \begin{enumerate}
