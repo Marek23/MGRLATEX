@@ -999,20 +999,20 @@ E(u) &= \int_{\widetilde D}\int_{\mathrm{N}_x}G_\sigma(h)\cdot e \bigl( u(x+h) -
 \end{align} 
 Niech $z := x+h$ i $\hat{z} := \hat{x}+h$. Wprowadzamy zależność:
 \begin{align}
-m(z,\hat{z}) = \int_{\mathrm{N}_x}G_\sigma(h)\chi_{z-h}\delta_{\varphi(z-h)}(\hat{z}-h)dh
+m(z,\hat{z}) = \int_{\mathrm{N}_x}G_\sigma(h)\chi_{z-h}C_{\varphi(z-h)}(\hat{z}-h)dh
 \end{align}
 gdzie:
 \begin{enumerate}
 \item
 zmienna $\chi$ została już zdefiniowana w modelu $NLCTV$ \eqref{maskFunction} i przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
 \item
-zmienna $\delta(p)$ określa pewność - prawdopodobieństwo tego, że nowa wartość wyznaczonego piksela $p \in \Omega$ przyjęłaby właśnie tą wyznaczoną wartość - i jest określona następującą zależnością:
+zmienna $C(p)$ określa pewność - prawdopodobieństwo tego, że nowa wartość wyznaczonego piksela $p \in \Omega$ przyjęłaby właśnie tą wyznaczoną wartość - i jest określona następującą zależnością:
 \begin{align}
-\delta(x)=(1-c_0)exp\bigg(\frac{-\mathrm{d}\bigl(x,\partial\Omega\bigr)}{t_c}\bigg) + c_0
+C(x)=(1-c_0)exp\bigg(\frac{-\mathrm{d}\bigl(x,\partial\Omega\bigr)}{t_c}\bigg) + c_0
 \label{pewnoscVFI}
 \end{align}
 \end{enumerate}
-przy czym wartość $t_c$ określa szybkość opadania funkcji wykładniczej, $c_0$ asymptotę, do której to funkcja zmierza, a wewnętrzna zależność $\frac{-\mathrm{d}(x,\partial\Omega)}{t_c}$ określa odległość punktu od granicy maski. $\delta(p)$ dla $p \in D^c$ przyjmuje wartość $1$, natomiast dla $p \in \Omega$ wartość ze zbioru $\langle c_0,1)$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących definicji norm:
+przy czym wartość $t_c$ określa szybkość opadania funkcji wykładniczej, $c_0$ asymptotę, do której to funkcja zmierza, a wewnętrzna zależność $\frac{-\mathrm{d}(x,\partial\Omega)}{t_c}$ określa odległość punktu od granicy maski. $C(p)$ dla $p \in D^c$ przyjmuje wartość $1$, natomiast dla $p \in \Omega$ wartość ze zbioru $\langle c_0,1)$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących definicji norm:
 \begin{enumerate}
 \item
 Normy nielokalnej ważonej uśredniającej:
@@ -1157,11 +1157,12 @@ Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczeniem warto�
 C_t\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|}
 \label{confidenceTerm}
 \end{align}
-gdzie $C(x)$ to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu, $\left| p_x\right |$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna. 
-Podczas inicjalizacji funkcja $C$ dla każdego piksela stanowiącego oryginalny obraz przyjmuje wartość $1$, natomiast dla punktów maski przyjmuje wartość $0$. Matematycznie ${\forall }_{z \in D}\ C\left( z \right)=1$  i analogicznie ${\forall }_{z\in \mathrm{\Omega }}\ C\left( z \right)=0$. Wraz z wyznaczaniem kolejnych wartości pikseli należących do obszaru maski funkcja $C$ jest aktualizowana, a zerowe wartości są odpowiednio przeliczane. Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym skrawku. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
+gdzie $\left| p_x\right |$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna,
+a $\mathbf{C(x)}$ \textbf{to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu}
+(zastosowanie równania \eqref{pewnoscVFI} jest niewielką zmianą w stosunku do oryginalnej propozycji definicji funkcji $C(x)$ przez autorów w \cite{criminisi2004region}). Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym skrawku. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem opisanym w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C_t$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
 Drugi krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $D_t(x)$ definiowanej jako:
 \begin{align}
-D_t(x)= \frac{\left|\nabla^{\bot}u_x \cdot n_x\right|}{\alpha }
+D_t(x)= \frac{\left|\left( \nabla^{\bot}u_x \right) n_x\right|}{\alpha }
 \label{DataTerm}
 \end{align}
 gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania Naviera-Stokes'a odpowiada kierunkowi rozchodzenia się izolinii obrazu, natomiast  $n_x$ to wektor normalny (prostopadły) do granicy maski $\partial \mathrm{\Omega }$ w punkcie piksela $x$.
@@ -1171,7 +1172,7 @@ gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania 
 	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$.}
 	\label{4_fig3} 
 \end{figure}
-Zgodnie z \autoref{4_fig3} funkcja $D_t$ w sposób liczbowy określa z jaką siłą izolinia obrazu uderza granicę maski. Siła ta zależna jest od gradientu jasności obrazu ${\mathrm{\nabla }}^{\bot }u_x$ oraz od orientacji względem gradientu wektora normalnego do granicy maski. Funkcja przyjmuje największą wartość w momencie, w którym wektor normalny oraz wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} \ 0^0\ }=1)$, a człon ${\mathrm{\nabla }}^{\bot }u_x$ ma największą wartość. W przeciwieństwie do definicji terminu $C_t$ funkcję $D_t$ można zinterpretować jako człon odpowiedzialny za przyznanie wyższego priorytetu pikselowi, stanowiącemu część struktury, która według psychologii widzenia powinna być kontynuowana w głąb odrestaurowywanego obszaru. Funkcja $D_t$ wpływa ma zmniejszenie pojawiającego się w metodzie zjawiska wprowadzania niespójności obrazu. Niech funkcja $f(p)$ w punkcie obrazu $p \in D \cup \Omega$, gdzie $C(p) > 0$ przyjmuje wartość 0, a w punktach $C(p) = 0$ wartość 1, $f : (\Omega \cup D \to {0,1}$.  Wtedy korzystając z zależności \eqref{dfdx} i \eqref{dfdy} wektor normalny do granicy maski można wyznaczyć z zależności:
+Zgodnie z \autoref{4_fig3} funkcja $D_t$ w sposób liczbowy określa z jaką siłą izolinia obrazu uderza granicę maski. Siła ta zależna jest od gradientu jasności obrazu ${\mathrm{\nabla }}^{\bot }u_x$ oraz od orientacji względem gradientu wektora normalnego do granicy maski. Funkcja przyjmuje największą wartość w momencie, w którym wektor normalny oraz wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} \ 0^0\ }=1)$, a człon ${\mathrm{\nabla }}^{\bot }u_x$ ma największą wartość. W przeciwieństwie do definicji składnika $C_t$ funkcję $D_t$ można zinterpretować jako człon odpowiedzialny za przyznanie wyższego priorytetu pikselowi, stanowiącemu część struktury, która według wyników badań z zakresu psychologii widzenia powinna być kontynuowana w głąb odrestaurowywanego obszaru. Funkcja $D_t$ wpływa ma zmniejszenie pojawiającego się w metodzie zjawiska wprowadzania niespójności obrazu. Niech funkcja $f(p)$ w punkcie obrazu $p \in D \cup \Omega$, gdzie $C(p) > 0$ przyjmuje wartość 0, a w punktach $C(p) = 0$ wartość 1, $f : (\Omega \cup D \to {0,1}$.  Wtedy korzystając z zależności \eqref{dfdx} i \eqref{dfdy} wektor normalny do granicy maski można wyznaczyć z następujących równań:
 \begin{align}
 n_p= \left[-n_{p_x}\frac{1}{l}\ ,\ -n_{p_y} \frac{1}{l}\right] =\left[-\frac{f_{i+1,j}+f_{i-1,j}}{2h}\cdot \frac{1}{l}, -\frac{f_{i,j+1} + f_{i,j-1}}{2h} \cdot \frac{1}{l}\right]
 \label{KIERUNEK}
@@ -1188,15 +1189,13 @@ Znając wartości $C_t\left(x\right)$ oraz $D_t(x)$ dla każdego piksela z grani
 Podsumowując operację wmalowywania obrazu można przedstawić w postaci następującego algorytmu. Algorytm ten należy powtarzać aż do wypełnienia wszystkich pikseli z $\mathrm{\Omega }$:
 \begin{enumerate}
 \item
-Na podstawie \eqref{LAPLASJAN} wyznaczyć granicę maski $\mathrm{\partial }\mathrm{\Omega }$
+Na podstawie \eqref{LAPLASJAN} trzeba wyznaczyć granicę maski $\mathrm{\partial }\mathrm{\Omega }$.
 \item
-Na podstawie \eqref{PRIORITY} wyznaczyć priorytety wszystkich pikseli z granicy maski $\mathrm{\partial }\mathrm{\Omega }$
+Na podstawie \eqref{PRIORITY} należy wyznaczyć priorytety wszystkich pikseli z granicy maski $\mathrm{\partial }\mathrm{\Omega }$.
 \item
-Na podstawie \eqref{FROBENIUS} wyznaczyć najlepsze dopasowanie dla okna utworzonego na podstawie punktu 2 
+Na podstawie \eqref{FROBENIUS} należy wyznaczyć najlepsze dopasowanie dla okna utworzonego na podstawie punktu 2.
 \item
-Zgodnie z \autoref{4_fig1} przepisać wartości z okna najlepszego dopasowania w restaurowany obszar, jednocześnie aktualizując wartości $C(p)$ zgodnie z zależnością:
-\begin{align}
-C_t\left(p\right)=C\left(\dot{p}\right)
+Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopasowania w restaurowany obszar
 \end{align} 
 gdzie $p \in s_x$, a $C \left(\dot{p} \right)$ to malejąca wartość w każdej kolejnej iteracji.
 \end{enumerate}
@@ -2887,7 +2886,7 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     \label{NLH1UMOD}
 \end{longtable}
 \section{Wariacyjny, nielokalny model wmalowywania.}
-Wszystkie przeprowadzone testy wykonano dla stałych parametrów związanych z terminem "pewności" równych:
+Wszystkie przeprowadzone testy wykonano dla stałych parametrów związanych ze składnikiem pewności $C$ równych:
 \begin{itemize}
 \item
 ilość stopni tworzonej piramidy $S=7$
@@ -2898,7 +2897,7 @@ A_{S-1}=\frac{1.5 \cdot ps}{\mathrm{max}_{x \in \mathcal{O}}d(x,\mathcal{O}^{c})
 \end{align}
 gdzie $ps = |\Omega|$ oznacza długość boku fragmentu obrazu.
 \end{itemize}
-Parametry związane z "pewnością" co do pikseli wewnątrz maski przyjęto jako stałe i równe:
+Parametry związane ze składnikiem pewności $C$ co do pikseli wewnątrz maski przyjęto jako stałe i równe:
 \begin{itemize}
 \item
 sposób rozkładu funkcji w przestrzeni $t_{c}=5.0$
