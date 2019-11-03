@@ -1,3 +1,4 @@
+
 \documentclass[12pt, twoside, openany]{report}
 \usepackage[dvips]{graphicx,color,rotating}
 \usepackage[utf8]{inputenc}
@@ -159,6 +160,7 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \newpage
 \pagestyle{headings}
 \setcounter{page}{1}
+\setcounter{secnumdepth}{3}
 \hyphenation{Syl-ves-tra}
 \hyphenation{Syl-ves-ter-a}
 
@@ -931,6 +933,7 @@ Energię poddawaną minimalizacji można wyrazić zależnością:
 \end{align}
 Funkcja ta jest niewypukła, stąd proces minimalizacji pozwala odnaleźć jedynie lokalne minima. W pracy wykorzystano iteracyjny algorytm naprzemiennej minimalizacji polegający na wyznaczaniu w każdym kroku $u(x)$ względem ustalonej wartości $\varphi(x)$, a następnie $\varphi(x)$ względem ustalonej wartości $u(x)$.
 \subsection{Wyznaczenie mapy podobieństwa.}
+\label{ssec:wyznaczanieMapySection}
 Proces minimalizacji funkcji przyjmując ustaloną wartość
 \begin{equation}
 u(x) = \text{const}
@@ -1055,13 +1058,13 @@ W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\
 \begin{align}
 \chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0}.
 \end{align}
-Nierówność stanowi ograniczenie próbkowania w dół, dzięki któremu obszar $\Omega^s$ na każdym kolejnym stopniu $s$ nieznacznie się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}$. Zapis ten oznacza, iż w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ wykorzystywana jest zależność
+Nierówność stanowi ograniczenie próbkowania w dół, dzięki któremu stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ nieznacznie się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ wykorzystywana jest zależność
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{\Omega^s} u^s(x)}{G \ast \chi_{\Omega^s}(x)}
 \end{align}
-Powyższe równanie przedstawia ograniczenie próbkowania w dół w postaci nieuwzględniania wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gauss'a. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ wymusza oprócz przeskalowania obrazu przeskalowanie także funkcji mapy podobieństwa. Obraz i mapa stanowią na każdym kolejnym poziome $s-1$ warunki początkowe algorytmu. Do tego został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+Powyższe równanie przedstawia ograniczenie próbkowania w dół w postaci nieuwzględniania wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gauss'a. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ wymusza przy każdym przejściu ze stopnia $s$ do $s-1$ oprócz przeskalowania obrazu $u$ przeskalowanie także funkcji mapy podobieństwa $\varphi$. Obraz i mapa stanowią na każdym kolejnym poziome $s-1$ aż do ostatniego $S$ warunki początkowe kolejnych kroków naprzemiennej minimalizacji.Do przeskalowania  został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \subsection{Podsumowanie algorytmu}
-Łącząc opisane powyżej operacje dokonywane na obrazie algorytm wypełniania można przedstawić w następujących krokach:
+Jeśli połączymy opisane powyżej operacje dokonywane na obrazie to algorytm wypełniania możemy przedstawić w następujących krokach:
 \begin{enumerate}
 \item
 Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $K$
@@ -1069,8 +1072,8 @@ Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poz
 Wyznaczenie piramidy maski stanowiącej zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
 Wyznaczenie piramidy obrazu stanowiącej zbiór: $\{u^s\}_{s=0,...,S-1}$
 \item
-Inicjalizacja obrazu $u^{S-1}$ w obszarze $\Omega$ \\
-Wyznaczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$
+Inicjalizacja obrazu $u^{S-1}$ w obszarze $\Omega$ (dla przykładu losowymi wartościami, bądź rozwiązaniem równania \eqref{DiscreteSOR})\\
+Obliczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$ według działu \ref{ssec:wyznaczanieMapySection}.
 \item
 Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
 \begin{enumerate}[a)]
@@ -1088,18 +1091,18 @@ przeprowadzenie \eqref{minUs} w celu wyznaczenia $u^s$
 \end{itemize}  
 \end{enumerate}
 \end{enumerate}
-Wynikiem powyższej instrukcji jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$
+Wynikiem powyższego algorytmu jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$.
 \chapter{Uzupełnianie kawałkami obrazu.}
 \section{Metoda Criminisi.}
 Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie fragmentami pochodzącymi z ich otoczenia. W odróżnieniu od różnych algorytmów bazujących na równaniach różniczkowych metoda ta nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na \autoref{4_fig1}.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.4]{rysunki/4_fig1}
+	\includegraphics[scale=0.6]{rysunki/4_fig1}
 	\caption{Schemat wmalowywania obrazu.}
 	\label{4_fig1}
 \end{figure}
-Podobnie jak w poprzednich działach niech zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\Omega$ oznaczony kolorem fioletowym określa obszar do odrestaurowania.
-Niech oznaczenie $\hat{u}(\hat{x})$ stanowi funkcję na obszarze $D^c$, $\hat{x}  \in D^c$ (\autoref{6_fig1}).
+Podobnie jak w poprzednich rozdziałach zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\Omega$ oznaczony kolorem fioletowym określa obszar do odrestaurowania.
+Oznaczenie $\hat{u}(\hat{x})$ stanowi funkcję na obszarze $D^c$, $\hat{x}  \in D^c$ (\autoref{6_fig1}).
 Niech $q_{\hat{x}}$ stanowi podzbiór wartości punktów obrazu scentrowanych względem piksela $\hat{x}$ o zdefiniowanym z góry promieniu otoczenia.
 Dla $q_{\hat{x}}$ zachodzi $\forall p \in q_{\hat{x}} : \chi(p) \neq 0$, gdzie $\chi$ odpowiada funkcji maski \eqref{maskFunction}.
 Niech $p_{x}$ stanowi podzbiór punktów tworzących fragment obrazu o rozmiarze równym rozmiarowi $q_{\hat{x}}$, scentrowanych względem piksela $x$, gdzie $x \in \partial \Omega$.
@@ -1110,7 +1113,7 @@ p_{x} = s_x + i_x
 \end{aligned}
 \end{align}
 gdzie $\forall p \in s_x : \chi(p) = 1$ i $s_x$ oznacza wypełnioną część fragmentu oraz $\forall p \in i : \chi(p) = 0$ czyli $i_x$ jako brakująca część fragmentu obrazu.  
-Oznaczmy odpowiednio zbiory $\hat{s}_{\hat{x}}$ i $\hat{i}_{\hat{x}}$ będące przekształceniem zbiorów $s_x$ i $i_x$ o wektor $\overrightarrow{|x \hat{x}|}$:
+Oznaczmy odpowiednio zbiory $\hat{s}_{\hat{x}}$ i $\hat{i}_{\hat{x}}$ będące przesunięciem zbiorów $s_x$ i $i_x$ o wektor $\overrightarrow{|x \hat{x}|}$:
 \begin{align}
 \begin{aligned}
 q_{\hat{x}} = \hat{s}_{\hat{x}} + \hat{i}_{\hat{x}}
@@ -1164,7 +1167,7 @@ D_t(x)= \frac{\left|\nabla^{\bot}u_x \cdot n_x\right|}{\alpha }
 gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania Naviera-Stokes'a odpowiada kierunkowi rozchodzenia się izolinii obrazu, natomiast  $n_x$ to wektor normalny (prostopadły) do granicy maski $\partial \mathrm{\Omega }$ w punkcie piksela $x$.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.7]{rysunki/4_fig3}
+	\includegraphics[scale=0.6]{rysunki/4_fig3}
 	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$.}
 	\label{4_fig3} 
 \end{figure}
@@ -1354,8 +1357,6 @@ Algorytm wypełniania fragmentami obrazu zbadano pod kątem ograniczenia źród�
 	\caption{Obszar zmniejszonego źródła czerpania dopasowania $\hat{x} \in D^c$.}
 \label{RysCrimMod}
 \end{figure}
-\subsection{Modyfikacja funkcji $C_t$}
-Podczas badań wykorzystano definicję pewności co do piksela \eqref{pewnoscVFI} i podmieniono ją z oryginalnie wprowadzoną przez autorów \cite{criminisi2004region} zależnością $C_t$ \eqref{confidenceTerm}.
 \subsection{Modyfikacja normy.}
 Podczas badania algorytmu przetestowano różne rodzaje norm zastępując oryginalną wprowadzoną przez autorów \cite{criminisi2004region} \eqref{FROBENIUS2} normami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} oraz \eqref{nonLocalpoisson}.
 \subsection{Modyfikacja funkcji $D_t$.}
