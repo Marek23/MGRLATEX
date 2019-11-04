@@ -1195,9 +1195,7 @@ Na podstawie \eqref{PRIORITY} należy wyznaczyć priorytety wszystkich pikseli z
 \item
 Na podstawie \eqref{FROBENIUS} należy wyznaczyć najlepsze dopasowanie dla okna utworzonego na podstawie punktu 2.
 \item
-Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopasowania w restaurowany obszar
-\end{align} 
-gdzie $p \in s_x$, a $C \left(\dot{p} \right)$ to malejąca wartość w każdej kolejnej iteracji.
+Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopasowania w restaurowany obszar.
 \end{enumerate}
 \section{Pojęcie głównych struktur.}
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
@@ -1206,17 +1204,17 @@ Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie fragm
 Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej pary łączonych krzywych) znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.9]{rysunki/4_fig4}
-	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. Źródło \cite{StructurePropagationManual}}
+	\includegraphics[scale=1.1]{rysunki/4_fig4}
+	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. Źródło \cite{StructurePropagationManual}}.
 	\label{4_fig4} 
 \end{figure}
 \section{Automatyczne wykrywanie struktur.}
-W celu zaprojektowania w pełni automatycznego programu do procesu wmalowywania opierającego się na algorytmie wprowadzonym przez Criminisi zaproponowano dodatkową analizę obrazu ograniczającą interakcję użytkownika wyłącznie do wprowadzenia maski. Autorzy w \cite{SalientStrucTexProp} proponują wykonać 2 dodatkowe kroki:
+W celu zaprojektowania w pełni automatycznego programu do procesu wmalowywania opierającego się na algorytmie wprowadzonym przez Criminisi zaproponowano dodatkową analizę obrazu ograniczającą interakcję użytkownika wyłącznie do wprowadzenia maski. Autorzy w \cite{SalientStrucTexProp} proponują wykonać dwa dodatkowe kroki:
 \begin{enumerate}
 \item
-Wyznaczenie głównych struktur obrazu.
+Wyznaczyć główne struktury obrazu.
 \item
-Rozwiązanie poniższych zależności:
+Rozwiązać poniższe zależności:
 \begin{align}
 D(i,j)\triangleq IP\cdot \left[\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ +\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)+\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)\right]
 \label{SalientDistance}
@@ -1226,12 +1224,12 @@ Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \math
 \label{SalientPair}
 \end{align}
 \end{enumerate}
-Analiza powyższych równań wykonana zostanie w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Uprzednim krokiem do powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
+Analiza powyższych równań wykonana zostanie w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Krokiem wstępnym do rozwiązania powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
 \begin{align}
 G\left(i,j\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{i^2+j^2}{2{\sigma }^2}}
 \label{rozmycieGaussa}
 \end{align}
-Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wygenerowaną macierzą wyznaczoną na podstawie powyższego równania. Operacja rozmycia pozwala pozbyć się mniej znaczących krawędzi z obrazu zostawiając tylko najistotniejsze cechy, które powinny być kontynuowane w niewyznaczonym obszarze. Po operacji rozmycia autorzy w \cite{SalientStrucTexProp} proponują wykrycie głównych struktur na podstawie transformacji falkowej oraz odpowiednio wyznaczonych lokalnych maksimów dla funkcji powstałych na podstawie wspomnianej transformacji. Na podstawie przeprowadzonej operacji uzyskuje się wszystkie główne struktury obrazu. Zbiorem krawędzi poddanych analizie są ostatecznie struktury, dla których dochodzi do przecięcia ze zdefiniowaną maską $\mathrm{\Omega }$ zgodnie z \autoref{4_fig5} (jako maska traktowany jest samochód).
+Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wygenerowaną macierzą wyznaczoną na podstawie powyższego równania. Operacja rozmycia pozwala pozbyć się mniej znaczących krawędzi z obrazu zostawiając tylko najistotniejsze cechy, które powinny być kontynuowane w niewyznaczonym obszarze. Po operacji rozmycia autorzy w \cite{SalientStrucTexProp} proponują wykrycie głównych struktur na podstawie transformacji falkowej oraz odpowiednio wyznaczonych lokalnych maksimów dla funkcji powstałych na podstawie wspomnianej transformacji. Po tak  przeprowadzonej operacji uzyskuje się wszystkie główne struktury obrazu. Zbiorem krawędzi poddanych analizie są ostatecznie struktury, dla których dochodzi do przecięcia ze zdefiniowaną maską $\mathrm{\Omega }$ zgodnie z \autoref{4_fig5} (jako maska traktowany jest samochód).
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.8]{rysunki/4_fig5}
@@ -1243,8 +1241,8 @@ Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zost
 D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j
 \label{colDistance}
 \end{align}
-Dokładna analiza oraz sposób wyznaczania podobieństwa okien $f^i$ przedstawiony jest w\cite{chen2005adaptive}.
-Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\right)$ określający stopień podobieństwa tekstur znajdujących się w utworzonych oknach $f$. Dla każdego obszaru $f^i$ wyznaczana jest macierz $MR8(f^i)$. Macierz uzyskiwana jest na podstawie odpowiedzi wybranego fragmentu obrazu na grupę 38 filtrów przedstawionych na \autoref{4_fig6}.
+Dokładna analiza oraz sposób wyznaczania podobieństwa okien $f^i$ przedstawione są w pozycji \cite{chen2005adaptive}.
+Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\right)$ określające stopień podobieństwa tekstur znajdujących się w utworzonych oknach $f$. Dla każdego obszaru $f^i$ wyznaczana jest macierz $MR8(f^i)$. Macierz uzyskiwana jest na podstawie odpowiedzi wybranego fragmentu obrazu na grupę 38 filtrów przedstawionych na \autoref{4_fig6}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/4_fig6}
@@ -1292,8 +1290,8 @@ y=\ -\frac{{\mathrm{cos} \theta \ }}{{\mathrm{sin} \theta \ }}x+\frac{r}{{\mathr
 Posługiwanie się parametrami $\theta $ oraz $r$ pozwala uniknąć niejednoznaczności, w przypadku opisu pionowych linii oraz umożliwia przedstawienie prostej w postaci jednego punktu w przestrzeni Hough'a. Przekształcenie z przestrzeni $D^c$ można przedstawić następująco:
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1]{rysunki/4_fig7}
-	\caption{Odwzorowanie prostej w przestrzeni Hough’a}
+	\includegraphics[scale=1.35]{rysunki/4_fig7}
+	\caption{Odwzorowanie prostej w przestrzeni Hough’a. Źródło \cite{houghTransform}}.
 \label{4_fig7}
 \end{figure}
 Posługując się parametrem $\theta$ określającym kąt pomiędzy wyznaczoną prostą a osią $x$ łatwo określić czy badane proste są do siebie równoległe. Aby wyznaczyć parametry prostej z równania \eqref{HOUGHTRANSFORM} zgodnie z \cite{houghTransform} należy każdemu punktowi tworzącemu prostą przypisać grupę punktów z przestrzeni Hough'a dla których wszystkie możliwe proste utworzone na ich podstawie zawierałyby badany punkt. Ostatecznie parametry prostej pochodzą z punktu, dla którego w przestrzeni Hough'a występuje największa gęstość powtarzających się punktów. Transformację przedstawia poniższy rysunek:
@@ -1308,14 +1306,13 @@ Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{Sa
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.4]{rysunki/4_fig9}
-	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru $\boldsymbol{\mathrm{\Omega }}$. źródło \cite{StructurePropagationManual}.}
+	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru $\boldsymbol{\mathrm{\Omega }}$.}
 \label{4_fig9}
 \end{figure}
-Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych fragmentów $\psi $, czy też okien stanowiących podstawę do dobierania w pary danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze. Jednym z problemów metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy fragmentów obrazu $q_{\hat{x}}$ w wyznaczanym obszarze $\mathrm{\Omega }$.
+Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm ten wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych fragmentów $\psi $, czy też okien stanowiących podstawę do dobierania w pary danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze.
 \chapter{Modyfikacje algorytmów}
 \section{Modyfikacja algorytmu bazującego na równaniu Naviera-Stokesa}
-Podczas badania algorytmu bazującego na równaniu dyfuzji szukano rozwiązań opartych na różnych
-sposobach dyskretyzacji. Dla \eqref{NavierAdv} jednym z nich może być metoda przedstawiona w \cite{van2005algorithms}, wykorzystująca asymetryczny schemat liczenia pierwszej pochodnej funkcji. Pierwsze pochodne lewostronne przyjmują postać:
+Jedną z głównych niedogodności rozwiązania opartego na równaniu mechaniki płynów jest umiejętność przyjęcia takich parametrów, dla których uzyskuje się jednocześnie stabilność, sprawność obliczeń oraz odpowiednią dokładność rozwiązania (ograniczenie rozmycia uzyskanego obrazu). Implementacja równania \eqref{NavierAdv} według oryginalnie przedstawionego w publikacji \cite{au2001image} sposobu dyskretyzacji, nie pozwala wpłynąć na uzyskiwany ostatecznie wynik pomimo wielu prób parametryzacji. To skłoniło autora ninijszej pracy do podmiany sposobu dyskretyzacji na sposób przedstawiony w \cite{van2005algorithms}. Algorytm ten wykorzystuje asymetryczny schemat liczenia pierwszej pochodnej funkcji. Niech pierwsze pochodne lewostronne przyjmą postać:
 \begin{equation}
 \frac{\partial^-f}{\partial x}\bigg|_{i,j}=\frac{f_{i,j}+f_{i-1,j}}{\Delta x}
 \label{leftdfdx}
@@ -1324,7 +1321,7 @@ sposobach dyskretyzacji. Dla \eqref{NavierAdv} jednym z nich może być metoda p
 {\frac{{\partial }^-f}{\partial y}}\bigg|_{i,j}=\frac{f_{i,j}+f_{i,j-1}}{\Delta y}
 \label{leftdfdy}
 \end{equation}
-Analogicznie pochodne prawostronne można zapisać jako:
+Analogicznie pochodne prawostronne zapiszmy jako:
 \begin{equation}
 {\frac{{\partial }^+f}{\partial x}}\bigg|_{i,j}=\frac{f_{i+1,j}+f_{i,j}}{\Delta x} 
 \label{rightdfdx}
@@ -1333,8 +1330,9 @@ Analogicznie pochodne prawostronne można zapisać jako:
 {\frac{{\partial }^+f}{\partial y}}\bigg|_{i,j}=\frac{f_{i,j+1}+f_{i,j}}{\Delta y}
 \label{rightdfdy}
 \end{equation}
-Następnie powyższe zależności znajdują zastosowanie w wyznaczeniu wyrażeń \\
-${\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)$ oraz ${\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)$. Stosując naprzemiennie schemat lewostronny i prawostronny do liczenia wartości pochodnych wewnętrznych i zewnętrznych w wyniku otrzymujemy ogólny schemat centralny. Zatem ostatecznie równanie \eqref{NavierAdv} można przedstawić w następującej postaci dyskretnej:
+Zależności te znajdą zastosowanie w wyznaczeniu wyrażeń \\
+${\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)$ oraz
+${\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)$. Stosując naprzemiennie schemat lewostronny i prawostronny do liczenia wartości pochodnych wewnętrznych i zewnętrznych w wyniku otrzymujemy ogólny schemat centralny. Zatem ostatecznie równanie \eqref{NavierAdv} można przedstawić w następującej postaci dyskretnej:
 \begin{align}
 \begin{aligned}
 {\left\{ad\right\}}_{i,j}
@@ -1349,7 +1347,13 @@ ${\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega
 \label{ssec:crimMod}
 \subsection{Modyfikacja źródła czerpania dopasowania.}
 \label{ssec:crimModSource}
-Algorytm wypełniania fragmentami obrazu zbadano pod kątem ograniczenia źródła czerpania najlepszego dopasowania $q_{\hat{x}}$ do okna będącego otoczeniem o promieniu $r$ rozważanego piksela $x$. Wtedy dla $q$ zachodzi zależność $q \in \mathcal{Z}$, $\mathcal{Z} = r_x$, gdzie $r_x$ jest oznaczeniem analogicznym do $p_x$, z jedyną różnicą rozmiaru wyznaczanego fragmentu obszaru. Matematycznie zmiana odnosi się do dynamicznej zmiany pola $D^c$ jako zależność od rozważanego piksela $x$. Modyfikację przedstawia \autoref{RysCrimMod}.
+W niniejszej pracy algorytm wypełniania fragmentami obrazu zmieniono przez wprowadzenie okna poszukiwania $r_x$, będącego otoczeniem piksela $x$ z promieniem o długości $r$. Wprowadzone okno ogranicza zbiór pikseli, dla których tworzony jest fragment obrazu $q_{\hat{x}}$ porównywany z $p_{x}$.
+Piksel $\hat{x}$ przedstawimy jako $\hat{x} \in r_x$, a zbiór $r_x$ jako 
+$\forall \ \hat{x} \in r_x: \forall \ p \in q_{\hat{x}} \cap \ \Omega = \emptyset$. Zapisując formalnie - wprowadzamy dodatkową funkcję $f_r$ tworzącą dla każdego piksela $x$ podzbiór $r_x$:
+\begin{align}
+r_x = f_r(x)
+\end{align}
+Graficzny sposób modyfikacji przedstawia \autoref{RysCrimMod}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.35]{rysunki/CrimMod}
@@ -3569,4 +3573,7 @@ Oświadczam, że pracę magisterską pod tytułem: ,,Poprawa jakości obrazów c
 
 \begin{comment}
 TODO - dodać w opisie na początku pracy że też opisuję dobór parametrów do algorytmów
+
+Zdanie do przeniesienia
+Jedną z niedogodności metody jest konieczność stosowania metody korekcji fotometrycznej zgodnie z \cite{StructurePropagationManual}, wygładzającej lokalne granice obrazu powstałe w wyniku syntezy fragmentów obrazu $q_{\hat{x}}$ w wyznaczanym obszarze $\mathrm{\Omega }$.
 \end{comment}
