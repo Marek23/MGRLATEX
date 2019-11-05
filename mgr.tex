@@ -1159,7 +1159,7 @@ C_t\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|}
 \end{align}
 gdzie $\left| p_x\right |$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna,
 a $\mathbf{C(x)}$ \textbf{to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu}
-(zastosowanie równania \eqref{pewnoscVFI} jest niewielką zmianą w stosunku do oryginalnej propozycji definicji funkcji $C(x)$ przez autorów w \cite{criminisi2004region}). Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym skrawku. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem opisanym w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C_t$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
+(zastosowanie równania \eqref{pewnoscVFI} jest niewielką zmianą w stosunku do oryginalnej propozycji definicji funkcji $C(x)$ przez autorów w \cite{criminisi2004region}). Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym fragmencie. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem opisanym w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C_t$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
 Drugi krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $D_t(x)$ definiowanej jako:
 \begin{align}
 D_t(x)= \frac{\left|\left( \nabla^{\bot}u_x \right) n_x\right|}{\alpha }
@@ -1360,10 +1360,10 @@ Graficzny sposób modyfikacji przedstawia \autoref{RysCrimMod}.
 	\caption{Obszar zmniejszonego źródła czerpania dopasowania $\hat{x} \in D^c$.}
 \label{RysCrimMod}
 \end{figure}
-\subsection{Modyfikacja normy.}
-Podczas badania algorytmu przetestowano różne rodzaje norm zastępując oryginalną wprowadzoną przez autorów \cite{criminisi2004region} \eqref{FROBENIUS2} normami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} oraz \eqref{nonLocalpoisson}.
+\subsection{Modyfikacja sposobu wyznaczania podobieństwa.}
+W niniejszej pracy przetestowano różne rodzaje sposobów definicji odległości $d\left( u(p_x), \hat{u} (q_{\hat{y}}) \right)$  zastępując oryginalną wprowadzoną przez autorów w \cite{criminisi2004region} definicję \eqref{FROBENIUS2} równaniami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} oraz \eqref{nonLocalpoisson}.
 \subsection{Modyfikacja funkcji $D_t$.}
-Ze względu na nieregularny kształt większości masek wyznaczenie granicy $\partial \mathrm{\Omega }$ można wykonać wykorzystując operację erozji i dylacji na wspomnianej masce. Innym sposobem może być zastosowanie dyskretnego splotu maski z macierzą będącej laplasjanem dla siatki 8-spójnej: 
+Granicę maski $\partial \mathrm{\Omega }$ wyznacza się wykorzystując operację erozji i dylacji. Innym sposobem jest zastosowanie dyskretnego splotu maski z macierzą reprezentującą laplasjan dla siatki 8-spójnej: 
 \begin{equation}
 \left[ \begin{array}{ccc}
 1 & 1 & 1 \\ 
@@ -1372,8 +1372,8 @@ Ze względu na nieregularny kształt większości masek wyznaczenie granicy $\pa
 \right]
 \label{LAPLASJAN}
 \end{equation}
-Aby polepszyć odwzorowanie wektorów: normalnego $n_x$ i $\nabla^\bot u_x$ (\autoref{4_fig3}) wnikających wgłąb nieznanego obszaru, co za tym idzie poprawić dokładność algorytmu, kolorowy obraz przekształcono do przestrzeni $CIELAB$, a następnie przy wykorzystaniu warstwy jasności wyznaczono wartość $D(x)$ biorąc pod uwagę różniczki wyznaczane dla wszystkich pikseli otaczających główny piksel (pikseli mieszczących się w skrawku utworzonym względem piksela $x$ o uprzednio definiowanym rozmiarze) przy jednoczesnym stopniowaniu ich procentowego wpływu na ostatecznie wyznaczaną wartość.
-Przykładowo licząc $n_{p_{(i,j)}}$ dla macierzy o rozmiarze $3$:
+Poprawę dokładności wyznaczania wektorów $n_x$ i $\nabla^\bot u_x$ (\autoref{4_fig3}) wnikających wgłąb nieznanego obszaru, a więc i poprawę dokładności algorytmu, w niniejszej pracy uzyskuje się przez uwzględnienie różniczek wyznaczanych dla wszystkich pikseli stanowiących otoczenie głównego piksela $x$. Wpływ każdej z różniczki na ostatecznie wyznaczaną wartość jest procentowo określany.
+Dla przykładu, niech otoczenie piksela $(i, j)$ stanowi macierz o rozmiarze $3 \times 3$. Wtedy jeśli chcemy wyznaczyć $n_{p_{(i,j)}}$ zastosujemy równanie:
 \[
 \begin{bmatrix}
 n_{p_{(i,j)}}
@@ -1396,9 +1396,9 @@ c_2\\
 c_3
 \end{bmatrix}
 \]
-gdzie $c_1, c_2, c_3$ współczynniki stopniujące wpływ różniczek wyznaczane na podstawie rozkładu Gaussa.
+gdzie $c_1, c_2, c_3$ współczynniki stopniujące wpływ różniczek (mogą być wyznaczane na podstawie rozkładu Gaussa). Analogicznie postępujemy dla innych rozmiarów.
 \section{Model NLCTV - modyfikacja funkcji wagi.}
-Podczas testowania algorytmu $NLCTV$ jedną z wad okazała się zbyt lokalna analiza obrazu, powodująca brak odpowiedniej kontynuacji struktury. Zwiększając parametry w postaci rozmiaru fragmentu obrazu i rozmiaru okna algorytm wprowadza zbytnie uśrednienie nie pozwalające odpowiednio kontynuować tekstury obrazu przy zniekształceniu struktury. W celu uniknięcia zjawiska rozmycia tekstur, przy jednoczesnej poprawie zdolności algorytmu do kontynuacji większych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
+W trakcie testowania algorytmu pożądanym przez autora stało się poszerzenie zbyt lokalnej analizy obrazu, skutkującej w nieodpowiednim kontynuowaniu struktury. Zwiększając parametry rozmiaru fragmentu obrazu $p_x$ i rozmiaru okna $\text{N}_x$ algorytm łączy różne struktury, rozmazuje je, nie pozwalając odpowiednio kontynuować także tekstury obrazu. Aby uniknąć zjawisk rozmycia tekstury i jednocześnie połączeń różnych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
 \begin{aligned}
 w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\} }\\
@@ -1406,9 +1406,9 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \
 \label{NLWEIGHTMODIFIED}
 \end{aligned}
 \end{align}
-W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość wagi.
+W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość obliczanej wagi.
 \section{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
-Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje stosunkowo długim czasem wypełniania obrazu. W celu skrócenia czasu wyznaczania obrazu wynikowego zastosowano następującą aproksymację równania  \eqref{uNLCTV} pozwalającą uzyskać wyniki przybliżone do wyników oryginalnego algorytmu:
+Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania nowych wartości w obrazie. W celu skrócenia tego czasu autor pracy proponuje zastosowanie następującej aproksymacji równania \eqref{uNLCTV} pozwalając uzyskać wyniki zbliżone  do wyników oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
 {{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
@@ -1416,28 +1416,28 @@ Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje stosunkowo długim czasem 
 \end{aligned}
 \label{NLH1}
 \end{align}
-W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywaną pamięć przez program oraz przyspieszyć działanie dzięki pominięciu obliczeń, wyrugowanych zmiennych. Zysk w czasie oraz różnicę w obliczonych obrazach przedstawia dział \ref{ssec:NLCTVModSec} 
+W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Zysk w czasie oraz różnicę w obliczonych obrazach przedstawi dział \ref{ssec:NLCTVModSec}.
 \section{Połączenie syntezy obrazu z funkcją wagi.}
-Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez autora jest zastąpienie problemu minimalizacji energii \eqref{ENLCTV}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury opisanej w \autoref{chap:StructureTextureNavierStokes}. Kroki nowego algorytmu można przedstawić w następującym schemacie:
+Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez autora jest zastąpienie problemu minimalizacji energii \eqref{ENLCTV}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury opisanej w \autoref{chap:StructureTextureNavierStokes}. Kroki nowego algorytmu można przedstawić w następującym schemacie postępowania:
 \begin{enumerate}
 \item
-Wyznaczenie funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT} 
+Wyznaczeniu funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT}.
 \item
-Powtarzanie aż do uzyskania zbioru $\Omega = \emptyset$
+Powtarzaniu aż do uzyskania zbioru $\Omega = \emptyset$:
 \begin{enumerate}[a)]
 \item
-Znalezienie dla każdego piksela $x \in \partial\Omega$ najlepszego dopasowania $\hat{x} \in D \cap \mathrm{N}_x$:
+Znalezieniu dla każdego $x \in \partial\Omega$ najlepszego dopasowania $\hat{x} \in D \cap \mathrm{N}_x$
 \begin{large}
 \begin{align}
-\hat{x} = \mathop{\mathrm{arg \ max}}_{p \in D \cap \mathrm{N}_x} w(x,\hat{x})
+\hat{x} = \mathop{\mathrm{arg \ max}}_{p \in D \cap \mathrm{N}_x} w(x,\hat{x}),
 \end{align}
 \end{large}
-a następnie przepisanie:
+a następnie przepisaniu:
 \begin{align}
-u(x) = \hat{u}(\hat{x})
+u(x) = \hat{u}(\hat{x}),
 \end{align}
 \item
-Pomniejszenie maski $\Omega$ o granicę $\partial\Omega$
+Pomniejszeniu maski $\Omega$ o granicę $\partial\Omega$.
 \end{enumerate}
 \end{enumerate}
 \chapter{Testy algorytmów}
