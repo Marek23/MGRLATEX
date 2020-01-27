@@ -64,9 +64,9 @@
 \glsxtrnewsymbol[description={pochodna cząstkowa funkcji wielu zmiennych $f$ względem zmiennej $x$}]{frac}{$\frac{\partial f}{\partial x},\frac{\partial f}{\partial_x},\partial{f}_x$}
 \glsxtrnewsymbol[description={wartość dyskretnej pochodnej cząstkowej funkcji wielu zmiennych $f$ względem zmiennej $x$ w punkcie o współrzędnych dyskretnych $i, j$}]{fracd}{$\frac{\partial f}{\partial x}\big|_{i,j}, \ \partial f_x \big|_{i,j}$}
 \glsxtrnewsymbol[description={pochodna względem czasu $t$}]{fract}{$\frac{\partial }{\partial t}$}
-\glsxtrnewsymbol[description={zbiór funkcji kwadratowo całkowalnych}]{squareint}{$L^2(R^2)$}
+\glsxtrnewsymbol[description={zbiór funkcji całkowalnych kwadratowo}]{squareint}{$L^2(R^2)$}
 \glsxtrnewsymbol[description={dywergencja funkcji $f$}]{divf}{$div\left( f \right)$}
-\glsxtrnewsymbol[description={całkowita wariacja funkcji (ang. total variation)}]{tv}{$TV$}
+\glsxtrnewsymbol[description={wariacja całkowita funkcji (ang. total variation)}]{tv}{$TV$}
 \glsxtrnewsymbol[description={z ang. non-local color total variation}]{nlctv}{$NLCTV$}
 \glsxtrnewsymbol[description={z ang. variational framework for non-local inpainting}]{vfi}{$VFI$}
 \glsxtrnewsymbol[description={punkt $(i,j)$ obrazu $I$ }]{points}{$x,y,z$}
@@ -75,7 +75,7 @@
 \glsxtrnewsymbol[description={podmacierz wartości obrazu $I$ utworzonych z punktów będących otoczeniem punktu $x$}]{surround2}{$p_x, q_x, \mathrm{N}_x$}
 \glsxtrnewsymbol[description={promienie tworzonych skrawków wokół piksela $x$}]{pixradius}{$|p_x|_r, |s_x|_r$}
 \glsxtrnewsymbol[description={macierz reprezentująca rozkład Gauss'a o odchyleniu standardowym $\sigma$}]{matgauss}{$G_\sigma$}
-\glsxtrnewsymbol[description={iloczyn po współrzędnych macierzy $A$ i $B$}]{hadarmatrix}{$A * B$}
+\glsxtrnewsymbol[description={iloczyn Hadamarda (inaczej po współrzędnych) macierzy $A$ i $B$}]{hadarmatrix}{$A \bullet B$}
 \glsxtrnewsymbol[description={dziedzina obrazu $I$ nie podlegająca modyfikacji}]{dziedzina}{$D$}
 \glsxtrnewsymbol[description={wypełniana część obrazu $I$}]{wmalowane}{$\Omega$}
 \glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$} w modelu $NLCTV$]{nlreop}{$p$}
@@ -182,7 +182,7 @@ W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększaj�
 	\includegraphics{rysunki/1_fig1.png}
 \end{figure}
 \\
-Do przetwarzania (analizy) obrazów możemy używać wiele różnych narzędzi takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest rekonstrukcja uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
+Do przetwarzania (analizy) obrazów możemy używać wiele różnych narzędzi takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest rekonstrukcja uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach używanych do edycji obrazów, usuwania niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
 \section{Obraz cyfrowy.}
 Dwuwymiarowy obraz jest reprezentacją skończonej ilości dyskretnych wartości zwanych pikselami. Każdy z pikseli przypisany jest do konkretnego położenia w dwuwymiarowej przestrzeni $x = {i,j} \in D=\mathcal{R}^2$, gdzie $D$ oznacza przestrzeń obrazu. Wartość piksela $f(x)$ stanowi informację o natężeniu oraz nasyceniu kolorów w danym punkcie $x$. Najczęściej obraz przechowywany jest jako zbiór wartości $f(x) \in \langle 0,255 \rangle$, gdzie 0 oznacza najmniejszą wartość intensywności, a 255 największą wartość intensywności. Obraz w odcieniach szarości stanowi przekształcenie $f: D \rightarrow \mathcal{R}$. W przypadku obrazów kolorowych obraz stanowi przekształcenie $f: D \rightarrow \mathcal{R}^n$, gdzie $n$ określa ilość barw w danej przestrzeni. Przykładem przestrzeni może być przestrzeń $RGB$, gdzie przy wykorzystaniu trzech kolorów $(n=3)$ uzyskuję się skończoną gamę innych kolorów. Biorąc pod uwagę trzy podstawowe kolory oraz 256 wartości ich intensywności obraz może modelować $256^3=16777216$ różnych kolorów. Jakość obrazu zależy od jego rozdzielczości. Rozdzielczość określa się jako liczbę wierszy i kolumn przypadających na obraz. Obrazy o dużej rozdzielczości charakteryzują się znikomą zdolnością do odróżnienia poszczególnego z pikseli obrazu, dzięki czemu w ogólnym wrażeniu tworzy gładki obraz.
 
@@ -216,7 +216,7 @@ Większość metod wmalowywania opisanych w literaturze opiera się na algorytma
 \chapter{Równania mechaniki płynu.}
 \label{chap:navierstokes}
 \section{Rozwiązanie równania Naviera-Stokesa }
-W celu dokładnego zaprezentowania idei wmalowywania w oparciu o równanie Naviera-Stokesa należy rozważyć poniższe równanie przepływu cieczy Newtonowskiej:
+W celu dokładnego zaprezentowania idei wmalowywania w oparciu o równanie Naviera-Stokesa należy rozważyć następujące równanie przepływu cieczy Newtonowskiej:
 \begin{equation}
 V \nabla V \mathrm{+} \frac{dV}{dt} = - \frac{\mathrm{1}}{q}\nabla p\mathrm{+}F \mathrm{+}\nu {\nabla }^{\mathrm{2}} V
 \label{NavierStokesEquation}
@@ -263,7 +263,7 @@ W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomięd
 	\label{tab1}
 \end{table}
 gdzie ${\nabla }^{\bot }=(\frac{\partial }{\partial y},\frac{\partial }{\partial x})$.
-Niech $\mathit{\Omega}\subset D$ stanowi wypełniany obszar obrazu (maskę). W wyniku rozwiązania dyskretnego równania Naviera-Stokesa w obszarze maski z warunkami brzegowymi zdefiniowanymi jako jasność pikseli sąsiadujących z obszarem maski uzyskuje się kontynuację linii o podobnej jasności (izolinii) w głąb odrestaurowywanego obszaru zgodnie z \autoref{3_fig1}.  Matematycznie kierunek izolinii jasności obrazu wyznacza ${\nabla }^{\bot }I$. W oparciu o \autoref{tab1} oraz równanie  \eqref{NavierStokesEquationVorticity} zagadnienia wmalowywania można sformułować jako problem stabilnego rozwiązania poniższego równania różniczkowego:
+Niech $\mathit{\Omega}\subset D$ stanowi wypełniany obszar obrazu (maskę). W wyniku rozwiązania dyskretnego równania Naviera-Stokesa w obszarze maski z warunkami brzegowymi zdefiniowanymi jako jasność pikseli sąsiadujących z obszarem maski uzyskuje się kontynuację linii o podobnej jasności (izolinii) w głąb odrestaurowywanego obszaru zgodnie z \autoref{3_fig1}.  Matematycznie kierunek izolinii jasności obrazu wyznacza ${\nabla }^{\bot }I$. W oparciu o \autoref{tab1} oraz równanie  \eqref{NavierStokesEquationVorticity} zagadnienia wmalowywania można sformułować jako problem stabilnego rozwiązania następującego równania różniczkowego:
 \begin{equation}
 {\mathrm{(}\mathrm{\nabla }}^{\mathrm{\bot }}I\mathrm{)}\mathrm{\cdot }\nabla {\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{)+}\frac{d{\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{)}}{dt}\mathrm{=}\nu \mathrm{\nabla }\mathrm{(}g\mathrm{(}\nabla {\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{))}\nabla {\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{))} 
 \label{NavierStokesInpainting}
@@ -385,7 +385,7 @@ Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej
 \end{align}
 \eqref{Anisotropic}
 gdzie: ${\partial }_x=\frac{\partial }{\partial x}$ oraz analogicznie: ${\partial }_y=\frac{\partial }{\partial y}$.
-Zgodnie z \cite{ebrahimi2012navier} równanie można rozwiązać w poniższych krokach:
+Zgodnie z \cite{ebrahimi2012navier} równanie można rozwiązać w następujących krokach:
 Korzystając z zależności \eqref{dfdx} i \eqref{dfdy} należy wyznaczyć wartości ${\frac{d\omega }{dx}}\big|_{i,j}$ oraz ${\frac{d\omega }{dy}}\big|_{i,j}$
 Korzystając z obliczonych wartości należy następnie obliczyć moduł wektora w przestrzeni Euklidesowej:
 \begin{equation}
@@ -398,7 +398,7 @@ Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\m
 &+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}
 \label{discreteAnisotropic}
 \end{align}
-Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla }}^2I$ wykorzystywanych do obliczeń \eqref{NavierDiffAdv} i \eqref{NavierAdv} w każdej kolejnej chwili czasu $n$, konieczna jest znajomość obrazu $I^n$. W związku z tym równocześnie z równaniem \eqref{Vorticity} należy rozwiązywać poniższe niejednorodne równanie różniczkowe cząstkowe liniowe drugiego rzędu.
+Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla }}^2I$ wykorzystywanych do obliczeń \eqref{NavierDiffAdv} i \eqref{NavierAdv} w każdej kolejnej chwili czasu $n$, konieczna jest znajomość obrazu $I^n$. W związku z tym równocześnie z równaniem \eqref{Vorticity} należy rozwiązywać następujące niejednorodne równanie różniczkowe cząstkowe liniowe drugiego rzędu.
 \begin{equation}
 \Delta I^n={\omega }^n
 \label{Poisson}
@@ -408,7 +408,7 @@ Dla przestrzeni dwuwymiarowej równanie to przyjmuje następującą postać:
 \frac{{\partial }^2I}{\partial x^2}+\frac{{\partial }^2I}{\partial y^2}=\ \omega
 \label{Poisson2D}
 \end{equation}
-W celu przybliżenia drugiej pochodnej funkcji $f$ w punkcie $(i,j)$ należy rozwinąć funkcję $f$ w dwa szeregi Taylora względem punktu $(i+1,j)$ oraz $(i-1,j)$. Po rozwiązaniu sumy dwóch rozwinięć względem $\frac{{\partial }^2f}{\partial x^2}$ otrzymuje się poniższy sposób dyskretyzacji drugiej pochodnej:
+W celu przybliżenia drugiej pochodnej funkcji $f$ w punkcie $(i,j)$ należy rozwinąć funkcję $f$ w dwa szeregi Taylora względem punktu $(i+1,j)$ oraz $(i-1,j)$. Po rozwiązaniu sumy dwóch rozwinięć względem $\frac{{\partial }^2f}{\partial x^2}$ otrzymuje się następujący sposób dyskretyzacji drugiej pochodnej:
 \begin{equation}
 {\frac{{\partial }^2f}{\partial x^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i+1,j}-2f_{i,j}+f_{i-1,j}}{\Delta x^2}
 \label{d2fdx2}
@@ -470,7 +470,7 @@ I_{2_{i,j}}=\ {\mathrm{sin} {\mathrm{\Theta }}_{i,j}\ }=\ {\mathrm{sin} {{\mathr
 I_{3_{i,j}}=\ {\mathrm{sin} {\phi }_{i,j}\ }=\ {\mathrm{sin} {{\mathrm{cos}}^{-1} \frac{B_{i,j}}{r_{i,j}}\ }\ } 
 \label{TIthree}
 \end{equation}
-Następnie dysponując składowymi $I_1$, $I_2$, $I_3$ wyznaczonymi z powyższych zależności, dla każdego z nich oddzielnie wykonujemy wcześniej opisane iteracje. W celu odwrotnego przekształcenia $\left[I_1,I_2,I_3 \right]\to\left[R,G,B\right]$ wystarczy przeprowadzić poniższe obliczenia:
+Następnie dysponując składowymi $I_1$, $I_2$, $I_3$ wyznaczonymi z powyższych zależności, dla każdego z nich oddzielnie wykonujemy wcześniej opisane iteracje. W celu odwrotnego przekształcenia $\left[I_1,I_2,I_3 \right]\to\left[R,G,B\right]$ wystarczy przeprowadzić następujące obliczenia:
 \begin{equation}
  B_{i,j}=\ r_{i,j}{\mathrm{cos} {\mathrm{\Theta }}_{\mathrm{i,j}}\ }{\mathrm{cos} {\phi }_{\mathrm{i,j}}\ }
 \label{TInvIone}
@@ -501,7 +501,7 @@ uzyskaną na podstawie rozwiązania problemu minimalizacji energii:
 {\mathop{\mathrm{min}}_{u} \Biggl\{E\left(u\right)=\int{\left|\mathrm{\nabla }u\right|+\lambda {\left|\left|v\right|\right|}^2_{L^2}}\Biggr\}\ }
 \label{STRUCTURETEXTURE2}
 \end{align}
-gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni o ograniczonym wariacji oznaczanej $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i teksturę przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ to człon odpowiadający dokładności odwzorowania, a $\lambda $ stanowi wcześniej zdefiniowany parametr. Zgodnie z dowodem Mayera \cite{meyer2001oscillating} dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania składowej zmiennej $u$ reprezentującej odfiltrowany obraz oraz składowej zmiennej $v$ reprezentującej szumy i tekstury obrazu. Nasz problem segmentacji można przedstawić jako zagadnienie minimalizacji energii \cite{vese2003modeling}:
+gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni o wariacji ograniczonej oznaczanej $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i teksturę przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ to człon odpowiadający dokładności odwzorowania, a $\lambda $ stanowi wcześniej zdefiniowany parametr. Zgodnie z dowodem Mayera \cite{meyer2001oscillating} dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania składowej zmiennej $u$ reprezentującej odfiltrowany obraz oraz składowej zmiennej $v$ reprezentującej szumy i tekstury obrazu. Nasz problem segmentacji można przedstawić jako zagadnienie minimalizacji energii \cite{vese2003modeling}:
 \begin{align}
 \begin{aligned} 
 \mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right| } \ + \\
@@ -573,14 +573,14 @@ Jako wartości początkowe tego iteracyjnego algorytmu można przyjąć:
 \begin{align}
 u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\right|},\ g_2=-\frac{1}{2\lambda }\frac{f_{\mathrm{y}}}{\left|\mathrm{\nabla }f\right|}
 \end{align}
-Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz poniższą metodę aproksymacji pochodnej drugiego stopnia:
+Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz następującą metodę aproksymacji pochodnej drugiego stopnia:
 \begin{align}
 \begin{aligned} 
 {\partial }_{xy}g_1 \big|_{i,j} &\cong \frac{1}{2h^2} \bigg[2g_1\big|_{i,j}+g_1\big|_{i-1,j-1}+g_1\big|_{i+1,j+1}-g_1\big|_{i,\ j-1} -\\ 
 &-g_1\big|_{i-1,j}-g_1\big|_{i+1,j}-g_1\big|_{i,j+1}\bigg]
 \end{aligned}
 \end{align}
-możemy równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} przedstawić w następującej postaci dyskretnej:
+możemy przedstawić równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} w następującej postaci dyskretnej:
 \begin{align}
 \begin{aligned}
 u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\big|_{i,j}+c_2\big|_{i,j}+c_3\big|_{i,j}+c_4\big|_{i,j}\right)}\right]\bigcdot \\ 
@@ -646,14 +646,14 @@ Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ dow
 Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego algorytmu syntezy tekstury $v_1$.
 \end{enumerate}
 \section{Model NLCTV. (Non-local color total variation)}
-Pojęcie całkowitej wariacji funkcji $TV$ (total variation)w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin'a, Osher'a i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan'a i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie operatorów lokalnych nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
-Klasyczny nielokalny model wariacji funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego, nielokalnego modelu wariacji funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
+Pojęcie wariacji całkowitej funkcji $TV$ (total variation) w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin'a, Osher'a i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan'a i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie operatorów lokalnych nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
+Klasyczny model nielokalny wariacji całkowitej funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego modelu nielokalnego wariacji całkowitej funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
 Zgodnie z oznaczeniami użytymi w poprzednim rozdziale $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako wynik przekształcenia $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowany dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji możemy wyrazić zależnością:
 \begin{equation}
 {\mathrm{\nabla }}_{NL}I\left(x,y\right)\triangleq \left[I\left(y\right)-I\left(x\right)\right]\sqrt{w(x,y)}
 \label{NLGRAD}
 \end{equation}
-Warto zauważyć, że \textbf{wynikiem} powyższej zależności nie jest wektor, a \textbf{wartość skalarna}. Wyrażenie stanowi proste przekształcenie $D \times D\longrightarrow R$. Wartość wagi $w(x,y)$ z definicji wyraża się poniższą zależnością:
+Warto zauważyć, że \textbf{wynikiem} powyższej zależności nie jest wektor, a \textbf{wartość skalarna}. Wyrażenie stanowi proste przekształcenie $D \times D\longrightarrow R$. Wartość wagi $w(x,y)$ z definicji wyraża się następującą zależnością:
 \begin{equation}
 w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\}\ }
 \label{NLWEIGHT}
@@ -764,7 +764,7 @@ y\in N_x \\
 \label{DNLDIVSMART}
 \end{equation}
 Warto zauważyć, iż indeksy $x,y$ wskazują na konkretny piksel w obrazie. Lokalizacji w przestrzeni $2D$ dokonuje się przez znajomość par: $x=(i_x,j_x)$ oraz $y=(i_y,j_y)$.
-Nielokalny model wariacji funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
+Model nielokalny wariacji całkowitej funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
 \begin{equation}
 {\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{\chi{\left(u-I^0\right)}^2}dx\ \right\}\ }
 \label{NLTVGRAY}
@@ -790,7 +790,7 @@ Tak zdefiniowany model można przekształcić wykorzystując operację podziału
 {\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k, {\overrightarrow{b}}^0={\overrightarrow{v}}^0=0
 \label{BREGMANVARIABLE}
 \end{align}
-gdzie $\Theta$ stanowi wcześniej definiowany parametr algorytmu. Stosując podstawowe równanie rachunku wariacyjnego w postaci równania Eulera-Lagrange’a, metodę przedstawioną w \cite{tai2011fast} oraz schemat iteracyjny Gauss’a-Seidel’a, powyższe równania można sprowadzić do problemu iteracyjnego rozwiązania poniższych zależności:
+gdzie $\Theta$ stanowi wcześniej definiowany parametr algorytmu. Stosując podstawowe równanie rachunku wariacyjnego w postaci równania Eulera-Lagrange’a, metodę przedstawioną w \cite{tai2011fast} oraz schemat iteracyjny Gauss’a-Seidel’a, powyższe równania można sprowadzić do problemu iteracyjnego rozwiązania następujących zależności:
 \begin{align}
 \chi \left(u-I^0\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0
 \label{ELNLTV1}
@@ -806,7 +806,7 @@ W celu uzależnienia od siebie wszystkich warstw obrazu autorzy w \cite{duan2015
 {\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}}+\frac{1}{2}\sum^m_{i=1}{\int_D{\chi{\left(u_i-I^0_i\right)}^2}dx}\ \right\}\ }
 \label{ENLCTV}
 \end{align}
-gdzie $m$ odpowiada ilości warstw tworzących obraz kolorowy. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacznie obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm podziału Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
+gdzie $m$ odpowiada ilości warstw tworzących obraz kolorowy. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacząco obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm podziału Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
 \begin{align}
 \begin{aligned}
 \mathop{\mathrm{min}}_{u}E\left(u\right) &= \mathop{\mathrm{min}}_{u}\Biggl\{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}}+\\ 
@@ -900,7 +900,7 @@ Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej w
 \begin{equation}
 \left|E^{k+1}-E^k\right|\le \varepsilon
 \end{equation}
-\section{Wariacyjny, nielokalny model wmalowywania VFI}
+\section{Wariacyjny model nielokalny wmalowywania - VFI}
 Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy tej publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\Omega))$ zależnej:
 \begin{itemize}
 \item
@@ -914,8 +914,8 @@ od mapy podobieństwa będącej funkcją przypisującą każdemu punktowi z niez
 	\caption{Określenie charakterystycznych obszarów obrazu.}
 	\label{6_fig1}
 \end{figure}
-Oznaczmy funkcję $u(x)$ na zbiorze $\Omega$, dla której zachodzi $u:\Omega \rightarrow R$, gdzie $\Omega$ oznacza obszar do uzupełnienia.
-Oznaczmy funkcję $\hat{u}(\hat{x})$ na zbiorze $D$, dla której zachodzi $\hat{u} : D \rightarrow R$, gdzie $D$ oznacza obszar oryginalnego obrazu nie podlegający modyfikacji.
+Niech $u(x)$ oznacza funkcję przekształcającą zbiór $\Omega$ według zależności  $u:\Omega \rightarrow R$, gdzie $\Omega$ to obszar do uzupełnienia.
+Niech $\hat{u}(\hat{x})$ oznacza funkcję przekształcającą zbiór $D$ według zależności $\hat{u} : D \rightarrow R$, gdzie $D$ to obszar oryginalnego obrazu nie podlegający modyfikacji.
 Niech $\mathrm{N}_x$ i $\mathrm{N}_{\hat{x}}$ oznaczają podzbiory punktów obrazu scentrowane względem odpowiednio punktów $x$ i $\hat{x}$.
 Wtedy zbiór $\widetilde{\Omega}$ definiuje się jako $\widetilde{\Omega} := \Omega + \sum {\mathrm{N}}_x$, gdzie $\sum {\mathrm{N}}_x$ to suma wszystkich podzbiorów utworzonych względem punktów $x \in \Omega$. Ostatecznie $D^c = D / \widetilde{\Omega}$.
 Zgodnie z \cite{arias2011variational} przekształcenie $u(x)$ jest zarezerwowane dla obszaru maski (obszaru wmalowywanego), a $\hat{u}(\hat{x})$ odpowiada przekształceniu w niezmienianym obszarze obrazu $D$). 
@@ -1055,11 +1055,11 @@ Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcają
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Oznaczmy $\chi_{\Omega^{s}}$ jako funkcję \eqref{maskFunction} tworzoną dla maski obrazu na stopniu $s$. Wtedy funkcję tą dla maski na stopniu $s+1$ wyznaczamy z zależności:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień maski $s+1$ wyznaczamy z zależności:
 \begin{align}
 \chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0}.
 \end{align}
-Nierówność stanowi ograniczenie próbkowania w dół, dzięki któremu stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ nieznacznie się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ wykorzystywana jest zależność
+Nierówność stanowi ograniczenie próbkowania w dół, dzięki któremu stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ niewiele się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ wykorzystywana jest zależność
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{\Omega^s} u^s(x)}{G \ast \chi_{\Omega^s}(x)}
 \end{align}
@@ -1203,7 +1203,7 @@ Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopaso
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
 Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie fragmentów jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie.
 \textbf{W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}.}
-Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej pary łączonych krzywych) znacznie przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
+Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej pary łączonych krzywych) znacząco przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1.1]{rysunki/4_fig4}
@@ -1216,7 +1216,7 @@ W celu zaprojektowania w pełni automatycznego programu do procesu wmalowywania 
 \item
 Wyznaczyć główne struktury obrazu.
 \item
-Rozwiązać poniższe zależności:
+Rozwiązać następujące zależności:
 \begin{align}
 D(i,j)\triangleq IP\cdot \left[\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ +\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)+\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)\right]
 \label{SalientDistance}
@@ -1247,7 +1247,7 @@ Dokładna analiza oraz sposób wyznaczania podobieństwa okien $f^i$ przedstawio
 Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\right)$ określające stopień podobieństwa tekstur znajdujących się w utworzonych oknach $f$. Dla każdego obszaru $f^i$ wyznaczana jest macierz $MR8(f^i)$. Macierz uzyskiwana jest na podstawie odpowiedzi wybranego fragmentu obrazu na grupę 38 filtrów przedstawionych na \autoref{4_fig6}.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1]{rysunki/4_fig6}
+	\includegraphics[scale=1.7]{rysunki/4_fig6}
 	\caption{Bank 38 filtrów grupy MR8. źródło \cite{varma2009statistical}.}
 \label{4_fig6}
 \end{figure}
@@ -1264,7 +1264,7 @@ Dokładny algorytm klasyfikacji tekstur przedstawiony został przez Manika Varma
 \begin{align}
 D_3\left(f^i_{cur},f^j_{cur}\right)=\ \left|curvature_i-curvature_j\right|
 \end{align}
-Proponują natomiast aby każdą z wyznaczonych głównych struktur przedstawić w postaci równania wielomianu drugiego stopnia. Aproksymacji współczynników wielomianu można dokonać na podstawie rozwiązania poniższego równania macierzowego:
+Proponują natomiast aby każdą z wyznaczonych głównych struktur przedstawić w postaci równania wielomianu drugiego stopnia. Aproksymacji współczynników wielomianu można dokonać na podstawie rozwiązania następującego równania macierzowego:
 \begin{align}
 \left[ \begin{array}{ccc}
 n & \sum{x_i} & \sum{x^2_i} \\ 
@@ -1296,7 +1296,7 @@ Posługiwanie się parametrami $\theta $ oraz $r$ pozwala uniknąć niejednoznac
 	\caption{Odwzorowanie prostej w przestrzeni Hough’a. Źródło \cite{houghTransform}}.
 \label{4_fig7}
 \end{figure}
-Posługując się parametrem $\theta$ określającym kąt pomiędzy wyznaczoną prostą a osią $x$ łatwo określić czy badane proste są do siebie równoległe. Aby wyznaczyć parametry prostej z równania \eqref{HOUGHTRANSFORM} zgodnie z \cite{houghTransform} należy każdemu punktowi tworzącemu prostą przypisać grupę punktów z przestrzeni Hough'a dla których wszystkie możliwe proste utworzone na ich podstawie zawierałyby badany punkt. Ostatecznie parametry prostej pochodzą z punktu, dla którego w przestrzeni Hough'a występuje największa gęstość powtarzających się punktów. Transformację przedstawia poniższy rysunek:
+Posługując się parametrem $\theta$ określającym kąt pomiędzy wyznaczoną prostą a osią $x$ łatwo określić czy badane proste są do siebie równoległe. Aby wyznaczyć parametry prostej z równania \eqref{HOUGHTRANSFORM} zgodnie z \cite{houghTransform} należy każdemu punktowi tworzącemu prostą przypisać grupę punktów z przestrzeni Hough'a dla których wszystkie możliwe proste utworzone na ich podstawie zawierałyby badany punkt. Ostatecznie parametry prostej pochodzą z punktu, dla którego w przestrzeni Hough'a występuje największa gęstość powtarzających się punktów. Transformację przedstawia następujący rysunek:
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.65]{rysunki/4_fig8}
@@ -1636,7 +1636,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
 \end{longtable}
 \section{Równanie mechaniki płynu.}
 \label{sec:NVResult}
-Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. \textbf{W trakcie badań autor niniejszej pracy zauważa, że rozmycie obrazu w znacznym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{Poisson} rozwiązywane jest w każdej jednej iteracji i stopniowo potęguje problem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Stabilność algorytmu jest zachowana przy wartości $h~1$, $h \geq1$ w przypadku wartości $\Delta t <0.1$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury.
+Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. \textbf{W trakcie badań autor niniejszej pracy zauważa, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{Poisson} rozwiązywane jest w każdej jednej iteracji i stopniowo potęguje problem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Stabilność algorytmu jest zachowana przy wartości $h~1$, $h \geq1$ w przypadku wartości $\Delta t <0.1$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury.
 \begin{longtable}[h!]{|c|c|}
 	\hline
 	Obraz & Dane \\ \hline
@@ -1799,7 +1799,7 @@ Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
 	\caption{Segmentacja obrazu na strukturę i teksturę.}
 	\label{TabSegmentation}
 \end{longtable}
-Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu parametru $\lambda$ otrzymujemy większą gładkość wynikowej struktury obrazu. Wyniki algorytmu \textbf{wykorzystującego metodę Criminisi do wyznaczenia tekstury} oraz równania Naviera-Stokesa wyznaczenia struktury przedstawia \autoref{TabNavierStokesSegm}. W tabeli autor porównuje wyniki z algorytmem bez wcześniejszej segmentacji obrazu.
+Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu parametru $\lambda$ otrzymujemy większą gładkość wynikowej struktury obrazu. Wyniki algorytmu \textbf{wykorzystującego metodę Criminisi do wyznaczenia tekstury} oraz równania Naviera-Stokesa wyznaczenia struktury przedstawia \autoref{TabNavierStokesSegm}. W tabeli autor tej pracy magisterskiej porównuje wyniki z algorytmem bez wcześniejszej segmentacji obrazu.
 \begin{longtable}[h!]{|c|c|}
     \hline
     \begin{minipage}{0.5\textwidth}
@@ -2130,7 +2130,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
         
 	\caption{Główne struktury testowanych obrazów manualnie wprowadzone przez użytkownika razem z parametrem $|p_x|_r$.}
 \end{longtable}
-Linie granic głównych struktur przedstawiono kolorem czerwonym. \textbf{Autor proponuje, aby część wspólna obrazu oryginalnego poza maską wraz z linią głównej struktury stanowiły zbiór, z którego pobierane jest najlepsze dopasowanie (oddzielnie dla każdej wypełnianej struktury)}. Wartość $|p_x|_r$ manualnie ustawiono na minimalną wartość zdolną zachować właściwości charakterystyczne dla danej granicy w pełnym zakresie linii. Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
+Linie granic głównych struktur przedstawiono kolorem czerwonym. \textbf{Autor tej pracy magisterskiej proponuje, aby część wspólna obrazu oryginalnego poza maską wraz z linią głównej struktury stanowiły zbiór, z którego pobierane jest najlepsze dopasowanie (oddzielnie dla każdej wypełnianej struktury)}. Wartość $|p_x|_r$ manualnie ustawiono na minimalną wartość zdolną zachować właściwości charakterystyczne dla danej granicy w pełnym zakresie linii. Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
 \begin{longtable}[h!]{|c|c|}
     \hline
     Obraz & Dane \\ \hline
@@ -2246,7 +2246,7 @@ Wyznaczenie głównych struktur w każdym z testowych obrazów nie wymagało cza
 	\caption{Korekcja fotometryczna obrazu w przypadku propagacji głównych struktur obrazu. Źródło \cite{StructurePropagationManual}.}
 	\label{7_fig1} 
 \end{figure}
-\textbf{Aby dodatkowo ograniczyć błędy nieodpowiedniej syntezy struktur w obrazie autor w dalszych badaniach proponuje segmentację celem wyznaczenia głównych dominujących kolorów} i na ich podstawie korzystając z metody przedstawionej w \cite{chen2005adaptive} badać podobieństwo rozważanych skrawków (czyli skorzystać z $IOCCD$ wspomnianym w zależności \eqref{colDistance}).
+\textbf{Aby dodatkowo ograniczyć błędy nieodpowiedniej syntezy struktur w obrazie autor tej pracy magisterskiej w dalszych badaniach proponuje segmentację celem wyznaczenia głównych dominujących kolorów} i na ich podstawie korzystając z metody przedstawionej w \cite{chen2005adaptive} badać podobieństwo rozważanych skrawków (czyli skorzystać z $IOCCD$ wspomnianym w zależności \eqref{colDistance}).
 Najskuteczniejszym ograniczeniem niespójności struktury możne być dodatkowy wejściowy parametr algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
 \begin{equation}
 \chi' \left(x\right)=\Bigg\{ \begin{array}{ll}
@@ -2266,7 +2266,7 @@ Autorzy w \cite{SalientStrucTexProp} nie przedstawiają dokładnego sposobu wyzn
 \item rozmiar okna otaczający główną strukturę brany pod uwagę podczas wyznaczania podobieństwa kolorów \eqref{colDistance}
 \item waga poszczególnych członów w równaniu \eqref{SalientDistance} mające wpływ na parowanie struktur
 \end{itemize}
-Dobór żadnego z parametrów nie jest automatyczny i zależy od rozpatrywanego obrazu. Problematyczność doboru parametrów, dokładność wyznaczania i łączenia w pary głównych struktur, dokładność wyników uzyskanych w poprzednim podrozdziale (przy manualnym - idealnym - połączeniu głównych struktur) skłaniają do znacznie głębszej analizy problemu. Porównanie metody z pozostałymi opisywanymi w niniejszej pracy metodami skłoniło autora do badań pozostałych algorytmów.
+Dobór żadnego z parametrów nie jest automatyczny i zależy od rozpatrywanego obrazu. Problematyczność doboru parametrów, dokładność wyznaczania i łączenia w pary głównych struktur, dokładność wyników uzyskanych w poprzednim podrozdziale (przy manualnym - idealnym - połączeniu głównych struktur) skłaniają do znacząco głębszej analizy problemu. Porównanie metody z pozostałymi opisywanymi w niniejszej pracy metodami skłoniło autora do badań pozostałych algorytmów.
 \section{Nielokalny model NLCTV.}
 \subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
 \label{ssec:NLCTVModSec}
@@ -2453,7 +2453,7 @@ Parametr $\lambda$ służy do przemnożenia wartości $\chi$ - \eqref{maskFuncti
 \right\}
 \end{equation}
 Parametr $|s_x|_r$ określa wymiar promienia w pikselach tworzonego okna $\mathrm{N_x}$ (z ang. search window).
-Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znacznym stopniu przyspiesza algorytm wmalowywania}. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest niemal niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znaczącym stopniu przyspiesza algorytm wmalowywania}. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
 
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2660,7 +2660,7 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \label{NLH1Tab}
 \end{longtable}
 
-Nielokalny model wariacyjny w pierwszych z publikacji dotyczących przetwarzania obrazów stosowany jest do filtracji, usuwania elementów tekstury i szumu, segmentacji na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $|s_x|_r$ i $|p_x|_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące z poza palety dostarczanej z obrazem bądź przechodzi w obszar niestabilności. W przypadku małych wartości parametru  $|s_x|_r$ i $|p_x|_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $|s_x|_r$, $|p_x|_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru. Wadą algorytmu jest znacznie rosnąca ilość czasu potrzebna na obliczenie obrazu maski w przypadku dużych wartości $|s_x|_r$ i $|p_x|_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $|s_x|_r <30$, $|p_x|_r$ dla obrazu o wymiarze $500x500$. \textbf{Autor niniejszej pracy zaleca następujące parametry algorytmu:}
+Model nielokalny wariacji całkowitej w pierwszych z publikacji dotyczących przetwarzania obrazów stosowany jest do filtracji, usuwania elementów tekstury i szumu, segmentacji na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $|s_x|_r$ i $|p_x|_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące z poza palety dostarczanej z obrazem bądź przechodzi w obszar niestabilności. W przypadku małych wartości parametru  $|s_x|_r$ i $|p_x|_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $|s_x|_r$, $|p_x|_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru. Wadą algorytmu jest znacząco rosnąca ilość czasu potrzebna na obliczenie obrazu maski w przypadku dużych wartości $|s_x|_r$ i $|p_x|_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $|s_x|_r <30$, $|p_x|_r$ dla obrazu o wymiarze $500x500$. \textbf{Autor niniejszej pracy zaleca następujące parametry algorytmu:}
 \begin{enumerate}
 \item Obraz ze ściśle powtarzającą się teksturą z maską w zakresie jednej struktury
 \begin{itemize}
@@ -2806,9 +2806,9 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość pro
     \caption{Wynikowe obrazy dla algorytmu $NLCTV$ z modyfikacją wagi.}
     \label{NLH1SWOVER1}
 \end{longtable}
-Wyniki uzyskane dla zmodyfikowanej funkcji wagi charakteryzują się zdolnością do dokładniejszej kontynuacji struktury, nie wpływając w znacznym stopniu na poprawę tekstury obrazu. Wadą algorytmu jest znaczne wydłużenie czasu wyznaczenia funkcji wagi, będącej najistotniejszym czynnikiem w algorytmie wpływającym na długość trwania obliczeń.
+Wyniki uzyskane dla zmodyfikowanej funkcji wagi charakteryzują się zdolnością do dokładniejszej kontynuacji struktury, nie wpływając w znaczącym stopniu na poprawę tekstury obrazu. Wadą algorytmu jest znaczne wydłużenie czasu wyznaczenia funkcji wagi, będącej najistotniejszym czynnikiem w algorytmie wpływającym na długość trwania obliczeń.
 \subsection{Połączenie syntezy obrazu z funkcją wagi.}
-Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze pojawia się kolor będący z poza palety dostępnych kolorów w oryginalnym obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd rozmycia. Algorytm charakteryzuje się lepszą kontynuacją tekstury. Wadą jest kilkukrotnie wydłużony czas obliczeń. Podobnie jak dla modelu $NLCTV$ można tutaj zastosować modyfikację funkcji wagi $w$, jednak autor pominął krok ze względu na dłuższe działanie algorytmu (modyfikacja funkcji wagi również wydłuża czas działania). Wyniki przedstawia tabela:
+Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze pojawia się kolor będący z poza palety dostępnych kolorów w oryginalnym obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd rozmycia. Algorytm charakteryzuje się lepszą kontynuacją tekstury. Wadą jest kilkukrotnie wydłużony czas obliczeń. Podobnie jak dla modelu $NLCTV$ można tutaj zastosować modyfikację funkcji wagi $w$, jednak autor niniejszej pracy pominął krok ze względu na dłuższe działanie algorytmu (modyfikacja funkcji wagi również wydłuża czas działania). Wyniki przedstawia tabela:
 \begin{longtable}[h!]{|c|c|}
     \hline
 	Modyfikacja algorytmu
@@ -2896,7 +2896,7 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     \caption{Porównanie do oryginalnego algorytmu $NLCTV$.}
     \label{NLH1UMOD}
 \end{longtable}
-\section{Wariacyjny, nielokalny model wmalowywania.}
+\section{Wmalowywanie za pomocą modelu nielokalnego wariacji całkowitej.}
 Wszystkie przeprowadzone testy wykonano dla stałych parametrów związanych ze składnikiem pewności $C$ równych:
 \begin{itemize}
 \item
@@ -3374,7 +3374,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$
 	\label{NONLOCALITYVFI}
 \end{longtable}
 
-Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacznie ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
+Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacząco ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
 \section{Porównanie algorytmów wmalowywania.}
 \subsection{Obrazy wykorzystane do porównania.}
 Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstawione w \autoref{COMPAREIMAGES}. Za obraz idealnie wypełniony uznajemy obraz oryginalny bez nałożonej maski.
