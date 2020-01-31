@@ -207,12 +207,13 @@ definicje metryk będące miarą podobieństwa badanych obszarów.
 
 
 \end{enumerate}
-W niniejszej pracy opisano przedstawione powyżej algorytmy, porównano oraz zaproponowano nowy model uzupełniania brakujących danych. Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
+W niniejszej pracy opisano przedstawione wcześniej algorytmy, porównano oraz zaproponowano nowy model uzupełniania brakujących danych. Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
 \chapter{Przegląd istniejących algorytmów.}
 Pierwszą gałęzią algorytmów zgodnie z rozróżnieniem wprowadzonym w  \cite{SalientStrucTexProp} są metody opierające się na rozwiązaniu równań różniczkowych wyższego rzędu. Wśród nich pojawia się próba przystosowania procesu dyfuzji do wypełniania braków w obrazie (źródła \cite{bertalmio2000image} lub \cite{BertalmioNavierStokes}), dzięki której przy wykorzystaniu zależności z działu mechaniki płynu można dokonać próby kontynuacji informacji z otoczenia w brakujące obszary. \\
-Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu fragment po fragmencie skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz taka metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. Na przestrzeni czasu pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. metoda opisana w  \cite{StructurePropagationManual}. \\
-Innym sposobem wyznaczenia braków jest zastosowanie analizy funkcjonalnej definiującej problem minimalizacji energii stanowiącej największą grupę zdefiniowanych rozwiązań wmalowywania. Przykładem mogą być \cite{MathematicalModelsforNLTextureInpainting}, \cite{ColorTextureInpaintingNLCTVModel}, czy też \cite{arias2011variational}. W przytoczonych przykładach rozwiązanie problemu minimalizacji stanowi wynik w postaci wmalowanego obrazu. Innym przykładem może być problem minimalizacji zdefiniowany w \cite{SalientStrucTexProp} stanowiący pośredni proces w wypełnianiu obrazu. Tu problem minimalizacji, będący segmentacją obrazu, pozwala oddzielić strukturę i teksturę, pozwalając w następstwie na przeprowadzenie oddzielnej syntezy dwóch zbiorów danych, za pomocą róznych algorytmów. \\
-Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem z tej grupy może algorytm opisany w \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najlepszego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują nielokalny model wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi fragmentami obrazu. \\
+Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu fragment po fragmencie skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz taka metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. W literaturze pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. metoda opisana w  \cite{StructurePropagationManual}. \\
+Innym sposobem wyznaczenia braków jest zastosowanie analizy funkcjonalnej definiującej problem minimalizacji energii stanowiącej największą grupę istniejących rozwiązań problemu wmalowywania. 
+Jej praktyczne zastosowania można znaleźć np. w \cite{MathematicalModelsforNLTextureInpainting}, \cite{ColorTextureInpaintingNLCTVModel}, czy też \cite{arias2011variational}. W przytoczonych przykładach rozwiązanie problemu minimalizacji stanowi wynik w postaci wmalowanego obrazu. Innym przykładem może być problem minimalizacji zdefiniowany w \cite{SalientStrucTexProp} stanowiący pośredni proces w wypełnianiu obrazu. Tu problem minimalizacji, będący segmentacją obrazu, pozwala oddzielić strukturę i teksturę, pozwalając w następstwie na przeprowadzenie oddzielnej syntezy dwóch zbiorów danych, za pomocą różnych algorytmów. \\
+Ostatnią grupą algorytmów jest grupa stanowiąca połączenie powyższych algorytmów. Najprostszym przykładem z tej grupy może algorytm opisany w \cite{NavierStokesAndTexturePropagation}, w którym zaproponowano poprzedzenie procesu wmalowywania segmentacją obrazu. Uzyskaną w procesie segmentacji teksturę uzupełnia się metodą najlepszego dopasowania natomiast strukturę uzyskuje na podstawie równań różniczkowych. Kolejnym przykładem może być publikacja \cite{arias2011variational}, w której autorzy proponują model nielokalny wyznaczający nieznany obszar obrazu wykorzystując rachunek wariacyjny, połączony ze zdefiniowaną metryką wyznaczającą odległości pomiędzy rozpatrywanymi fragmentami obrazu. \\
 Większość metod wmalowywania opisanych w literaturze opiera się na algorytmach kontynuujących strukturę, geometrię bądź teksturę obrazu. Modele bazujące na geometrii i strukturze w uogólnieniu generują efekt uboczny w postaci braku kontynuacji tekstur, sprawiających wrażenie rozmytego obrazu. Do algorytmów broniących się przed efektem rozmycia można zaliczyć takie, w których wyznaczeniu konkretnego miejsca w nieznanym obszarze może towarzyszyć przebadanie całego zbioru punktów niemodyfikowanej części obrazu. Stąd metody kontynuujące tekstury w większości uważa się za metody nielokalne.
 \chapter{Równania mechaniki płynu.}
 \label{chap:navierstokes}
@@ -221,26 +222,31 @@ W celu dokładnego zaprezentowania idei wmalowywania w oparciu o równanie Navie
 \begin{equation}
 V \nabla V \mathrm{+} \frac{dV}{dt} = - \frac{\mathrm{1}}{q}\nabla p\mathrm{+}F \mathrm{+}\nu {\nabla }^{\mathrm{2}} V
 \label{NavierStokesEquation}
+,
 \end{equation}
 \begin{equation}
-\mathrm{V=\ (-}\frac{\mathrm{\partial }\mathrm{\Psi }}{\mathrm{\partial }\mathrm{y}},\frac{\mathrm{\partial }\mathrm{\Psi }}{\mathrm{\partial }\mathrm{x}}\mathrm{)}
+V = \left( -\frac{\partial\Psi}{\partial y},\frac{\partial \Psi}{\partial x} \right)
 \label{LiquidVelociy}
+,
 \end{equation}
 gdzie $V$ oznacza prędkość lokalną, $t$ chwilę czasu, $q$ gęstość lokalną, $p$ ciśnienie lokalne, $F$ siłę zewnętrzną działającą lokalnie na ciecz, $\nu$ lepkość kinematyczną lokalną. $\mathit{\Psi}$ oznacza linię prądu będącą ciągłą linią w polu prędkości płynu, poprowadzoną
 stycznie do wektorów prędkości w danej chwili. Człon $V\nabla V$ odpowiada konwekcji lokalnego pędu wraz z ruchem cieczy, $\frac{1}{q}\nabla p$ wpływowi sił ciśnieniowych na zmianę pędu (kompensuje niezerową konwekcję),  $F$ odpowiada sile zewnętrznej działającej na ciecz (np. grawitację) natomiast $\nu {\nabla }^2V\ $ odpowiada dyssypacji pędu cieczy od tarcia pomiędzy cząstkami. Traktując płyn jako nieściśliwy ($q \leftarrow \infty $)  oraz pomijając działanie sił zewnętrznych ($F=0$)  równanie \eqref{NavierStokesEquation} możemy uprościć do postaci:
 \begin{equation}
  V\nabla V+\frac{dV}{dt}=\nu {\nabla }^2V
 \label{NavierStokesEquationShort}
+.
 \end{equation}
 Dokonując obustronnej rotacji równania \eqref{NavierStokesEquation} otrzymujemy równanie w zależności od wirowości (zgodnie z \cite{StreamfuntionVorticityForm})
 \begin{equation}
 V\nabla \omega \mathrm{+}\frac{d\omega }{dt}\mathrm{=}\nu {\nabla }^{\mathrm{2}}V
 \label{NavierStokesEquationVorticity}
+,
 \end{equation}
 przy czym wirowość określa się wzorem:
 \begin{equation}
 \omega =\nabla \times V
 \label{Vorticity}
+.
 \end{equation}
 Niech $I$ reprezentuje obraz cyfrowy będący macierzą o rozmiarze $m \mathrm{\times} n$, \cite{ebrahimi2012navier}. Wtedy $I_{i,j}$ zawiera wartość dodatnią całkowitą z przedziału od 0 do 255, stanowiącą informację o poziomie jasności danego piksela z obrazu. Wartość 0 opowiada odcieniowi czarnemu, natomiast 255 odcieniowi czystemu białemu. Niech D stanowi zbiór indeksów $(i,j)\ \in \ \left\{1,2\dots ,m\right\} \mathrm{\times}$ $\left\{1,2\dots ,n\right\}$. Obraz $I$ wtedy można traktować jako funkcję $I:D\to R$. \\
 W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomiędzy wirowością a gładkością obrazu. Dokładniej przedstawia to \autoref{tab1}
@@ -255,7 +261,7 @@ W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomięd
 		& Linia prądu $\ \mathit{\Psi}$ &  Jasność obrazu $I$ \\ \hline
 	
 		& Prędkość płynu $V = {\mathrm{\nabla }}^{\bot }\mathit{\Psi} = [u, v]$  & Kierunek izotop $V$ = ${\mathrm{\nabla }}^{\bot }I = [u, v]$ \\ \hline
-		& Wirowość $\omega =\ {\mathrm{\nabla }}^2\mathit{\Psi}$ & gładkość $\omega =\ {\mathrm{\nabla }}^2I$ \\ \hline
+		& Wirowość $\omega =\ {\mathrm{\nabla }}^2\mathit{\Psi}$ & Gładkość $\omega =\ {\mathrm{\nabla }}^2I$ \\ \hline
 		
 		& Lepkość płynu $\nu $ & Parametr dyfuzji anizotropowej $\nu $ \\
 	\hline
@@ -263,128 +269,141 @@ W 2000 roku Bertalmio w \cite{BertalmioNavierStokes} wprowadza analogię pomięd
 	\caption{przekształcenie zmiennych w zagadnieniu wmalowywnia obrazu.}
 	\label{tab1}
 \end{table}
-gdzie ${\nabla }^{\bot }=(\frac{\partial }{\partial y},\frac{\partial }{\partial x})$.
-Niech $\mathit{\Omega}\subset D$ stanowi wypełniany obszar obrazu (maskę). W wyniku rozwiązania dyskretnego równania Naviera-Stokesa w obszarze maski z warunkami brzegowymi zdefiniowanymi jako jasność pikseli sąsiadujących z obszarem maski uzyskuje się kontynuację linii o podobnej jasności (izolinii) w głąb odrestaurowywanego obszaru zgodnie z \autoref{3_fig1}.  Matematycznie kierunek izolinii jasności obrazu wyznacza ${\nabla }^{\bot }I$. W oparciu o \autoref{tab1} oraz równanie  \eqref{NavierStokesEquationVorticity} zagadnienia wmalowywania można sformułować jako problem stabilnego rozwiązania następującego równania różniczkowego:
+gdzie ${\nabla }^{\bot }=\left(\frac{\partial }{\partial y},\frac{\partial }{\partial x}\right)$.
+Niech $\mathit{\Omega}\subset D$ stanowi wypełniany obszar obrazu (maskę). W wyniku rozwiązania dyskretnego równania Naviera-Stokesa w obszarze maski z warunkami brzegowymi zdefiniowanymi jako jasność pikseli sąsiadujących z obszarem maski uzyskuje się kontynuację linii o podobnej jasności (izolinii) w głąb odrestaurowywanego obszaru zgodnie z \autoref{3_fig1}.  Matematycznie kierunek izolinii jasności obrazu wyznacza ${\nabla }^{\bot }I$. W oparciu o \autoref{tab1} oraz równanie  \eqref{NavierStokesEquationVorticity} wyciągamy wniosek, że zagadnienie wmalowywania można sformułować jako problem stabilnego rozwiązania następującego równania różniczkowego:
 \begin{equation}
-{\mathrm{(}\mathrm{\nabla }}^{\mathrm{\bot }}I\mathrm{)}\mathrm{\cdot }\nabla {\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{)+}\frac{d{\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{)}}{dt}\mathrm{=}\nu \mathrm{\nabla }\mathrm{(}g\mathrm{(}\nabla {\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{))}\nabla {\mathrm{(}\mathrm{\nabla }}^{\mathrm{2}}I\mathrm{))} 
+\left( \nabla ^ \bot I \right) \cdot \nabla \left(\nabla^{2} I \right) +\frac{d\left( \nabla ^{2}I\right)}{\mathrm{d}t} = \nu \nabla \Big[ g \Big( \nabla \left(\nabla ^2 I \right) \Big) \nabla \left( \nabla^2 I \right) \Big]
 \label{NavierStokesInpainting}
+.
 \end{equation}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.3]{rysunki/3_fig1}
-	\caption{Propagacja jasności obrazu wgłąb nieznanego obszaru.}
+	\caption{Propagacja jasności obrazu wgłąb nieznanego obszaru. Rysunek autorski.}
 	\label{3_fig1}
 \end{figure}
-W równaniu \eqref{NavierStokesInpainting} człon odpowiedzialny za tarcie pomiędzy cząstkami płynu $\nu {\nabla }^2V\ $ został zastąpiony dyfuzją anizotropową, która w kontekście przetwarzania obrazów pierwszy raz wprowadzona została przez Perona i Malika w 1987 roku \cite{perona1990scale}. Dyfuzja anizotropowa ma znaczny wpływ na zachowanie krawędzi obrazu oraz poprawę jego ostrości. Za dyfuzję anizotropową odpowiada współczynnik $g$, który przedstawiany jest w różnych postaciach funkcji przewodności. W publikacji \cite{au2001image} autorzy wykorzystują postać:
+W równaniu \eqref{NavierStokesInpainting} człon odpowiedzialny za tarcie pomiędzy cząstkami płynu $\nu {\nabla }^2V\ $ został zastąpiony dyfuzją anizotropową, która w kontekście przetwarzania obrazów pierwszy raz wprowadzona została przez Perona i Malika w 1987 roku \cite{perona1990scale}.
+Dyfuzja anizotropowa ma znaczny wpływ na zachowanie krawędzi obrazu oraz poprawę jego ostrości. Za dyfuzję anizotropową odpowiada współczynnik $g$, który przedstawiany jest w różnych postaciach funkcji przewodności. W publikacji \cite{au2001image} autorzy wykorzystują postać:
 \begin{equation}
 g\left(s\right)=\frac{1}{1+\alpha \left|s\right|}
+,
 \end{equation}
-gdzie $\alpha\ $, $K$ oznacza wcześniej zdefiniowane parametry dyfuzji (stałe), ${\mathrm{\nabla }}^{\bot }=({-\partial }_y,{\partial }_x)$. 
+gdzie $\alpha$ oznacza wcześniej zdefiniowane parametry dyfuzji (stałe), ${\mathrm{\nabla }}^{\bot }=({-\partial }_y,{\partial }_x)$. 
 Dyskretne rozwiązanie równania \eqref{NavierStokesInpainting} jest analogiczne do dyskretnego rozwiązania przepływu płynu w przestrzeni $2D$. W tym celu należy wprowadzić chwile dyskretne $t=n\cdot \Delta t$, gdzie $n=\left\{1,2,3,\dots ,N\right\}$, $\Delta t$ wartość przyrostu czasu pomiędzy dyskretnymi chwilami $n$ i $n+1$, $N$ moment osiągnięcia stanu ustalonego, matematycznie przedstawianego jako:
 \begin{equation}
 \frac{\partial I}{\partial t}\mathrm{+}{\mathrm{\nabla }}^{\mathrm{\bot }}I\mathrm{\nabla }\mathrm{\Delta }I\mathrm{\ }\mathrm{\cong }\mathrm{0}
 \label{NavierStokesStability}
+.
 \end{equation}
-Warto zauważyć, że człon ${\mathrm{\nabla }}^{\bot }I$ w równaniu \eqref{NavierStokesStability} odpowiada kierunkowi linii tworzonej przez punkty o podobnej jasności, natomiast $\mathrm{\nabla }\Delta I$ to kierunek największej zmiany gładkości obrazu. Jeśli wektory są do siebie prostopadłe  iloczyn skalarny wynosi 0 i przedstawia stan stabilny. 
+Warto zauważyć, że człon ${\mathrm{\nabla }}^{\bot }I$ w równaniu \eqref{NavierStokesStability} odpowiada kierunkowi linii tworzonej przez punkty o podobnej jasności, natomiast $\mathrm{\nabla }\Delta I$ to kierunek największej zmiany gładkości obrazu. Jeśli wektory są do siebie prostopadłe to iloczyn skalarny wynosi 0 i przedstawia stan stabilny. 
 W celu dokładnej analizy dyskretyzacji równanie \eqref{NavierStokesEquationVorticity} zostanie rozdzielone na dwa podrównania:
 \begin{equation}
-\frac{d{\mathrm{(}\mathrm{\nabla }}^2I)}{dt}=-{\mathrm{(}\mathrm{\nabla }}^{\bot }I)\cdot \nabla {\mathrm{(}\mathrm{\nabla }}^2I)+\left\{ad\right\}
+\frac{\mathrm{d}{\mathrm{(}\mathrm{\nabla }}^2I)}{\mathrm{d}t}=-{\mathrm{(}\mathrm{\nabla }}^{\bot }I)\cdot \nabla {\mathrm{(}\mathrm{\nabla }}^2I)+\left\{ad\right\}
 \label{NavierDiffAdv}
+,
 \end{equation}
 oraz
 \begin{equation}
-{ad}=\nu \mathrm{\nabla }(g(\nabla {\mathrm{(}\mathrm{\nabla }}^2I))\nabla {\mathrm{(}\mathrm{\nabla }}^2I))
+{ad}=\nu \nabla \Big[ \nabla 
+\Big(\mathrm{\nabla }^2I)\Big)\nabla {\mathrm{(}\mathrm{\nabla }}^2I)\Big]
 \label{NavierAdv}
+.
 \end{equation}
-Rozwiązanie powyższych równań dokonywane będzie na siatce obliczeniowej typu Eulera, a wszystkie wartości wyznaczanych zmiennych będą znajdować się w centrach komórek zdefiniowanych jako konkretne piksele obrazu, zgodnie z \autoref{3_fig1} 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=1.2]{rysunki/fig2}
-	\caption{Przykłady obrazów poddanych operacji wmalowywania.}
-	\label{3_fig2}
-\end{figure}
+Rozwiązanie powyższych równań dokonywane będzie na siatce obliczeniowej typu Eulera, a wszystkie wartości wyznaczanych zmiennych będą znajdować się w centrach komórek zdefiniowanych jako konkretne piksele obrazu.
+\begin{longtable}{ ||c|c|c|| } 
+ \hline \hline
+ $i-1, j-1$ & $i-1, j$ & $i-1, j+1$ \\ \hline
+ $i, j-1$ & $i, j$ & $i, j+1$ \\ \hline
+ $i+1, j+1$ & $i+1, j$ & $i+1, j+1$ \\ \hline \hline
+\caption{Współrzędne komórek siatki obliczeniowej.}
+\end{longtable}
 Równanie \eqref{NavierDiffAdv} to równanie różniczkowe cząstkowe typu parabolicznego. Równanie to  można rozwiązać w sposób przybliżony używając schematu różnicy centralnej bądź schematu różnicy do przodu. W przypadku równania parabolicznego oba schematy dają stabilne rozwiązanie. W celu ułatwienia dalszych rozważań wprowadzono funkcję $f$ określoną w centrach siatki, z dolnymi indeksami wskazującymi na konkretne miejsce w siatce. Korzystając z rozwinięcia w szereg Taylora możemy gradient funkcji $f$ w punkcie $(i,j)$ przybliżyć następującym wzorem:
 \begin{equation}
 \nabla f_{i,j}=\left[\ {\frac{\partial f}{\partial x}\bigg |}_{i,j,} \ {\frac{\partial f}{\partial y}\bigg |}_{i,j}\right]
 \label{gradF}
+,
 \end{equation}
 gdzie:
 \begin{equation}
 {\frac{\partial f}{\partial x}} {\bigg |}_{i,j}=\frac{f_{i+1,j}+f_{i-1,j}}{2\Delta x}
 \label{dfdx}
+,
 \end{equation}
-Analogicznie:
+i analogicznie:
 \begin{equation}
 {\frac{\partial f}{\partial y}} {\bigg |}_{i,j}=\frac{f_{i,j+1}+f_{i,j-1}}{2\Delta y}
 \label{dfdy}
+.
 \end{equation}
 Na podstawie wzorów \eqref{gradF} - \eqref{dfdy} składowe wektora ${\mathrm{\nabla }}^{\bot }I$, czyli kierunku, w którym należy propagować gładkość obrazu ${\mathrm{\nabla }}^2I$ wyznacza się z zależności:
 \begin{equation}
 u_{i,j}=\frac{I_{i,j+1}+I_{i,j-1}}{2\Delta y} 
 \label{u}
+,
 \end{equation}
-Oraz
 \begin{equation}
  v_{i,j}=-\frac{I_{i+1,j}+I_{i-1,j}}{2\Delta x}
 \label{v}
+,
 \end{equation}
 przy czym:
 \begin{equation}\\
-{\mathrm{\nabla }}^{\bot }I=|-u,v|
+{\mathrm{\nabla }}^{\bot }I=\left[-u,v\right]
 \label{gradI}
+.
 \end{equation}
 Jeśli zastosujemy pięciopunktowy analog różnicowy w metodzie różnic skończonych to operator Laplace’a dla przyjętej siatki Eulera można przybliżyć następującym wzorem (przy założeniu, że $\Delta x=\ \Delta y$):
 \begin{align}
 \begin{aligned}
 {\mathrm{\nabla }}^2f_{i,j} &= \Delta f_{i,j}=\\[1ex]
 &={\frac{{\partial }^2f}{\partial x^2}}\bigg|_{i,j}+{\frac{{\partial }^2f}{\partial y^2}}\bigg|_{i,j}=\\
-&=\frac{f_{i+1,j+1}+f_{i-1,j+1}+f_{i+1,j-1}+f_{i-1,j-1}-4f_{i,j}}{\Delta x^2}\ 
+&=\frac{f_{i+1,j+1}+f_{i-1,j+1}+f_{i+1,j-1}+f_{i-1,j-1}-4f_{i,j}}{\Delta x^2} .
 \end{aligned}
 \label{LaplaceOpr}
 \end{align}
-Korzystając z wyznaczonych powyżej zależności na wartości $u$ oraz $v$ wartość gładkości obrazu $\omega =\ {\mathrm{\nabla }}^2I$ można przedstawić w postaci: 
+Jeśli skorzystamy z wyznaczonych wcześniej zależności na wartości $u$ oraz $v$ to wartość gładkości obrazu $\omega =\ {\mathrm{\nabla }}^2I$ można przedstawić w postaci: 
 \begin{equation}
 \Delta {I}\big|_{i,j}=\ {\frac{\partial v}{\partial x}}\bigg|_{i,j,}-\ {\frac{\partial u}{\partial y}}\bigg|_{i,j}
 \label{discreteVorticity}
+.
 \end{equation}
 Podobnie jak w przypadku liczenia pochodnej w dziedzinie obrazu pierwszą pochodną w dziedzinie czasu przybliża się rozwinięciem w szereg Taylora. Niech indeks górny oznacza konkretną chwilę czasową. Wtedy wartość pochodnej wynosi:
 \begin{equation}
 \ {{\frac{\partial f}{\partial t}}\bigg|^n_{i,j}=\ \frac{f^{n+1}_{i,j}-\ f^n_{i,j}}{\Delta t}}
 \label{dfdt}
+.
 \end{equation}
-Ostatecznie rozwiązanie dyskretnego równania parabolicznego \eqref{NavierDiffAdv} , gdzie $\Delta x= \Delta y=h$, z wykorzystaniem schematu centralnego ma postać:
+Ostatecznie rozwiązanie dyskretnego równania parabolicznego \eqref{NavierDiffAdv} , gdzie $\Delta x= \Delta y=h$, z wykorzystaniem \textbf{schematu centralnego} ma postać:
 \begin{align}
-{\omega }^{n+1}_{i,j} &= {\omega }^n_{i,j}+\Delta t\biggl[
+\omega ^{n+1}_{i,j} &= {\omega }^n_{i,j}+\Delta t\biggl[
 -\left(\frac{I_{i,j+1}+I_{i,j-1}}{2h}\right)\left(\frac{{\omega }_{i+1,j}
 +{\omega }_{i-1,j}}{2h}\right)+\notag\\ 
-&\qquad+ \left(\frac{I_{i+1,j}+I_{i-1,j}}{2h}\right)\left(\frac{{\omega }_{i,j+1}+{\omega }_{i,j-1}}{2h}\right)+{\left\{ad\right\}}_{i,j} \biggr]
+&\qquad+ \left(\frac{I_{i+1,j}+I_{i-1,j}}{2h}\right)\left(\frac{{\omega }_{i,j+1}+{\omega }_{i,j-1}}{2h}\right)+{\left\{ad\right\}}_{i,j} \biggr].
 \label{NavierDiffAdvCen}
 \end{align}
-Rozwiązanie równania \eqref{NavierDiffAdv} można przedstawić również w drugiej postaci wykorzystującej schemat „do przodu”, charakteryzujący się wyznaczaniem wartości pochodnej wirowości w zależności od wyznaczonego kierunku ${\mathrm{(}\mathrm{\nabla }}^{\bot }I)$.  Wtedy równanie \eqref{NavierDiffAdvCen} przyjmuje postać:
+Rozwiązanie równania \eqref{NavierDiffAdv} można przedstawić również w drugiej postaci wykorzystującej schemat „\textbf{do przodu}”, charakteryzujący się wyznaczaniem wartości pochodnej wirowości w zależności od wyznaczonego kierunku ${\mathrm{(}\mathrm{\nabla }}^{\bot }I)$.  Wtedy równanie \eqref{NavierDiffAdvCen} przyjmuje postać:
 \begin{align}
-\fontsize{11}
-{\omega }^{n+1}_{i,j} &= {\omega }^n_{i,j}+\Delta t\biggl[
+\fontsize{11} \omega
+\omega^{n+1}_{i,j} &= {\omega }^n_{i,j}+\Delta t\biggl[
 -\left(\frac{I_{i,j+1}+I_{i,j-1}}{2h}\right)\left(\frac{{\omega }_{k,j}+{\omega }_{i,j}}{2h}\right)+ \notag\\ 
-&\qquad+ \left(\frac{I_{i+1,j}+I_{i-1,j}}{2h}\right)\left(\frac{{\omega }_{i,l}+{\omega }_{i,j}}{2h}\right)+{\left\{ad\right\}}_{i,j} \biggr]
+&\qquad+ \left(\frac{I_{i+1,j}+I_{i-1,j}}{2h}\right)\left(\frac{{\omega }_{i,l}+{\omega }_{i,j}}{2h}\right)+{\left\{ad\right\}}_{i,j} \biggr],
 \label{NavierDiffAdvFor}
 \end{align}
 gdzie:
 \begin{align}
-k = i+sgn\left(u^n\right) \\
-l = j+sgn(u^n)
+k = i+sgn\left(u^n\right), \\
+l = j+sgn(u^n).
 \end{align}
-\par
 Rozwiązanie równania \eqref{NavierAdv}, w którym zastąpiono postać zwykłej dyfuzji przez wyrażenie $\nu {\nabla }^2V$ wymaga uważniejszego potraktowania ze względu na większą podatność na niestabilność implementowanych metod dyskretyzacji. Równanie to można przedstawić w postaci dywergencji pola wektorowego uzyskanego w wyniku wyliczenia gradientu wirowości z uwzględnionym współczynnikiem dyfuzji anizotropowej:
 \begin{align}
 \begin{aligned}
 \left\{ad\right\} 
-&= \nu \mathrm{\nabla }(g(\nabla {\mathrm{(}\mathrm{\nabla }}^2I))\nabla {\mathrm{(}\mathrm{\nabla }}^2I)= \\[1ex]
-&= \nu \mathrm{\nabla }\mathrm{\cdot}(g(|\nabla \omega |)\nabla \omega )=\\[1ex]
-&= {\partial }_x\left(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega \right)+{\partial }_y\left(g\left(\left|\nabla \omega \right|\right){\partial }_y\omega \right)
+&= \nu \nabla\Big[g\Big(\nabla {(\mathrm{\nabla }}^2I)\Big)\nabla {\mathrm{(}\mathrm{\nabla }}^2I)\Big]= \\[1ex]
+&= \nu \nabla \cdot \Big[g\big(|\nabla \omega|\big)\nabla \omega \Big]=\\[1ex]
+&= \partial _x \Big(g\big(\left|\nabla \omega \right|\big){\partial }_x\omega \Big)+ \partial_y \Big(g\big(\left|\nabla \omega \right|\big){\partial }_y\omega \Big),
 \end{aligned}
 \label{Anisotropic}
 \end{align}
-\eqref{Anisotropic}
 gdzie: ${\partial }_x=\frac{\partial }{\partial x}$ oraz analogicznie: ${\partial }_y=\frac{\partial }{\partial y}$.
 Zgodnie z \cite{ebrahimi2012navier} równanie można rozwiązać w następujących krokach:
 Korzystając z zależności \eqref{dfdx} i \eqref{dfdy} należy wyznaczyć wartości ${\frac{d\omega }{dx}}\big|_{i,j}$ oraz ${\frac{d\omega }{dy}}\big|_{i,j}$
@@ -392,37 +411,42 @@ Korzystając z obliczonych wartości należy następnie obliczyć moduł wektora
 \begin{equation}
 {\left|\mathrm{\nabla }\omega \right|}_{i,j}=\ \sqrt{\frac{\partial \omega }{\partial x}\bigg|^2_{i,j}+\frac{\partial \omega }{\partial y}\bigg|^2_{i,j}}
 \label{magnitudedw}
+.
 \end{equation}
-Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych powyżej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} możemy wyliczyć wartość $\{ad_{i,j}\} $:
+Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\mathrm{\nabla }\omega \right|}_{i,j}\right)}$ wykorzystując \eqref{NavierStokesInpainting}. Korzystając z wartości wyznaczonych wcześniej oraz ponownie z zależności \eqref{dfdx} i \eqref{dfdy} możemy wyliczyć wartość $\{ad_{i,j}\} $:
 \begin{align}
 \{ad_{i,j}\} &= \partial_x \left( g(\left| \nabla\omega \right|_{i,j}) \cdot \partial_x \omega \big|_{i,j} \right) \bigg|_{i,j} \notag +\\[1ex]
-&+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}
+&+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}.
 \label{discreteAnisotropic}
 \end{align}
-Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla }}^2I$ wykorzystywanych do obliczeń \eqref{NavierDiffAdv} i \eqref{NavierAdv} w każdej kolejnej chwili czasu $n$, konieczna jest znajomość obrazu $I^n$. W związku z tym równocześnie z równaniem \eqref{Vorticity} należy rozwiązywać następujące niejednorodne równanie różniczkowe cząstkowe liniowe drugiego rzędu.
+Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla }}^2I$ wykorzystywanych do obliczeń \eqref{NavierDiffAdv} i \eqref{NavierAdv} w każdej kolejnej chwili czasu (iteracji) $n$, konieczna jest znajomość obrazu $I^n$. W związku z tym równocześnie z równaniem \eqref{Vorticity} należy rozwiązywać następujące niejednorodne równanie różniczkowe cząstkowe liniowe drugiego rzędu.
 \begin{equation}
 \Delta I^n={\omega }^n
 \label{Poisson}
+.
 \end{equation}
 Dla przestrzeni dwuwymiarowej równanie to przyjmuje następującą postać:
 \begin{equation}
-\frac{{\partial }^2I}{\partial x^2}+\frac{{\partial }^2I}{\partial y^2}=\ \omega
+\frac{{{\partial }^2I}^n}{\partial x^2}+\frac{{{\partial }^2I}^n}{\partial y^2}=\ \omega^n
 \label{Poisson2D}
+.
 \end{equation}
 W celu przybliżenia drugiej pochodnej funkcji $f$ w punkcie $(i,j)$ należy rozwinąć funkcję $f$ w dwa szeregi Taylora względem punktu $(i+1,j)$ oraz $(i-1,j)$. Po rozwiązaniu sumy dwóch rozwinięć względem $\frac{{\partial }^2f}{\partial x^2}$ otrzymuje się następujący sposób dyskretyzacji drugiej pochodnej:
 \begin{equation}
 {\frac{{\partial }^2f}{\partial x^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i+1,j}-2f_{i,j}+f_{i-1,j}}{\Delta x^2}
 \label{d2fdx2}
+,
 \end{equation}
-Analogicznie:
 \begin{equation}
 {\frac{{\partial }^2f}{\partial y^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i,j+1}-2f_{i,j}+f_{i,j-1}}{\Delta y^2}
 \label{d2fdy2}
+.
 \end{equation}
 Jeśli skorzystamy z zależności \eqref{d2fdx2} oraz \eqref{d2fdy2} to równanie \eqref{Poisson} w punkcie $(i,j)$ przyjmuje postać pięciopunktowego analogu różnicowego operatora $\Delta $ ($\Delta x=\ \Delta y=h)$:
 \begin{equation}
 I_{i+1,j}+I_{i-1,j}+I_{i,j+1}+I_{i,j-1}-4I_{i,j}=h^2{\omega }_{i,j}
 \label{Laplace}
+.
 \end{equation}
 Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje nasz obraz $I$, $B$ gładkość obrazu, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele różnych metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy 
 a-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując podejście SOR – czyli metodę sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
@@ -434,151 +458,153 @@ I^{n+1}_{i,j}
 \end{aligned}
 \label{DiscreteSOR}
 \end{align}
-Metoda ta w swoim równaniu przyjmuje parametr wagowy $\beta$ odpowiadający za zbieżność algorytmu i musi zawierać się w przedziale $(0,2)$ \cite{neumann1981kahan}. Według informacji podanych w  \cite{blacksuccessive} parametr ten powinno przyjmować się zgodnie z zależnością:
+Metoda ta w swoim równaniu ma parametr wagowy $\beta$ odpowiadający za zbieżność algorytmu i musi on zawierać się w przedziale $(0,2)$ \cite{neumann1981kahan}. Według informacji podanych w  \cite{blacksuccessive} parametr ten powinno przyjmować się zgodnie z zależnością:
 \begin{equation}
 {\omega }_{opt}=2{\left(1+\frac{\pi }{N}\right)}^{-1}
 \label{BetaChoose}
+.
 \end{equation}
 gdzie $N$ to liczba kolumn przyjętej siatki obliczeniowej. 
 \par
-Operacje wmalowywania bardzo często wykonywane są w punktach maski tworzących nieregularne kształty, mogących znajdować się w różnych częściach obrazu. Stąd powyżej przedstawiony schemat obliczeń wykonywany jest dla wszystkich pikseli obrazu. Po każdej iteracji uzyskane wartości $I^{n+1}$ w znanych punktach przepisywane są z oryginalnego obrazu $I^{0}$, zgodnie z zależnością:
+Operacje wmalowywania bardzo często wykonywane są w punktach maski tworzących nieregularne kształty, mogących znajdować się w różnych częściach obrazu. Dlatego też wcześniej przedstawiony schemat obliczeń wykonywany jest dla wszystkich pikseli obrazu. Po każdej iteracji uzyskane wartości $I^{n+1}$ w znanych punktach przepisywane są z oryginalnego obrazu $I^{0}$, zgodnie z zależnością:
 \begin{equation}
-I^{n+1}(D/\mathrm{\Omega }\mathrm{)\ }\ ={\ I}^0(D/\mathrm{\Omega }\mathrm{)}
+I^{n+1}(D/\mathrm{\Omega }\mathrm{)\ }\ ={\ I}^0(D/\mathrm{\Omega }\mathrm{)}.
 \label{retrieveMask}
 \end{equation}
-\par
 Podsumowując, w celu wyznaczenia nieznanych wartości obrazu w punktach zdefiniowanych przez maskę należy powtarzać następujące kroki do uzyskania stanu ustalonego:
 \begin{enumerate}
 \item
-Rozwiązać równanie \eqref{discreteAnisotropic} 
+Rozwiązać równanie \eqref{discreteAnisotropic}.
 \item
-Na podstawie równania \eqref{NavierDiffAdvCen} zamiennie z \eqref{NavierDiffAdvFor} wyznaczyć wartości $\omega_{i,j}^{n+1}$ dla każdego punktu $(i,j)$ 
+Na podstawie równania \eqref{NavierDiffAdvCen} zamiennie z \eqref{NavierDiffAdvFor} wyznaczyć wartości $\omega_{i,j}^{n+1}$ dla każdego punktu $(i,j)$.
 \item
 Korzystając z \eqref{DiscreteSOR} wyznaczyć jasność każdego piksela $I_{i,j}^{n+1}$.
 \item
-Do uzyskanego obrazu w punkcie 3 przepisać znane wartości z obrazu oryginalnego
+Do uzyskanego obrazu w punkcie 3 przepisać znane wartości z obrazu oryginalnego.
 \end{enumerate}
-Powyższy algorytm przedstawiono dla obrazów w odcieniach szarości $I:D\to R$. W przypadku obrazów kolorowych, zdefiniowanych funkcją będącą przekształceniem w pole wektorowe $[R,G,B]$, czyli $I:D\to R^3$ metodę stosuje się oddzielnie dla każdej z warstwy. Zgodnie z propozycją przedstawioną w \cite{fishelov2006image} obraz można również przekształcić w poprzedzającym algorytm kroku do współrzędnych sferycznych (CIELab) $\left[I_{1},I_{2},I_{3} \right]$ zgodnie z zależnościami:
+Powyższy algorytm przedstawiono dla obrazów w odcieniach szarości $I:D\to R$. W przypadku obrazów kolorowych, zdefiniowanych funkcją będącą przekształceniem w pole wektorowe $[R,G,B]$, czyli $I:D\to R^3$ metodę stosuje się oddzielnie dla każdej warstwy. Zgodnie z propozycją przedstawioną w \cite{fishelov2006image} obraz można również przekształcić w poprzedzającym algorytm kroku do współrzędnych sferycznych (CIELab) $\left[I_{1},I_{2},I_{3} \right]$ zgodnie z zależnościami:
 \begin{equation}
 {I_{1_{i,j}}=r}_{i,j}=\ \sqrt{R^2_{i,j}+G^2_{i,j}+B^2_{i,j}}
 \label{TIone}
+,
 \end{equation}
 \begin{equation}
 I_{2_{i,j}}=\ {\mathrm{sin} {\mathrm{\Theta }}_{i,j}\ }=\ {\mathrm{sin} {{\mathrm{tan}}^{-1} \frac{G_{i,j}}{R_{i,j}}\ }\ } 
 \label{TItwo}
+,
 \end{equation}
 \begin{equation}
 I_{3_{i,j}}=\ {\mathrm{sin} {\phi }_{i,j}\ }=\ {\mathrm{sin} {{\mathrm{cos}}^{-1} \frac{B_{i,j}}{r_{i,j}}\ }\ } 
 \label{TIthree}
+.
 \end{equation}
-Następnie dysponując składowymi $I_1$, $I_2$, $I_3$ wyznaczonymi z powyższych zależności, dla każdego z nich oddzielnie wykonujemy wcześniej opisane iteracje. W celu odwrotnego przekształcenia $\left[I_1,I_2,I_3 \right]\to\left[R,G,B\right]$ wystarczy przeprowadzić następujące obliczenia:
+Następnie dysponując składowymi $I_1$, $I_2$, $I_3$ wyznaczonymi z powyższych zależności, dla każdego z nich oddzielnie wykonujemy wcześniej opisane iteracje. W celu wykonania odwrotnego przekształcenia $\left[I_1,I_2,I_3 \right]\to\left[R,G,B\right]$ wystarczy przeprowadzić następujące obliczenia:
 \begin{equation}
  B_{i,j}=\ r_{i,j}{\mathrm{cos} {\mathrm{\Theta }}_{\mathrm{i,j}}\ }{\mathrm{cos} {\phi }_{\mathrm{i,j}}\ }
 \label{TInvIone}
+,
 \end{equation}
 \begin{equation}
 R_{i,j}=\ r_{i,j}{\mathrm{cos} {\mathrm{\Theta }}_{\mathrm{i,j}}\ }{\mathrm{sin} {\phi }_{\mathrm{i,j}}\ }
-\label{TInvItwo}
+\label{TInvItwo},
 \end{equation}
 \begin{equation}
 G_{i,j}=\ r_{i,j}{\mathrm{sin} {\theta }_{\mathrm{i,j}}\ } 
 \label{TInvIthree}
+.
 \end{equation}
 Operację wmalowywania można wykonać na pierwotnych składowych $[R,G,B]$ lecz matematyczna transformacja przestrzeni charakteryzuje się lepszymi właściwościami związanymi z postrzeganiem różnicy barw $\delta E$ przez ludzkie oko:
 \begin{equation}
 \Delta E=\ \sqrt{{\Delta I_1}^2+{\Delta I_2}^2+{\Delta I_3}^2}
 \label{deltaE}
+.
 \end{equation}
 \chapter{Metody oparte na procesie minimalizacji energii.}
 \section{Wmalowywanie struktury i tekstury obrazu.}\label{chap:StructureTextureNavierStokes}
 \subsection{Segmentacja obrazu na strukturę i teksturę.}
 Metoda jednoczesnego wmalowywania struktur i tekstur pierwszy raz przedstawiona została przez Bertalmio w 2003 roku w \cite{NavierStokesAndTexturePropagation}. Opiera się ona na wmalowywaniu struktury w oparciu o algorytm przedstawiony w artykule przy jednoczesnej propozycji prostej syntezy tekstury. Niech $I$ oznacza obraz $R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
 \begin{align}
-I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right) 
+I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right).
 \label{STRUCTURETEXTURE1}
 \end{align}
 uzyskaną na podstawie rozwiązania problemu minimalizacji energii:
 \begin{align} 
-{\mathop{\mathrm{min}}_{u} \Biggl\{E\left(u\right)=\int{\left|\mathrm{\nabla }u\right|+\lambda {\left|\left|v\right|\right|}^2_{L^2}}\Biggr\}\ }
+{\mathop{\mathrm{min}}_{u} \Biggl\{E\left(u\right)=\int{\left|\mathrm{\nabla }u\right|+\lambda {\left|\left|v\right|\right|}^2_{L^2}}\Biggr\}\ },
 \label{STRUCTURETEXTURE2}
 \end{align}
-gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni o wariacji ograniczonej oznaczanej $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i teksturę przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ to człon odpowiadający dokładności odwzorowania, a $\lambda $ stanowi wcześniej zdefiniowany parametr. Zgodnie z dowodem Mayera \cite{meyer2001oscillating} dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania składowej zmiennej $u$ reprezentującej odfiltrowany obraz oraz składowej zmiennej $v$ reprezentującej szumy i tekstury obrazu. Nasz problem segmentacji można przedstawić jako zagadnienie minimalizacji energii \cite{vese2003modeling}:
+gdzie: $\int{\left|\mathrm{\nabla }u\right|}$ stanowi funkcjonał z przestrzeni o wariacji ograniczonej oznaczanej $BV(R^2)$ pozwalający usunąć z oryginalnego obrazu szum i teksturę przy jednoczesnym zachowaniu głównych cech oraz ostrych krawędzi, ${\left|\left|v\right|\right|}^2_{L^2}$ to człon odpowiadający za dokładność odwzorowania, a $\lambda $ stanowi wcześniej zdefiniowany parametr. Zgodnie z dowodem Mayera \cite{meyer2001oscillating} dla odpowiednio małych wartości $\lambda $ problem minimalizacji prowadzi do uzyskania składowej zmiennej $u$ reprezentującej odfiltrowany obraz oraz składowej zmiennej $v$ reprezentującej szumy i tekstury obrazu. Nasz problem segmentacji można przedstawić jako zagadnienie minimalizacji energii \cite{vese2003modeling}:
 \begin{align}
 \begin{aligned} 
 \mathop{\mathrm{min}}_{u,g_1,g_2} \Biggl\{E &= \int{\left|\mathrm{\nabla }u\right| } \ + \\
 &+\lambda \int{\left|I-u-\partial_x g_1- \partial_y g_2 \right|}^2dxdy \ +\\
-&+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^\beta dxdy}\right]}^{\frac{1}{\beta}}\Biggr\}
+&+ \mu {\left[\int{{\sqrt{g^2_1+g^2_2}}^\beta dxdy}\right]}^{\frac{1}{\beta}}\Biggr\},
 \end{aligned}
 \end{align}
 gdzie:
 \begin{align}
-v=div(g),\ g=\left[ g_1,g_2 \right],\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\
+v=div(g),\ g=\left[ g_1,g_2 \right],\ g_1=-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|},\ g_2=-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}.
 \label{VG1G2}
 \end{align}
 Minimalizacja względem $u, g_1$ i $g_2$ w rezultacie prowadzi do równań Eulera-Lagrange'a \cite{vese2003modeling}:
 \begin{align}
-u=I-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+u=I-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right),
 \label{EL1}
 \end{align}
 \begin{align}
-{\mu H\left(g_1,g_2\right)g}_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
+{\mu H\left(g_1,g_2\right)g}_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right],
 \label{EL2}
 \end{align}
 \begin{align}
-\mu H\left(g_1,g_2\right)g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
+\mu H\left(g_1,g_2\right)g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right].
 \label{EL3}
 \end{align}
 gdzie $\mu$ stanowi predefiniowany parametr dyskretyzacji, natomiast $H\left(g_1,g_2\right)$ opisane jest wzorem:
 \begin{align}
-H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}}
+H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}}.
 \end{align}
 Formalnie, równanie Eulera-Lagrange'a uzyskane podczas minimalizacji energii \eqref{STRUCTURETEXTURE2} przyjmuje postać \cite{vese2003modeling}:
 \begin{align}
-u=I+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+u=I+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right).
 \label{uToInsert}
 \end{align}
-Pamiętając, że:
+Pamiętając, że $v = I -u$ podstawiając w miejsce $u$ zależność \eqref{uToInsert} otrzymujemy zależność
 \begin{align}
-v = I -u
-\end{align}
-i podstawiając w miejsce $u$ zależność \eqref{uToInsert} otrzymujemy zależność
-\begin{align}
-v=-\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+v=-\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right).
 \end{align}
 Korzystając z zależności \eqref{VG1G2} możemy łatwo zauważyć, że:
 \begin{align}
 \begin{aligned}
 g^2_1+g^2_2 & = 
 \left(-\frac{1}{2\lambda }\frac{u_x}{\left|\mathrm{\nabla }u\right|}\right)^2 +  \left(-\frac{1}{2\lambda }\frac{u_y}{\left|\mathrm{\nabla }u\right|}\right)^2 &=\\
-&= \frac{1}{2\lambda} \frac{u_x^2 + u_y^2 }{|\nabla u|^2} = \frac{1}{2\lambda} \frac{|\nabla u|^2}{|\nabla u|^2} = \frac{1}{2\lambda}
+&= \frac{1}{2\lambda} \frac{u_x^2 + u_y^2 }{|\nabla u|^2} = \frac{1}{2\lambda} \frac{|\nabla u|^2}{|\nabla u|^2} = \frac{1}{2\lambda}.
 \end{aligned}
 \end{align}
 Stąd:
 \begin{align}
-H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}} = \frac{1}{\sqrt{\frac{1}{2\lambda}}} = \sqrt{2\lambda}
+H\left(g_1,g_2\right)=\frac{1}{\sqrt{g^2_1+g^2_2}} = \frac{1}{\sqrt{\frac{1}{2\lambda}}} = \sqrt{2\lambda}.
 \end{align}
 Zatem równania \eqref{EL1}, \eqref{EL2} i \eqref{EL3} przyjmą postać: 
 \begin{align}
-u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right)
+u=I-u-{\partial }_xg_1-{\partial }_yg_2+\frac{1}{2\lambda }div\left(\frac{\mathrm{\nabla }u}{\left|\mathrm{\nabla }u\right|}\right),
 \label{EU}
 \end{align}
 \begin{align}
-\mu \sqrt{2\lambda }g_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right]
+\mu \sqrt{2\lambda }g_1=2\lambda \left[\frac{\partial }{{\partial }_x}\left(u-I\right)+{\partial }^2_{xx}g_1+{\partial }^2_{xy}g_2\right],
 \label{EG1}
 \end{align}
 \begin{align}
 \mu \sqrt{2\lambda }g_2=2\lambda \left[\frac{\partial }{{\partial }_y}\left(u-I\right)+{\partial }^2_{xy}g_1+{\partial }^2_{yy}g_2\right]
-\label{EG2}
+\label{EG2}.
 \end{align}
 Jako wartości początkowe tego iteracyjnego algorytmu można przyjąć:
 \begin{align}
-u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\right|},\ g_2=-\frac{1}{2\lambda }\frac{f_{\mathrm{y}}}{\left|\mathrm{\nabla }f\right|}
+u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\right|},\ g_2=-\frac{1}{2\lambda }\frac{f_{\mathrm{y}}}{\left|\mathrm{\nabla }f\right|}.
 \end{align}
 Następnie stosując zależności wyznaczania pochodnych \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz następującą metodę aproksymacji pochodnej drugiego stopnia:
 \begin{align}
 \begin{aligned} 
 {\partial }_{xy}g_1 \big|_{i,j} &\cong \frac{1}{2h^2} \bigg[2g_1\big|_{i,j}+g_1\big|_{i-1,j-1}+g_1\big|_{i+1,j+1}-g_1\big|_{i,\ j-1} -\\ 
-&-g_1\big|_{i-1,j}-g_1\big|_{i+1,j}-g_1\big|_{i,j+1}\bigg]
+&-g_1\big|_{i-1,j}-g_1\big|_{i+1,j}-g_1\big|_{i,j+1}\bigg],
 \end{aligned}
 \end{align}
 możemy przedstawić równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} w następującej postaci dyskretnej:
@@ -587,7 +613,7 @@ możemy przedstawić równania \eqref{EU}, \eqref{EG1} i \eqref{EG2} w następuj
 u^{n+1}\big|_{i,j} &= \left[\frac{1}{1 + \left(\frac{1}{2\lambda h^2}\right)\cdot \left(c_1\big|_{i,j}+c_2\big|_{i,j}+c_3\big|_{i,j}+c_4\big|_{i,j}\right)}\right]\bigcdot \\ 
 &\bigcdot \biggl[I\big|_{i,j}- \left(\frac{g^n_1\big|_{i+1,j} - g^n_1\big|_{i-1,j}}{2h}\right)- \left(\frac{g^n_2\big|_{i,j+1}-g^n_2\big|_{i,j-1}}{2h}\right) +\\ 
 &+\ \left(\frac{1}{2\lambda h^2}\right)\bigcdot \Bigl[c_1\big|_{i,j}\cdot u^n\big|_{i+1,j}+c_2\big|_{i,j}\cdot u^n\big|_{i-1,j} +\\
-&+c_3\big|_{i,j}\cdot \lambda \cdot {u}^n\big|_{i,j+1}+c_4\big|_{i,j}\cdot u^n\big|_{i,j-1}\Bigr]\biggr]
+&+c_3\big|_{i,j}\cdot \lambda \cdot {u}^n\big|_{i,j+1}+c_4\big|_{i,j}\cdot u^n\big|_{i,j-1}\Bigr]\biggr],
 \end{aligned}
 \end{align}
 \begin{align}
@@ -596,34 +622,35 @@ g^{n+1}_1\big|_{i,j} &= \left[\frac{2\lambda }{\mu \sqrt{2\lambda }+\ 4\frac{\la
 &+\frac{g_1\big|_{i+1,j}+g_1\big|_{i-1,j}}{h^2}\frac{1}{2h^2}\cdot \Bigl[2g^n_2\big|_{i,j}+ g^n_2\big|_{i-1,j-1} +\\ 
 &+ g^n_2\big|_{i+1,j+1}+
 g^n_2\big|_{i,j-1}-g^n_2\big|_{i-1,j}+g^n_2\big|_{i+1,j}-\\
-&-g^n_2\big|_{i,j+1}\Bigr]\Biggr]
+&-g^n_2\big|_{i,j+1}\Bigr]\Biggr],
 \end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
 g^{n+1}_2|_{i,j} &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambda }{2h}}\right]\bigcdot \Biggl[\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}-\frac{I\big|_{i,j+1}-I\big|_{i,j-1}}{2h}+\\ 
 &+\frac{g_2\big|_{i,j+1}+g_2\big|_{i,j-1}}{h^2}+\frac{1}{2h^2}\cdot \Bigl[2g^n_1\big|_{i,j}+ g^n_1\big|_{i-1,j-1}+ g^n_1\big|_{i+1,j+1} -\\
-&-\ g^n_1\big|_{i,j-1}-g^n_1\big|_{i-1,j}+g^n_1\big|_{i+1,j}- g^n_1\big|_{i,j+1}\Bigr]\Biggr]
+&-\ g^n_1\big|_{i,j-1}-g^n_1\big|_{i-1,j}+g^n_1\big|_{i+1,j}- g^n_1\big|_{i,j+1}\Bigr]\Biggr],
 \end{aligned}
 \end{align}
 przy czym:
 \begin{align}
 \begin{aligned}
-c^n_1\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}\right)}^2+\ \varepsilon }}
+c^n_1\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}\right)}^2+\ \varepsilon }},
 \end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-c^n_2\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i,j}-u^n\big|_{i-1,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i-1,j+1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ \varepsilon }}
+c^n_2\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i,j}-u^n\big|_{i-1,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i-1,j+1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ \varepsilon }},
 \end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-c^n_3\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i-1,j}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j}}{h}\right)}^2+\ \varepsilon }}\end{aligned}
+c^n_3\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i-1,j}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j}}{h}\right)}^2+\ \varepsilon }},
+\end{aligned}
 \end{align}
 \begin{align}
 \begin{aligned}
-c^n_4\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j-1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j}-u^n\big|_{i,j-1}}{h}\right)}^2+\ \varepsilon }}
+c^n_4\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j-1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j}-u^n\big|_{i,j-1}}{h}\right)}^2+\ \varepsilon }}.
 \end{aligned}
 \end{align}
 W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
@@ -648,16 +675,18 @@ Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego alg
 \end{enumerate}
 \section{Model NLCTV. (Non-local color total variation)}
 Pojęcie wariacji całkowitej funkcji $TV$ (total variation) w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin'a, Osher'a i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan'a i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie operatorów lokalnych nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
-Klasyczny model nielokalny wariacji całkowitej funkcji został intensywnie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego modelu nielokalnego wariacji całkowitej funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
-Zgodnie z oznaczeniami użytymi w poprzednim rozdziale $D$ stanowi dziedzinę obrazu. Wtedy obraz w odcieniach szarości możemy przedstawić jako wynik przekształcenia $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowany dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji możemy wyrazić zależnością:
+Klasyczny model nielokalny wariacji całkowitej funkcji został gruntownie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego modelu nielokalnego wariacji całkowitej funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
+Zgodnie z oznaczeniami użytymi w poprzednim rozdziale $D$ stanowi dziedzinę obrazu. Zatem obraz w odcieniach szarości możemy przedstawić jako wynik przekształcenia $I\left(x\right):D\longrightarrow R,\ x\in R$ zdefiniowany dla każdego piksela $x$ ze zbioru $D$. Wtedy pojęcie nielokalnego gradientu pomiędzy pikselem $x$ i $y$, gdzie $x,y\in D$ z definicji możemy wyrazić zależnością:
 \begin{equation}
 {\mathrm{\nabla }}_{NL}I\left(x,y\right)\triangleq \left[I\left(y\right)-I\left(x\right)\right]\sqrt{w(x,y)}
 \label{NLGRAD}
+.
 \end{equation}
 Warto zauważyć, że \textbf{wynikiem} powyższej zależności nie jest wektor, a \textbf{wartość skalarna}. Wyrażenie stanowi proste przekształcenie $D \times D\longrightarrow R$. Wartość wagi $w(x,y)$ z definicji wyraża się następującą zależnością:
 \begin{equation}
 w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\}\ }
 \label{NLWEIGHT}
+,
 \end{equation}
 \begin{figure}[!h]
 	\centering
@@ -669,14 +698,15 @@ gdzie $r$ to zdefiniowana wcześniej stała skalująca wartości podobieństwa p
 \begin{equation}
 {\|I\left(x+\cdot \right)-I\left(y+\cdot \right)\|}=\ \sum^{p_s}_{i=1}{\sum^{p_s}_{j=1}{{\left(I(x+\cdot)\big|_{i,j}-I(y+\cdot)\big|_{i,j}\right)}^2}}
 \label{FROBENIUS}
+,
 \end{equation}
-gdzie wartość $p_s$ odpowiada wielkości badanego fragmentu i stanowi wcześniej definiowany parametr. Zmienna $G_\sigma$ reprezentuje macierz o rozmiarze zgodnym z operatorem otoczenia danego piksela "$\cdot$" - $p_s$. Wartości macierzy pozwalają stopniować wpływ każdego z rozpatrywanych pikseli na uzyskiwany wynik poprzez przyznawanie większego priorytetu pikselom centralnym, przy deprecjonowaniu tych bardziej oddalonych od centrum. Dla $G_\sigma$ zachodzi:
+gdzie wartość $p_s$ odpowiada wielkości badanego fragmentu obrazu i stanowi wcześniej zdefiniowany parametr. Zmienna $G_\sigma$ reprezentuje macierz o rozmiarze zgodnym z operatorem otoczenia danego piksela "$\cdot$" - $p_s$. Wartości macierzy pozwalają stopniować wpływ każdego z rozpatrywanych pikseli na uzyskiwany wynik poprzez przyznawanie większego priorytetu pikselom centralnym, przy deprecjonowaniu pikseli bardziej oddalonych od centrum. Dla $G_\sigma$ zachodzi zależność:
 \begin{align}
-\int_{I(x+\cdot)}G_{\sigma}(y)dy = 1
+\int_{I(x+\cdot)}G_{\sigma}(y)dy = 1.
 \end{align}
 Rozważając okno Gauss'owskie $G_\sigma$ możemy je opisać zależnością:
 \begin{align}
-G_\sigma(z)=\frac{1}{Z}\exp(-\frac{\|z\|}{2\sigma^2})
+G_\sigma(z)=\frac{1}{Z}\exp\left(-\frac{\|z\|}{2\sigma^2}\right),
 \label{oknoGaussowskie}
 \end{align}
 gdzie $\sigma$ odpowiada odchyleniu standardowemu, a $Z$ współczynnikowi normalizującemu. Podobnie jak w przypadku gradientu nielokalnego funkcja wagi stanowi przekształcenie $D \times D\longrightarrow R$. Kolejnymi ważnymi nielokalnymi operatorami wykonanymi w punkcie $x$ są: 
@@ -686,76 +716,87 @@ iloczyn skalarny dwóch nielokalnych przekształceń typu $\overrightarrow{p}:D 
 \begin{equation}
 \left({\overrightarrow{p}}_1\cdot {\overrightarrow{p}}_2\right)(x)\triangleq \int_D{p_1(x,y)\cdot p_2\left(x,y\right)dy}
 \label{NLPRODUCT}
+,
 \end{equation}
 \item
 moduł przekształcenia $\overrightarrow{p}$:
 \begin{equation}
-\left|\overrightarrow{p}\right|\left(x\right)\triangleq \sqrt{(\overrightarrow{p}\cdot \overrightarrow{p})}=\sqrt{\int_D{{\left(p\left(x,y\right)\right)}^2dy}} 
+\left|\overrightarrow{p}\right|\left(x\right)\triangleq \sqrt{(\overrightarrow{p}\cdot \overrightarrow{p})}=\sqrt{\int_D{{\big(p(x,y)\big)}^2\mathrm{d}y}}
 \label{NLMOD}
+,
 \end{equation}
 \item
 dywergencja przekształcenia $\overrightarrow{p}$:
 \begin{equation}
-({\mathrm{\nabla }}_{NL}\cdot \overrightarrow{p})(x)\ \triangleq \int_D{\left(p\left(x,y\right)-p\left(y,x\right)\right)\sqrt{w(x,y)}dy}
+({\mathrm{\nabla }}_{NL}\cdot \overrightarrow{p})(x)\ \triangleq \int_D{\big(p\left(x,y\right)-p\left(y,x\right)\big)\sqrt{w(x,y)}\mathrm{d}y}
 \label{NLDIV}
+,
 \end{equation}
 \item
 laplasjan przekształcenia
 \begin{equation}
-{\mathrm{\Delta }}_{NL}\overrightarrow{p}(x)\ \triangleq \frac{1}{2}{\mathrm{\nabla }}_{NL}\cdot \left({\mathrm{\nabla }}_{NL}I\left(x\right)\right)=\int_D{\left(I\left(y\right)-I\left(x\right)\right)w(x,y)dy}
+{\mathrm{\Delta }}_{NL}\overrightarrow{p}(x)\ \triangleq \frac{1}{2}{\mathrm{\nabla }}_{NL}\cdot \Big({\mathrm{\nabla }}_{NL}I\left(x\right)\Big)=\int_D{\Big(I\left(y\right)-I\left(x\right)\Big)w(x,y)\mathrm{d}y}
 \label{NLLAP}
+.
 \end{equation}
 \end{itemize}
 Warto zauważyć, iż w przypadku przekształceń w postaci nielokalnego gradientu \eqref{NLGRAD} oraz wagi \eqref{NLWEIGHT} zachodzą odpowiednio zależności:
 \begin{align}
-\left(p\left(x,y\right)-p\left(y,x\right)\right) &= \left({\mathrm{\nabla }}_{NL}I\left(x,y\right)-{\mathrm{\nabla }}_{NL}I\left(y,x\right)\right)  \notag =\\ 
-&= \left({\mathrm{\nabla }}_{NL}I\left(x,y\right)+{\mathrm{\nabla }}_{NL}I\left(x,y\right)\right) \notag =\\
-&=2{\mathrm{\nabla }}_{NL}I\left(x,y\right)\
+\Big(p\left(x,y\right)-p\left(y,x\right)\Big) &= \Big({\mathrm{\nabla }}_{NL}I\left(x,y\right)-{\mathrm{\nabla }}_{NL}I\left(y,x\right)\Big)  \notag =\\ 
+&= \Big({\mathrm{\nabla }}_{NL}I\left(x,y\right)+{\mathrm{\nabla }}_{NL}I\left(x,y\right)\Big) \notag =\\
+&=2{\mathrm{\nabla }}_{NL}I\left(x,y\right) .
 \label{NLPOM}
 \end{align}
 Stąd w szczególnym przypadku nielokalną dywergencję można przedstawić jako: 
 \begin{equation}
-({\mathrm{\nabla }}_{NL}\cdot \overrightarrow{p})(x)\ \triangleq \int_D{2\left(p\left(x,y\right)\right)\sqrt{w(x,y)}dy}
+\Big({\mathrm{\nabla }}_{NL}\cdot \overrightarrow{p}\Big)(x)\ \triangleq \int_D{2\Big(p\left(x,y\right)\Big)\sqrt{w(x,y)}dy}
 \label{NLDIVSMART}
+,
 \end{equation}
 \begin{equation}
 w(x,y) = w(y,x)
 \label{SMARTWEIGHT}
+.
 \end{equation}
 Nielokalna dywergencja stanowi przekształcenie $D \times D \longrightarrow D$.
-W celu dyskretyzacji powyższych równań należy zgodnie z \cite{gilboa2008nonlocal} wprowadzić pojęcie okna poszukiwania ${\mathrm{N}}_x$, gdzie $x\in D,\ y\in {\mathrm{N}}_x$. ${\mathrm{N}}_x$ jest podzbiorem obrazu składającym się z punktów będących otoczeniem punktu $x$. Rozmiar okna stanowi wcześniej definiowany parametr. Dla wszystkich pikseli w oknie zachodzi zależność ${\mathrm{N}}_x\coloneqq \left\{y:w_{x,y}>0\right\}$. Wprowadzenie okna skutkuje ograniczeniem wcześniej wprowadzonego przekształcenia $D \times D\longrightarrow R$ do $\mathrm{N} \times D\longrightarrow R$.
+W celu dyskretyzacji powyższych równań należy zgodnie z \cite{gilboa2008nonlocal} wprowadzić pojęcie okna poszukiwania ${\mathrm{N}}_x$, gdzie $x\in D,\ y\in {\mathrm{N}}_x$. ${\mathrm{N}}_x$ jest podzbiorem obrazu składającym się z punktów będących otoczeniem punktu $x$. Rozmiar okna stanowi wcześniej zdefiniowany parametr. Dla wszystkich pikseli w oknie zachodzi zależność ${\mathrm{N}}_x\coloneqq \left\{y:w_{x,y}>0\right\}$. Wprowadzenie okna skutkuje ograniczeniem wcześniej wprowadzonego przekształcenia $D \times D\longrightarrow R$ do $\mathrm{N} \times D\longrightarrow R$.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.4]{rysunki/3_fig4.png}
 	\caption{Przykładowe okna ${\boldsymbol{\mathrm{N}}}_{\boldsymbol{x}}\boldsymbol{,\ }{\boldsymbol{\mathrm{N}}}_{\boldsymbol{y}}$ utworzone dla pikseli $\boldsymbol{x},\boldsymbol{y}$.}
 	\label{3_fig4}
 \end{figure}
-Nielokalne operatory można przedstawić za pomocą zdyskretyzowanych równań:
+Operatory nielokalne można przedstawić za pomocą zdyskretyzowanych równań:
 \begin{equation}
 {\mathrm{\nabla }}_{NLd}I|_{x,y}\triangleq \left(I_y-I_x\right)\sqrt{w_{x,y}}
 \label{DNLGRAD}
+,
 \end{equation}
 \begin{equation}
 w_{x,y}={\mathrm{exp} \left\{-\sum_{y\in N_x,k\in N_y \\
-}{{G_{\sigma}}_y \ast {\left|I_y-I_k\right|}^2}\right\}\ },
+}{{G_{\sigma}}_y \ast {\left|I_y-I_k\right|}^2}\right\}\ }
 \label{DNLWEIGHT}
+,
 \end{equation}
 \begin{equation}
 {\left|\overrightarrow{p}\right|}_x\triangleq \sqrt{\sum_{y\in N_x \\ 
-}{{\left(p_{x,y}\right)}^2}},
+}{{\left(p_{x,y}\right)}^2}}
 \label{DNLMAG}
+,
 \end{equation}
 \begin{equation}
 {\mathrm{\nabla }}_{NLd}\cdot \overrightarrow{p}\big|_x \triangleq \sum_{ 
 y\in N_x \\ 
-}{\left(p_{x,y}-p_{y,x}\right)}\sqrt{w_{x,y}},
+}{\left(p_{x,y}-p_{y,x}\right)}\sqrt{w_{x,y}}
 \label{DNLDIV}
+,
 \end{equation}
 \begin{equation}
 {\mathrm{\Delta }}_{NL}{\overrightarrow{p}}\big|_x \triangleq \sum_{
 y\in N_x \\ 
-}{\left(I_y-I_x\right)}w_{x,y}.
+}{\left(I_y-I_x\right)}w_{x,y}
 \label{DNLLAP}
+.
 \end{equation}
 W szczególnym przypadku dla \eqref{NLDIVSMART} można zapisać:
 \begin{equation}
@@ -769,6 +810,7 @@ Model nielokalny wariacji całkowitej funkcji oznaczany $NLTV$ (non-local total 
 \begin{equation}
 {\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{\chi{\left(u-I^0\right)}^2}dx\ \right\}\ }
 \label{NLTVGRAY}
+,
 \end{equation}
 gdzie $I^0$ stanowi oryginalny obraz wejściowy, natomiast $u\left(x\right):D\mathrm{\longrightarrow }\mathrm{R}$ obraz wynikowy, będący obrazem wmalowanym, bądź w przypadku pierwotnych założeń obrazem z usuniętym szumem. W przypadku zagadnienia wmalowywania zmienna ${\chi }$ jest funkcją definiowaną na podstawie maski obrazu przyjmująca następujące wartości:
 \begin{equation}
@@ -776,6 +818,7 @@ gdzie $I^0$ stanowi oryginalny obraz wejściowy, natomiast $u\left(x\right):D\ma
 0, & \text{dla} \ x \in \Omega \\ 
 1, & \text{dla} \ x \in D/ \Omega \end{array}
 \label{maskFunction}
+.
 \end{equation}
 Tak zdefiniowany model można przekształcić wykorzystując operację podziału Bregman’a \cite{bresson2009short}. Podział ten stosuje się w celu poprawienia wydajności obliczeniowej w przypadku dyskretnej implementacji problemu minimalizacji energii. Wprowadzenie pomocniczej zmiennej $\overrightarrow{v}=v\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ } \times \ \mathrm{\Omega }\longrightarrow R$ i parametru Bregman’a $\overrightarrow{b}=\overrightarrow{b}\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }\times \ \mathrm{\Omega }\longrightarrow R$ pozwala przekształcić problem minimalizacji powyższej energii do następującej postaci iteracyjnej:
 \begin{align}
@@ -783,41 +826,40 @@ Tak zdefiniowany model można przekształcić wykorzystując operację podziału
 \left(u^{k+1},{\overrightarrow{v}}^{k+1}\right) &= arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}} E\left(u,\overrightarrow{v}\right)=\\ 
 &= \biggl\{arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}}
 \int_D{|\overrightarrow{v}|\left(x\right)}dx+\frac{1}{2}\int_D{{\chi }{\left(u-I^0\right)}^2}dx+\\
-&+  \frac{\mathrm{\Theta }}{2}\int_D{{\left|\overrightarrow{v}-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right|}^2(x)}dx\ \biggr\}
+&+  \frac{\mathrm{\Theta }}{2}\int_D{{\left|\overrightarrow{v}-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right|}^2(x)}dx\ \biggr\},
 \end{aligned}
 \label{NLTVGRAYMINPROB}
 \end{align}
 \begin{align}
-{\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k, {\overrightarrow{b}}^0={\overrightarrow{v}}^0=0
+{\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k, {\overrightarrow{b}}^0={\overrightarrow{v}}^0=0.
 \label{BREGMANVARIABLE}
 \end{align}
-gdzie $\Theta$ stanowi wcześniej definiowany parametr algorytmu. Stosując podstawowe równanie rachunku wariacyjnego w postaci równania Eulera-Lagrange’a, metodę przedstawioną w \cite{tai2011fast} oraz schemat iteracyjny Gauss’a-Seidel’a, powyższe równania można sprowadzić do problemu iteracyjnego rozwiązania następujących zależności:
+gdzie $\Theta$ stanowi wcześniej zdefiniowany parametr algorytmu. Stosując podstawowe równanie rachunku wariacyjnego w postaci równania Eulera-Lagrange’a, metodę przedstawioną w \cite{tai2011fast} oraz schemat iteracyjny Gauss’a-Seidel’a, powyższe równania można sprowadzić do problemu iteracyjnego rozwiązania następujących zależności:
 \begin{align}
-\chi \left(u-I^0\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0
+\chi \left(u-I^0\right)+\mathrm{\Theta }{\mathrm{\nabla }}_{NL}\cdot \left({\overrightarrow{v}}^k-{\mathrm{\nabla }}_{NL}u-{\overrightarrow{b}}^{k+1}\right)=0,
 \label{ELNLTV1}
 \end{align}
 \begin{align}
-{\overrightarrow{v}}^{k+1}\mathrm{=}{\mathrm{max} \left(\left|{\mathrm{\nabla }}_{NL}u^{k+1}+{\overrightarrow{v}}^{k+1}\right|-\frac{1}{\mathrm{\Theta }},0\right)\cdot\frac{{\mathrm{\nabla }}_{NL}u^{k+1}+{\overrightarrow{b}}^{k+1}}{\left|{\mathrm{\nabla }}_{NL}u^{k+1}+{\overrightarrow{b}}^{k+1}\right|}\ }
+{\overrightarrow{v}}^{k+1}\mathrm{=}{\mathrm{max} \left(\left|{\mathrm{\nabla }}_{NL}u^{k+1}+{\overrightarrow{v}}^{k+1}\right|-\frac{1}{\mathrm{\Theta }},0\right)\cdot\frac{{\mathrm{\nabla }}_{NL}u^{k+1}+{\overrightarrow{b}}^{k+1}}{\left|{\mathrm{\nabla }}_{NL}u^{k+1}+{\overrightarrow{b}}^{k+1}\right|}\ }.
 \label{ELNLTV2}
 \end{align}
 Zależności te można stosować do obrazów w odcieniach szarości, bądź obrazów kolorowych używając do  każdej z poszczególnych warstw osobnego algorytmu iteracyjnego. Zgodnie z \cite{duan2015fast} takie rozwiązanie prowadzi do niezachowania odpowiedniego kontrastu odrestaurowanej części obrazu i niezachowania krawędzi.
-\par
-W celu uzależnienia od siebie wszystkich warstw obrazu autorzy w \cite{duan2015fast} proponują zastosowanie funkcjonału $MTV$ przedstawionego w \cite{yang2009fast}, funkcjonału $CTV$ przedstawionego w \cite{blomgren1998color}, bądź model Mumford-Shah’a dokładnie opisanego w \cite{jung2011nonlocal}. Ze względu na wydajniejszą implementację oraz najlepsze wyniki uzyskiwane w przypadku modelu \textbf{$CTV$} został on wybrany do badań w niniejszej pracy. Jeśli wykorzystamy wspomniany funkcjonał to zagadnienie minimalizacji energii przyjmie postać:
+W celu uzależnienia od siebie wszystkich warstw obrazu autorzy w \cite{duan2015fast} proponują zastosowanie funkcjonału $MTV$ przedstawionego w \cite{yang2009fast}, funkcjonału $CTV$ przedstawionego w \cite{blomgren1998color}, bądź modelu Mumford-Shah’a dokładnie opisanego w \cite{jung2011nonlocal}. Ze względu na wydajniejszą implementację oraz najlepsze wyniki uzyskiwane w przypadku modelu \textbf{$CTV$} został on wybrany do badań w niniejszej pracy. Jeśli wykorzystamy wspomniany funkcjonał to zagadnienie minimalizacji energii przyjmie postać:
 \begin{align}
-{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}}+\frac{1}{2}\sum^m_{i=1}{\int_D{\chi{\left(u_i-I^0_i\right)}^2}dx}\ \right\}\ }
+{\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx\right)}^2}}+\frac{1}{2}\sum^m_{i=1}{\int_D{\chi{\left(u_i-I^0_i\right)}^2}dx}\ \right\}\ },
 \label{ENLCTV}
 \end{align}
-gdzie $m$ odpowiada ilości warstw tworzących obraz kolorowy. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacząco obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm podziału Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\left({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\right)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać: 
+gdzie $m$ odpowiada ilości warstw tworzących obraz kolorowy. Zastosowanie równania rachunku wariacyjnego postaci Eulera-Lagrange’a w swoim rozwiązaniu prowadzi do konieczności obliczenia nielokalnej krzywizny krzywej, będącej w przypadku dyskretyzacji rozwiązania znacząco obciążającą obliczeniowo operacją. W tym celu, podobnie jak w przypadku poprzedniego modelu $NLTV$ zastosowany zostanie heurystyczny algorytm podziału Bregman’a. Analogicznie wprowadzone zostają zmienne $\overrightarrow{v}=\big({\overrightarrow{v}}_1,{\overrightarrow{v}}_2,\ \dots ,\ \ {\overrightarrow{v}}_m\big)$ oraz $\overrightarrow{b}=\left({\overrightarrow{b}}_1,{\overrightarrow{b}}_2,\ \dots ,\ \ {\overrightarrow{b}}_m\right)$. Wtedy przytoczona energia przyjmuje iteracyjną postać:
 \begin{align}
 \begin{aligned}
 \mathop{\mathrm{min}}_{u}E\left(u\right) &= \mathop{\mathrm{min}}_{u}\Biggl\{\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|\overrightarrow{v_i}\right|(x)}dx\right)}^2}}+\\ 
 &+\frac{1}{2}\sum^m_{i=1}{\int_D{ \chi {\left(u_i-I^0_i\right)}^2}dx} 
-+\frac{\theta }{2}\sum^m_{i=1}{\int_D{{\left|\overrightarrow{v_i}-{\mathrm{\nabla }}_{NL}u_i- {\overrightarrow{b_i}}^{k+1}\right|}^2\left(x\right)}dx}\Biggr\}
++\frac{\theta }{2}\sum^m_{i=1}{\int_D{{\left|\overrightarrow{v_i}-{\mathrm{\nabla }}_{NL}u_i- {\overrightarrow{b_i}}^{k+1}\right|}^2\left(x\right)}dx}\Biggr\},
 \end{aligned}
 \label{ENLCTV1}
 \end{align}
 \begin{align}
-{\overrightarrow{b_i}}^{k+1}={\overrightarrow{b_i}}^k+{\mathrm{\nabla }}_{NL}u^k_i-{\overrightarrow{v_i}}^k,\ {{\overrightarrow{b}}_i}^0={\overrightarrow{v_i}}^0=0
+{\overrightarrow{b_i}}^{k+1}={\overrightarrow{b_i}}^k+{\mathrm{\nabla }}_{NL}u^k_i-{\overrightarrow{v_i}}^k,\ {{\overrightarrow{b}}_i}^0={\overrightarrow{v_i}}^0=0.
 \label{ENLCTV2}
 \end{align}
 Przyjmując naprzemienną strategię minimalizacji energii można uzyskać równania Eulera-Lagrange’a wyznaczone oddzielnie względem zmiennych $u$ oraz $v$:
@@ -831,7 +873,7 @@ Przyjmując naprzemienną strategię minimalizacji energii można uzyskać równ
 \end{align}
 W celu przedstawienia dyskretnej postaci równań \eqref{ELNLCTV1} i \eqref{ELNLCTV2} wygodnym będzie zapis dla konkretnego piksela $z\in D$ w obrazie. W przypadku \eqref{ELNLCTV1} mamy: 
 \begin{align}
-\chi_z \left[u_{i_z}-{I^0_i}_z\right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left({{\overrightarrow{v_i}}^k}_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{{{\overrightarrow{b}}_i}^{k+1}}_z\right)=0.
+\chi_z \left[{(u_i)}_z-{\left(I^0_i\right)}_z \right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left({{\overrightarrow{v_i}}^k}_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{{{\overrightarrow{b}}_i}^{k+1}}_z\right)=0.
 \label{DELNLCTV1}
 \end{align}
 Korzystając z dyskretnych postaci równań \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{NLPRODUCT} i \eqref{NLDIV} równanie \eqref{ELNLCTV1} można przedstawić w postaci:
@@ -839,15 +881,15 @@ Korzystając z dyskretnych postaci równań \eqref{NLGRAD}, \eqref{NLWEIGHT}, \e
 \begin{aligned}
 {u^{k+1}_i}_{z} &= \frac{1}{\chi_z+2\mathrm{\Theta} \sum\limits_{y\in N_i} w_{i_{z,y}}} \Biggl[2\mathrm{\Theta }\sum_{y\in N_i} {{{u^k_i}_y w_i}_{z,y}}+\\
 &+ \chi_z \ {I^0_i}_z -\\
-&-\mathrm{\Theta} \Biggl[\sum_{y\in N_z} \left({ v^k_i}_{z,y} - { v^k_i}_{z,y} - { v^k_i}_{z,y} + { v^k_i}_{z,y}\right) \sqrt{{w_i}_{z,y}} \Biggr]
+&-\mathrm{\Theta} \Biggl[\sum_{y\in N_z} \left({ \left( v^k_i \right)}_{z,y} - { \left( v^k_i \right)}_{z,y} - { \left( v^k_i \right)}_{z,y} + { \left( v^k_i \right)}_{z,y}\right) \sqrt{{\left(w_i\right)}_{z,y}} \Biggr].
 \end{aligned}
 \label{uNLCTV}
 \end{align}
 W przypadku równania \eqref{ELNLCTV1} Eulera-Lagrange’a należy przekształcić je względem zmiennej $\overrightarrow{v}$:
 \begin{align}
 \begin{aligned}
-{\overrightarrow{v_i}}^{k+1} &= \mathrm{max} \left(\left|{\mathrm{\nabla }}_{NL}u^{k+1}_i+{\overrightarrow{b_i}}^{k+1}\right|-\frac{\int_D{\left|\overrightarrow{v_i}\right|(x)}dx}{\mathrm{\Theta }\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\overrightarrow{v_i}}^k\right|(x)}dx\right)}^2}\ }},0\right) \\ 
-&\cdot \frac{{\mathrm{\nabla }}_{NL}u^{k+1}_i+{{\overrightarrow{b}}_i}^{k+1}}{\left|{\mathrm{\nabla }}_{NL}u^{k+1}_i+{\overrightarrow{b_i}}^{k+1}\right|}\ 
+{\overrightarrow{v_i}}^{k+1} &= \mathrm{max} \left(\left|{\mathrm{\nabla }}_{NL}u^{k+1}_i+{\overrightarrow{b_i}}^{k+1}\right|-\frac{\int_D{\left|\overrightarrow{v_i}\right|(x)}dx}{\mathrm{\Theta }\sqrt{\sum^m_{i=1}{{\left(\int_D{\left|{\overrightarrow{v_i}}^k\right|(x)}dx\right)}^2}\ }},0\right) \cdot\\ 
+&\cdot \frac{{\mathrm{\nabla }}_{NL}u^{k+1}_i+{{\overrightarrow{b}}_i}^{k+1}}{\left|{\mathrm{\nabla }}_{NL}u^{k+1}_i+{\overrightarrow{b_i}}^{k+1}\right|}.
 \label{DELNLCTV2}
 \end{aligned}
 \end{align}
@@ -858,17 +900,17 @@ Podobnie, korzystając z dyskretnych wersji równań \eqref{NLGRAD}, \eqref{NLWE
 \end{align}
 gdzie:
 \begin{align}
-{A^{k+1}_i}_z=\left({u^{k+1}_i}_y-{u^{k+1}_i}_z\right)\sqrt{w_{i_{z,y}}}+{b^{k+1}_i}_{z,y},
+{A^{k+1}_i}_z=\left({\left(u^{k+1}_i\right)}_y-{\left(u^{k+1}_i\right)}_z\right)\sqrt{{\left(w_{i}\right)}_{z,y}}+{\left(b^{k+1}_i\right)}_{z,y},
 \end{align} 
 \begin{align}
-{\left|A^{k+1}_i\right|}_z=\sqrt{\sum_y{{\left[\left({u^{k+1}_i}_y-{u^{k+1}_i}_z\right)\sqrt{{w_i}_{z,y}}+{b^{k+1}_i}_{z,y}\right]}^2}\ }.
+{\left|A^{k+1}_i\right|}_z=\sqrt{\sum_y{{\left[\left({u^{k+1}_i}_y-{u^{k+1}_i}_z\right)\sqrt{{w_i}_{z,y}}+{b^{k+1}_i}_{z,y}\right]}^2}\ },
 \end{align}
 \begin{align}
-B^k_i=\sum_z{\sqrt{\sum_y{{{v^k_i}^2}_{z,y}}}}
+B^k_i=\sum_z{\sqrt{\sum_y{{{v^k_i}^2}_{z,y}}}}.
 \end{align}
-Warto przypomnieć, iż w przytoczonych wzorach $y$ odpowiada pikselom znajdującym się oknie poszukiwania ${\mathrm{N}}_z$ scentrowanym względem piksela $z$, natomiast $i$ odpowiada $i$-tej warstwie spośród warstw tworzących obraz kolorowy. Autorzy w \cite{jung2011nonlocal} proponują zmodyfikowany sposób wyznaczania wagi uwzględniający kształt maski w obrazie:
+\textbf{Warto przypomnieć, iż w przytoczonych wzorach $y$ odpowiada pikselom znajdującym się oknie poszukiwania ${\mathrm{N}}_z$ scentrowanym względem piksela $z$, natomiast $i$ odpowiada $i$-tej warstwie spośród warstw tworzących obraz kolorowy}. Autorzy w \cite{jung2011nonlocal} proponują zmodyfikowany sposób wyznaczania wagi uwzględniający kształt maski w obrazie:
 \begin{align}
-w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\chi }_R\left(x+\ \cdot \right){\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\}\ }
+w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\chi }_R\left(x+\ \cdot \right){\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\}\ },
 \label{NLWEIGHTMASK}
 \end{align}
 gdzie:
@@ -876,30 +918,32 @@ gdzie:
 {\chi }\left(x\right)=\Bigg\{ \begin{array}{ll}
 0, & \text{dla} \ x \in  \mathrm{\Omega} \\ 
 1, & \text{dla} \ x \in  D/\mathrm{\Omega} \end{array}
+.
 \end{equation}
 Podsumowując algorytm wmalowywania w oparciu o model $NLCTV$ z algorytmem podziału Bregman’a można przedstawić w następujących krokach:
 \begin{enumerate}
 \item  
-Inicjalizacja zmiennych $k=0,\ \overrightarrow{b^0_i}=0,\ \overrightarrow{v^0_i}=0,\ u^0_i=f^0_i$ 
+Inicjalizacja zmiennych $k=0,\ \overrightarrow{b^0_i}=0,\ \overrightarrow{v^0_i}=0,\ u^0_i=f^0_i$.
 \item  
-Wyznaczenie wagi $w_i$ zgodnie z równaniem \eqref{NLWEIGHTMASK} dla całego obszaru obrazu $D$
+Wyznaczenie wagi $w_i$ zgodnie z równaniem \eqref{NLWEIGHTMASK} dla całego obszaru obrazu $D$.
 \item  
 Powtarzanie aż do spełnienia kryterium końcowego:
 \begin{itemize}
 %\addtolength{\itemindent}{1cm}
 \item
-\noindent Wyznaczenie ${\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k$
+\noindent wyznaczenie ${\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k$,
 \item
-\noindent Wyznaczenie $u^{k+1}$ na podstawie \eqref{DELNLCTV1} dla każdego piksela $z$
+\noindent wyznaczenie $u^{k+1}$ na podstawie \eqref{DELNLCTV1} dla każdego piksela $z$,
 \item
-\noindent Wyznaczenie $v^{k+1}$ na podstawie \eqref{VNLCTVITER} dla każdego piksela $z$
+\noindent wyznaczenie $v^{k+1}$ na podstawie \eqref{VNLCTVITER} dla każdego piksela $z$.
 \end{itemize}
 \item  
-Aktualizacja wagi $w_i$ w obszarze $\mathrm{\Omega }$
+Aktualizacja wagi $w_i$ w obszarze $\mathrm{\Omega }$.
 \end{enumerate}
 Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej wartości różnicy wcześniej zdefiniowanej energii $\varepsilon$ pomiędzy kolejnymi wykonywanymi iteracjami:
 \begin{equation}
 \left|E^{k+1}-E^k\right|\le \varepsilon
+.
 \end{equation}
 \section{Wariacyjny model nielokalny wmalowywania - VFI}
 Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy tej publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\Omega))$ zależnej:
@@ -907,67 +951,64 @@ Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facc
 \item
 od nieznanego obszaru obrazu $u(\Omega)$,
 \item
-od mapy podobieństwa będącej funkcją przypisującą każdemu punktowi z nieznanego obszaru jego konkretnego odpowiednika z obszaru znajdującego się poza maską $\varphi(x)$.
+od mapy podobieństwa będącej funkcją przypisującą każdemu punktowi z nieznanego obszaru jego konkretny odpowiednik z obszaru znajdującego się poza maską $\varphi(x)$.
 \end{itemize}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.7]{rysunki/6_fig1}
-	\caption{Określenie charakterystycznych obszarów obrazu.}
+	\caption{Określenie charakterystycznych obszarów obrazu. Rysunek autorski.}
 	\label{6_fig1}
 \end{figure}
 Niech $u(x)$ oznacza funkcję przekształcającą zbiór $\Omega$ według zależności  $u:\Omega \rightarrow R$, gdzie $\Omega$ to obszar do uzupełnienia.
 Niech $\hat{u}(\hat{x})$ oznacza funkcję przekształcającą zbiór $D$ według zależności $\hat{u} : D \rightarrow R$, gdzie $D$ to obszar oryginalnego obrazu nie podlegający modyfikacji.
-Niech $\mathrm{N}_x$ i $\mathrm{N}_{\hat{x}}$ oznaczają podzbiory punktów obrazu scentrowane względem odpowiednio punktów $x$ i $\hat{x}$.
+Ponad to niech $\mathrm{N}_x$ i $\mathrm{N}_{\hat{x}}$ oznaczają podzbiory punktów obrazu scentrowane odpowiednio względem punktów $x$ i $\hat{x}$.
 Wtedy zbiór $\widetilde{\Omega}$ definiuje się jako $\widetilde{\Omega} := \Omega + \sum {\mathrm{N}}_x$, gdzie $\sum {\mathrm{N}}_x$ to suma wszystkich podzbiorów utworzonych względem punktów $x \in \Omega$. Ostatecznie $D^c = D / \widetilde{\Omega}$.
 Zgodnie z \cite{arias2011variational} przekształcenie $u(x)$ jest zarezerwowane dla obszaru maski (obszaru wmalowywanego), a $\hat{u}(\hat{x})$ odpowiada przekształceniu w niezmienianym obszarze obrazu $D$). 
 Przekształcenie funkcji podobieństwa $\varphi(x)$ przedstawia \autoref{6_fig2}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.7]{rysunki/6_fig2}
-	\caption{Funkcja podobieństwa $\varphi(x)$ : $\varphi(x_1)=\hat{x_1}, \varphi(x_2)=\hat{x_2}, \varphi(x_3)=\hat{x_3}$.}
+	\caption{Funkcja podobieństwa $\varphi(x)$ : $\varphi(x_1)=\hat{x_1}, \varphi(x_2)=\hat{x_2}, \varphi(x_3)=\hat{x_3}$. Rysunek autorski.}
 	\label{6_fig2}
 \end{figure}
 Energię poddawaną minimalizacji można wyrazić zależnością:
 \begin{align}
 \begin{aligned}
-\mathcal{E}(u,\varphi) = \int_{\mathcal{\widetilde{O}}}\int_{\Omega_p}\abs{u(x+h) - \hat{u}(\varphi(x)+h)}^2dhdx
+\mathcal{E}(u,\varphi) = \int_{\mathcal{\widetilde{O}}}\int_{\Omega_p}\abs{u(x+h) - \hat{u}(\varphi(x)+h)}^2\mathrm{dhdx}.
 \end{aligned}
 \end{align}
 Funkcja ta jest niewypukła, stąd proces minimalizacji pozwala odnaleźć jedynie lokalne minima. W pracy wykorzystano iteracyjny algorytm naprzemiennej minimalizacji polegający na wyznaczaniu w każdym kroku $u(x)$ względem ustalonej wartości $\varphi(x)$, a następnie $\varphi(x)$ względem ustalonej wartości $u(x)$.
 \subsection{Wyznaczenie mapy podobieństwa.}
 \label{ssec:wyznaczanieMapySection}
-Proces minimalizacji funkcji przyjmując ustaloną wartość
-\begin{equation}
-u(x) = \text{const}
-\end{equation}
-można opisać zależnością:
+W przypadku gdy przyjmiemy ustaloną wartość $u(x)$ (czyli $u(x) = $ const), to proces minimalizacji można opisać zależnością:
 \begin{align}
 \begin{aligned}
 \mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\biggl( u(x+\cdot) - {\hat{u}}\bigl((x+t)+\cdot\bigr)\biggr),\operatorname{gdzie} \ \forall \ t : x+t \in D^c
 \label{minNNF}
 \end{aligned}
 \end{align}
-Zmienna $t$ w tym zagadnieniu przyjmuje takie wartości ze zbioru wektorów przemieszczeń, których suma z danym wektorem położenia $x$ lokalizuje go w obszarze $D^c$. Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $D^c$, $\varphi :\Omega \rightarrow D^c$. Warto zaznaczyć, że przez pojęcie najbliższego sąsiada punktu $x$ rozumiemy nie punkt znajdujący się najbliżej, ale ten piksel, dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
+Przez symbol $(x+\cdot)$ rozumiemy podmacierz punktów otaczających punkt $x$. 
+Zmienna $t$ w tym zagadnieniu przyjmuje takie wartości ze zbioru wektorów przemieszczeń, których suma z danym wektorem położenia $x$ lokalizuje go w obszarze $D^c$ (podobnie jak na \autoref{6_fig2}, $ \ \hat{x} = x + t$, $ \ x = \hat{x} - t$). Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $D^c$, $\varphi :\Omega \rightarrow D^c$. Warto zaznaczyć, że przez pojęcie najbliższego sąsiada punktu $x$ rozumiemy nie punkt znajdujący się najbliżej, ale ten piksel, dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
 \begin{align}
 \begin{aligned}
 \big\| u(x + \cdot) - \hat{u}(\hat{x}+\cdot) \big\| 
 \label{normNNF}
 \end{aligned}
 \end{align}
-Propozycje definicji normy są przedstawione przez autorów w \cite{MathematicalModelsforNLTextureInpainting} i zostaną opisane w dalszej części pracy. Warto zauważyć, że normę tą można również zdefiniować za pomocą równań \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i wymagać znacznych nakładów obliczeniowych. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu \textbf{PatchMatch} dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm ten oparty jest na dwóch krokach. Niech punkt $x$ odpowiada współrzędnym $i, j$ obrazu, natomiast dla uproszczenia zapisu oznaczmy $u(x+\cdot)$ jako $p_u(i,j)$. Wtedy kroki te można opisać następująco:
+Propozycje definicji normy są przedstawione przez autorów w \cite{MathematicalModelsforNLTextureInpainting} i zostaną opisane w dalszej części pracy. Warto zauważyć, że normę tę można również zdefiniować za pomocą równań \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i wymagać znacznych nakładów obliczeniowych. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu \textbf{PatchMatch} dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm ten oparty jest na dwóch krokach. Niech punkt $x$ odpowiada współrzędnym $i, j$ obrazu, natomiast dla uproszczenia zapisu oznaczmy $u(x+\cdot)$ jako $p_u(i,j)$. Wtedy kroki te można opisać następująco:
 \begin{enumerate}
 \item
-Losowo inicjalizujemy piksele
+Losowo inicjalizujemy piksele.
 \item
 Definiujemy skończoną liczbę iteracji i wykonujemy następujące czynności:
 \begin{enumerate}[a)]
 \item
 propagacja: w przypadku parzystej iteracji dla sprawdzenia wszystkich pikseli $x$ z maski w kierunku rastrowym przedstawionym na \autoref{6_fig3}, czy 
-wartość $\big\| p_u(i,j) - p_{\hat{u}}(\varphi(i+1,j)) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j+1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej wartości i w takim przypadku należy zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
+wartość $\big\| p_u(i,j) - p_{\hat{u}}\big(\varphi(i+1,j)\big) \big\|$, bądź $\big\| p_{u}(i,j) - p_{\hat{u}}\big(\varphi(i,j+1)\big) \big\|$ nie jest mniejsza od obecnie wyznaczonej wartości i w takim przypadku należy zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i+1,j)$, lub $\varphi(i,j) = \varphi(i,j+1)$, 
 w przypadku nieparzystej iteracji należy sprawdzić dla wszystkich pikseli $x$ w kierunku odwrotnym do kierunku rastrowego przedstawionym na \autoref{6_fig3}, czy 
-wartość $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i-1,j)) \big\|$ bądź $\big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j-1)) \big\|$ nie jest mniejsza od obecnie wyznaczonej wartości i w takim przypadku trzeba zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i-1,j)$, lub $\varphi(i,j) = \varphi(i,j-1)$
+wartość $\big\| p_{u}(i,j) - p_{\hat{u}}\big(\varphi(i-1,j)\big) \big\|$ bądź $\big\| p_{u}(i,j) - p_{\hat{u}}\big(\varphi(i,j-1)\big) \big\|$ nie jest mniejsza od obecnie wyznaczonej wartości i w takim przypadku trzeba zmienić najbliższego sąsiada według formuły $\varphi(i,j) = \varphi(i-1,j)$, lub $\varphi(i,j) = \varphi(i,j-1)$,
 \item
-poszukiwanie w oknach: dla każdego punktu $(i,j)$ sprawdzane jest, czy w stopniowo pomniejszanych oknach centrowanych względem punktu $\varphi(i,j)$ istnieje losowy punkt $(i', j')$, dla którego zachodzi nierówność $\big\| p_{u}(i,j) - p_{\hat{u}}(i',j') \big\| < \big\| p_{u}(i,j) - p_{\hat{u}}(\varphi(i,j) \big\|$, jeśli tak to punkt ten jest podmieniany.
+poszukiwanie w oknach: dla każdego punktu $(i,j)$ sprawdzane jest, czy w stopniowo pomniejszanych oknach centrowanych względem punktu $\varphi(i,j)$ istnieje losowy punkt $(i', j')$, dla którego zachodzi nierówność $\big\| p_{u}(i,j) - p_{\hat{u}}(i',j') \big\| < \big\| p_{u}(i,j) - p_{\hat{u}}\big(\varphi(i,j) \big)\big\|$, jeśli tak to punkt ten jest podmieniany.
 \end{enumerate}
 \end{enumerate}
 \begin{figure}[!h]
@@ -988,57 +1029,57 @@ Niech funkcja $e$  będzie przekształceniem $e: \mathrm{N}_x \rightarrow {\rm I
 \begin{align}
 \begin{aligned}
 e(x, \hat{x}) &= G_\sigma \ast \big\| u(x + \cdot) - u(\hat{x} + \cdot) \big\| = G_\sigma \ast \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\| = \\ 
-&= \int_{\mathrm{N}_x} G_\sigma(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|dh
+&= \int_{\mathrm{N}_x} G_\sigma(h) \big\| u(x+h) - \hat{u}(\hat{x} +h) \big\|\mathrm{dh},
 \label{minUs}
 \end{aligned}
 \end{align}
 gdzie zmienna $G_{\sigma}$ została wprowadzona dla algorytmu $NLCTV$ i opisywana jest zależnością \eqref{oknoGaussowskie}. Autorzy artykułu \cite{arias2011variational} proponują tam minimalizację następującej energii będącej akumulacją błędów pikseli:
 \begin{align}
 \begin{aligned}
-E(u) &= \int_{\widetilde D}\int_{\mathrm{N}_x}G_\sigma(h)\cdot e \bigl( u(x+h) - \hat{u}(\varphi(x)+h\bigr)dhdx
+E(u) &= \int_{\widetilde D}\int_{\mathrm{N}_x}G_\sigma(h)\cdot e \left[ u(x+h) - \hat{u}(\varphi(x)+h\right]\mathrm{dhdx}.
 \label{patchMatchEnergy}
 \end{aligned}
 \end{align} 
 Niech $z := x+h$ i $\hat{z} := \hat{x}+h$. Wprowadzamy zależność:
 \begin{align}
-m(z,\hat{z}) = \int_{\mathrm{N}_x}G_\sigma(h)\chi_{z-h}C_{\varphi(z-h)}(\hat{z}-h)dh
+m(z,\hat{z}) = \int_{\mathrm{N}_x}G_\sigma(h)\chi_{z-h}C_{\varphi(z-h)}(\hat{z}-h)\mathrm{dh},
 \end{align}
 gdzie:
-\begin{enumerate}
+\begin{itemize}
 \item
-zmienna $\chi$ została już zdefiniowana w modelu $NLCTV$ \eqref{maskFunction} i przyjmuje wartość $1$ poza maską i wartość $0$ w masce.
+zmienna $\chi$ została już zdefiniowana w modelu $NLCTV$ \eqref{maskFunction} i przyjmuje wartość $1$ poza maską i wartość $0$ w masce,
 \item
-zmienna $C(p)$ określa pewność - prawdopodobieństwo tego, że nowa wartość wyznaczonego piksela $p \in \Omega$ przyjęłaby właśnie tą wyznaczoną wartość - i jest określona następującą zależnością:
+zmienna $C(p)$ określa pewność - prawdopodobieństwo tego, że nowa wartość wyznaczonego piksela $p \in \Omega$ przyjęłaby właśnie tę wyznaczoną wartość - i jest ona określona następującą zależnością:
 \begin{align}
-C(x)=(1-c_0)exp\bigg(\frac{-\mathrm{d}\bigl(x,\partial\Omega\bigr)}{t_c}\bigg) + c_0
+C(x)=(1-c_0)exp\bigg(\frac{-\mathrm{d}\bigl(x,\partial\Omega\bigr)}{t_c}\bigg) + c_0,
 \label{pewnoscVFI}
 \end{align}
-\end{enumerate}
+\end{itemize}
 przy czym wartość $t_c$ określa szybkość opadania funkcji wykładniczej, $c_0$ asymptotę, do której to funkcja zmierza, a wewnętrzna zależność $\frac{-\mathrm{d}(x,\partial\Omega)}{t_c}$ określa odległość punktu od granicy maski. $C(p)$ dla $p \in D^c$ przyjmuje wartość $1$, natomiast dla $p \in \Omega$ wartość ze zbioru $\langle c_0,1)$ W zależności od zastosowanej normy \eqref{normNNF} rozwiązanie problemu minimalizacji energii uzyskuje różne postacie. Autorzy w \cite{arias2011variational} przedstawiają rozwiązanie dla następujących definicji norm:
 \begin{enumerate}
 \item
-Normy nielokalnej ważonej uśredniającej:
+Ważonej nielokalnej normy uśredniającej:
 \begin{align}
 \begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |^2
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |^2,
 \label{nonLocalMeans}
 \end{aligned}
 \end{align}
 \item
-Normy nielokalnej ważonej euklidesowej:
+Ważonej nielokalnej normy euklidesowej:
 \begin{align}
 \begin{aligned}
-\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{g,1} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) |
+\big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{g,1} = g \ast | u(x+\cdot) - \hat{u}(\hat{x}+\cdot)|,
 \label{nonLocalMedians}
 \end{aligned}
 \end{align}
 \item
-Normy nielokalnej Poissona:
+Nielokalnej normy Poissona:
 \begin{align}
 \begin{aligned}
 \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|_{P} &= \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2} + \big\| p_{u}(x) - p_{\hat{u}}(\hat{x}) \big\|^{2}_{g,2,\nabla} \\
-&= g \ast (\lambda | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) | \\
-&+ (1-\lambda)|\nabla u(x+\cdot) - \nabla \hat{u}(\hat{x}+\cdot)|
+&= g \ast \Big[\lambda \cdot | u(x+\cdot) - \hat{u}(\hat{x}+\cdot) | + \\
+&+ (1-\lambda)\cdot |\nabla u(x+\cdot) - \nabla \hat{u}(\hat{x}+\cdot)|\Big].
 \label{nonLocalpoisson}
 \end{aligned}
 \end{align}
@@ -1048,7 +1089,7 @@ Indeksy dolne $g, 1, 2, \nabla$ przy zapisach nielokalnych norm oznaczają odpow
 W wielu metodach wypełniania braków w obrazie stosowany jest algorytm wielostopniowy, przykładem mogą być \cite{kawai2009image}, \cite{komodakis2007image} bądź \cite{wexler2007space}. Algorytm ten polega na utworzeniu serii mniejszych przeskalowanych obrazów, następnie wypełnianiu ich począwszy od najmniejszego z warunkami początkowymi uzyskanymi poprzez przeskalowanie do większego obrazu wcześniej wyznaczonych wartości w masce. W przypadku najmniejszego obrazu z serii warunkami początkowymi mogą być:
 \begin{itemize}
 \item
-losowo wyznaczone wartości obrazu pobierane z obszaru $D^c$
+losowo wyznaczone wartości obrazu pobierane z obszaru $D^c$,
 \item
 rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR ( z ang. succesive over relaxation method) zgodnie z zależnością \eqref{DiscreteSOR}.
 \end{itemize}
@@ -1056,81 +1097,80 @@ Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcają
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt[2]{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień maski $s+1$ wyznaczamy z zależności:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień piramidy $s+1$ dla maski  wyznaczamy z zależności:
 \begin{align}
-\chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0}.
+\chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0},
 \end{align}
-Nierówność stanowi ograniczenie próbkowania w dół, dzięki któremu stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ niewiele się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ wykorzystywana jest zależność
+gdzie $\downarrow_r$ oznacza, że grupa pikseli w otoczeniu o promieniu (współczynniku próbkowania) $r$ zostanie zastąpiona jednym pikselem. Zasadą pomniejszania obrazu jest nierówność, dzięki której stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ niewiele się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku zachodzi $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ piramidy wykorzystywana jest zależność:
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{\Omega^s} u^s(x)}{G \ast \chi_{\Omega^s}(x)}
 \end{align}
-Powyższe równanie przedstawia ograniczenie próbkowania w dół w postaci nieuwzględniania wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gauss'a. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ wymusza przy każdym przejściu ze stopnia $s$ do $s-1$ oprócz przeskalowania obrazu $u$ przeskalowanie także funkcji mapy podobieństwa $\varphi$. Obraz i mapa stanowią na każdym kolejnym poziome $s-1$ aż do ostatniego $S$ warunki początkowe kolejnych kroków naprzemiennej minimalizacji.Do przeskalowania  został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+W niej ograniczeniem próbkowania w dół jest nieuwzględnianie wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gauss'a. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ wymusza przy każdym przejściu ze stopnia $s$ do $s-1$ piramidy oprócz przeskalowania obrazu $u$ przeskalowanie także funkcji mapy podobieństwa $\varphi$. Obraz i mapa stanowią na każdym kolejnym poziomie $s-1$ piramidy aż do ostatniego $S$ warunki początkowe kolejnych kroków naprzemiennej minimalizacji. Do przeskalowania  został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \subsection{Podsumowanie algorytmu}
-Jeśli połączymy opisane powyżej operacje dokonywane na obrazie to algorytm wypełniania możemy przedstawić w następujących krokach:
+Jeśli połączymy opisane wcześniej operacje dokonywane na obrazie to algorytm wypełniania brakującego obszaru możemy przedstawić w następujących krokach:
 \begin{enumerate}
 \item
-Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $K$
+Ustawienie argumentów algorytmu: obraz $u^{0}$, maska obrazu $\chi$, liczba poziomów piramidy $S$, rozmiar najmniejszego obrazu $A_{S-1}$, ilość iteracji minimalizacji energii $K$.
 \item
-Wyznaczenie piramidy maski stanowiącej zbiór: $\{\chi^s\}_{s=0,...,S-1}$ \\
-Wyznaczenie piramidy obrazu stanowiącej zbiór: $\{u^s\}_{s=0,...,S-1}$
+Wyznaczenie piramidy maski stanowiącej zbiór $\{\chi^s\}_{s=0,...,S-1} \ $, wyznaczenie piramidy obrazu stanowiącej zbiór $\{u^s\}_{s=0,...,S-1} \ $.
 \item
-Inicjalizacja obrazu $u^{S-1}$ w obszarze $\Omega$ (dla przykładu losowymi wartościami, bądź rozwiązaniem równania \eqref{DiscreteSOR})\\
-Obliczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$ według działu \ref{ssec:wyznaczanieMapySection}.
+Inicjalizacja obrazu $u^{S-1}$ w obszarze $\Omega$ losowymi wartościami, bądź np. rozwiązaniem równania \eqref{DiscreteSOR}. Obliczenie mapy podobieństwa $\varphi^{S-1}$ na podstawie $u^{S-1}$ według opisu zawartego w podrozdziale \ref{ssec:wyznaczanieMapySection}.
 \item
-Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$:
+Wykonanie dla każdego z poziomów piramidy $s$ począwszy od $S-2$ do $0$ następujących kroków:
 \begin{enumerate}[a)]
 \item
-Przeskalowanie mapy podobieństwa z zastosowaniem algorytmu interpolacji najbliższego sąsiada $\varphi^s=r \cdot (\uparrow_r \varphi^{s+1})$
+przeskalowanie mapy podobieństwa $\varphi^s=r \cdot (\uparrow_r \varphi^{s+1})$, gdzie $\uparrow_r$ oznacza, że jedna komórka zostanie zastąpiona podmacierzą o rozmiarze (współczynniku próbkowania) $r$, następnie dla każdej komórki z podmacierzy interpolowanie jej wartości czyli najbliższego sąsiada,
 \item
-Wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\Omega)=u^s_0(\Omega)$ w celu inicjalizacji
+wyznaczenie przeskalowanego obrazu $u^s_0=r \cdot (\uparrow_r u^{s+1})$ i przepisanie wartości $u^s(\Omega)=u^s_0(\Omega)$ w celu inicjalizacji.
 \item
-Powtarzanie $I$-tą ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF}
+przeprowadzenie naprzemiennie założoną z góry ilość razy z wykorzystaniem odpowiedniej normy \eqref{normNNF} dwóch minimalizacji ($i$ oznacza $i$-tą iterację):
 \begin{itemize}
 \item
-przeprowadzenie \eqref{minNNF} w celu wyznaczenia $\varphi^s$
+\eqref{minNNF} w celu wyznaczenia mapy podobieństwa ${\left(\varphi^s\right)}^i$,
 \item
-przeprowadzenie \eqref{minUs} w celu wyznaczenia $u^s$
-\end{itemize}  
+\eqref{minUs} w celu wyznaczenia wartości obrazu ${\left(u^s\right)}^i$ w nieznanym obszarze.
+\end{itemize}
 \end{enumerate}
 \end{enumerate}
 Wynikiem powyższego algorytmu jest zbiór obrazów $\{u^s\}$ oraz map podobieństwa $\{\varphi^s\}$, gdzie $s \in {0,...,S-1}$.
 \chapter{Uzupełnianie kawałkami obrazu.}
 \section{Metoda Criminisi.}
 \label{ssec:crimMetod}
-Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie fragmentami pochodzącymi z ich otoczenia. W odróżnieniu od różnych algorytmów bazujących na równaniach różniczkowych metoda ta nie bazuje na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na \autoref{4_fig1}.
+Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierająca się na wypełnianiu brakujących obszarów w obrazie fragmentami pochodzącymi z ich otoczenia. W odróżnieniu od różnych algorytmów opierających się na równaniach różniczkowych metoda ta nie opiera się na metodzie dyfuzji. Pierwszy raz zaproponowana została w \cite{efros1999texture}, a jej podstawowy krok opiera się na schemacie przedstawionym na \autoref{4_fig1}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.6]{rysunki/4_fig1}
 	\caption{Schemat wmalowywania obrazu.}
 	\label{4_fig1}
 \end{figure}
-Podobnie jak w poprzednich rozdziałach zbiór $D$ oznaczony kolorem jasnozielonym określa znane punkty obrazu, natomiast $\Omega$ oznaczony kolorem fioletowym określa obszar do odrestaurowania.
+Podobnie jak w poprzednich rozdziałach zbiór $D$ oznaczony kolorem zielonym
+określa znane punkty obrazu, natomiast $\Omega$ oznaczony kolorem fioletowym określa obszar do odrestaurowania.
 Oznaczenie $\hat{u}(\hat{x})$ stanowi funkcję na obszarze $D^c$, $\hat{x}  \in D^c$ (\autoref{6_fig1}).
 Niech $q_{\hat{x}}$ stanowi podzbiór wartości punktów obrazu scentrowanych względem piksela $\hat{x}$ o zdefiniowanym z góry promieniu otoczenia.
-Dla $q_{\hat{x}}$ zachodzi $\forall p \in q_{\hat{x}} : \chi(p) \neq 0$, gdzie $\chi$ odpowiada funkcji maski \eqref{maskFunction}.
+Dla $q_{\hat{x}}$ zachodzi $\forall p \in q_{\hat{x}} : \chi(p) \neq 0$, gdzie $\chi$ odpowiada funkcji maski \eqref{maskFunction}.oznacza 
 Niech $p_{x}$ stanowi podzbiór punktów tworzących fragment obrazu o rozmiarze równym rozmiarowi $q_{\hat{x}}$, scentrowanych względem piksela $x$, gdzie $x \in \partial \Omega$.
 Zdefiniujmy dwa podzbiory punktów:
 \begin{align}
 \begin{aligned}
-p_{x} = s_x + i_x
+p_{x} = s_x + i_x,
 \end{aligned}
 \end{align}
-gdzie $\forall p \in s_x : \chi(p) = 1$ i $s_x$ oznacza wypełnioną część fragmentu oraz $\forall p \in i : \chi(p) = 0$ czyli $i_x$ jako brakująca część fragmentu obrazu.  
+gdzie $\forall p \in s_x : \chi(p) = 1$ przy czym $s_x$ oznacza wypełnioną część fragmentu oraz $\forall p \in i : \chi(p) = 0$ czyli $i_x$ jako brakująca część fragmentu obrazu.  
 Oznaczmy odpowiednio zbiory $\hat{s}_{\hat{x}}$ i $\hat{i}_{\hat{x}}$ będące przesunięciem zbiorów $s_x$ i $i_x$ o wektor $\overrightarrow{|x \hat{x}|}$:
 \begin{align}
 \begin{aligned}
-q_{\hat{x}} = \hat{s}_{\hat{x}} + \hat{i}_{\hat{x}}
+q_{\hat{x}} = \hat{s}_{\hat{x}} + \hat{i}_{\hat{x}}.
 \end{aligned}
 \end{align}
 Podstawową operacją wmalowywania metodą propagacji tekstury obrazu jest znalezienie pary
  najbardziej podobnych do siebie fragmentów $\left\langle p_{x}, q_{\hat{x}} \right\rangle $ oraz zgodnie z \autoref{4_fig1} przepisanie wartości odpowiednich pikseli z wyznaczonego zbioru $\hat{i}_{\hat{x}}$ do odpowiadających im pikseli w zbiorze $i_x$ oznaczonych kolorem ciemnozielonym. Zapisując to w sposób formalny szukamy:
 \begin{align}
-\mathrm{arg} \mathop{\mathrm{min}}_{\hat{y} \in D^c} \big\| u(p_x) - \hat{u} (q_{\hat{y}} ) \big\| 
+\mathrm{arg} \mathop{\mathrm{min}}_{\hat{y} \in D^c} \big\| u(p_x) - \hat{u} (q_{\hat{y}} ) \big\| .
 \label{FROBDIST}
 \end{align}
 Najprościej odległość pomiędzy dwoma fragmentami $d\left( u(p_x), \hat{u} (q_{\hat{y}}) \right)$ może być definiowana jako suma kwadratów różnic odpowiadających sobie pikseli ze zbiorów $s_x$ i ${\hat{s}}_{\hat{y}}$:
 \begin{align}
-d\left( u(s_x) - \hat{u}( \hat{s}_{\hat{y}} )\right)= \sum_{z \in s_x} \left( \hat{u}(z + \overrightarrow{|x \hat{x}|}) - u(z) \right)^2
+d\left( u(s_x) - \hat{u}( \hat{s}_{\hat{y}} )\right)= \sum_{z \in s_x} \left( \hat{u}(z + \overrightarrow{|x \hat{x}|}) - u(z) \right)^2 .
 \label{FROBENIUS2} 
 \end{align}
 W celu odrestaurowania obrazu powyższy schemat powtarzany jest aż do momentu wypełnienia całego obszaru $\mathrm{\Omega }$.
@@ -1138,7 +1178,7 @@ Metoda wmalowywania pierwszy raz przedstawiona w  \cite{efros1999texture} nie za
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.3]{rysunki/5_fig2}
-	\caption{Niespójność obrazu przy najlepszym dopasowaniu. $A$ - odrestaurowywany obraz, $B$ - wynik algorytmu, $C$ - oczekiwany wynik.}
+	\caption{Niespójność obrazu przy najlepszym dopasowaniu. $A$ - odrestaurowywany obraz, $B$ - wynik algorytmu, $C$ - oczekiwany wynik. Rysunek autorski.}
 	\label{5_fig2} 
 \end{figure}
 \begin{figure}[!h]
@@ -1152,20 +1192,20 @@ Algorytm przedstawiony w \cite{criminisi2004region} opiera się na powtarzaniu t
 Każda kolejna iteracja prowadzi do przesunięcia granicy maski $\partial \Omega$ w jej głąb. Pierwsze dwa kroki w pojedynczej iteracji służą do wyznaczenia priorytetu $P\left(x\right)$ dla każdego piksela obrazu znajdującego się na granicy maski $x \in \partial \Omega$, natomiast trzeci krok służy znalezieniu najlepszego punktu dopasowania $\hat{x}$.
 Priorytet $P \left( x \right)$ każdego piksela $x$ wyznaczany jest z zależności:
 \begin{align}
-P\left( x \right)=C_t(x)\cdot D_t(x)
+P\left( x \right)=C_t(x)\cdot D_t(x).
 \label{PRIORITY}
 \end{align}
 Pierwszy krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $C_t(x)$ definiowanej (z ang. $C_t$ - confidence term, $D_t$ - data term):
 \begin{align}
-C_t\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|}
+C_t\left( x \right)=\ \frac{\sum_{z \in s_x} {C(z)}}{\left|p_x\right|},
 \label{confidenceTerm}
 \end{align}
 gdzie $\left| p_x\right |$ - liczba pikseli w analizowanym fragmencie - rozmiar rozważanego okna,
 a $\mathbf{C(x)}$ \textbf{to funkcja przypisująca wszystkim pikselom z obrazu poziom wiarygodności odwzorowania oryginalnego obrazu}
-(zastosowanie równania \eqref{pewnoscVFI} jest niewielką zmianą w stosunku do oryginalnej propozycji definicji funkcji $C(x)$ przez autorów w \cite{criminisi2004region}). Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym fragmencie. Funkcję tą interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem opisanym w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C_t$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
+(zastosowanie równania \eqref{pewnoscVFI} jest niewielką zmianą w stosunku do oryginalnej propozycji definicji funkcji $C(x)$ przez autorów w \cite{criminisi2004region}). Funkcja $C_t(x)$ jest sumą wartości $C_t(y)$ wszystkich pikseli z analizowanego fragmentu obrazu $y \in s_x$ scentrowanego względem piksela $x$, które znajdują się w przestrzeni wyznaczonego już obrazu, podzieloną przez ilość pikseli w danym fragmencie. Funkcję tę interpretuje się jako czynnik wymuszający koncentryczne, czyli postępujące wypełnianie wzdłuż granicy maski nieznanych punktów zgodnie z pierwotnym założeniem opisanym w \cite{efros1999texture}. Wynika to z pierwszeństwa jakie wprowadza funkcja $C_t$ przypisując w każdej iteracji coraz niższe wartości kolejnym wypełnianym pikselom. W ten sposób pierwszeństwo wypełniania uzyskują wycinki obrazu zawierające większą liczbę pikseli wypełnionych w poprzednich iteracjach, bądź zawierających oryginalne części obrazu. Mniejszą wartość $C_t$ w każdym kroku interpretuje się jako mniejszą pewność co do wyznaczonych wartości koloru w obrazie.
 Drugi krok w każdej wykonywanej iteracji związany jest z obliczeniem wartości funkcji $D_t(x)$ definiowanej jako:
 \begin{align}
-D_t(x)= \frac{\left|\left( \nabla^{\bot}u_x \right) n_x\right|}{\alpha }
+D_t(x)= \frac{\left|\left( \nabla^{\bot}u_x \right) n_x\right|}{\alpha },
 \label{DataTerm}
 \end{align}
 gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania Naviera-Stokes'a odpowiada kierunkowi rozchodzenia się izolinii obrazu, natomiast  $n_x$ to wektor normalny (prostopadły) do granicy maski $\partial \mathrm{\Omega }$ w punkcie piksela $x$.
@@ -1175,18 +1215,19 @@ gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania 
 	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$.}
 	\label{4_fig3} 
 \end{figure}
-Zgodnie z \autoref{4_fig3} funkcja $D_t$ w sposób liczbowy określa z jaką siłą izolinia obrazu uderza granicę maski. Siła ta zależna jest od gradientu jasności obrazu ${\mathrm{\nabla }}^{\bot }u_x$ oraz od orientacji względem gradientu wektora normalnego do granicy maski. Funkcja przyjmuje największą wartość w momencie, w którym wektor normalny oraz wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} \ 0^0\ }=1)$, a człon ${\mathrm{\nabla }}^{\bot }u_x$ ma największą wartość. W przeciwieństwie do definicji składnika $C_t$ funkcję $D_t$ można zinterpretować jako człon odpowiedzialny za przyznanie wyższego priorytetu pikselowi, stanowiącemu część struktury, która według wyników badań z zakresu psychologii widzenia powinna być kontynuowana w głąb odrestaurowywanego obszaru. Funkcja $D_t$ wpływa ma zmniejszenie pojawiającego się w metodzie zjawiska wprowadzania niespójności obrazu. Niech funkcja $f(p)$ w punkcie obrazu $p \in D \cup \Omega$, gdzie $C(p) > 0$ przyjmuje wartość 0, a w punktach $C(p) = 0$ wartość 1, $f : (\Omega \cup D \to {0,1}$.  Wtedy korzystając z zależności \eqref{dfdx} i \eqref{dfdy} wektor normalny do granicy maski można wyznaczyć z następujących równań:
+Zgodnie z \autoref{4_fig3} funkcja $D_t$ w sposób liczbowy określa z jaką siłą izolinia obrazu ${\mathrm{\nabla }}^{\bot }u_x$ dotyka granicy maski. Siła ta zależy również od wektora normalnego i jest największa gdy oba wspomniane wektory normalny i wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} \ 0^0\ }=1)$.
+W przeciwieństwie do definicji składnika $C_t$ funkcję $D_t$ można zinterpretować jako człon odpowiedzialny za przyznanie wyższego priorytetu pikselowi, stanowiącemu część struktury, która według wyników badań z zakresu psychologii widzenia powinna być kontynuowana w głąb odrestaurowywanego obszaru. Funkcja $D_t$ wpływa ma zmniejszenie pojawiającego się w metodzie zjawiska wprowadzania niespójności obrazu. Niech funkcja $f(p)$ w punkcie obrazu $p \in D \cup \Omega \ $, gdzie $C(p) > 0$ przyjmuje wartość 0, a w punktach $C(p) = 0$ funkcja ta przyjmuje wartość 1, $f : (\Omega \cup D \to \{0,1\}$.  Wtedy korzystając z zależności \eqref{dfdx} i \eqref{dfdy} wektor normalny do granicy maski można wyznaczyć z następujących równań:
 \begin{align}
-n_p= \left[-n_{p_x}\frac{1}{l}\ ,\ -n_{p_y} \frac{1}{l}\right] =\left[-\frac{f_{i+1,j}+f_{i-1,j}}{2h}\cdot \frac{1}{l}, -\frac{f_{i,j+1} + f_{i,j-1}}{2h} \cdot \frac{1}{l}\right]
+n_p= \left[-n_{p_x}\frac{1}{l}\ ,\ -n_{p_y} \frac{1}{l}\right] =\left[-\frac{f_{i+1,j}+f_{i-1,j}}{2h}\cdot \frac{1}{l}, \  -\frac{f_{i,j+1} + f_{i,j-1}}{2h} \cdot \frac{1}{l}\right],
 \label{KIERUNEK}
 \end{align}
 \begin{align}
-l= \sqrt{n^2_{p_x} + n^2_{p_y}}
+l= \sqrt{n^2_{p_x} + n^2_{p_y}}.
 \label{POMKIERUNEK}
 \end{align}
 Dyskretyzacja równania \eqref{DataTerm} zgodnie z \eqref{u}, \eqref{v}, \eqref{KIERUNEK} i \eqref{POMKIERUNEK} w wyniku przyjmuje postać:
 \begin{align}
-D(p)=\ \left|u{\cdot n}_x\frac{1}{L}-v\cdot n_y\frac{1}{L}\right|
+D(p)=\ \left|u{\cdot n}_x\frac{1}{L}-v\cdot n_y\frac{1}{L}\right|.
 \end{align}
 Znając wartości $C_t\left(x\right)$ oraz $D_t(x)$ dla każdego piksela z granicy maski można wyznaczyć wartość priorytetów $P(x)$. Na ich podstawie wybierane jest okno $p(x)$, a następnie najlepsze odwzorowanie $q_{\hat{x}}$.
 Podsumowując operację wmalowywania obrazu można przedstawić w postaci następującego algorytmu. Algorytm ten należy powtarzać aż do wypełnienia wszystkich pikseli z $\mathrm{\Omega }$:
@@ -1204,7 +1245,7 @@ Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopaso
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
 Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie fragmentów jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie.
 \textbf{W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}.}
-Różnica pomiędzy zwykłym algorytmem przedstawionym w \cite{criminisi2004region}, a nowym rozwiązaniem polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej pary łączonych krzywych) znacząco przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
+Różnica pomiędzy algorytmem przedstawionym w \cite{criminisi2004region}, a algorytmem w \cite{StructurePropagationManual} polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe te charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej dla pary łączonych krzywych) znacząco przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1.1]{rysunki/4_fig4}
@@ -1219,17 +1260,17 @@ Wyznaczyć główne struktury obrazu.
 \item
 Rozwiązać następujące zależności:
 \begin{align}
-D(i,j)\triangleq IP\cdot \left[\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ +\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)+\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)\right]
+D(i,j)\triangleq IP\cdot \left[\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ +\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)+\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)\right],
 \label{SalientDistance}
 \end{align}
 \begin{align}
-Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \mathrm{\ }\{1,..,N\}} D(i,j)\ }
+Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \mathrm{\ }\{1,..,N\}} D(i,j)\ }.
 \label{SalientPair}
 \end{align}
 \end{enumerate}
 Analiza powyższych równań wykonana zostanie w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Krokiem wstępnym do rozwiązania powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
 \begin{align}
-G\left(i,j\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{i^2+j^2}{2{\sigma }^2}}
+G\left(i,j\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{i^2+j^2}{2{\sigma }^2}}.
 \label{rozmycieGaussa}
 \end{align}
 Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wygenerowaną macierzą wyznaczoną na podstawie powyższego równania. Operacja rozmycia pozwala pozbyć się mniej znaczących krawędzi z obrazu zostawiając tylko najistotniejsze cechy, które powinny być kontynuowane w niewyznaczonym obszarze. Po operacji rozmycia autorzy w \cite{SalientStrucTexProp} proponują wykrycie głównych struktur na podstawie transformacji falkowej oraz odpowiednio wyznaczonych lokalnych maksimów dla funkcji powstałych na podstawie wspomnianej transformacji. Po tak  przeprowadzonej operacji uzyskuje się wszystkie główne struktury obrazu. Zbiorem krawędzi poddanych analizie są ostatecznie struktury, dla których dochodzi do przecięcia ze zdefiniowaną maską $\mathrm{\Omega }$ zgodnie z \autoref{4_fig5} (jako maska traktowany jest samochód).
@@ -1241,7 +1282,7 @@ Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wy
 \end{figure}
 Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zostaje punkt środkowy. Względem środka tego punktu tworzone jest okno  $f^i$ o wcześniej zdefiniowanym obszarze. Pierwszym członem w równaniu \eqref{SalientDistance} wyznaczonym na podstawie utworzonego okna $f^i$ jest $D_1\left(f^i_C,f^j_C\right)$. Symbole $f^i_C$ oraz $f^j_C$ stanowią posegmentowane fragmenty obrazu względem wcześniej zdefiniowanej liczby głównych, dominujących kolorów w obrazie. Dla każdego wycinka $f^i_C$ można zdefiniować zbiór punktów $(c_k,p_k)$, gdzie $c_k$ odpowiada danemu kolorowi, natomiast $p_k$ jego procentowemu udziałowi we fragmencie $f^i$, przy $k=1,\dots ,M$. Dysponując zbiorami punktów dla okien $f^i_C$,$\ f^j_C$ można liczbowo przedstawić ich poziom podobieństwa obliczając: 
 \begin{align}
-D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j
+D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j.
 \label{colDistance}
 \end{align}
 Dokładna analiza oraz sposób wyznaczania podobieństwa okien $f^i$ przedstawione są w pozycji \cite{chen2005adaptive}.
@@ -1252,20 +1293,21 @@ Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\r
 	\caption{Bank 38 filtrów grupy MR8. źródło \cite{varma2009statistical}.}
 \label{4_fig6}
 \end{figure}
-Przez odpowiedź obrazu na filtr należy rozumieć operację splotu z macierzą odpowiadającą definicji konkretnego filtru. W grupie filtrów $MR8$ branych pod uwagę znajduje się filtr Gaussowski, oraz filtr $LOG$ będący laplasjanem funkcji gaussowskiej. Na pozostałe 36 filtrów składają się dwie grupy filtrów utworzonych na podstawie filtru krawędziowego oraz filtru (w języku angielskim) "bar filter". Każdy z nich przedstawiony jest w sześciu orientacjach oraz trzech skalach zgodnie z rysunkiem \autoref{4_fig6}. Maksymalna odpowiedź na bazę trzydziestu ośmiu filtrów definiowana jest następująco:
+Przez odpowiedź obrazu na filtr należy rozumieć operację splotu z macierzą odpowiadającą definicji konkretnego filtru. W grupie filtrów $MR8$ branych pod uwagę znajduje się filtr Gaussowski, oraz filtr $LOG$ będący laplasjanem funkcji gaussowskiej.
+Na pozostałe 36 filtrów składają się dwie grupy filtrów utworzonych na podstawie filtru krawędziowego oraz filtru (w języku angielskim) "bar filter". Każdy z nich przedstawiony jest w sześciu orientacjach oraz trzech skalach zgodnie z \autoref{4_fig6}. Maksymalna odpowiedź na bazę trzydziestu ośmiu filtrów definiowana jest następująco:
 \begin{align}
-I_{fmax}(p)=\mathrm{max}\mathrm{}(I_{f1}(p),I_{f2}(p),\dots ,I_{f38}(p))
+I_{fmax}(p)=\mathrm{max}\big[(I_{f1}(p),I_{f2}(p),\dots ,I_{f38}(p) \big],
 \end{align}
 gdzie $p$ - piksel obrazu poddanego filtracji, $p\in I$, $I_{fi}$ - odpowiedź obrazu $I$ na $i$-ty filtr z bazy filtrów. Wzajemne podobieństwo wyznaczonych okien odpowiadających głównym strukturom w obrazie można wyrazić zależnością:
 \begin{align}
-D_2{\left(f^i_T,f^j_T\right)}_i=\frac{{\left|MR8\left(f^i\right)-MR8\left(f^j\right)\right|}_F}{250}=\frac{{\left|f^i_T-f^j_T\right|}_F}{250}
+D_2{\left(f^i_T,f^j_T\right)}_i=\frac{{\left|MR8\left(f^i\right)-MR8\left(f^j\right)\right|}_F}{250}=\frac{{\left|f^i_T-f^j_T\right|}_F}{250}.
 \end{align}
 W powyższej zależności norma oznaczona literą $F$ oznacza normę Frobenius'a liczoną zgodnie z \eqref{FROBENIUS}.
 Dokładny algorytm klasyfikacji tekstur przedstawiony został przez Manika Varma'e i Adrew Zisserman'a w \cite{varma2009statistical}. Ostatnim członem w równaniu \eqref{SalientDistance} jest człon $D_3\left(f^i_{cur},f^j_{cur}\right)$ odpowiadający liczbowej reprezentacji podobieństwa krzywizn ze zbioru głównych struktur. Autorzy w \cite{SalientStrucTexProp} nie podają sposobu wyznaczenia normy:
 \begin{align}
 D_3\left(f^i_{cur},f^j_{cur}\right)=\ \left|curvature_i-curvature_j\right|
 \end{align}
-Proponują natomiast aby każdą z wyznaczonych głównych struktur przedstawić w postaci równania wielomianu drugiego stopnia. Aproksymacji współczynników wielomianu można dokonać na podstawie rozwiązania następującego równania macierzowego:
+Proponują oni natomiast aby każdą z wyznaczonych głównych struktur przedstawić w postaci równania wielomianu drugiego stopnia. Aproksymacji współczynników wielomianu można dokonać na podstawie rozwiązania następującego równania macierzowego:
 \begin{align}
 \left[ \begin{array}{ccc}
 n & \sum{x_i} & \sum{x^2_i} \\ 
@@ -1285,12 +1327,12 @@ gdzie $n$ określa liczbę zastosowanych par $(x_i,y_i)$, a wielomian przedstawi
 \begin{align}
 curvature_i={f_i\left(x\right)=a}_{0_i}+a_{1_i}x+a_{2_i}x^2
 \end{align}
-Według wyznaczonych równań, pary głównych struktur uzyskane w dalszych krokach algorytmu, propagowane są w głąb obszaru $\mathrm{\Omega }$, aż do momentu ich przecięcia. Ostatnią ważną zmienną w równaniu \eqref{SalientDistance} jest $IP$. Jest to zmienna, która przyjmuje wartość zerową, gdy badana para głównych struktur nie jest ze sobą równoległa, bądź jeden w przeciwnym wypadku. Aby uzyskać równania prostych opisujące wyznaczone krzywe można dokonać aproksymacji na podstawie transformacji Hough'a. Transformacja bazuje na wygodnej postaci równania prostej:
+Według wyznaczonych równań, pary głównych struktur uzyskane w dalszych krokach algorytmu, propagowane są w głąb obszaru $\mathrm{\Omega }$, aż do momentu ich przecięcia. Ostatnią ważną zmienną w równaniu \eqref{SalientDistance} jest $IP$. Jest to zmienna, która przyjmuje wartość zerową, gdy badana para głównych struktur nie jest do siebie równoległa, bądź przyjmuje wartość jeden w przeciwnym wypadku. Aby uzyskać równania prostych opisujące wyznaczone krzywe można dokonać aproksymacji na podstawie transformacji Hough'a. Transformacja ta bazuje na następującej postaci równania prostej:
 \begin{align}
 y=\ -\frac{{\mathrm{cos} \theta \ }}{{\mathrm{sin} \theta \ }}x+\frac{r}{{\mathrm{sin} \theta \ }}
 \label{HOUGHTRANSFORM}
 \end{align}
-Posługiwanie się parametrami $\theta $ oraz $r$ pozwala uniknąć niejednoznaczności, w przypadku opisu pionowych linii oraz umożliwia przedstawienie prostej w postaci jednego punktu w przestrzeni Hough'a. Przekształcenie z przestrzeni $D^c$ można przedstawić następująco:
+Posługiwanie się parametrami $\theta $ oraz $r$ pozwala uniknąć niejednoznaczności, w przypadku opisu linii pionowych oraz umożliwia przedstawienie prostej w postaci jednego punktu w przestrzeni Hough'a. Przekształcenie z przestrzeni $D^c$ można przedstawić następująco:
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1.35]{rysunki/4_fig7}
