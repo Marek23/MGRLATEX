@@ -1,4 +1,3 @@
-
 \documentclass[12pt, twoside, openany]{report}
 \usepackage[dvips]{graphicx,color,rotating}
 \usepackage[utf8]{inputenc}
@@ -11,7 +10,7 @@
 \usepackage{grffile}
 \usepackage{hyperref}
 \usepackage{verbatim}
-\usepackage{longtable}
+\usepackage{longtable,pdflscape,booktabs}
 \usepackage[MeX]{polski}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
@@ -330,7 +329,6 @@ W celu dokładnej analizy dyskretyzacji równanie \eqref{NavierStokesEquationVor
 \label{NavierDiffAdv}
 ,
 \end{equation}
-oraz
 \begin{equation}
 {ad}=\nu \nabla \Big[ \nabla 
 \Big(\mathrm{\nabla }^2I)\Big)\nabla {\mathrm{(}\mathrm{\nabla }}^2I)\Big]
@@ -338,12 +336,12 @@ oraz
 .
 \end{equation}
 Rozwiązanie powyższych równań dokonywane będzie na siatce obliczeniowej typu Eulera, a wszystkie wartości wyznaczanych zmiennych będą znajdować się w centrach komórek zdefiniowanych jako konkretne piksele obrazu.
-\begin{longtable}{ ||c|c|c|| } 
+\begin{longtable}{ ||P{2cm}|P{2cm}|P{2cm}|| } 
  \hline \hline
  $i-1, j-1$ & $i-1, j$ & $i-1, j+1$ \\ \hline
  $i, j-1$ & $i, j$ & $i, j+1$ \\ \hline
  $i+1, j+1$ & $i+1, j$ & $i+1, j+1$ \\ \hline \hline
-\caption{Współrzędne komórek siatki obliczeniowej.}
+\caption{Widok siatki obliczeniowej typu Eulera.}
 \end{longtable}
 Równanie \eqref{NavierDiffAdv} to równanie różniczkowe cząstkowe typu parabolicznego. Równanie to  można rozwiązać w sposób przybliżony używając schematu różnicy centralnej bądź schematu różnicy do przodu. W przypadku równania parabolicznego oba schematy dają stabilne rozwiązanie. W celu ułatwienia dalszych rozważań wprowadzono funkcję $f$ określoną w centrach siatki, z dolnymi indeksami wskazującymi na konkretne miejsce w siatce. Korzystając z rozwinięcia w szereg Taylora możemy gradient funkcji $f$ w punkcie $(i,j)$ przybliżyć następującym wzorem:
 \begin{equation}
@@ -357,7 +355,6 @@ gdzie:
 \label{dfdx}
 ,
 \end{equation}
-i analogicznie:
 \begin{equation}
 {\frac{\partial f}{\partial y}} {\bigg |}_{i,j}=\frac{f_{i,j+1}+f_{i,j-1}}{2\Delta y}
 \label{dfdy}
@@ -661,6 +658,7 @@ g^{n+1}_2|_{i,j} &=\left[\frac{2\lambda }{\mu \sqrt{2\lambda }\ +\ 4\frac{\lambd
 \end{aligned}
 \end{align}
 przy czym:
+\begin{large}
 \begin{align}
 \begin{aligned}
 c^n_1\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i,j}}{h}\right)}^2+ {\left(\frac{u^n\big|_{i,j+1}-u^n\big|_{i,j-1}}{2h}\right)}^2+\ \varepsilon }},
@@ -681,12 +679,13 @@ c^n_3\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j}-u^n\big|_{i-1,j}}{
 c^n_4\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j-1}-u^n\big|_{i-1,j-1}}{2h}\right)}^2+\ {\left(\frac{u^n\big|_{i,j}-u^n\big|_{i,j-1}}{h}\right)}^2+\ \varepsilon }}.
 \end{aligned}
 \end{align}
+\end{large}
 W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \longrightarrow 0$. 
 Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Autorzy w \cite{NavierStokesAndTexturePropagation} proponują aby do wmalowywania struktur zastosować algorytm przedstawiony w \cite{bertalmio2000image}, natomiast do uzyskania brakującej tekstury sugerują użycie następującego algorytmu syntezy obszaru $\mathrm{\Omega }$.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1]{rysunki/5_fig1}
-	\caption{Prosty algorytm wmalowywania tekstury obrazu.}
+	\includegraphics[scale=0.9]{rysunki/5_fig1}
+	\caption{Prosty algorytm wmalowywania tekstury obrazu. Rysunek autorski.}
 	\label{5_fig1}
 \end{figure} \\
 Zgodnie z \autoref{5_fig1} dla każdego piksela znajdującego się na granicy obszaru $\mathrm{\Omega }$ tworzone jest okno stanowiące szablon wykorzystywany do odnalezienia najlepszego dopasowania z pośród całego obrazu $v$. W przypadku odnalezienia takiego dopasowania uzyskany piksel kopiowany jest w miejsce piksela brakującego. Algorytm ten można wykonywać pobierając piksele z granicy w kolejności zgodnej z kolejnością obrotu wskazówek zegara, postępując w głąb obszaru $\mathrm{\Omega }$, aż do wypełnienia wszystkich brakujących pikseli. 
@@ -795,7 +794,8 @@ W celu dyskretyzacji powyższych równań należy zgodnie z \cite{gilboa2008nonl
 	\caption{Przykładowe okna ${\boldsymbol{\mathrm{N}}}_{\boldsymbol{x}}\boldsymbol{,\ }{\boldsymbol{\mathrm{N}}}_{\boldsymbol{y}}$ utworzone dla pikseli $\boldsymbol{x},\boldsymbol{y}$.}
 	\label{3_fig4}
 \end{figure}
-Operatory nielokalne można przedstawić za pomocą zdyskretyzowanych równań:
+Operatory nielokalne można przedstawić w postaciach dyskretnych:
+\begin{large}
 \begin{equation}
 {\mathrm{\nabla }}_{NLd}I|_{x,y}\triangleq \left(I_y-I_x\right)\sqrt{w_{x,y}}
 \label{DNLGRAD}
@@ -827,13 +827,16 @@ y\in N_x \\
 \label{DNLLAP}
 .
 \end{equation}
+\end{large}
 W szczególnym przypadku dla \eqref{NLDIVSMART} można zapisać:
+\begin{large}
 \begin{equation}
 {\mathrm{\nabla }}_{NLd}\cdot \overrightarrow{p}\big|_x \triangleq \sum_{ 
 y\in N_x \\ 
 }{2p_{x,y}}\sqrt{w_{x,y}}
 \label{DNLDIVSMART}
 \end{equation}
+\end{large}
 Warto zauważyć, iż indeksy $x,y$ wskazują na konkretny piksel w obrazie. Lokalizacji w przestrzeni $2D$ dokonuje się przez znajomość par: $x=(i_x,j_x)$ oraz $y=(i_y,j_y)$.
 Model nielokalny wariacji całkowitej funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następująca postać:
 \begin{equation}
@@ -902,18 +905,20 @@ Przyjmując naprzemienną strategię minimalizacji energii można uzyskać równ
 \end{align}
 W celu przedstawienia dyskretnej postaci równań \eqref{ELNLCTV1} i \eqref{ELNLCTV2} wygodnym będzie zapis dla konkretnego piksela $z\in D$ w obrazie. W przypadku \eqref{ELNLCTV1} mamy: 
 \begin{align}
-\chi_z \left[{(u_i)}_z-{\left(I^0_i\right)}_z \right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left({{\overrightarrow{v_i}}^k}_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{{{\overrightarrow{b}}_i}^{k+1}}_z\right)=0.
+\chi_z \left[{(u_i)}_z-{\left(I^0_i\right)}_z \right]+\mathrm{\Theta}{\mathrm{\nabla}}_{NL}\cdot \left[ \left({{\overrightarrow{v_i}}^k}\right)_z-{{\mathrm{\nabla}}_{NL}u_i}\big|_z-{\left({{\overrightarrow{b}}_i}^{k+1}\right)}_z \ \right]=0 .
 \label{DELNLCTV1}
 \end{align}
 Korzystając z dyskretnych postaci równań \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{NLPRODUCT} i \eqref{NLDIV} równanie \eqref{ELNLCTV1} można przedstawić w postaci:
+\begin{large}
 \begin{align}
 \begin{aligned}
-{u^{k+1}_i}_{z} &= \frac{1}{\chi_z+2\mathrm{\Theta} \sum\limits_{y\in N_i} w_{i_{z,y}}} \Biggl[2\mathrm{\Theta }\sum_{y\in N_i} {{{u^k_i}_y w_i}_{z,y}}+\\
+{u^{k+1}_i}_{z} &= \frac{1}{\chi_z+2\mathrm{\Theta} \sum\limits_{y\in N_i} \left({w_i}\right)_{z,y}} \Biggl[2\mathrm{\Theta }\sum_{y\in N_i} {{{u^k_i}_y \left({w_i}\right)}_{z,y}}+\\
 &+ \chi_z \ {I^0_i}_z -\\
 &-\mathrm{\Theta} \Biggl[\sum_{y\in N_z} \left({ \left( v^k_i \right)}_{z,y} - { \left( v^k_i \right)}_{z,y} - { \left( v^k_i \right)}_{z,y} + { \left( v^k_i \right)}_{z,y}\right) \sqrt{{\left(w_i\right)}_{z,y}} \Biggr].
 \end{aligned}
 \label{uNLCTV}
 \end{align}
+\end{large}
 W przypadku równania \eqref{ELNLCTV1} Eulera-Lagrange’a należy przekształcić je względem zmiennej $\overrightarrow{v}$:
 \begin{align}
 \begin{aligned}
@@ -924,7 +929,7 @@ W przypadku równania \eqref{ELNLCTV1} Eulera-Lagrange’a należy przekształci
 \end{align}
 Podobnie, korzystając z dyskretnych wersji równań \eqref{NLGRAD}, \eqref{NLWEIGHT}, \eqref{FROBENIUS}, \eqref{NLPRODUCT} i \eqref{NLDIV} równanie \eqref{DELNLCTV2} można przedstawić w postaci:
 \begin{align}
-{{\overrightarrow{v_i}}^{k+1}}_z \cong {\mathrm{max} \left({\left|A^{k+1}_i\right|}_z-\frac{B^k_i}{\mathrm{\Theta }\sqrt{\sum^m_{i=1}{{\left(B^k_i\right)}^2}\ }},0\right)\frac{{A^{k+1}_i}_z}{{\left|A^{k+1}_i\right|}_z}\ },
+{{\overrightarrow{v_i}}^{k+1}}_z \cong {\mathrm{max} \left({\left|A^{k+1}_i\right|}_z-\frac{B^k_i}{\mathrm{\Theta }\sqrt{\sum^m_{i=1}{{\left(B^k_i\right)}^2}\ }},0\right)\frac{\left(A^{k+1}_i\right)_z}{{\left|A^{k+1}_i\right|}_z}\ },
 \label{VNLCTVITER}
 \end{align}
 gdzie:
@@ -932,10 +937,10 @@ gdzie:
 {A^{k+1}_i}_z=\left({\left(u^{k+1}_i\right)}_y-{\left(u^{k+1}_i\right)}_z\right)\sqrt{{\left(w_{i}\right)}_{z,y}}+{\left(b^{k+1}_i\right)}_{z,y},
 \end{align} 
 \begin{align}
-{\left|A^{k+1}_i\right|}_z=\sqrt{\sum_y{{\left[\left({u^{k+1}_i}_y-{u^{k+1}_i}_z\right)\sqrt{{w_i}_{z,y}}+{b^{k+1}_i}_{z,y}\right]}^2}\ },
+{\left|A^{k+1}_i\right|}_z=\sqrt{\sum_y{{\left[\left(\left(u^{k+1}_i\right)_y-\left(u^{k+1}_i\right)_z\right)\sqrt{\left(w_i\right)_{z,y}}+\left(b^{k+1}_i\right)_{z,y}\right]}^2}\ },
 \end{align}
 \begin{align}
-B^k_i=\sum_z{\sqrt{\sum_y{{{v^k_i}^2}_{z,y}}}}.
+B^k_i=\sum_z{\sqrt{\sum_y{\left({v^k_i}^2\right)_{z,y}}}}.
 \end{align}
 \textbf{Warto przypomnieć, iż w przytoczonych wzorach $y$ odpowiada pikselom znajdującym się oknie poszukiwania ${\mathrm{N}}_z$ scentrowanym względem piksela $z$, natomiast $i$ odpowiada $i$-tej warstwie spośród warstw tworzących obraz kolorowy}. Autorzy w \cite{jung2011nonlocal} proponują zmodyfikowany sposób wyznaczania wagi uwzględniający kształt maski w obrazie:
 \begin{align}
@@ -950,30 +955,28 @@ gdzie:
 .
 \end{equation}
 Podsumowując algorytm wmalowywania w oparciu o model $NLCTV$ z algorytmem podziału Bregman’a można przedstawić w następujących krokach:
-\begin{enumerate}
+\begin{enumerate}[I.]
 \item  
 Inicjalizacja zmiennych $k=0,\ \overrightarrow{b^0_i}=0,\ \overrightarrow{v^0_i}=0,\ u^0_i=f^0_i$.
 \item  
 Wyznaczenie wagi $w_i$ zgodnie z równaniem \eqref{NLWEIGHTMASK} dla całego obszaru obrazu $D$.
 \item  
-Powtarzanie aż do spełnienia kryterium końcowego:
-\begin{itemize}
-%\addtolength{\itemindent}{1cm}
+Powtarzanie aż do wyznaczenia całego nieznanego obszaru $\Omega$:
+\begin{enumerate}[1)]
+\item
+wyznaczenie wartości $u_x$ dla każdego piksela $x$, dla którego $p_x$ zawiera conajmniej jeden punkt z poza obszaru $\Omega$, $k$ oznacza krok iteracji procesu minimalizacji w celu wyznaczenia $u$:
+\begin{enumerate}[a)]
 \item
 \noindent wyznaczenie ${\overrightarrow{b}}^{k+1}={\overrightarrow{b}}^k+{\mathrm{\nabla }}_{NL}u^k-{\overrightarrow{v}}^k$,
 \item
-\noindent wyznaczenie $u^{k+1}$ na podstawie \eqref{DELNLCTV1} dla każdego piksela $z$,
+\noindent wyznaczenie $u^{k+1}$ na podstawie \eqref{DELNLCTV1},
 \item
-\noindent wyznaczenie $v^{k+1}$ na podstawie \eqref{VNLCTVITER} dla każdego piksela $z$.
-\end{itemize}
-\item  
-Aktualizacja wagi $w_i$ w obszarze $\mathrm{\Omega }$.
+\noindent wyznaczenie $v^{k+1}$ na podstawie \eqref{VNLCTVITER}.
 \end{enumerate}
-Kryterium definiującym zakończenie algorytmu może być uzyskanie granicznej wartości różnicy wcześniej zdefiniowanej energii $\varepsilon$ pomiędzy kolejnymi wykonywanymi iteracjami:
-\begin{equation}
-\left|E^{k+1}-E^k\right|\le \varepsilon
-.
-\end{equation}
+\item  
+Aktualizacja wagi $w_i$ w wypełnionym obszarze, pomniejszenie obszaru $\mathrm{\Omega }$ o wypełnione piksele.
+\end{enumerate}
+\end{enumerate}
 \section{Wariacyjny model nielokalny wmalowywania - VFI}
 \label{sec:sVFI}
 Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy tej publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\Omega))$ zależnej:
@@ -1016,6 +1019,7 @@ W przypadku gdy przyjmiemy ustaloną wartość $u(x)$ (czyli $u(x) = $ const), t
 \mathop{\operatorname{arg \ min}}_{t} \ \mathcal{E}\biggl( u(x+\cdot) - {\hat{u}}\bigl((x+t)+\cdot\bigr)\biggr),\operatorname{gdzie} \ \forall \ t : x+t \in D^c
 \label{minNNF}
 \end{aligned}
+.
 \end{align}
 Przez symbol $(x+\cdot)$ rozumiemy podmacierz punktów otaczających punkt $x$. 
 Zmienna $t$ w tym zagadnieniu przyjmuje takie wartości ze zbioru wektorów przemieszczeń, których suma z danym wektorem położenia $x$ lokalizuje go w obszarze $D^c$ (podobnie jak na \autoref{6_fig2}, $ \ \hat{x} = x + t$, $ \ x = \hat{x} - t$). Wynikiem minimalizacji jest $\varphi$, która stanowi funkcję wyznaczającą najbliższego sąsiada punktu $x$ z przestrzeni $D^c$, $\varphi :\Omega \rightarrow D^c$. Warto zaznaczyć, że przez pojęcie najbliższego sąsiada punktu $x$ rozumiemy nie punkt znajdujący się najbliżej, ale ten piksel, dla którego zgodnie z przyjętą normą uzyskuje się najniższą wartość z pośród wszystkich możliwych:
@@ -1024,6 +1028,7 @@ Zmienna $t$ w tym zagadnieniu przyjmuje takie wartości ze zbioru wektorów prze
 \big\| u(x + \cdot) - \hat{u}(\hat{x}+\cdot) \big\| 
 \label{normNNF}
 \end{aligned}
+.
 \end{align}
 Propozycje definicji normy są przedstawione przez autorów w \cite{MathematicalModelsforNLTextureInpainting} i zostaną opisane w dalszej części pracy. Warto zauważyć, że normę tę można również zdefiniować za pomocą równań \eqref{NLWEIGHT} bądź \eqref{FROBENIUS}. Najprostszy algorytm wyznaczania najbliższego sąsiada może osiągnąć złożoność do $O(N^3)$ i wymagać znacznych nakładów obliczeniowych. Autorzy w \cite{arias2011variational} proponują zastosowanie algorytmu \textbf{PatchMatch} dokładnie opisanego w \cite{barnes2009patchmatch}. Algorytm ten oparty jest na dwóch krokach. Niech punkt $x$ odpowiada współrzędnym $i, j$ obrazu, natomiast dla uproszczenia zapisu oznaczmy $u(x+\cdot)$ jako $p_u(i,j)$. Wtedy kroki te można opisać następująco:
 \begin{enumerate}
@@ -1125,7 +1130,7 @@ rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \
 \end{itemize}
 Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gaussa. W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{S-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania wykorzystywany do tworzenia coraz mniejszych obrazów wynosi:
 \begin{align}
-r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}
+r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}.
 \end{align}
 W rezultacie aby uzyskać mniejszy obraz musi zachodzić $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień piramidy $s+1$ dla maski  wyznaczamy z zależności:
 \begin{align}
@@ -1171,7 +1176,7 @@ Kolejną grupą algorytmów rozważanych w niniejszej pracy jest grupa opierają
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.6]{rysunki/4_fig1}
-	\caption{Schemat wmalowywania obrazu.}
+	\caption{Schemat wmalowywania obrazu. Rysunek autorski.}
 	\label{4_fig1}
 \end{figure}
 Podobnie jak w poprzednich rozdziałach zbiór $D$ oznaczony kolorem zielonym
@@ -1243,7 +1248,7 @@ gdzie człon ${\mathrm{\nabla }}^{\bot }u_x$ podobnie jak w przypadku równania 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.6]{rysunki/4_fig3}
-	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$.}
+	\caption{Oznaczenie wektorów wykorzystywanych do liczenia wartości $D(x)$. Rysunek autorski.}
 	\label{4_fig3} 
 \end{figure}
 Zgodnie z \autoref{4_fig3} funkcja $D_t$ w sposób liczbowy określa z jaką siłą izolinia obrazu ${\mathrm{\nabla }}^{\bot }u_x$ dotyka granicy maski. Siła ta zależy również od wektora normalnego i jest największa gdy oba wspomniane wektory normalny i wektor izolinii są do siebie równoległe (zgodnie z iloczynem skalarnym wektorów ${\mathrm{cos} \ 0^0\ }=1)$.
@@ -1276,14 +1281,14 @@ Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopaso
 \label{sec:crimMetodSalient}
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
 Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie fragmentów jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie.
-\textbf{W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}.}
 Różnica pomiędzy algorytmem przedstawionym w \cite{criminisi2004region}, a algorytmem w \cite{StructurePropagationManual} polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe te charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej dla pary łączonych krzywych) znacząco przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1.1]{rysunki/4_fig4}
-	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. Źródło \cite{StructurePropagationManual}}.
+	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. Źródło \cite{StructurePropagationManual}.}
 	\label{4_fig4} 
 \end{figure}
+\textbf{W niniejszej pracy zaimplementowano i sprawdzono odrestaurowywanie obrazu na podstawie zadawanych ręcznie przez użytkownika głównych linii zgodnie z \cite{StructurePropagationManual}.}
 \subsection{Automatyczne wykrywanie struktur.}
 W celu zaprojektowania w pełni automatycznego programu do procesu wmalowywania opierającego się na algorytmie wprowadzonym przez Criminisi zaproponowano dodatkową analizę obrazu ograniczającą interakcję użytkownika wyłącznie do wprowadzenia maski. Autorzy w \cite{SalientStrucTexProp} proponują wykonać dwa dodatkowe kroki:
 \begin{enumerate}
@@ -1379,15 +1384,7 @@ Posługując się parametrem $\theta$ określającym kąt pomiędzy wyznaczoną 
 \label{4_fig8}
 \end{figure}
 Dokładną analizę transformacji można znaleźć w \cite{houghTransform}.
-Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{SalientDistance} stanowią wcześniej zdefiniowane wartości przypisujące procentowy wpływ poszczególnych członów na ostateczną wartość dopasowania $D(i,j)$. Według \cite{SalientStrucTexProp} najważniejszym dopasowaniem jest dopasowanie kolorów, następnie tekstur i krzywizn. Stąd należy przyjmować $\alpha >\beta >\gamma $ gdzie suma współczynników wynosi 1. W pracy zbadano powyższe rozwiązanie w ograniczeniu do wykorzystania członów $D_1\left(f^i_C,f^j_C\right)$ oraz $IP$. Człon $D_2\left(f^i_T,f^j_T\right)$ jest istotny w przypadku obrazów monochromatycznych o różnej teksturze. W przypadku obrazów kolorowych w większości przypadków linie granicy głównych struktur tworzone są poprzez gradienty kolorów. Zaletą metody jest stosowanie podzbiorów stanowiących źródło kopiowanych fragmentów w nieznane części obrazu. W uproszczeniu można to przedstawić zgodnie z \autoref{4_fig9}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.4]{rysunki/4_fig9}
-	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru $\boldsymbol{\mathrm{\Omega }}$. Rysunek autorski.}
-\label{4_fig9}
-\end{figure}
-\subsection{Podsumowanie}
-Pomimo automatycznej metody wykrywania i kontunuowania głównych struktur algorytm ten wymaga wielu operacji wykonywanych zdalnie przez użytkownika, takich jak stopień rozmycia wymagany do wprowadzenia w obrazie, wielkość kopiowanych fragmentów, czy też okien stanowiących podstawę do dobierania w pary danych struktur $f$. W przeciwieństwie do metod bazujących na rozwiązywaniu równań różniczkowych oraz metod bazujących na procesie dyfuzji proces wmalowywania opisany w aktualnym rozdziale pozbawiony jest wady w postaci rozmycia w odrestaurowanym obszarze.
+Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{SalientDistance} stanowią wcześniej zdefiniowane wartości przypisujące procentowy wpływ poszczególnych członów na ostateczną wartość dopasowania $D(i,j)$. Według \cite{SalientStrucTexProp} najważniejszym dopasowaniem jest dopasowanie kolorów, następnie tekstur i krzywizn. Stąd należy przyjmować $\alpha >\beta >\gamma $ gdzie suma współczynników wynosi 1. \textbf{W pracy zbadano powyższe rozwiązanie w ograniczeniu do wykorzystania członów $D_1\left(f^i_C,f^j_C\right)$ oraz $IP$}. Człon $D_2\left(f^i_T,f^j_T\right)$ jest istotny w przypadku obrazów monochromatycznych o różnej teksturze. \textbf{Autor niniejszej pracy zauważa, że w przypadku obrazów kolorowych w większości przypadków linie granicy głównych struktur tworzone są poprzez gradienty kolorów}.
 \chapter{Modyfikacje algorytmów}
 \section{Modyfikacja algorytmu bazującego na równaniu Naviera-Stokesa}
 \subsection{Dyskretyzacja dyfuzji anizotropowej}
@@ -1437,12 +1434,12 @@ $\forall \ \hat{x} \in r_x: \forall \ p \in q_{\hat{x}} \cap \ \Omega = \emptyse
 \begin{align}
 r_x = f_r(x).
 \end{align}
-Graficzny sposób modyfikacji przedstawia \autoref{RysCrimMod}.
+Zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego wzorca oraz pozwala w pewnym stopniu wyodrębnić podzbiory, które powinny być jednolicie kontynuowane wgłąb maski. Graficznie przedstawia to rysunek \ref{4_fig9}.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.35]{rysunki/CrimMod}
-	\caption{Obszar zmniejszonego źródła czerpania dopasowania $\hat{x} \in D^c$.}
-\label{RysCrimMod}
+	\includegraphics[scale=0.4]{rysunki/4_fig9}
+	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru$\boldsymbol{\mathrm{\Omega }}$. Rysunek autorski.}
+\label{4_fig9}
 \end{figure}
 \subsection{Modyfikacja sposobu wyznaczania podobieństwa.}
 W niniejszej pracy przetestowano różne rodzaje sposobów definicji odległości $d\left( u(p_x), \hat{u} (q_{\hat{y}}) \right)$  zastępując oryginalną wprowadzoną przez autorów w \cite{criminisi2004region} definicję \eqref{FROBENIUS2} równaniami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} oraz \eqref{nonLocalpoisson}.
@@ -1720,7 +1717,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
 \section{Równanie mechaniki płynu.}
 \label{sec:NVResult}
 \subsection{Rozwiązanie równania Naviera-Stokes'a.}
-Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. \textbf{W trakcie badań autor niniejszej pracy zauważa, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{DiscreteSOR} rozwiązywane jest w każdej jednej iteracji i stopniowo potęguje problem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Jeśli $\Delta t <0.1$ w równaniu \eqref{NavierDiffAdvFor} to stabilność algorytmu jest zachowana przy wartościach $h \geq 0.9$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury. 
+Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. \textbf{Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic}. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. \textbf{W trakcie badań autor niniejszej pracy zauważa, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{DiscreteSOR} rozwiązywane jest w każdej jednej iteracji i stopniowo potęguje problem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Jeśli $\Delta t <0.1$ w równaniu \eqref{NavierDiffAdvFor} to stabilność algorytmu jest zachowana przy wartościach $h \geq 0.9$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury. 
 \begin{longtable}[h!]{|c|c|}
 	\hline
 	Obraz & Dane \\ \hline
@@ -1834,14 +1831,14 @@ Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{imgmask/kotmyszm}.png}
+    \includegraphics[height=5cm]{{imgmask/kotmyszm}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/kotmyszm.bmpUlambda_0.005ts_2.6707}.png}
+    \includegraphics[height=5cm]{{TESTY/SEGMENTACJA/kotmyszm.bmpUlambda_0.005ts_2.6707}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
     
@@ -1852,14 +1849,14 @@ Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{imgmask/Obr17m}.png}
+    \includegraphics[height=6cm]{{imgmask/Obr17m}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr17m.pngUlambda_0.03ts_0.52276}.png}
+    \includegraphics[height=6cm]{{TESTY/SEGMENTACJA/Obr17m.pngUlambda_0.03ts_0.52276}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
     
@@ -1870,14 +1867,14 @@ Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{imgmask/Obr4m}.png}
+    \includegraphics[height=4.5cm]{{imgmask/Obr4m}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/SEGMENTACJA/Obr4m.pngUlambda_0.03ts_2.9892}.png}
+    \includegraphics[height=4.5cm]{{TESTY/SEGMENTACJA/Obr4m.pngUlambda_0.03ts_2.9892}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 	\caption{Segmentacja obrazu na strukturę i teksturę.}
@@ -1924,14 +1921,14 @@ Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu p
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{TESTY/NavierStokes/{Obr4m.pngITER_10000dt_0.015h_3pr_2tns_2021.6256}.png}
+    \includegraphics[height=4.5cm]{TESTY/NavierStokes/{Obr4m.pngITER_10000dt_0.015h_3pr_2tns_2021.6256}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NavierStokes/Obr4m.pngITER_16000dt_0.01h_1pr_2ts_0.37671tns_3310.8032tt_58.261}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NavierStokes/Obr4m.pngITER_16000dt_0.01h_1pr_2ts_0.37671tns_3310.8032tt_58.261}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -1963,14 +1960,14 @@ Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu p
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{TESTY/NavierStokes/{Obr17m.pngITER_10000dt_0.015h_3pr_2tns_3225.3982}.png}
+    \includegraphics[height=6cm]{TESTY/NavierStokes/{Obr17m.pngITER_10000dt_0.015h_3pr_2tns_3225.3982}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{TESTY/NavierStokes/{Obr17m.pngdt_0.01h_1pr_3ts_0.49582tns_526.7624tt_26.033}.png}
+    \includegraphics[height=6cm]{TESTY/NavierStokes/{Obr17m.pngdt_0.01h_1pr_3ts_0.49582tns_526.7624tt_26.033}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -1982,9 +1979,9 @@ Oddzielna synteza tekstury skutkuje jej kontynuacją wgłąb maski. W porównani
 Autor tej pracy magisterskiej sprawdził zaproponowane i opisane przez niego sposoby dyskretyzacji równań dyfuzji przy użyciu skryptów napisanych w Matlab'ie. \textbf{Do dalszych porównań metod bazujących na mechanice płynów (dyfuzji) z pozostałymi zaproponowanymi w tej pracy posłużono się implementacją zawartą w bibliotece OpenCV dostarczaną w ramach wolnego (ogólnodostępnego) oprogramowania.} Ta dyskretyzuje równanie dyfuzji bazując na \cite{BertalmioNavierStokes} i \cite{telea2004image}. Przykłady rozwiązań przedstawia tabela \ref{NavierStokesOpenCV}.
 \begin{longtable}[h!]{|c|c|}
     \hline
-    $t < 1$ s
+    $t < 0.56$ s
     &
-    $t < 1$ s \\ \hline
+    $t < 0.62$ s \\ \hline
 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -1996,13 +1993,13 @@ Autor tej pracy magisterskiej sprawdził zaproponowane i opisane przez niego spo
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5cm]{{TESTY/OpenCV/Obr/Obr19}.png}
+    \includegraphics[height=6cm]{{TESTY/OpenCV/Obr/Obr19}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
 
-    $t <1$ s
+    $t = 0.78$ s
     &
-    $t  <1$ s\\ \hline
+    $t = 0.44$ s\\ \hline
 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -2014,14 +2011,14 @@ Autor tej pracy magisterskiej sprawdził zaproponowane i opisane przez niego spo
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5cm]{{TESTY/OpenCV/Obr/Obr17}.png}
+    \includegraphics[height=6.5cm]{{TESTY/OpenCV/Obr/Obr17}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
 
 	\caption{Rozwiązania uzyskane z wykorzystaniem biblioteki OpenCV.}
 	\label{NavierStokesOpenCV}
 \end{longtable}
-\textbf{Znaczna różnica w czasach wmalowywania obrazów} w głównej mierze (oprócz sposobu implementacji) spowodowana jest wolnym czasem wykonywania operacji matematycznych na macierzach w środowisku Matlab w porównaniu do podstawowych implementacji w językach C/C++.
+\textbf{Znaczna różnica w czasach wmalowywania obrazów} w głównej mierze (oprócz sposobu implementacji) spowodowana jest wolnym czasem wykonywania operacji matematycznych na macierzach w środowisku Matlab - w porównaniu do podstawowych implementacji w językach C/C++.
 \section{Uzupełnianie kawałkami obrazu.}
 \subsection{Metoda Criminisi.}
 Przykładowe wyniki przedstawia tabela:
@@ -2075,7 +2072,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_3sr_8010alfa_0.2t_213.2492}.png}
+    \includegraphics[height=4.7cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_3sr_8010alfa_0.2t_213.2492}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2089,7 +2086,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_15sr_8010alfa_0.2t_113.4021}.png}
+    \includegraphics[height=4.7cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_15sr_8010alfa_0.2t_113.4021}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2103,7 +2100,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_23sr_8010alfa_0.2t_134.3072}.png}
+    \includegraphics[height=4.7cm]{TESTY/CRIM2004/Obr4/{Obr4m.pngpr_23sr_8010alfa_0.2t_134.3072}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2117,7 +2114,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_3sr_8011alfa_0.2t_294.2353}.png}
+    \includegraphics[height=6cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_3sr_8011alfa_0.2t_294.2353}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2131,7 +2128,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_11sr_8011alfa_0.2t_181.0897}.png}
+    \includegraphics[height=6cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_11sr_8011alfa_0.2t_181.0897}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2145,7 +2142,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_23sr_8011alfa_0.2t_196.3067}.png}
+    \includegraphics[height=6cm]{TESTY/CRIM2004/Obr19/{Obr19m.pngpr_23sr_8011alfa_0.2t_196.3067}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2159,7 +2156,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_3sr_8012alfa_0.2t_565.4799}.png}
+    \includegraphics[height=6cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_3sr_8012alfa_0.2t_565.4799}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2173,7 +2170,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_11sr_8012alfa_0.2t_294.7297}.png}
+    \includegraphics[height=6cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_11sr_8012alfa_0.2t_294.7297}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2187,7 +2184,7 @@ Przykładowe wyniki przedstawia tabela:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_23sr_8012alfa_0.2t_328.5629}.png}
+    \includegraphics[height=6cm]{TESTY/CRIM2004/Obr13/{Obr13m.pngpr_23sr_8012alfa_0.2t_328.5629}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2204,7 +2201,12 @@ Przykładowe wyniki przedstawia tabela:
 
 Wyniki przedstawione w tabeli wyznaczono dla \textbf{optymalnego ustawienia parametru $\alpha=0.2$} (definiowanego w związku z \eqref{DataTerm}). Biorąc pod uwagę charakter działania algorytmu i błędy jakie powstają przy jego zastosowaniu można stwierdzić, że zmiana wspomnianego parametru w ogólnym rozważaniu nie wpływa na końcowe obrazy. W zależności od rozpatrywanego obrazu rozmiar fragmentu obrazu może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIImu \ mały rozmiar fragmentu obrazu skutkuje odpowiednią kontynuacją dachu budynku. W przypadku \ObrIVmu \ średni wymiar fragmentu obrazu pozwala na odpowiednią syntezę plaży. W przypadku  \ObrVImu \ największy rozmiar fragmentu obrazu zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. \textbf{W ogólnym rozrachunku metoda w każdym z wyników wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu, niezależnie od modyfikacji wspomnianych w \autoref{ssec:crimMod}}.
 \subsection{Główne struktury obrazu.}
-W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} algorytm wmalowywania przebadano pod kątem priorytetowego wypełnienia głównych struktur obrazu zgodnie z wytycznymi wprowadzonymi manualnie przez użytkownika. Punkty linii głównej struktury znajdującej się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Manualnie została również dobrana wartość promienia skrawka dla każdego obrazu $|p_x|_r$.
+\subsubsection{Automatyczne wykrywanie głównych struktur.}
+Autor niniejszej pracy biorąc pod uwagę przeciętne wyniki uzyskiwane w następnym podrozdziale, gdzie manualne wprowadzenie głównych struktur wiąże się z ich idealnym wyznaczeniem, odszedł od dalszych prac, przedstawienia wyników i udoskonaleń tego rozwiązania.
+Złożoność problemu implementacji oraz nie spełniające oczekiwań wyniki uzyskiwane dla zaimplementowanego rozwiązania skłaniają do zaproponowania innego rozwiązania.
+\subsubsection{Manualne wprowadzanie głównych struktur.}
+W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} algorytm wmalowywania przebadano również pod kątem priorytetowego wypełnienia głównych struktur obrazu \textbf{zgodnie z wytycznymi wprowadzonymi manualnie przez użytkownika}. Punkty linii głównej struktury znajdującej się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Manualnie została również dobrana wartość promienia skrawka dla każdego obrazu $|p_x|_r$.
+\newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
     Obraz & Dane \\ \hline
@@ -2212,7 +2214,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{5_9_Obr6m}.png}
+    \includegraphics[height=6cm]{TESTY/SALCRIM2004/SALIENT/{5_9_Obr6m}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2224,7 +2226,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{4_8_Obr13m}.png}
+    \includegraphics[height=5cm]{TESTY/SALCRIM2004/SALIENT/{4_8_Obr13m}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2236,7 +2238,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{3_4_Obr17m}.png}
+    \includegraphics[height=6cm]{TESTY/SALCRIM2004/SALIENT/{3_4_Obr17m}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2248,7 +2250,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/SALIENT/{1_12_Obr19m}.png}
+    \includegraphics[height=6cm]{TESTY/SALCRIM2004/SALIENT/{1_12_Obr19m}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2274,7 +2276,7 @@ Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr6/{5_9_Obr6m.pngpr_9sr_100000alfa_0.2t_0.49515}.png}
+    \includegraphics[height=6cm]{TESTY/SALCRIM2004/TESTY/Obr6/{5_9_Obr6m.pngpr_9sr_100000alfa_0.2t_0.49515}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2286,7 +2288,7 @@ Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr13/{4_8_Obr13m.pngpr_8sr_100000alfa_0.2t_0.31031}.png}
+    \includegraphics[height=5cm]{TESTY/SALCRIM2004/TESTY/Obr13/{4_8_Obr13m.pngpr_8sr_100000alfa_0.2t_0.31031}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2298,7 +2300,7 @@ Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr17/{3_4_Obr17m.pngpr_4sr_12alfa_0.2t_0.080489}.png}
+    \includegraphics[height=6cm]{TESTY/SALCRIM2004/TESTY/Obr17/{3_4_Obr17m.pngpr_4sr_12alfa_0.2t_0.080489}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2310,7 +2312,7 @@ Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=5.8cm]{TESTY/SALCRIM2004/TESTY/Obr19/{1_12_Obr19m.pngpr_12sr_100000alfa_0.2t_0.36266}.png}
+    \includegraphics[height=6cm]{TESTY/SALCRIM2004/TESTY/Obr19/{1_12_Obr19m.pngpr_12sr_100000alfa_0.2t_0.36266}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
@@ -2484,14 +2486,14 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/bh_2t_150.07}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/ORIG/bh_2t_150.07}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/bh_2_t_13.06}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/NLH1/bh_2_t_13.06}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
     
@@ -2506,14 +2508,14 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/bh_15_t_172.46}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/ORIG/bh_15_t_172.46}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/bh_15_t_13.99}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/NLH1/bh_15_t_13.99}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
     
@@ -2528,14 +2530,14 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/th_2_t_219.95}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/ORIG/th_2_t_219.95}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/th_2t_12.96}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/NLH1/th_2t_12.96}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
     
@@ -2550,14 +2552,14 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/ORIG/th_10_t_227.01}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/ORIG/th_10_t_227.01}.png}
     \vspace{0.2cm}
     \end{minipage}
     &
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVNLH1/NLH1/th_10_t_13.13}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVNLH1/NLH1/th_10_t_13.13}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
 
@@ -2630,14 +2632,14 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_2sw_1t_2041.8515}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_2sw_1t_2041.8515}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_1t_2299.7753}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_1t_2299.7753}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2667,14 +2669,14 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_2sw_1t_5032.0394}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_2sw_1t_5032.0394}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_5sw_3t_21013.3605}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_5sw_3t_21013.3605}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2704,14 +2706,14 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Obr6/Obr6m.pngs_r_9p_r3h_10sw_1t_387.1384}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Obr6/Obr6m.pngs_r_9p_r3h_10sw_1t_387.1384}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Obr6/Obr6m.pngs_r_9p_r3h_12sw_1t_395.0529}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Obr6/Obr6m.pngs_r_9p_r3h_12sw_1t_395.0529}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2749,14 +2751,14 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/kotmyszm.bmps_r_24p_r8h_3sw_1t_38923.7386}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/kotmyszm.bmps_r_24p_r8h_3sw_1t_38923.7386}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/KotMysz/kotmysz_m.pngs_r_5p_r3h_10sw_1t_150.5554}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/KotMysz/kotmysz_m.pngs_r_5p_r3h_10sw_1t_150.5554}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2786,14 +2788,14 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr1m.pngs_r_20p_r7h_2sw_1t_16271.6586}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr1m.pngs_r_20p_r7h_2sw_1t_16271.6586}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Obr1/Obr1m.pngs_r_5p_r3h_10sw_1t_104.9599}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Obr1/Obr1m.pngs_r_5p_r3h_10sw_1t_104.9599}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2855,14 +2857,14 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość pro
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/maciek1m.pngs_r_23p_r10h_3sw_3t_27579.3828}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/maciek1m.pngs_r_23p_r10h_3sw_3t_27579.3828}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/maciek1m.pngs_r_23p_r10h_3sw_1t_4987.1313}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/maciek1m.pngs_r_23p_r10h_3sw_1t_4987.1313}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2894,14 +2896,14 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość pro
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_3t_12766.7184}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_3t_12766.7184}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_1t_2299.7753}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr17m.pngs_r_25p_r10h_5sw_1t_2299.7753}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2933,14 +2935,14 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość pro
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_3sw_3t_21601.9746}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_3sw_3t_21601.9746}.png}
     \vspace{0.2cm}
     \end{minipage}
 	&
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
-    \includegraphics[height=3.8cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_3sw_1t_5037.5187}.png}
+    \includegraphics[height=4.5cm]{{TESTY/NLCTVORIG/Adds/Obr19m.pngs_r_20p_r7h_3sw_1t_5037.5187}.png}
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
@@ -2952,9 +2954,10 @@ Wyniki uzyskane dla zmodyfikowanej funkcji wagi pokazują dokładniejszą kontyn
 Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze pojawia się kolor będący poza paletą dostępnych kolorów w oryginalnym obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd rozmycia. Algorytm ten charakteryzuje się lepszą kontynuacją tekstury. Wadą jest kilkukrotnie wydłużony czas obliczeń. Podobnie jak dla modelu $NLCTV$ można tutaj zastosować modyfikację funkcji wagi $w$, jednak autor niniejszej pracy pominął krok ze względu na dłuższe działanie algorytmu (modyfikacja funkcji wagi również wydłuża czas działania). Wyniki przedstawia tabela:
 \begin{longtable}[h!]{|c|c|}
     \hline
-	Modyfikacja algorytmu
+	Algorytm oryginalny
 	&
-	Algorytm oryginalny \\ \hline
+	Modyfikacja algorytmu
+	\\ \hline
     \multicolumn{2}{|c|}{
     \begin{minipage}{1\textwidth}
     \centering
@@ -3618,7 +3621,7 @@ s(x,y) = \frac{\sigma_{xy} + C_3}{\sigma_{x}\sigma_{y}+C_3}.
 \end{aligned}
 \end{align}
 Zmienne $\mu_x$, $\mu_y$, $\sigma_{x}$, $\sigma_{y}$, $\sigma_{xy}$ stanowią lokalne średnie, odchylenia standardowe i kowariancję.
-\subsection{Porównanie i podsumowanie algorytmów.}
+\subsection{Porównanie i podsumowanie wybranych algorytmów.}
 Algorytmy zostały zbadane dla różnych parametrów wypełniania. Zestawienie w tabelach wykonane jest biorąc pod uwagę najlepszy wyniki dla każdej z grupy. Porównanie przedstawiają tabele \ref{TabCompare} i \ref{TabTimeCompare}.
 
 \begin{table}[!h]
