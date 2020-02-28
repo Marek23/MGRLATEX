@@ -538,8 +538,7 @@ Operację wmalowywania można wykonać na pierwotnych składowych $[R,G,B]$ lecz
 .
 \end{equation}
 \chapter{Metody oparte na procesie minimalizacji energii.}
-\section{Wmalowywanie struktury i tekstury obrazu.}\label{sec:StructureTextureNavierStokes}
-\subsection{Segmentacja obrazu na strukturę i teksturę.}
+\section{Segmentacja obrazu na strukturę i teksturę.}\label{sec:StructureTextureNavierStokes}
 Metoda jednoczesnego wmalowywania struktur i tekstur pierwszy raz przedstawiona została przez Bertalmio w 2003 roku w \cite{NavierStokesAndTexturePropagation}. Opiera się ona na wmalowywaniu struktury w oparciu o algorytm przedstawiony w artykule przy jednoczesnej propozycji prostej syntezy tekstury. Niech $I$ oznacza obraz $R^2\to R,\ \ I\in L^2(R^2)$. Proces wypełniania brakującego regionu $\mathrm{\Omega }$ poprzedzony jest dekompozycją obrazu:
 \begin{align}
 I\left(i,j\right)=u\left(i,j\right)+v\left(i,j\right).
@@ -694,7 +693,7 @@ Wmalowanie nieznanych obszarów $\mathrm{\Omega }$ w warstwach $u_1,u_2,u_3$ dow
 Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego algorytmu syntezy tekstury $v_1$.
 \end{enumerate}
 \textbf{W niniejszej pracy magisterskiej do wypełnienia $u$ posłużono się mętodą Naviera-Stokes'a, natomiast do wypełnienia $v$ metodą Criminisi opisaną w rozdziale \ref{sec:crimMetod}}.
-\section{Model NLCTV. (Non-local color total variation)}
+\section{Model nielokalny NLCTV. (Non-local color total variation)}
 \label{sec:sNLCTV}
 Pojęcie wariacji całkowitej funkcji $TV$ (total variation) w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin'a, Osher'a i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan'a i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie operatorów lokalnych nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
 Klasyczny model nielokalny wariacji całkowitej funkcji został gruntownie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego modelu nielokalnego wariacji całkowitej funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
@@ -1273,6 +1272,7 @@ Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopaso
 \end{enumerate}
 \section{Pojęcie głównych struktur.}
 \label{sec:crimMetodSalient}
+\subsection{Ręczne definiowanie struktur.}
 Poprawa algorytmu przedstawiona w \cite{criminisi2004region} prowadzi do polepszenia otrzymywanych wyników, lecz nie w optymalnym stopniu. W celu dalszej minimalizacji uzyskiwanych niespójności w obrazie i optymalizacji pod kątem szybkości działania algorytmów zostały wprowadzone kolejne modyfikacje: \cite{StructurePropagationManual},  \cite{malluvalasaimplementation}, \cite{SalientStrucTexProp}. 
 Jednym z istotnych ulepszeń algorytmu wmalowywania w oparciu o kopiowanie fragmentów jest wprowadzenie zależności kolejności ich wstawiania w oparciu o główne struktury w obrazie.
 Różnica pomiędzy algorytmem przedstawionym w \cite{criminisi2004region}, a algorytmem w \cite{StructurePropagationManual} polega na wstępnej definicji przez użytkownika grupy punktów znajdujących się w masce. Najczęściej są to krzywe, które zgodnie z psychologią widzenia powinny być kontynuowane w głąb maski tworząc odpowiednie połączenia między sobą. Krzywe te charakteryzują się ograniczoną grupą pikseli mogących stanowić źródło uzupełniania maski. Ograniczając pole $D^c$ dla każdej kontynuowanej krzywej (a najczęściej dla pary łączonych krzywych) znacząco przyspiesza się krok iteracji związany z odnalezieniem najlepszego dopasowania $p_x$ oraz $q_{\hat{x}}$. Schemat wmalowywania w oparciu o powyższy algorytm przedstawia \autoref{4_fig4}.
@@ -1500,7 +1500,7 @@ Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania 
 \end{align}
 W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
 \section{Połączenie syntezy obrazu z funkcją wagi.}
-Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez autora jest zastąpienie problemu minimalizacji energii \eqref{ENLCTV}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury opisanej w \autoref{sec:StructureTextureNavierStokes}. Kroki nowego algorytmu można przedstawić w następującym schemacie postępowania:
+Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez autora jest zastąpienie równania \eqref{NLH1}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury. Kroki nowego algorytmu można przedstawić w następującym schemacie postępowania:
 \begin{enumerate}
 \item
 Wyznaczeniu funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT}.
@@ -3550,10 +3550,9 @@ Algorytmy zostały zbadane dla różnych parametrów wypełniania. Zestawienie w
         \hline
          Skrót & Pełna nazwa metody \\ \hline \hline
          NS    & Metoda wykorzystująca równianie Naviera-Stokesa \\ \hline
-         NSTS    & Metoda wykorzystująca równianie Naviera-Stokesa z uprzednią segmentacją na teksturę i strukturę. \\ \hline
+         NS TS    & Metoda wykorzystująca równianie Naviera-Stokesa z uprzednią segmentacją na teksturę i strukturę. \\ \hline
          Crim    & Metoda Criminisi bazująca na kopiowaniu skrawków. \\ \hline
-         Sal Crim    & Metoda Criminisi bazująca na kopiowaniu z uprzednim wmalowywaniu głównych
-         struktur \\ \hline
+         Sal Crim    & Metoda Criminisi bazująca na kopiowaniu z uprzednim wmalowywaniem ręcznie zadanych głównych struktur \\ \hline
          NLCTV    & Metoda NLCTV \\ \hline
          NLCTV MOD   & Metoda NLCTV z modyfikacją funkcji wagi proponowaną przez autora tej pracy \\ \hline
          VFI   & Wariacyjny model nielokalny \\ \hline
@@ -3620,7 +3619,7 @@ NLCTV MOD (\ref{sec:smodNLCTV}) &
 VFI (\ref{sec:sVFI}) &
 310.71   & 165.53   & 54.95    & 136.01\\ \hline
 \end{tabular}
-\caption{Czas wmalowywania z wykorzystaniem wymienionych metod w sekundach.}
+\caption{Czas wmalowywania z wykorzystaniem wymienionych metod w [s].}
 \label{TabTimeCompare}
 \end{center}
 \end{table}
