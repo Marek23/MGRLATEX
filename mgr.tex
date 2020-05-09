@@ -194,18 +194,38 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \printunsrtglossary[type=symbols, style=long, title={Wykaz oznaczeń i symboli}]
     
 %-----------Poczłtek człłci zasadniczej-----------
-
+\begin{abstract}
+Głównym celem tej pracy magisterskiej jest opracowanie algorytmu skutecznie odbudowującego wcześniej zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi narzędziami wykorzystywanymi w algorytmach rekonstrukcji są:
+\begin{enumerate}
+\item
+cząstkowe równania różniczkowe wyższego rzędu,
+\item
+analiza funkcjonalna, problem minimalizacji energii,
+\item
+definicje metryk będące miarą podobieństwa badanych obszarów.
+\end{enumerate}
+W niniejszej pracy opisano wybrane algorytmy, podano sposoby dyskretyzacji, zaimplementowano, przetestowano, opisano dobór ich optymalnych parametrów i ostatecznie porównano je ze sobą. Zaproponowano nowe modele bądź ulepszenia do zaimplementowanych algorytmów uzupełniania brakujących danych.
+Porównania dokonano na podstawie szybkości algorytmu, obiektywnej oceny poprawności otrzymanego wyniku oraz współczynnika \textbf{SSIM} (Structural similarity). Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
+\textbf{Do implementacji prezentowanych przez autora algorytmów w tej pracy magisterskiej skorzystano z: Matlab'a (narzędzia mex), języka C, C++ oraz Python.}
+\end{abstract}
 \chapter{Wprowadzenie do przetwarzania obrazów.}
-W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększając //TODO zakres zastosowania poszerza. Ogólnie proces analizy obrazu można przedstawić za pomocą następującego modelu: \\
+W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększając swój zakres zastosowań takich jak: wykrywanie obiektów w obrazie, uszkodzeń monitorowanych narzędzi czy też maszyn wykorzystywanych w przemyśle, śledzenie obiektów, automatyczne namierzanie, wykrywanie postaci i obiektów w ruchu ulicznym, rozpoznawanie twarzy, wykrywanie emocji na twarzy itd.  Ogólnie proces analizy obrazu można przedstawić za pomocą prostej transformacji: \\
 \begin{figure}[!h]
 	\centering
 	\includegraphics{rysunki/1_fig1.png}
 \end{figure}
 \\
-Do przetwarzania (analizy) obrazów możemy używać wiele różnych narzędzi takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. Jednym z podstawowych problemów w analizie obrazów jest rekonstrukcja uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach używanych do edycji obrazów, usuwania: niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, do poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
+gdzie $I_0$ to obraz wejściowy, a $u$ to oczekiwany sygnał wyjściowy:
+\begin{align}
+\begin{aligned}
+y(s) = G(s) \cdot u(s)
+\end{aligned}
+\end{align}
+Do przetwarzania (analizy) obrazów możemy używać wiele różnych narzędzi takich jak model stochastyczny, transformacje, równania różniczkowe wyższego rzędu, analiza funkcjonalna. \\
+Jednym z podstawowych problemów w analizie obrazów jest rekonstrukcja uszkodzonego obrazu. Poprawa jakości poprzez metodę wmalowywania jest szeroko stosowana w aplikacjach używanych do edycji obrazów, usuwania: niechcianych obiektów z obrazów, tekstów, zarysowań, uszkodzeń, do poprawy starych zdjęć oraz filmów. Przed przejściem do dokładniejszej analizy wmalowywania obrazu należy podać definicje obrazu cyfrowego.
 \section{Obraz cyfrowy.}
 Dwuwymiarowy obraz jest reprezentacją skończonej ilości dyskretnych wartości zwanych pikselami.
-Każdy z pikseli przypisany jest do konkretnego położenia w dwuwymiarowej przestrzeni dwuwymiarowej - //TODO $x = (i,j) \in D=R^2$, gdzie $D$ oznacza przestrzeń obrazu.
+Każdy z pikseli przypisany jest do konkretnego położenia $x$ o dyskretnych współrzędnych $(i,j)$ w dwuwymiarowej przestrzeni $D=R^2$, gdzie $D$ oznacza przestrzeń obrazu i $x \in D$.
 Wartość piksela $f(x)$ stanowi informację o jasności obrazu szarościowego lub o wartości koloru w obrazie barwnym w danym punkcie $x$. Najczęściej obraz przechowywany jest jako zbiór wartości $f(x) \in \langle 0,255 \rangle$, gdzie 0 oznacza najmniejszą wartość intensywności, a 255 największą wartość intensywności. Obraz w odcieniach szarości jest wynikiem przekształcenia $f: D \rightarrow \mathcal{R}$.
 W przypadku obrazów kolorowych obraz jest wynikiem przekształcenia $f: D \rightarrow \mathcal{R}^n$, gdzie $n$ określa ilość barw w danej przestrzeni.
 Przykładem takiej przestrzeni może być przestrzeń $RGB$, gdzie przy wykorzystaniu trzech kolorów $(n=3)$ uzyskuje się skończoną gamę różnych barw. Biorąc pod uwagę trzy podstawowe kolory oraz 256 wartości intensywności każdej składowej obraz może modelować $256^3=16777216$ różnych kolorów. Jakość obrazu zależy od jego rozdzielczości. Rozdzielczość określa się jako liczbę wierszy i kolumn przypadających na obraz. Obrazy o dużej rozdzielczości charakteryzują się znikomą zdolnością do rozróżnienia poszczególnych pikseli obrazu, dzięki czemu w ogólnym wrażeniu tworzy obraz ciągły (wygładzony)
@@ -219,18 +239,7 @@ Cyfrowe wmalowywanie obrazu jest określeniem malarskim zapożyczonym z techniki
 \end{figure}
 \par
 Obrazy przedstawiono parami: po lewej obraz wejściowy - uszkodzony i po prawej obraz wynikowy - odrestaurowany. Operacji wmalowywania poddaje się uszkodzone obrazy takie jak (a) i (b), bądź jak (c) obrazy przesłonięte umieszczonymi napisami. Często pożądanym jest usunięcie wybranego obiektu z obrazu tak jak np. w przypadku (d) usunięcie postaci. Przestrzeń do wmalowywania w obrazie wyznaczana jest manualnie poprzez użytkownika definiującego konkretny obiekt, który powinien według użytkownika zostać usunięty. Program automatycznie nie jest w stanie wyznaczyć części, która powinna zostać odrestaurowana. 
-Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany obszar sceny wizyjnej musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze. Głównym celem tej pracy magisterskiej jest opracowanie algorytmu skutecznie odbudowującego wcześniej zdefiniowaną nieznaną przestrzeń obrazu. W tym celu dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Wyniki badanych zagadnień uzyskiwane są na podstawie danych wejściowych w postaci zdefiniowanych obszarów obrazu otaczających brakujące regiony. Podstawowymi narzędziami wykorzystywanymi w bardziej złożonych algorytmach rekonstrukcji są:
-\begin{enumerate}
-\item
-cząstkowe równania różniczkowe wyższego rzędu,
-\item
-analiza funkcjonalna, problem minimalizacji energii,
-\item
-definicje metryk będące miarą podobieństwa badanych obszarów.
-\end{enumerate}
-\textbf{W niniejszej pracy opisano przedstawione wcześniej algorytmy, przetestowano, opisano dobór ich optymalnych parametrów, porównano i zaproponowano nowe modele uzupełniania brakujących danych}.
-Porównania dokonano na podstawie dwóch najistotniejszych właściwości: szybkości algorytmu oraz obiektywnej oceny poprawności otrzymanego wyniku. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. Warto zaznaczyć, iż do tej pory nie została przedstawiona jednoznaczna definicja problemu matematycznego pozwalająca w niezawodny sposób wyznaczyć braki w obrazie niezależnie od jego cech charakterystycznych.
-\textbf{Do implementacji prezentowanych przez autora algorytmów w tej pracy magisterskiej skorzystano z: Matlab'a (narzędzia mex), języka C, C++ oraz Python.}
+Techniki wmalowywania znajdują szeroki zakres zastosowań w przetwarzaniu nagrań filmowych, gdzie nieznany obszar sceny wizyjnej musi zostać oszacowany w pewien sposób dostarczając spójności wizualnej użytkownikowi. Przykładami mogą być konieczność ukrywania błędów nagrań, strat wynikających z błędów urządzeń nagrywających, czy też usunięcia niepożądanych obiektów, które w trakcie nagrywania pojawiły się w kadrze. 
 \chapter{Przegląd istniejących algorytmów.}
 Pierwszą gałęzią algorytmów zgodnie z rozróżnieniem wprowadzonym w  \cite{SalientStrucTexProp} są metody opierające się na rozwiązaniu równań różniczkowych wyższego rzędu. Wśród nich pojawia się próba przystosowania procesu dyfuzji do wypełniania braków w obrazie (źródła \cite{bertalmio2000image} lub \cite{BertalmioNavierStokes}), dzięki której przy wykorzystaniu zależności z działu mechaniki płynu można dokonać próby kontynuacji informacji z otoczenia w brakujące obszary. \\
 Drugą gałęzią algorytmów są metody oparte na uzupełnianiu braków obrazu fragment po fragmencie skopiowanymi częściami istniejącego obrazu z miejsc o najlepszym dopasowaniu w miejsce braku. Pierwszy raz taka metoda syntezy obrazu kopiowanymi kawałkami została zaproponowana w \cite{efros1999texture}. Kolejność wypełniania braków nie jest obojętna i ma znaczny wpływ na ostateczną spójność obrazu. Jedna z najpopularniejszych metod określania priorytetu została przedstawiona w \cite{criminisi2004region}. W literaturze pojawiło się wiele metod minimalizujących zjawisko niespójności w obrazie takich jak np. metoda opisana w  \cite{StructurePropagationManual}. \\
@@ -254,7 +263,7 @@ V = \left( -\frac{\partial\Psi}{\partial y},\frac{\partial \Psi}{\partial x} \ri
 ,
 \end{equation}
 gdzie $V$ oznacza prędkość lokalną, $t$ chwilę czasu, $q$ gęstość lokalną, $p$ ciśnienie lokalne, $F$ siłę zewnętrzną działającą lokalnie na ciecz, $\nu$ lepkość kinematyczną lokalną. $\mathit{\Psi}$ oznacza linię prądu będącą ciągłą linią w polu prędkości płynu, poprowadzoną
-stycznie do wektorów prędkości w danej chwili -TODO odnośnik do Navier. Człon $V\nabla V$ odpowiada konwekcji lokalnego pędu wraz z ruchem cieczy, $\frac{1}{q}\nabla p$ wpływowi sił ciśnieniowych na zmianę pędu (kompensuje niezerową konwekcję),  $F$ odpowiada sile zewnętrznej działającej na ciecz (np. grawitację) natomiast $\nu {\nabla }^2V\ $ odpowiada dyssypacji pędu cieczy od tarcia pomiędzy cząstkami. Traktując płyn jako nieściśliwy ($q \leftarrow \infty $)  oraz pomijając działanie sił zewnętrznych ($F=0$)  równanie \eqref{NavierStokesEquation} możemy uprościć do postaci:
+stycznie do wektorów prędkości w danej chwili \cite{BertalmioNavierStokes}. Człon $V\nabla V$ odpowiada konwekcji lokalnego pędu wraz z ruchem cieczy, $\frac{1}{q}\nabla p$ wpływowi sił ciśnieniowych na zmianę pędu (kompensuje niezerową konwekcję),  $F$ odpowiada sile zewnętrznej działającej na ciecz (np. grawitację) natomiast $\nu {\nabla }^2V\ $ odpowiada dyssypacji pędu cieczy od tarcia pomiędzy cząstkami. Traktując płyn jako nieściśliwy ($q \leftarrow \infty $)  oraz pomijając działanie sił zewnętrznych ($F=0$)  równanie \eqref{NavierStokesEquation} możemy uprościć do postaci:
 \begin{equation}
  V\nabla V+\frac{dV}{dt}=\nu {\nabla }^2V
 \label{NavierStokesEquationShort}
@@ -374,7 +383,7 @@ przy czym:
 \label{gradI}
 .
 \end{equation}
-Jeśli zastosujemy pięciopunktowy analog różnicowy \\TODO - cytat do analogu w metodzie różnic skończonych to operator Laplace’a dla przyjętej siatki Eulera można przybliżyć następującym wzorem (przy założeniu, że $\Delta x=\ \Delta y$):
+Jeśli zastosujemy pięciopunktowy analog różnicowy \cite{blacksuccessive} w metodzie różnic skończonych to operator Laplace’a dla przyjętej siatki Eulera można przybliżyć następującym wzorem (przy założeniu, że $\Delta x=\ \Delta y$):
 \begin{align}
 \begin{aligned}
 {\mathrm{\nabla }}^2f_{i,j} &= \Delta f_{i,j}=\\[1ex]
@@ -441,7 +450,7 @@ Na podstawie wyznaczonego modułu należy obliczyć wartość $g{\left({\left|\m
 &+ \partial_y \left( g(\left|\nabla\omega\right|_{i,j}) \cdot \partial_y \omega \big|_{i,j} \right)\bigg|_{i,j}.
 \label{discreteAnisotropic}
 \end{align}
-Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla }}^2I$ wykorzystywanych do obliczeń \eqref{NavierDiffAdv} i \eqref{NavierAdv} w każdej kolejnej chwili czasu (iteracji) $n$, konieczna jest znajomość obrazu $I^n$. W związku z tym równocześnie z równaniem \eqref{Vorticity} \\TODO - zły odnośnik należy rozwiązywać następujące niejednorodne równanie różniczkowe cząstkowe liniowe drugiego rzędu.
+Należy zauważyć, iż do wyznaczenia wartości $u$, $v$ oraz ${\mathrm{\nabla }}^2I$ wykorzystywanych do obliczeń \eqref{NavierDiffAdv} i \eqref{NavierAdv} w każdej kolejnej chwili czasu (iteracji) $n$, konieczna jest znajomość obrazu $I^n$. W związku z tym równocześnie z równaniem \eqref{NavierDiffAdv} należy rozwiązywać następujące niejednorodne równanie różniczkowe cząstkowe liniowe drugiego rzędu.
 \begin{equation}
 \Delta I^n={\omega }^n
 \label{Poisson}
@@ -453,7 +462,7 @@ Dla przestrzeni dwuwymiarowej równanie to przyjmuje następującą postać:
 \label{Poisson2D}
 .
 \end{equation}
-W celu przybliżenia drugiej pochodnej funkcji \\TODO - f zmienić na I $f$ w punkcie $(i,j)$ należy rozwinąć funkcję $f$ w dwa szeregi Taylora względem punktu $(i+1,j)$ oraz $(i-1,j)$. Po rozwiązaniu sumy dwóch rozwinięć względem $\frac{{\partial }^2f}{\partial x^2}$ otrzymuje się następujący sposób dyskretyzacji drugiej pochodnej:
+Aproksymacje pochodnych cząstkowych drugiego stopnia schematem centralnym przedstawiają następujące zależności:
 \begin{equation}
 {\frac{{\partial }^2f}{\partial x^2}\bigg|}_{i,j}\mathrm{=}\frac{f_{i+1,j}-2f_{i,j}+f_{i-1,j}}{\Delta x^2}
 \label{d2fdx2}
@@ -470,8 +479,7 @@ I_{i+1,j}+I_{i-1,j}+I_{i,j+1}+I_{i,j-1}-4I_{i,j}=h^2{\omega }_{i,j}
 \label{Laplace}
 .
 \end{equation}
-Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje nasz obraz $I$, $B$ gładkość obrazu, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele różnych metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy 
-a-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując podejście SOR – czyli metodę sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
+Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje nasz obraz $I$, $B$ gładkość obrazu $\omega$, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele różnych metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy Gaussa-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując podejście SOR – czyli metodę sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
 \begin{align}
 \begin{aligned}
 I^{n+1}_{i,j}
@@ -621,7 +629,7 @@ Jako wartości początkowe tego iteracyjnego algorytmu można przyjąć:
 \begin{align}
 u^0=f,\ g_1=-\frac{1}{2\lambda }\frac{f_{\mathrm{x}}}{\left|\mathrm{\nabla }f\right|},\ g_2=-\frac{1}{2\lambda }\frac{f_{\mathrm{y}}}{\left|\mathrm{\nabla }f\right|}.
 \end{align}
-Następnie stosując zależności wyznaczania pochodnych \\TODO zmienić odnośniki z przyszłości \eqref{dfdx}, \eqref{dfdy}, \eqref{leftdfdx}, \eqref{leftdfdy} oraz następującą metodę aproksymacji pochodnej drugiego stopnia:
+Zgodnie z dokładnym wyprowadzeniem przedstawionym w \cite{vese2003modeling} ostatecznie otrzymujemy:
 \begin{align}
 \begin{aligned} 
 {\partial }_{xy}g_1 \big|_{i,j} &\cong \frac{1}{2h^2} \bigg[2g_1\big|_{i,j}+g_1\big|_{i-1,j-1}+g_1\big|_{i+1,j+1}-g_1\big|_{i,\ j-1} -\\ 
@@ -1264,9 +1272,10 @@ D(p)=\ \left|u{\cdot n}_x\frac{1}{L}-v\cdot n_y\frac{1}{L}\right|.
 \end{align}
 Znając wartości $C_t\left(x\right)$ oraz $D_t(x)$ dla każdego piksela z granicy maski można wyznaczyć wartość priorytetów $P(x)$. Na ich podstawie wybierane jest okno $p(x)$, a następnie najlepsze odwzorowanie $q_{\hat{x}}$.
 Podsumowując operację wmalowywania obrazu można przedstawić w postaci następującego algorytmu. Algorytm ten należy powtarzać aż do wypełnienia wszystkich pikseli z $\mathrm{\Omega }$:
+\\ZNOWU PRZYSZŁOŚĆ- TODO
 \begin{enumerate}
 \item
-\\ZNOWU PRZYSZŁOŚĆ- TODO
+
 Na podstawie \eqref{LAPLASJAN} trzeba wyznaczyć granicę maski $\mathrm{\partial }\mathrm{\Omega }$.
 \item
 Na podstawie \eqref{PRIORITY} należy wyznaczyć priorytety wszystkich pikseli z granicy maski $\mathrm{\partial }\mathrm{\Omega }$.
