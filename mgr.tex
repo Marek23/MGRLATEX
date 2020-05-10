@@ -1272,10 +1272,9 @@ D(p)=\ \left|u{\cdot n}_x\frac{1}{L}-v\cdot n_y\frac{1}{L}\right|.
 \end{align}
 Znając wartości $C_t\left(x\right)$ oraz $D_t(x)$ dla każdego piksela z granicy maski można wyznaczyć wartość priorytetów $P(x)$. Na ich podstawie wybierane jest okno $p(x)$, a następnie najlepsze odwzorowanie $q_{\hat{x}}$.
 Podsumowując operację wmalowywania obrazu można przedstawić w postaci następującego algorytmu. Algorytm ten należy powtarzać aż do wypełnienia wszystkich pikseli z $\mathrm{\Omega }$:
-\\ZNOWU PRZYSZŁOŚĆ- TODO
+//ZNOWU PRZYSZŁOŚĆ- TODO
 \begin{enumerate}
 \item
-
 Na podstawie \eqref{LAPLASJAN} trzeba wyznaczyć granicę maski $\mathrm{\partial }\mathrm{\Omega }$.
 \item
 Na podstawie \eqref{PRIORITY} należy wyznaczyć priorytety wszystkich pikseli z granicy maski $\mathrm{\partial }\mathrm{\Omega }$.
@@ -1395,11 +1394,11 @@ Posługując się parametrem $\theta$ określającym kąt pomiędzy wyznaczoną 
 \end{figure}
 Dokładną analizę transformacji można znaleźć w \cite{houghTransform}.
 Pojawiające się współczynniki $\alpha ,\beta ,\gamma $ w równaniu \eqref{SalientDistance} stanowią wcześniej zdefiniowane wartości przypisujące procentowy wpływ poszczególnych członów na ostateczną wartość dopasowania $D(i,j)$. Według \cite{SalientStrucTexProp} najważniejszym dopasowaniem jest dopasowanie kolorów, następnie tekstur i krzywizn. Stąd należy przyjmować $\alpha >\beta >\gamma $ gdzie suma współczynników wynosi 1. \textbf{W pracy zbadano powyższe rozwiązanie w ograniczeniu do wykorzystania członów $D_1\left(f^i_C,f^j_C\right)$ oraz $IP$}. Człon $D_2\left(f^i_T,f^j_T\right)$ jest istotny w przypadku obrazów monochromatycznych o różnej teksturze. \textbf{Autor niniejszej pracy zauważa, że w przypadku obrazów kolorowych w większości przypadków linie granicy głównych struktur tworzone są poprzez gradienty kolorów}.
-\chapter{Modyfikacje algorytmów}
+\chapter{Autorska modyfikacja algorytmów}
 \section{Modyfikacja algorytmu bazującego na równaniu Naviera-Stokesa}
 \subsection{Dyskretyzacja dyfuzji anizotropowej}
 \label{ssec:anisModNS}
-Jedną z głównych niedogodności rozwiązania opartego na równaniu mechaniki płynów jest konieczność przyjęcia takich parametrów, dla których uzyskuje się jednocześnie stabilność, sprawność obliczeń oraz odpowiednią dokładność rozwiązania (ograniczenie rozmycia uzyskanego obrazu). Implementacja równania \eqref{NavierAdv} według oryginalnie przedstawionego w publikacji \cite{au2001image} sposobu dyskretyzacji, nie pozwala wpłynąć na uzyskiwany ostatecznie wynik pomimo wielu prób parametryzacji. To skłoniło autora ninijszej pracy do podmiany sposobu dyskretyzacji na sposób przedstawiony w \cite{van2005algorithms}. Algorytm ten wykorzystuje asymetryczny schemat liczenia pierwszej pochodnej funkcji. Niech pierwsze pochodne lewostronne przyjmą postać:
+Jedną z głównych niedogodności rozwiązania opartego na równaniu mechaniki płynów jest konieczność przyjęcia takich parametrów, dla których uzyskuje się jednocześnie stabilność, sprawność obliczeń oraz odpowiednią dokładność rozwiązania (ograniczenie rozmycia uzyskanego obrazu). Implementacja równania \eqref{NavierAdv} według oryginalnie przedstawionego w publikacji \cite{au2001image} sposobu dyskretyzacji, nie pozwala wpłynąć na uzyskiwany ostatecznie wynik pomimo wielu prób parametryzacji. To skłoniło autora ninijszej pracy do zmiany sposobu dyskretyzacji na sposób przedstawiony w \cite{van2005algorithms}. Algorytm ten wykorzystuje asymetryczny schemat liczenia pierwszej pochodnej funkcji. Niech pierwsze pochodne lewostronne przyjmą postać:
 \begin{equation}
 \frac{\partial^-f}{\partial x}\bigg|_{i,j}=\frac{f_{i,j}-f_{i-1,j}}{\Delta x}
 \label{leftdfdx}
@@ -1434,18 +1433,18 @@ ${\partial }_x\Big(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega 
 \label{discreteAnisotropic2}
 \end{align}
 \subsection{Algorytm wmalowywania tekstury obrazu}
-Jednym ze sposobów wmalowywania jest osobne rozpatrywanie uzyskanej w wyniku segmentacji struktury i tekstury obrazu. \textbf{Autor niniejszej pracy proponuje wypełniać teksturę bazując na metodzie Criminisi opisanej w dziale \ref{sec:crimMetod}} w zamian za metodę przedstawioną na rysunku \ref{5_fig1}.
+Jednym ze sposobów wmalowywania jest osobne rozpatrywanie uzyskanej w wyniku segmentacji struktury i tekstury obrazu. \textbf{Autor niniejszej pracy proponuje wypełnianie tekstury w oparciu o metodę Criminisi'ego opisaną w podrozdziale \ref{sec:crimMetod}} zamiast stosowania mety przedstawionej na rysunku \ref{5_fig1}.
 \section{Modyfikacja algorytmu Criminisi.}
 \label{ssec:crimMod}
 \subsection{Modyfikacja źródła czerpania dopasowania.}
 \label{ssec:crimModSource}
-W niniejszej pracy algorytm wypełniania fragmentami obrazu zmieniono przez wprowadzenie okna poszukiwania $r_x$, będącego otoczeniem piksela $x$ z promieniem o długości $r$. Wprowadzone okno ogranicza zbiór pikseli, dla których tworzony jest fragment obrazu $q_{\hat{x}}$ porównywany z $p_{x}$.
+W niniejszej pracy algorytm wypełniania fragmentami obrazu zmieniono przez wprowadzenie okna poszukiwania $r_x$, będącego otoczeniem piksela $x$ z bokiem o długości $r$. Wprowadzone okno ogranicza zbiór pikseli, dla których tworzony jest fragment obrazu $q_{\hat{x}}$ porównywany z $p_{x}$.
 Piksel $\hat{x}$ przedstawimy jako $\hat{x} \in r_x$, a zbiór $r_x$ jako 
 $\forall \ \hat{x} \in r_x: \forall \ p \in q_{\hat{x}} \cap \ \Omega = \emptyset$. Zapisując formalnie - wprowadzamy dodatkową funkcję $f_r$ tworzącą dla każdego piksela $x$ podzbiór $r_x$:
 \begin{align}
 r_x = f_r(x).
 \end{align}
-Zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego wzorca oraz pozwala w pewnym stopniu wyodrębnić podzbiory, które powinny być jednolicie kontynuowane wgłąb maski. Graficznie przedstawia to rysunek \ref{4_fig9}.
+Zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego //TODO normy oraz pozwala w pewnym stopniu //TODO że chodzi o strukturę wyodrębnić podzbiory, które powinny być jednolicie kontynuowane wgłąb maski. Graficznie przedstawia to rysunek \ref{4_fig9}.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.4]{rysunki/4_fig9}
@@ -1454,7 +1453,7 @@ Zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego wzorca oraz pozwa
 \end{figure}
 \subsection{Modyfikacja sposobu wyznaczania podobieństwa.}
 \label{ssec:modDistForCrim}
-W niniejszej pracy przetestowano różne rodzaje sposobów definicji odległości $d\left( u(p_x), \hat{u} (q_{\hat{y}}) \right)$  zastępując oryginalną wprowadzoną przez autorów w \cite{criminisi2004region} definicję \eqref{FROBENIUS2} równaniami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} oraz \eqref{nonLocalpoisson}.
+W niniejszej pracy przetestowano różne rodzaje odległości $d\left( u(p_x), \hat{u} (q_{\hat{y}}) \right)$  zastępując oryginalną odległosć wprowadzoną przez autorów w \cite{criminisi2004region} definicję \eqref{FROBENIUS2} równaniami: \eqref{NLWEIGHT}, \eqref{normNNF}, \eqref{nonLocalMeans}, \eqref{nonLocalMedians} oraz \eqref{nonLocalpoisson}.
 \subsection{Modyfikacja funkcji $D_t$.}
 \label{ssec:modDtForCrim}
 Granicę maski $\partial \mathrm{\Omega }$ wyznacza się wykorzystując operację erozji i dylacji. Innym sposobem jest zastosowanie dyskretnego splotu maski z macierzą reprezentującą laplasjan dla siatki 8-spójnej: 
@@ -1468,8 +1467,8 @@ s_8 =
 \label{LAPLASJAN}
 .
 \end{equation}
-Poprawę dokładności wyznaczania wektorów $n_x$ i $\nabla^\bot u_x$ (\autoref{4_fig3}) wnikających wgłąb nieznanego obszaru, a więc i poprawę dokładności algorytmu, w niniejszej pracy uzyskuje się przez uwzględnienie różniczek wyznaczanych dla wszystkich pikseli stanowiących otoczenie głównego piksela $x$. Wpływ każdej z różniczki na ostatecznie wyznaczaną wartość jest procentowo określany.
-Dla przykładu, niech otoczenie piksela $(i, j)$ stanowi macierz o rozmiarze $3 \times 3$. Wtedy jeśli chcemy wyznaczyć $n_{p_{(i,j)}}$ zastosujemy równanie:
+Poprawę dokładności wyznaczania wektorów $n_x$ oraz $\nabla^\bot u_x$ (\autoref{4_fig3}) wnikających wgłąb nieznanego obszaru, a więc i poprawę dokładności algorytmu, w niniejszej pracy uzyskuje się przez uwzględnienie różniczek wyznaczanych dla wszystkich pikseli stanowiących otoczenie głównego piksela $x$. Wpływ każdej z różniczek na ostatecznie wyznaczaną wartość jest procentowo określany.
+Na przykład niech otoczenie piksela $(i, j)$ stanowi macierz o rozmiarze $3 \times 3$. Wtedy jeśli chcemy wyznaczyć $n_{p_{(i,j)}}$ zastosujemy równanie: //TODO dodać nr równania
 \[
 \begin{bmatrix}
 n_{p_{(i,j)}}
@@ -1492,11 +1491,12 @@ c_2\\
 c_3
 \end{bmatrix},
 \]
-gdzie $c_1, c_2, c_3$ współczynniki stopniujące wpływ różniczek (mogą być wyznaczane na podstawie rozkładu Gaussa). Analogicznie postępujemy dla innych rozmiarów.
+gdzie $c_1, c_2, c_3$ oznaczają współczynniki stopniujące wpływ różniczek (mogą być wyznaczane na podstawie rozkładu Gaussa). Analogicznie postępujemy dla innych rozmiarów.
 \section{Model NLCTV}
 \label{sec:smodNLCTV}
 \subsection{Modyfikacja funkcji wagi.}
-W trakcie testowania algorytmu pożądanym przez autora stało się poszerzenie zbyt lokalnej analizy obrazu, skutkującej nieodpowiednią kontynuacją struktury. Zwiększając parametry rozmiaru fragmentu obrazu $p_x$ i rozmiaru okna $\text{N}_x$ algorytm ten łączy różne struktury, rozmazuje je, nie pozwalając odpowiednio kontynuować także tekstury obrazu. Aby uniknąć zjawisk rozmycia tekstury i jednocześnie połączeń różnych struktur zaproponowano modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
+//TODO jeśli zwiększamy parametry okna to algorytm łączy różne struktury.
+W trakcie testowania algorytmu pożądanym przez Autora //TODO autor z dużej wszędzie tej pracy magisterskiej stało się poszerzenie zbyt lokalnej analizy obrazu, skutkującej nieodpowiednią kontynuacją struktury. Zwiększając parametry rozmiaru fragmentu obrazu $p_x$ i rozmiaru okna $\text{N}_x$ algorytm ten łączy różne struktury, rozmazuje je, nie pozwalając odpowiednio kontynuować także tekstury obrazu. Aby uniknąć zjawisk rozmycia tekstury obrazu i jednocześnie połączeń różnych struktur //TODO autor tej pracy zaproponował modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
 \begin{aligned}
 w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\big|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\big|}^2}{r^2}\right\} \cdot}\\
@@ -1504,9 +1504,9 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\big|I\left(x+\ \c
 \label{NLWEIGHTMODIFIED}
 \end{aligned}
 \end{align}
-W powyższej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość obliczanej wagi.
+W //TODO powyższej przytoczonej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość obliczanej wagi.
 \subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
-Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania nowych wartości w obrazie. W celu skrócenia tego czasu autor pracy proponuje zastosowanie następującej aproksymacji równania \eqref{uNLCTV} pozwalając uzyskać wyniki zbliżone do wyników oryginalnego algorytmu:
+Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania nowych wartości w obrazie. W celu skrócenia tego czasu Autor tej pracy magisterskiej proponuje zastosowanie następującej aproksymacji równania \eqref{uNLCTV}, pozwalającej uzyskać wyniki zbliżone do wyników oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
 {{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
@@ -1514,28 +1514,28 @@ Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania 
 \end{aligned}
 \label{NLH1}
 \end{align}
-W powyższym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
+W //TODO przytoczonym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie algorytmu dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
 \section{Połączenie syntezy obrazu z funkcją wagi.}
-Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez autora jest zastąpienie równania \eqref{NLH1}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury. Kroki nowego algorytmu można przedstawić w następującym schemacie postępowania:
+Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez Autora tej pracy jest zastąpienie równania \eqref{NLH1}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury. Kroki nowego algorytmu można wtedy przedstawić w następującym schemacie postępowania:
 \begin{enumerate}
 \item
-Wyznaczeniu funkcji wagi $w$ zgodnie z \eqref{DNLWEIGHT}.
+Wyznaczeniu funkcji wagi $w$ zgodnie z zależnością \eqref{DNLWEIGHT}.
 \item
-Powtarzaniu aż do uzyskania zbioru $\Omega = \emptyset$ następujących czynności
+Powtarzaniu aż do uzyskania zbioru $\Omega = \emptyset$ następujących czynności:
 \begin{itemize}
 \item
-znalezieniu dla każdego $x \in \partial\Omega$ najlepszego dopasowania $\hat{x} \in D \cap \mathrm{N}_x$:
+znajdowania dla każdego $x \in \partial\Omega$ najlepszego dopasowania $\hat{x} \in D \cap \mathrm{N}_x$:
 \begin{large}
 \begin{align}
 \hat{x} = \mathop{\mathrm{arg \ max}}_{p \in D \cap \mathrm{N}_x} w(x,\hat{x}),
 \end{align}
 \end{large}
-a następnie przepisaniu:
+a następnie przypisania:
 \begin{align}
 u(x) = \hat{u}(\hat{x}),
 \end{align}
 \item
-pomniejszeniu maski $\Omega$ o granicę $\partial\Omega$.
+i pomniejszenia maski $\Omega$ o granicę $\partial\Omega$.
 \end{itemize}
 \end{enumerate}
 \chapter{Testy algorytmów}
@@ -1730,7 +1730,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
 \section{Równanie mechaniki płynu.}
 \label{sec:NVResult}
 \subsection{Rozwiązanie równania Naviera-Stokes'a.}
-Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. \textbf{Wynikowe obrazy uzyskane schematem centralnym \eqref{NavierDiffAdvCen} w porównaniu ze schematem "do przodu" \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic}. W przypadku dyfuzji anizotropowej \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu, również te przedstawiane w podrozdziale \ref{ssec:anisModNS}. \textbf{W trakcie badań autor niniejszej pracy zauważa, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{DiscreteSOR} rozwiązywane jest w każdej jednej iteracji i stopniowo potęguje problem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Jeśli $\Delta t <0.1$ w równaniu \eqref{NavierDiffAdvFor} to stabilność algorytmu jest zachowana przy wartościach $h \geq 0.9$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, dla przykładu \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury. 
+Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. \textbf{Wynikowe obrazy uzyskane przy zastosowaniu schematu centralnego opisanego przez równanie \eqref{NavierDiffAdvCen} w porównaniu z wynikami otrzymanymi z zastosowaniem schematu "do przodu" opisanego przez równanie //TODO \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic}. W przypadku dyfuzji anizotropowej opoisany przez równanie \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Również modyfikacja Autora opisana w podrozdziale \ref{ssec:anisModNS} ma znikomy wpływ na dokładność wyznaczonego obrazu //TODO tylko sprawdzić czy w miare ok. \textbf{W trakcie badań autor niniejszej pracy zauważył, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{DiscreteSOR} rozwiązywane jest w każdej iteracji i stopniowo coraz bardziej widoczny jest //TODOproblem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Jeśli $\Delta t <0.1$ w równaniu \eqref{NavierDiffAdvFor} to stabilność algorytmu jest zachowana przy wartościach $h \geq 0.9$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, //TODO bo dla przykładu było, teraz ok//na przykład metody opisane w \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury. 
 \begin{longtable}[h!]{|c|c|}
 	\hline
 	Obraz & Dane \\ \hline
@@ -1817,7 +1817,7 @@ Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. \textbf{Wynikowe ob
     \begin{minipage}{.3\textwidth}
 		Parametr $h=10$
     \end{minipage} \\ \hline
-	\caption{Wyniki obrazów uzyskane metodą sukcesywnej nadrelaksacji (SOR), używanej w równaniu Naviera Stokesa. Wpływ parametru $h$.}
+	\caption{Wyniki obrazów uzyskane metodą sukcesywnej nadrelaksacji (SOR), używanej w równaniu Naviera Stokesa (wpływ parametru $h$).}
 	\label{SORMethod}
 \end{longtable}
 Dla większej wartości parametru $h$ uzyskuje się większą dokładność wyznaczonego obrazu. Niezależnie od dobrania parametru wynik generuje zjawisko rozmycia ostrych krawędzi obrazu.
@@ -1893,7 +1893,7 @@ Przykłady obrazów poddanych segmentacji przedstawia \autoref{TabSegmentation}.
 	\caption{Segmentacja obrazu na strukturę i teksturę.}
 	\label{TabSegmentation}
 \end{longtable}
-Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu parametru $\lambda$ otrzymujemy większą gładkość wynikowej struktury obrazu. \textbf{W niniejszej pracy magisterskiej do syntezy struktury wykorzystano metodę Naviera-Stokesa, a do uzupełnienia tekstury metodę Criminisi}. Wyniki algorytmu przedstawia \autoref{TabNavierStokesSegm}. W tabeli autor tej pracy magisterskiej porównuje wyniki z algorytmem bez wcześniejszej segmentacji obrazu.
+Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu parametru $\lambda$ otrzymujemy większą gładkość wynikowej struktury obrazu. \textbf{W niniejszej pracy magisterskiej do syntezy struktury wykorzystano metodę Naviera-Stokesa, a do uzupełnienia tekstury metodę Criminisi}. Wyniki algorytmu przedstawia \autoref{TabNavierStokesSegm}. W tabeli Autor tej pracy magisterskiej porównuje wyniki z wynikami algorytmu bez wcześniejszej segmentacji obrazu.
 \begin{longtable}[h!]{|c|c|}
     \hline
     \begin{minipage}{0.5\textwidth}
@@ -1938,9 +1938,11 @@ Czas trwania segmentacji obrazu nie przekracza kilku sekund. Przy zmniejszaniu p
 	\caption{Porównanie wyników uzyskanych metodą rozwiązania równania Navier'a-Stokes'a do metody z algorytmem segmentacji.}
 	\label{TabNavierStokesSegm}
 \end{longtable}
-Oddzielna synteza tekstury skutkuje jej kontynuacją wgłąb maski. W porównaniu z działem \ref{sec:NVResult} \textbf{uzyskujemy nielokalny charakter rozwiązania}. Efekt rozmycia głównego algorytmu odrestaurowania struktury negatywnie wpływa na jakość wynikowego obszaru. Wynik tworzony z oddzielnie odrestaurowanej tekstury i struktury obrazu może prowadzić do powstania nieprawidłowych wyników w postaci nowych kolorów obrazu. Wadą algorytmu, co łatwo zauważyć w tabeli \ref{TabNavierStokesSegm} jest możliwość wstawienia do danej struktury obcej dla niej tekstury, pochodzącej z innej części obrazu.  W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z trzech segmentowanych warstw uzyskiwane wyniki również prowadzą do niepożądanego zjawiska tworzenia nowych kolorów w obrazie.
+Oddzielna synteza tekstury skutkuje jej kontynuacją wgłąb maski. W porównaniu z podrozdziałem \ref{sec:NVResult} \textbf{uzyskujemy nielokalny charakter rozwiązania}. Efekt rozmycia głównego algorytmu odrestaurowania struktury negatywnie wpływa na jakość obszaru wynikowego. Wynik tworzony z oddzielnie odrestaurowanej tekstury i struktury obrazu może prowadzić do powstania nieprawidłowych wyników w postaci nowych kolorów obrazu. Wadą algorytmu, co łatwo zauważyć w tabeli \ref{TabNavierStokesSegm} jest możliwość wstawienia do danej struktury obcej dla niej tekstury, pochodzącej z innej części obrazu.  W przypadku algorytmu dokonującego syntezy tekstury oddzielnie dla każdej z trzech segmentowanych warstw uzyskiwane wyniki również prowadzą do niepożądanego zjawiska tworzenia nowych kolorów w obrazie.
 \subsection{Podsumowanie implementacji.}
-Autor tej pracy magisterskiej sprawdził zaproponowane i opisane przez niego sposoby dyskretyzacji równań dyfuzji przy użyciu skryptów napisanych w Matlab'ie. \textbf{Do dalszych porównań metod bazujących na mechanice płynów (dyfuzji) z pozostałymi zaproponowanymi w tej pracy posłużono się implementacją zawartą w bibliotece OpenCV dostarczaną w ramach wolnego (ogólnodostępnego) oprogramowania.} Ta dyskretyzuje równanie dyfuzji bazując na innym sposobie dyskretyzacji przedstawionym w \cite{BertalmioNavierStokes} i zmniejsza efekt rozmycia stosując metodę przedstawioną w \cite{telea2004image}. Przykłady rozwiązań przedstawia tabela \ref{NavierStokesOpenCV}.
+Autor tej pracy magisterskiej sprawdził zaproponowane i opisane przez niego sposoby dyskretyzacji równań dyfuzji przy użyciu skryptów napisanych w Matlab'ie. \textbf{Do dalszych porównań metod bazujących na mechanice płynów (dyfuzji) z pozostałymi zaproponowanymi w tej pracy posłużono się implementacją zawartą w bibliotece OpenCV dostarczaną w ramach wolnego (ogólnodostępnego) oprogramowania.} Występuje tutaj dyskretyzacja dyfuzji oparta na równaniu  //TODO czy spoko tylko //przedstawionym w \cite{BertalmioNavierStokes} i zmniejsza efekt rozmycia stosując metodę przedstawioną w \cite{telea2004image}. Przykłady rozwiązań przedstawia tabela \ref{NavierStokesOpenCV}.
+
+//TODO dopisać wszędzie obok wynik dla obrazu
 \begin{longtable}[h!]{|c|c|}
     \hline
     $t = 0.56$ s
@@ -2164,13 +2166,13 @@ Przykładowe wyniki przedstawia tabela:
   \label{CRIMTEST}
 \end{longtable}
 
-Wyniki przedstawione w tabeli wyznaczono dla \textbf{optymalnego ustawienia parametru $\alpha=0.2$} (definiowanego w związku z \eqref{DataTerm}). Biorąc pod uwagę charakter działania algorytmu i błędy jakie powstają przy jego zastosowaniu można stwierdzić, że zmiana wspomnianego parametru w ogólnym rozważaniu nie wpływa na końcowe obrazy. W zależności od rozpatrywanego obrazu rozmiar fragmentu obrazu może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIImu \ mały rozmiar fragmentu obrazu skutkuje odpowiednią kontynuacją dachu budynku. W przypadku \ObrIVmu \ średni wymiar fragmentu obrazu pozwala na odpowiednią syntezę plaży. W przypadku  \ObrVImu \ największy rozmiar fragmentu obrazu zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. \textbf{W ogólnym rozrachunku metoda w każdym z wyników wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu. Niezależnie od modyfikacji wspomnianych w podrozdziałach \ref{ssec:crimMod}, \ref{ssec:modDtForCrim} i \ref{ssec:modDistForCrim} w swoim podejściu generuje charakterystyczne dla siebie niespójności}.
+Wyniki przedstawione w tabeli //TODO dodać nr tabeli wyznaczono dla \textbf{optymalnego ustawienia parametru $\alpha=0.2$} (definiowanego w związku z \eqref{DataTerm}). Biorąc pod uwagę charakter działania algorytmu i błędy jakie powstają przy jego zastosowaniu można stwierdzić, że zmiana wspomnianego parametru w praktyce nie wpływa na obrazy końcowe. W zależności od rozpatrywanego obrazu rozmiar fragmentu obrazu może wpływać na odpowiedniość syntezy struktury. W przypadku \ObrXVIImu \ mały rozmiar fragmentu obrazu skutkuje odpowiednią kontynuacją dachu budynku. W przypadku \ObrIVmu \ średni wymiar fragmentu obrazu pozwala na odpowiednią syntezę plaży. W przypadku  \ObrVImu \ największy rozmiar fragmentu obrazu zagwarantował dla obserwatora względnie najbliższe odtworzenie zawartości maski. \textbf{W ogólnym rozrachunku metoda w każdym z wyników wprowadza wadę w postaci nieprawidłowego elementu w danej ze struktur obrazu. Niezależnie od modyfikacji wspomnianych w podrozdziałach \ref{ssec:crimMod}, \ref{ssec:modDtForCrim} i \ref{ssec:modDistForCrim} w swoim podejściu generuje charakterystyczne dla siebie niespójności}.
 \subsection{Główne struktury obrazu.}
 \subsubsection{Automatyczne wykrywanie głównych struktur.}
-Autorzy w \cite{SalientStrucTexProp} nie przedstawiają dokładnego sposobu wyznaczania głównych struktur, łączenia w pary, a następnie wyznaczania równań kontynuacji w obszar maski. Autor niniejszej pracy biorąc pod uwagę przeciętne wyniki uzyskiwane w następnym podrozdziale, gdzie manualne wprowadzenie głównych struktur wiąże się z ich idealnym wyznaczeniem, odszedł od dalszych prac, przedstawienia wyników i udoskonaleń tego rozwiązania.
-Złożoność problemu implementacji, nie spełniające oczekiwań wyniki uzyskiwane dla zaimplementowanego rozwiązania skłaniają do zaproponowania innego rozwiązania. Zaimplementowana metoda działa jedynie na obrazach, na których bardzo łatwo wyróżnic linie głównych struktur oraz linie te nie tworzą złożonych kształtów.
-\subsubsection{Manualne wprowadzanie głównych struktur.}
-W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} algorytm wmalowywania przebadano również pod kątem priorytetowego wypełnienia głównych struktur obrazu \textbf{zgodnie z wytycznymi wprowadzonymi manualnie przez użytkownika}. Punkty linii głównej struktury znajdującej się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Manualnie została również dobrana wartość promienia skrawka dla każdego obrazu $|p_x|_r$.
+Autorzy artykułu \cite{SalientStrucTexProp} nie opisują dokładnego sposobu wyznaczania głównych struktur, łączenia w pary, a następnie wyznaczania równań kontynuacji w obszar maski. Autor niniejszej pracy, wziąłwszy pod uwagę przeciętne wyniki uzyskiwane w następnym podrozdziale, gdzie manualne wprowadzenie głównych struktur wiąże się z ich idealnym wyznaczeniem, odszedł od dalszych prac, przedstawienia wyników i udoskonaleń tego rozwiązania.
+Złożoność problemu implementacji oraz nie spełnione oczekiwania co do wyników uzyskiwanych dla zaimplementowanego rozwiązania skłoniły Autora tej pracy do zaproponowania innego rozwiązania. Zaimplementowana metoda działa jedynie na obrazach, na których bardzo łatwo wyróżnić linie głównych struktur jedynie w przypadku gdy linie te nie tworzą złożonych kształtów.
+\subsubsection{Ręczne wprowadzanie głównych struktur.} // TODO manualne na ręczne wszędzie
+W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} przebadano algorytm wmalowywania również pod kątem priorytetowego wypełnienia głównych struktur obrazu \textbf{zgodnie z wytycznymi wprowadzonymi ręcznie przez użytkownika}. Punkty linii głównej struktury znajdujące się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Doświadczalnie została również dobrana wartość promienia skrawka dla każdego obrazu $|p_x|_r$.
 \newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2226,11 +2228,12 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
         
 	\caption{Główne struktury testowanych obrazów manualnie wprowadzone przez użytkownika razem z parametrem $|p_x|_r$.}
 \end{longtable}
+//TODO wynik dla obrazu nr.
 Linie granic głównych struktur przedstawiono kolorem czerwonym. \textbf{Autor tej pracy magisterskiej proponuje, aby część wspólna obrazu oryginalnego poza maską wraz z linią głównej struktury stanowiły zbiór, z którego pobierane jest najlepsze dopasowanie (oddzielnie dla każdej wypełnianej struktury)}. Wartość $|p_x|_r$ manualnie ustawiono na minimalną wartość zdolną zachować właściwości charakterystyczne dla danej granicy tworzonej przez główne struktury (\autoref{PatchProperSize}).
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/SalientPatch.png}
-	\caption{Przykład skrawków obrazu dla granicy w postaci plaży: kolor zielony przedstawia skrawek o wymiarze pozwalającym scharakteryzować granicę, kolorem czerwonym - skrawek za mały.}
+	\caption{Przykład skrawków obrazu dla granicy w postaci plaży: kolor zielony przedstawia skrawek o wymiarze pozwalającym scharakteryzować granicę, kolorem czerwonym - skrawek jest zbyt mały.}//TODO dodać źródło albo zamienić obraz
 	\label{PatchProperSize}
 \end{figure}
 Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
@@ -2290,7 +2293,7 @@ Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
 	\label{GS}
 \end{longtable}
 Wyznaczenie głównych struktur w każdym z obrazów testowych nie wymagało czasu obliczeniowego dłuższego niż $1s$.
-\textbf{Autor tej pracy magisterskiej stwierdza, że w uproszczeniu można przyjąć, że algorytm pozwala oszczędzić czas jaki byłby potrzebny na proces wmalowywania głównych struktur (w tabeli \ref{GS}):}
+\textbf{Autor tej pracy magisterskiej stwierdza, że w uproszczeniu można przyjąć, że algorytm ten pozwala oszczędzić czas jaki byłby potrzebny na proces wmalowywania głównych struktur (w tabeli \ref{GS}):}
 \begin{align}
     t \cdot \left(100 - p \right) \%,
 \end{align}
@@ -2347,7 +2350,7 @@ gdzie $p$ - procent z tabeli \ref{GS}, $t$ z tabeli \ref{CRIMTEST}. Ostatecznie 
 	\label{CrimSalStructRes}
 \end{longtable}
 
-\textbf{Wszystkie przedstawione wyniki otrzymano ograniczając okno poszukiwań zgodnie z podrozdziałem \ref{ssec:crimModSource} (dla kroku po wyznaczeniu głównych struktur) przyjmując jako parametr} $\mathbf{|s_x|_r = 3 \cdot 	|p_x|_r}$ ($|s_x|_r$ trzy krotnie większe). W przypadku \ObrVImu , \ObrXVIImu \ i \ObrXIXmu \ wyniki w porównaniu do wyników z tabeli \ref{CRIMTEST} posiadają lepszą syntezę głównych struktur, ograniczenie okna poszukiwania \textbf{przyspiesza o rząd wielkości czas} wyznaczenia głównego obrazu. W przypadku \ObrXVmu \ i \ObrXIIImu \ pomimo wstępnej syntezy głównych struktur nie udało się uniknąć błędów w postaci obcych wartości w różnych strukturach obrazu. Ograniczenie okna poszukiwania może wprowadzać dodatkowe błędy w przypadku niejednoznaczności struktur znajdujących się w pobliżu granicy maski. Analizując uzyskany wynik dla \ObrXVIImu \ po prawej części maski widzimy, że algorytm wypełniania ogranicza źródło wzorca do błędnego źródła zawierającego część pozostawionej w obrazie postaci (postać z prawej strony obrazu traktowana jest jako niejednoznaczność). Wadą algorytmu wypełniania jest konieczność dodatkowej korekcji fotometrycznej uzyskanego wyniku zgodnie z \cite{StructurePropagationManual} przedstawionym na \autoref{7_fig1}, która wygładza lokalne granice powstałe w wyniku syntezy fragmentów. 
+\textbf{Wszystkie przedstawione wyniki otrzymano ograniczając okno poszukiwań zgodnie z podrozdziałem \ref{ssec:crimModSource} (dla kroku po wyznaczeniu głównych struktur) przyjmując jako parametr} $\mathbf{|s_x|_r = 3 \cdot 	|p_x|_r}$ ($|s_x|_r$ trzykrotnie większe). W przypadku \ObrVImu , \ObrXVIImu \ i \ObrXIXmu \ wyniki w porównaniu do wyników z tabeli \ref{CRIMTEST} posiadają lepszą syntezę głównych struktur; ograniczenie okna poszukiwania \textbf{skraca tu o rząd wielkości czas potrzebny} na wyznaczenie głównego obrazu. W przypadku \ObrXVmu \ i \ObrXIIImu \ pomimo wstępnej syntezy głównych struktur nie udało się uniknąć błędów w postaci obcych wartości w różnych strukturach obrazu. Ograniczenie okna poszukiwania może wprowadzać dodatkowe błędy w przypadku niejednoznaczności struktur znajdujących się w pobliżu granicy maski. Analizując uzyskany wynik dla \ObrXVIImu \ po prawej części maski widzimy, że algorytm wypełniania ogranicza źródło wzorca do błędnego źródła zawierającego część pozostawionej w obrazie postaci (postać z prawej strony obrazu traktowana jest jako niejednoznaczność). Wadą algorytmu wypełniania jest konieczność dodatkowej korekcji fotometrycznej uzyskanego wyniku zgodnie z \cite{StructurePropagationManual} przedstawionym na \autoref{7_fig1}, która wygładza lokalne granice powstałe w wyniku syntezy fragmentów. 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.5]{rysunki/7_fig1}
@@ -2355,7 +2358,7 @@ gdzie $p$ - procent z tabeli \ref{GS}, $t$ z tabeli \ref{CRIMTEST}. Ostatecznie 
 	\label{7_fig1} 
 \end{figure}
 \textbf{Aby dodatkowo ograniczyć błędy nieodpowiedniej syntezy struktur w obrazie autor tej pracy magisterskiej w dalszych badaniach proponuje segmentację celem wyznaczenia głównych dominujących kolorów} i na ich podstawie korzystając z metody przedstawionej w \cite{chen2005adaptive} badanie podobieństwa rozważanych skrawków (czyli skorzystanie ze wspomnianej zależności \eqref{colDistance}).
-Najskuteczniejszym ograniczeniem niespójności struktury może być dodatkowy wejściowy parametr algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
+Najskuteczniejszym ograniczeniem niespójności struktury może być dodatkowy parametr wejściowy algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
 \begin{equation}
 \chi' \left(x\right)=\Bigg\{ \begin{array}{ll}
 0, & \text{dla} \ x \in \Omega' \\ 
@@ -2369,9 +2372,9 @@ Wtedy dla każdego $\hat{q}_{\hat{x}}$ należy spełnić warunek:
 \section{Nielokalny model NLCTV.}
 \subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
 \label{ssec:NLCTVModSec}
-Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Podobieństwo obrazów mierzy się współczynnikiem:
+Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Podobieństwo obrazów mierzy się współczynnikiem://TODO nie było procenta
 \begin{align}
-f = \frac{100}{256}\frac{1}{n| \Omega |} \sum^c_{k=1}{\sum^m_{i=1}{\sum^n_{j=1}{ | I_1(i,j,k)-I_2(i,j,k) |}}} %
+f = \frac{100}{256}\frac{1}{c| \Omega |} \sum^c_{k=1}{\sum^m_{i=1}{\sum^n_{j=1}{ | I_1(i,j,k)-I_2(i,j,k) |}}} \%
 \end{align}
 gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary obrazu, $|\Omega|$ to pole obszaru maski. Do porównania algorytmów wykorzystano dodatkowo badaną grupę obrazów przedstawioną w \autoref{NLCTVVSNLHIIM}.
 \begin{longtable}[h!]{| c | c |}
@@ -2537,7 +2540,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
 	\caption{Wynik wyznaczania głównych struktur testowanych obrazów.}
 	\label{NLCTVVSNLHI}
 \end{longtable}
-Parametr $\lambda$ służy do przemnożenia wartości $\chi$ - \eqref{maskFunction} zmieniając:
+Parametr $\lambda$ służy do przemnożenia wartości $\chi$ danej wzorem\eqref{maskFunction} zmieniając:
 \begin{equation}
 \chi \left(x\right)=\left\{ \begin{array}{c}
 0\ x \in \Omega \\ 
@@ -2752,7 +2755,7 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \label{NLH1Tab}
 \end{longtable}
 
-Model nielokalny wariacji całkowitej w pierwszych publikacjach dotyczących przetwarzania obrazów stosowany jest do filtracji, usuwania elementów tekstury i szumu, segmentacji obrazu na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje, co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $|s_x|_r$ i $|p_x|_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące poza paletą dostarczaną w obrazie, bądź przechodzi w obszar niestabilności. W przypadku małych wartości parametru  $|s_x|_r$ i $|p_x|_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $|s_x|_r$, $|p_x|_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru. Wadą tego algorytmu jest znacząco rosnąca ilość czasu potrzebna na obliczenie obrazu maski w przypadku dużych wartości $|s_x|_r$ i $|p_x|_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $|s_x|_r <30$, $|p_x|_r$ dla obrazu o wymiarze $500x500$. \textbf{Autor niniejszej pracy zaleca następujące parametry algorytmu:}
+Model nielokalny wariacji całkowitej w pierwszych publikacjach dotyczących przetwarzania obrazów został zastosowany filtracji, usuwania elementów tekstury i szumu, segmentacji obrazu na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje, co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $|s_x|_r$ i $|p_x|_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące poza paletą dostarczaną w obrazie, bądź przechodzi w obszar niestabilności. W przypadku małych wartości parametru  $|s_x|_r$ i $|p_x|_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $|s_x|_r$, $|p_x|_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru. Wadą tego algorytmu jest znaczące wydłużenie czasu potrzebnego na obliczenie obrazu maski w przypadku dużych wartości $|s_x|_r$ i $|p_x|_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $|s_x|_r <30$, $|p_x|_r$ dla obrazu o wymiarze $500x500$. \textbf{Autor niniejszej pracy zaleca następujące parametry algorytmu:}
 \begin{enumerate}
 \item Obraz ze ściśle powtarzającą się teksturą z maską w zakresie jednej struktury
 \begin{itemize}
@@ -2888,7 +2891,7 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość pro
 \end{longtable}
 Wyniki uzyskane dla zmodyfikowanej funkcji wagi pokazują dokładniejszą kontynuację struktury, nie wpływając w znaczącym stopniu na poprawę tekstury obrazu. Wadą algorytmu jest znaczne wydłużenie czasu wyznaczenia funkcji wagi, będącej najistotniejszym czynnikiem w algorytmie wpływającym na długość trwania obliczeń.
 \subsection{Połączenie syntezy obrazu z funkcją wagi.}
-Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze pojawia się kolor będący poza paletą dostępnych kolorów w oryginalnym obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd rozmycia. Algorytm ten charakteryzuje się lepszą kontynuacją tekstury. Wadą jest kilkukrotnie wydłużony czas obliczeń. Podobnie jak dla modelu $NLCTV$ można tutaj zastosować modyfikację funkcji wagi $w$, jednak autor niniejszej pracy pominął krok ze względu na dłuższe działanie algorytmu (modyfikacja funkcji wagi również wydłuża czas działania). Wyniki przedstawia tabela:
+Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze pojawia się kolor będący poza paletą dostępnych kolorów w oryginalnym obrazie. Taki sposób wyznaczania wpływa na wartość wag obliczanych w kolejnych iteracjach i niweluje błąd rozmycia. Algorytm ten charakteryzuje się lepszą kontynuacją tekstury. Wadą jest kilkukrotnie wydłużony czas obliczeń. Podobnie jak dla modelu $NLCTV$ można tutaj zastosować modyfikację funkcji wagi $w$, jednak Autor niniejszej pracy pominął ten krok ze względu na dłuższe działanie algorytmu (modyfikacja funkcji wagi również wydłuża czas działania). Wyniki przedstawia tabela:
 \begin{longtable}[h!]{|c|c|}
     \hline
 	Algorytm oryginalny
@@ -2978,10 +2981,10 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     \label{NLH1UMOD}
 \end{longtable}
 \section{Wmalowywanie za pomocą modelu nielokalnego wariacji całkowitej.}
-Wszystkie przeprowadzone testy wykonano dla stałych parametrów związanych ze składnikiem pewności $C$ przy następujących parametrach:
+Wszystkie przeprowadzone testy wykonano dla stałych parametrów związanych ze składnikiem pewności $C$ (z ang. confidence term) przy następujących parametrach:
 \begin{itemize}
 \item
-ilość stopni tworzonej piramidy $S=7$,
+ilość poziomów tworzonej piramidy $S=7$,
 \item
 rozmiar obrazu dla najwyższego poziomu w piramidzie 
 \begin{align}
@@ -2993,9 +2996,9 @@ gdzie $ps = |\Omega|$ oznacza długość boku fragmentu obrazu.
 Parametry związane z samym składnikiem pewności $C$ co do pikseli wewnątrz maski przyjęto jako stałe i równe:
 \begin{itemize}
 \item
-sposób rozkładu funkcji w przestrzeni $t_{c}=5.0$,
+dla sposobu rozkładu funkcji parametr $t_{c}=5.0$,
 \item 
-asymptota, do której dąży funkcja $c_{0}=0.1$.
+dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
 \end{itemize}
 \textbf{Żaden z obrazów przed operacją wmalowywania nie był wstępnie wypełniany} (o takiej możliwości wspominano w podrozdziale \ref{ssec:VFIPodsumowanie}).
 \begin{longtable}[h!]{|c|c|}
@@ -3455,7 +3458,7 @@ asymptota, do której dąży funkcja $c_{0}=0.1$.
 	\label{NONLOCALITYVFI}
 \end{longtable}
 
-Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać metodę bazującą na metodzie Criminisi ze znacząco ograniczoną wadą niespójności w obrazie. Analizując wyniki \maciekIm \ i \ObrXVIIm, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVm. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
+Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać wyniki otrzymywane z zastosowaniem metody bazującej na metodzie Criminisi'niego ze znacząco ograniczoną wadą niespójności w obrazie. //TODO składnia tylko czy ok// Analizując wyniki //TODO obr na obrazu \maciekImu \ i \ObrXVIImu, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy wyrażonej wzorem \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVmu //TODO obrazu//. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma wyrażona wzorem \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
 \section{Porównanie algorytmów wmalowywania.}
 \subsection{Obrazy wykorzystane do porównania.}
 Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstawione w \autoref{COMPAREIMAGES}. Za obraz idealnie wypełniony uznajemy obraz oryginalny bez nałożonej maski.
@@ -3711,10 +3714,10 @@ VFI (\ref{sec:sVFI}) &
 	\label{COMPAREIMAGES}
 \end{longtable}
 
-W metodzie bazującej na równaniu Naviera-Stokes'a segmentacja, a następnie oddzielne wypełnianie tekstury nie poprawia wyniku w wystarczającym stopniu ze względu na główny błąd jakim jest rozmycie struktury. Metoda ta jest najszybsza, lecz nie charakteryzuje się najlepszymi wynikami. Najlepsze wyniki uzyskiwane są dla algorytmów bazujących na minimalizacji energii, jednak ich wadą jest szybkość działania. Metoda $VFI$ w porównaniu z innymi najlepiej odwzorowuje braki w obrazie. Rozważając grupę algorytmów bazujących na procesie minimalizacji metoda $VFI$ jest najszybsza i zużywa mniej zasobów obliczeniowych spośród rozważanych. Metoda $VFI$ w swoich wynikach jest najmniej wrażliwa na manipulacje wejściowych parametrów. W przypadku pozostałych algorytmów ich zmiana ma znaczny wpływ na ostateczną syntezę wyznaczanego obszaru. Główną przewagą algorytmu $VFI$ jest zastosowanie kroku  minimalizacji mapy położenia pikseli,a także wypełnianie wielostopniowe. Każdy z pozostałych algorytmów badanych w pracy wyznacza obraz postępując od granicy maski do jej wnętrza w pewnym stopniu ograniczając charakter nielokalności.\\
-W zagadnieniu wmalowywania brak wskaźnika, który jednoznacznie określiłby poprawność wyznaczonego obszaru zgodnie z obiektywnym odczuciem obserwatora.
+W metodzie bazującej na równaniu Naviera-Stokes'a //TODO metoda polegająca najpierw na segmentacji a potem oddzielnym wypełnianiu nie poprawia//segmentacja, a następnie oddzielne wypełnianie tekstury nie poprawia wyniku w wystarczającym stopniu ze względu na główny błąd jakim jest rozmycie struktury. Metoda ta jest najszybsza, lecz charakteryzuje się niezbyt dobrymi wynikami. Najlepsze wyniki uzyskiwane są dla algorytmów bazujących na minimalizacji energii, jednak ich wadą jest szybkość działania. Metoda $VFI$ w porównaniu z innymi najlepiej odwzorowuje braki w obrazie. Rozważając grupę algorytmów bazujących na procesie minimalizacji można stwierdzić, że metoda $VFI$ jest najszybsza i zużywa mniej zasobów obliczeniowych spośród rozważanych metod //TODO to co dopisałem//. Metoda $VFI$ w swoich wynikach jest najmniej wrażliwa na manipulacje tych parametrów wejściowych. W przypadku pozostałych algorytmów ich zmiana ma znaczny wpływ na ostateczną syntezę wyznaczanego obszaru. Główną przewagą algorytmu $VFI$ jest zastosowanie kroku  minimalizacji mapy położenia pikseli,a także wypełnianie wielostopniowe. Każdy z pozostałych algorytmów badanych w pracy wyznacza obraz postępując od granicy maski do jej wnętrza w pewnym stopniu ograniczając charakter nielokalności.\\
+W zagadnieniu wmalowywania brak jest wskaźnika, który jednoznacznie określiłby poprawność wyznaczonego obszaru zgodnie z obiektywnym odczuciem obserwatora.
 \\
-Wadą wszystkich z przedstawionych algorytmów jest brak głębszej analizy figur geometrycznych pojawiających się w wypełnianych obrazach. Przykładem może być \autoref{TabGeometryFail}. w której znak drogowy nie został odrestaurowany.
+Wadą wszystkich przedstawianych algorytmów jest brak głębszej analizy figur geometrycznych pojawiających się w wypełnianych obrazach. Przykładem może być \autoref{TabGeometryFail}. w której znak drogowy nie został odrestaurowany.
 \begin{longtable}[h!]{|c|c|}
     \hline
     Obraz oryginalny  & Obraz z maską \\ \hline
