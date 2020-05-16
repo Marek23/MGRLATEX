@@ -684,8 +684,8 @@ c^n_4\big|_{i,j}=\frac{1}{\sqrt{{\left(\frac{u^n\big|_{i+1,j-1}-u^n\big|_{i-1,j-
 \end{aligned}
 \end{align}
 \end{large}
-W celu uniknięcia problemu dzielenia przez zero w powyższej dyskretyzacji wprowadzono parametr $\varepsilon \rightarrow 0$. 
-Po przeprowadzeniu powyższej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Autorzy w \cite{NavierStokesAndTexturePropagation} proponują aby do wmalowywania struktur zastosować algorytm przedstawiony w \cite{bertalmio2000image}, natomiast do uzyskania brakującej tekstury sugerują użycie następującego algorytmu syntezy obszaru $\mathrm{\Omega }$.
+W celu uniknięcia problemu dzielenia przez zero w przedstawionej dyskretyzacji wprowadzono parametr $\varepsilon \rightarrow 0$. 
+Po przeprowadzeniu takiej segmentacji obrazu dla uzyskanych członów $u$ i $v$ można zastosować różne algorytmy wmalowywania braków. Autorzy w \cite{NavierStokesAndTexturePropagation} proponują aby do wmalowywania struktur zastosować algorytm przedstawiony w \cite{bertalmio2000image}, natomiast do uzyskania brakującej tekstury sugerują użycie następującego algorytmu syntezy obszaru $\mathrm{\Omega }$.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.9]{rysunki/5_fig1}
@@ -715,7 +715,7 @@ Zgodnie z oznaczeniami użytymi w poprzednim rozdziale $D$ stanowi dziedzinę ob
 \label{NLGRAD}
 .
 \end{equation}
-Warto zauważyć, że \textbf{wynikiem} powyższej zależności nie jest wektor, a \textbf{wartość skalarna}. Wyrażenie stanowi proste przekształcenie $D \times D\longrightarrow R$. Wartość wagi $w(x,y)$ z definicji wyraża się następującą zależnością:
+Warto zauważyć, że \textbf{wynikiem} tej zależności nie jest wektor, a \textbf{wartość skalarna}. Wyrażenie stanowi proste przekształcenie $D \times D\longrightarrow R$. Wartość wagi $w(x,y)$ z definicji wyraża się następującą zależnością:
 \begin{equation}
 w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\right|}^2}{r^2}\right\}\ }
 \label{NLWEIGHT}
@@ -727,7 +727,7 @@ w\left(x,y\right)\triangleq {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\left|I\lef
 	\caption{Kształt okien wykorzystywanych do obliczania wartości $w(x,y)$.}
 	\label{3_fig3}
 \end{figure}
-gdzie $r$ to zdefiniowana wcześniej stała skalująca wartości podobieństwa pomiędzy pikselami, a operator "$\cdot$" oznacza okna scentrowane względem piksela $x$ oraz $y$ (\autoref{3_fig3}), na podstawie których liczone jest podobieństwo. Normę macierzową występującą w powyższej zależności można wyznaczyć korzystając z normy Frobeniusa:
+gdzie $r$ to zdefiniowana wcześniej stała skalująca wartości podobieństwa pomiędzy pikselami, a operator "$\cdot$" oznacza okna scentrowane względem piksela $x$ oraz $y$ (\autoref{3_fig3}), na podstawie których liczone jest podobieństwo. Normę macierzową występującą w przedstawionej zależności można wyznaczyć korzystając z normy Frobeniusa:
 \begin{equation}
 {\|I\left(x+\cdot \right)-I\left(y+\cdot \right)\|}_F=\ \sum^{p_s}_{i=1}{\sum^{p_s}_{j=1}{{\left(I(x+\cdot)\big|_{i,j}-I(y+\cdot)\big|_{i,j}\right)}^2}}
 \label{FROBENIUS}
@@ -843,7 +843,7 @@ y\in N_x \\
 \end{equation}
 \end{large}
 Warto zauważyć, iż indeksy $x,y$ wskazują na konkretny piksel w obrazie. Lokalizacji w przestrzeni $2D$ dokonuje się przez znajomość par: $x=(i_x,j_x)$ oraz $y=(i_y,j_y)$.
-Model nielokalny wariacji całkowitej funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następującą postać:
+Model nielokalny wariacji całkowitej funkcji oznaczany $NLTV$ (non-local total variation) definiowany dla obrazów w odcieniach szarości przyjmuje następującą postać \cite{rudin1992nonlinear}:
 \begin{equation}
 {\mathop{\mathrm{min}}_{u} \left\{E\left(u\right)=\ \int_D{\left|{\mathrm{\nabla }}_{NL}u(x)\right|}dx+\frac{1}{2}\int_D{\chi{\left(u-I^0\right)}^2}dx\ \right\}\ }
 \label{NLTVGRAY}
@@ -857,7 +857,7 @@ gdzie $I^0$ stanowi oryginalny obraz wejściowy, natomiast $u\left(x\right):D\ma
 \label{maskFunction}
 .
 \end{equation}
-Tak zdefiniowany model można przekształcić wykorzystując operację podziału Bregman’a \cite{bresson2009short}. Podział ten stosuje się w celu poprawienia wydajności obliczeniowej w przypadku dyskretnej implementacji problemu minimalizacji energii. Wprowadzenie pomocniczej zmiennej $\overrightarrow{v}=v\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ } \times \ \mathrm{\Omega }\longrightarrow R$ i parametru Bregman’a $\overrightarrow{b}=\overrightarrow{b}\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }\times \ \mathrm{\Omega }\longrightarrow R$ pozwala przekształcić problem minimalizacji energii opisanej równaniem \\TODO nr równania do następującej postaci iteracyjnej:
+Tak zdefiniowany model można przekształcić wykorzystując operację podziału Bregman’a \cite{bresson2009short}. Podział ten stosuje się w celu poprawienia wydajności obliczeniowej w przypadku dyskretnej implementacji problemu minimalizacji energii. Wprowadzenie pomocniczej zmiennej $\overrightarrow{v}=v\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ } \times \ \mathrm{\Omega }\longrightarrow R$ i parametru Bregman’a $\overrightarrow{b}=\overrightarrow{b}\left(x,y\right):\ \mathrm{\Omega }\mathrm{\ }\times \ \mathrm{\Omega }\longrightarrow R$ pozwala przekształcić problem minimalizacji energii opisanej równaniem \eqref{NLTVGRAY} do następującej postaci iteracyjnej \cite{bresson2009short}:
 \begin{align}
 \begin{aligned}
 \left(u^{k+1},{\overrightarrow{v}}^{k+1}\right) &= arg\ \mathop{\mathrm{min}}_{u,\overrightarrow{v}} E\left(u,\overrightarrow{v}\right)=\\ 
@@ -1137,11 +1137,11 @@ Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcają
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}.
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić zależność $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt{r^2-1}$. Rozmiar okna Gaussa \\TODO sprawdzić ' wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień piramidy $s+1$ dla maski  wyznaczamy z zależności:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić zależność $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt{r^2-1}$. Rozmiar okna Gaussa wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień piramidy $s+1$ dla maski  wyznaczamy z zależności:
 \begin{align}
 \chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0},
 \end{align}
-gdzie $\downarrow_r$ oznacza, że grupa pikseli w otoczeniu o promieniu (współczynniku próbkowania) $r$ zostanie zastąpiona jednym pikselem. Zasadą pomniejszania obrazu jest nierówność, dzięki której stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ niewiele się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ to punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku zachodzi $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ piramidy wykorzystywana jest zależność:
+gdzie $\downarrow_r$ oznacza, że grupa pikseli w otoczeniu o boku (współczynniku próbkowania) $r$ zostanie zastąpiona jednym pikselem. Zasadą pomniejszania obrazu jest nierówność, dzięki której stosunek pól obszarów $\frac{\Omega}{D}$ na każdym kolejnym stopniu $s$ niewiele się zmniejsza. Autorzy w \cite{arias2011variational} proponują wartość parametru $T_0=0.4$. Wprowadźmy pomocniczą funkcję skalarną $f(x) = \downarrow_r G_{\sigma(r)}\ast\chi_{\Omega^s}(x + \cdot)$. Wtedy ograniczenie możemy prosto wytłumaczyć - w przypadku gdy $f(x)$ będzie większa od $0.4$ to punkt $x$ potraktujemy jako punkt źródłowy obrazu, nie wymagający wmalowania, czyli $x \in D^{s+1}$, w przeciwnym wypadku zachodzi $x \in \Omega^{s+1}.$ W przypadku wyznaczenia obrazu na kolejnym stopniu $s+1$ piramidy wykorzystywana jest zależność:
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{\Omega^s} u^s(x)}{G \ast \chi_{\Omega^s}(x)}
 \end{align}
@@ -1272,16 +1272,15 @@ D(p)=\ \left|u{\cdot n}_x\frac{1}{L}-v\cdot n_y\frac{1}{L}\right|.
 \end{align}
 Znając wartości $C_t\left(x\right)$ oraz $D_t(x)$ dla każdego piksela z granicy maski można wyznaczyć wartość priorytetów $P(x)$. Na ich podstawie wybierane jest okno $p(x)$, a następnie najlepsze odwzorowanie $q_{\hat{x}}$.
 Podsumowując operację wmalowywania obrazu można przedstawić w postaci następującego algorytmu. Algorytm ten należy powtarzać aż do wypełnienia wszystkich pikseli z $\mathrm{\Omega }$:
-//ZNOWU PRZYSZŁOŚĆ- TODO
 \begin{enumerate}
 \item
-Na podstawie \eqref{LAPLASJAN} trzeba wyznaczyć granicę maski $\mathrm{\partial }\mathrm{\Omega }$.
+Na podstawie \eqref{LAPLASJAN} wyznaczamy granicę maski $\mathrm{\partial }\mathrm{\Omega }$.
 \item
-Na podstawie \eqref{PRIORITY} należy wyznaczyć priorytety wszystkich pikseli z granicy maski $\mathrm{\partial }\mathrm{\Omega }$.
+Na podstawie \eqref{PRIORITY} wyznaczamy priorytety wszystkich pikseli z granicy maski $\mathrm{\partial }\mathrm{\Omega }$.
 \item
-Na podstawie \eqref{FROBENIUS} należy wyznaczyć najlepsze dopasowanie dla okna utworzonego na podstawie punktu 2.
+Na podstawie \eqref{FROBENIUS} wyznaczamy najlepsze dopasowanie dla okna utworzonego na podstawie punktu drugiego.
 \item
-Zgodnie z \autoref{4_fig1} trzeba przepisać wartości z okna najlepszego dopasowania w restaurowany obszar.
+Zgodnie z \autoref{4_fig1} przepisujemy wartości z okna najlepszego dopasowania w restaurowany obszar.
 \end{enumerate}
 \section{Pojęcie głównych struktur.}
 \label{sec:crimMetodSalient}
@@ -1308,12 +1307,12 @@ D(i,j)\triangleq IP\cdot \left[\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ +\ \bet
 \label{SalientDistance}
 \end{align}
 \begin{align}
-Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \mathrm{\ }\{1,..,N\}} D(i,j)\ }.
+Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \mathrm{\ }\{1,..,N\}} D(i,j)\ },
 \label{SalientPair}
 \end{align}
 \end{enumerate}
-//TODO krótko wyjaśnić symbole
-Analiza powyższych równań wykonana zostanie w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Krokiem wstępnym do rozwiązania powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
+gdzie człon $IP$ określa czy para głównych struktur $(i,j)$ jest do siebie równoległa, czy nie, $D_1$ to liczbowa reprezentacja podobieństwa kolorów, $D_2$ to liczbowa reprezentacja podobieństwa tekstur, a $D_3$ to liczbowa reprezentacja podobieństwa krzywizn. 
+Analiza powyższych równań zostanie wykonana w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Krokiem wstępnym do rozwiązania powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
 \begin{align}
 G\left(i,j\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{i^2+j^2}{2{\sigma }^2}}.
 \label{rozmycieGaussa}
@@ -1325,12 +1324,12 @@ Operacji rozmycia dokonuje się poprzez operację splotu obrazu z odpowiednio wy
 	\caption{Koncepcja wmalowywania w oparciu o główne struktury obrazu. źródło \cite{StructurePropagationManual}.}
 	\label{4_fig5} 
 \end{figure}
-Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zostaje punkt środkowy. Względem środka tego punktu tworzone jest okno  $f^i$ o wcześniej zdefiniowanym obszarze. Pierwszym członem w równaniu \eqref{SalientDistance} wyznaczonym na podstawie utworzonego okna $f^i$ jest $D_1\left(f^i_C,f^j_C\right)$. Symbole $f^i_C$ oraz $f^j_C$ stanowią posegmentowane fragmenty obrazu względem wcześniej zdefiniowanej liczby głównych, dominujących kolorów w obrazie. Dla każdego wycinka $f^i_C$ można zdefiniować zbiór punktów $(c_k,p_k)$, gdzie $c_k$ odpowiada danemu kolorowi, natomiast $p_k$ jego procentowemu udziałowi we fragmencie $f^i$, przy $k=1,\dots ,M$. Dysponując zbiorami punktów dla okien $f^i_C$,$\ f^j_C$ można liczbowo przedstawić ich poziom podobieństwa obliczając: 
+Dla każdej linii stykającej się z obszarem $\mathrm{\Omega }$ wyznaczony zostaje punkt środkowy. Względem środka tego punktu tworzone jest okno  $f^i$ o wcześniej zdefiniowanym obszarze. Pierwszym członem w równaniu \eqref{SalientDistance} wyznaczonym na podstawie utworzonego okna $f^i$ jest $D_1\left(f^i_C,f^j_C\right)$. Symbole $f^i_C$ oraz $f^j_C$ stanowią posegmentowane fragmenty obrazu względem wcześniej zdefiniowanej liczby głównych, dominujących kolorów w obrazie. Dla każdego wycinka $f^i_C$ można zdefiniować zbiór punktów $(c_k,p_k)$, gdzie $c_k$ odpowiada danemu kolorowi, natomiast $p_k$ jego procentowemu udziałowi we fragmencie $f^i$, przy $k=1,\dots ,M$. Dysponując zbiorami punktów dla okien $f^i_C$,$\ f^j_C$ można liczbowo przedstawić ich poziom podobieństwa obliczając \cite{chen2005adaptive}:
 \begin{align}
-D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j.
+D_1\left(f^i_C,f^j_C\right)=IOCCD({\left(c_k,p_k\right)}_i,{\left(c_k,p_k\right)}_j,
 \label{colDistance}
 \end{align}
-//TODO wyjaśnić IOCCD
+czyli obliczając normę $IOCCD$, z ang. improved optimal color composition distance, która to reprezentuje liczbowo stopień podobieństwa okien na podstawie kompozycji kolorystycznej.
 Dokładna analiza oraz sposób wyznaczania podobieństwa okien $f^i$ przedstawione są w pozycji \cite{chen2005adaptive}.
 Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\right)$ określające stopień podobieństwa tekstur znajdujących się w utworzonych oknach $f$. Dla każdego obszaru $f^i$ wyznaczana jest macierz $MR8(f^i)$. Macierz uzyskiwana jest na podstawie odpowiedzi wybranego fragmentu obrazu na grupę 38 filtrów przedstawionych na \autoref{4_fig6}.
 \begin{figure}[!h]
@@ -1348,7 +1347,7 @@ gdzie $p$ - piksel obrazu poddanego filtracji, $p\in I$, $I_{fi}$ - odpowiedź o
 \begin{align}
 D_2{\left(f^i_T,f^j_T\right)}_i=\frac{{\left|MR8\left(f^i\right)-MR8\left(f^j\right)\right|}_F}{250}=\frac{{\left|f^i_T-f^j_T\right|}_F}{250}.
 \end{align}
-W powyższej zależności norma oznaczona literą $F$ oznacza normę Frobeniusa liczoną zgodnie z \eqref{FROBENIUS}.
+W przedstawionej zależności norma oznaczona literą $F$ oznacza normę Frobeniusa liczoną zgodnie z \eqref{FROBENIUS}.
 Dokładny algorytm klasyfikacji tekstur przedstawiony został przez Manika Varma'e i Adrew Zisserman'a w \cite{varma2009statistical}. Ostatnim członem w równaniu \eqref{SalientDistance} jest człon $D_3\left(f^i_{cur},f^j_{cur}\right)$ odpowiadający liczbowej reprezentacji podobieństwa krzywizn ze zbioru głównych struktur. Autorzy w \cite{SalientStrucTexProp} nie podają jednak sposobu wyznaczenia normy:
 \begin{align}
 D_3\left(f^i_{cur},f^j_{cur}\right)=\ \left|curvature_i-curvature_j\right|.
@@ -1433,7 +1432,7 @@ ${\partial }_x\Big(g\left(\left|\nabla \omega \right|\right){\partial }_x\omega 
 \label{discreteAnisotropic2}
 \end{align}
 \subsection{Algorytm wmalowywania tekstury obrazu}
-Jednym ze sposobów wmalowywania jest osobne rozpatrywanie uzyskanej w wyniku segmentacji struktury i tekstury obrazu. \textbf{Autor niniejszej pracy proponuje wypełnianie tekstury w oparciu o metodę Criminisi'ego opisaną w podrozdziale \ref{sec:crimMetod}} zamiast stosowania mety przedstawionej na rysunku \ref{5_fig1}.
+Jednym ze sposobów wmalowywania jest osobne rozpatrywanie uzyskanej w wyniku segmentacji struktury i tekstury obrazu. \textbf{Autor niniejszej pracy proponuje wypełnianie tekstury w oparciu o metodę Criminisi'ego opisaną w podrozdziale \ref{sec:crimMetod}} zamiast stosowania metody przedstawionej na rysunku \ref{5_fig1}.
 \section{Modyfikacja algorytmu Criminisi.}
 \label{ssec:crimMod}
 \subsection{Modyfikacja źródła czerpania dopasowania.}
@@ -1444,7 +1443,7 @@ $\forall \ \hat{x} \in r_x: \forall \ p \in q_{\hat{x}} \cap \ \Omega = \emptyse
 \begin{align}
 r_x = f_r(x).
 \end{align}
-Zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego //TODO normy oraz pozwala w pewnym stopniu //TODO że chodzi o strukturę wyodrębnić podzbiory, które powinny być jednolicie kontynuowane wgłąb maski. Graficznie przedstawia to rysunek \ref{4_fig9}.
+Takie zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego wzorca \eqref{FROBDIST} - $|s_x| > |r_x|$. Zmniejszenie okna poszukiwania pozwala także poprawić jednolitość uzyskiwanych struktur. Na rysunku \ref{4_fig9}, dla piksela $p$ podczas wyznaczania najlepszego dopasowania \eqref{FROBDIST} prawdopodobieństwo wstawienia piksela z ze strukury obcej, np. 1 czy 4, jest mniejsze.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.4]{rysunki/4_fig9}
@@ -1468,8 +1467,8 @@ s_8 =
 .
 \end{equation}
 Poprawę dokładności wyznaczania wektorów $n_x$ oraz $\nabla^\bot u_x$ (\autoref{4_fig3}) wnikających wgłąb nieznanego obszaru, a więc i poprawę dokładności algorytmu, w niniejszej pracy uzyskuje się przez uwzględnienie różniczek wyznaczanych dla wszystkich pikseli stanowiących otoczenie głównego piksela $x$. Wpływ każdej z różniczek na ostatecznie wyznaczaną wartość jest procentowo określany.
-Na przykład niech otoczenie piksela $(i, j)$ stanowi macierz o rozmiarze $3 \times 3$. Wtedy jeśli chcemy wyznaczyć $n_{p_{(i,j)}}$ zastosujemy równanie: //TODO dodać nr równania
-\[
+Na przykład niech otoczenie piksela $(i, j)$ stanowi macierz o rozmiarze $3 \times 3$. Wtedy jeśli chcemy wyznaczyć $n_{p_{(i,j)}}$ zastosujemy równanie:
+\begin{equation}
 \begin{bmatrix}
 n_{p_{(i,j)}}
 \end{bmatrix}
@@ -1490,13 +1489,12 @@ c_1\\
 c_2\\
 c_3
 \end{bmatrix},
-\]
+\end{equation}
 gdzie $c_1, c_2, c_3$ oznaczają współczynniki stopniujące wpływ różniczek (mogą być wyznaczane na podstawie rozkładu Gaussa). Analogicznie postępujemy dla innych rozmiarów.
 \section{Model NLCTV}
 \label{sec:smodNLCTV}
 \subsection{Modyfikacja funkcji wagi.}
-//TODO jeśli zwiększamy parametry okna to algorytm łączy różne struktury.
-W trakcie testowania algorytmu pożądanym przez Autora //TODO autor z dużej wszędzie tej pracy magisterskiej stało się poszerzenie zbyt lokalnej analizy obrazu, skutkującej nieodpowiednią kontynuacją struktury. Zwiększając parametry rozmiaru fragmentu obrazu $p_x$ i rozmiaru okna $\text{N}_x$ algorytm ten łączy różne struktury, rozmazuje je, nie pozwalając odpowiednio kontynuować także tekstury obrazu. Aby uniknąć zjawisk rozmycia tekstury obrazu i jednocześnie połączeń różnych struktur //TODO autor tej pracy zaproponował modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
+W trakcie testowania algorytmu pożądanym przez Autora tej pracy magisterskiej stało się poszerzenie zbyt lokalnej analizy obrazu, skutkującej nieodpowiednią kontynuacją struktury. Zwiększanie parametrów wejściowych takich jak rozmiar fragmentu obrazu $p_x$ i rozmiar okna $\text{N}_x$ powoduje, że struktury w uzyskiwanych wynikach stają się coraz bardziej rozmyte, połączone ze sobą. Wypełniony obraz nie posiada także tekstury. Aby uniknąć tego zjawiska Autor tej pracy zaproponował modyfikację funkcji wagi \eqref{NLWEIGHT} do następującej postaci:
 \begin{align}
 \begin{aligned}
 w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\big|I\left(x+\ \cdot \right)-I\left(y+\ \cdot \right)\big|}^2}{r^2}\right\} \cdot}\\
@@ -1504,9 +1502,9 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\big|I\left(x+\ \c
 \label{NLWEIGHTMODIFIED}
 \end{aligned}
 \end{align}
-W //TODO powyższej przytoczonej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość obliczanej wagi.
+W przytoczonej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość obliczanej wagi.
 \subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
-Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania nowych wartości w obrazie. W celu skrócenia tego czasu Autor tej pracy magisterskiej proponuje zastosowanie następującej aproksymacji równania \eqref{uNLCTV}, pozwalającej uzyskać wyniki zbliżone do wyników oryginalnego algorytmu:
+Złożoność obliczeniowa algorytmu $NLCTV$ powoduje, że czas potrzebny na obliczanie nowych wartości w obrazie wydłuża się. W celu skrócenia tego czasu Autor tej pracy magisterskiej proponuje zastosowanie następującej aproksymacji równania \eqref{uNLCTV}, pozwalającej uzyskać wyniki zbliżone do wyników oryginalnego algorytmu:
 \begin{align}
 \begin{aligned}
 {{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
@@ -1514,7 +1512,7 @@ Złożoność obliczeniowa algorytmu $NLCTV$ skutkuje długim czasem obliczania 
 \end{aligned}
 \label{NLH1}
 \end{align}
-W //TODO przytoczonym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie algorytmu dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
+W przytoczonym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie algorytmu dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
 \section{Połączenie syntezy obrazu z funkcją wagi.}
 Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez Autora tej pracy jest zastąpienie równania \eqref{NLH1}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury. Kroki nowego algorytmu można wtedy przedstawić w następującym schemacie postępowania:
 \begin{enumerate}
@@ -1730,7 +1728,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
 \section{Równanie mechaniki płynu.}
 \label{sec:NVResult}
 \subsection{Rozwiązanie równania Naviera-Stokes'a.}
-Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. \textbf{Wynikowe obrazy uzyskane przy zastosowaniu schematu centralnego opisanego przez równanie \eqref{NavierDiffAdvCen} w porównaniu z wynikami otrzymanymi z zastosowaniem schematu "do przodu" opisanego przez równanie //TODO \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic}. W przypadku dyfuzji anizotropowej opoisany przez równanie \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Również modyfikacja Autora opisana w podrozdziale \ref{ssec:anisModNS} ma znikomy wpływ na dokładność wyznaczonego obrazu //TODO tylko sprawdzić czy w miare ok. \textbf{W trakcie badań autor niniejszej pracy zauważył, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{DiscreteSOR} rozwiązywane jest w każdej iteracji i stopniowo coraz bardziej widoczny jest //TODOproblem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Jeśli $\Delta t <0.1$ w równaniu \eqref{NavierDiffAdvFor} to stabilność algorytmu jest zachowana przy wartościach $h \geq 0.9$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, //TODO bo dla przykładu było, teraz ok//na przykład metody opisane w \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury. 
+Przykładowe wyniki  przedstawia Tab. \ref{TabNavierStokes}. \textbf{Wynikowe obrazy uzyskane przy zastosowaniu schematu centralnego opisanego przez równanie \eqref{NavierDiffAdvCen} w porównaniu z wynikami otrzymanymi z zastosowaniem schematu "do przodu" opisanego przez równanie //TODO \eqref{NavierDiffAdvFor} nie wykazują znaczących różnic}. W przypadku dyfuzji anizotropowej opoisany przez równanie \eqref{NavierAdv}  \textbf{przedstawione w pracy sposoby dyskretyzacji} nie minimalizują wystarczająco rozmycia w odrestaurowywanej masce i mają znikomy wpływ na dokładność wyznaczonego obrazu. Również modyfikacja Autora opisana w podrozdziale \ref{ssec:anisModNS} ma znikomy wpływ na dokładność wyznaczonego obrazu //TODO tylko sprawdzić czy w miare ok. \textbf{W trakcie badań Autor niniejszej pracy zauważył, że rozmycie obrazu w znaczącym stopniu spowodowane jest zgrubną dokładnością rozwiązania równania \eqref{Poisson}}. Warto zaznaczyć, że równanie \eqref{DiscreteSOR} rozwiązywane jest w każdej iteracji i stopniowo coraz bardziej widoczny jest //TODOproblem rozmycia. Przykładowe wyniki w zależności od parametru $h$  przedstawia \autoref{SORMethod}. Jeśli $\Delta t <0.1$ w równaniu \eqref{NavierDiffAdvFor} to stabilność algorytmu jest zachowana przy wartościach $h \geq 0.9$. W celu uzyskania dokładniejszej kontynuacji struktury należy rozważyć bardziej zaawansowane algorytmy dyskretyzacji równania mechaniki płynów, //TODO bo dla przykładu było, teraz ok//na przykład metody opisane w \cite{tschumperle2006fast}. Kontynuacja obrazu na podstawie równania mechaniki płynów nie jest metodą gwarantującą poprawną kontynuację tekstury. 
 \begin{longtable}[h!]{|c|c|}
 	\hline
 	Obraz & Dane \\ \hline
@@ -2162,7 +2160,7 @@ Przykładowe wyniki przedstawia tabela:
     \end{tabular}
     \end{minipage} \\ \hline
     
-  \caption{Wyniki metody Criminisi, $|p_x|_r$ - promień w pikselach tworzonego skrawka obrazu $p_x$.}
+  \caption{Wyniki metody Criminisi, $|p_x|_r$ - długość boku skrawka w pikselach tworzonego skrawka obrazu $p_x$.}
   \label{CRIMTEST}
 \end{longtable}
 
@@ -2172,7 +2170,7 @@ Wyniki przedstawione w tabeli //TODO dodać nr tabeli wyznaczono dla \textbf{opt
 Autorzy artykułu \cite{SalientStrucTexProp} nie opisują dokładnego sposobu wyznaczania głównych struktur, łączenia w pary, a następnie wyznaczania równań kontynuacji w obszar maski. Autor niniejszej pracy, wziąłwszy pod uwagę przeciętne wyniki uzyskiwane w następnym podrozdziale, gdzie manualne wprowadzenie głównych struktur wiąże się z ich idealnym wyznaczeniem, odszedł od dalszych prac, przedstawienia wyników i udoskonaleń tego rozwiązania.
 Złożoność problemu implementacji oraz nie spełnione oczekiwania co do wyników uzyskiwanych dla zaimplementowanego rozwiązania skłoniły Autora tej pracy do zaproponowania innego rozwiązania. Zaimplementowana metoda działa jedynie na obrazach, na których bardzo łatwo wyróżnić linie głównych struktur jedynie w przypadku gdy linie te nie tworzą złożonych kształtów.
 \subsubsection{Ręczne wprowadzanie głównych struktur.} // TODO manualne na ręczne wszędzie
-W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} przebadano algorytm wmalowywania również pod kątem priorytetowego wypełnienia głównych struktur obrazu \textbf{zgodnie z wytycznymi wprowadzonymi ręcznie przez użytkownika}. Punkty linii głównej struktury znajdujące się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Doświadczalnie została również dobrana wartość promienia skrawka dla każdego obrazu $|p_x|_r$.
+W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} przebadano algorytm wmalowywania również pod kątem priorytetowego wypełnienia głównych struktur obrazu \textbf{zgodnie z wytycznymi wprowadzonymi ręcznie przez użytkownika}. Punkty linii głównej struktury znajdujące się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Doświadczalnie została również dobrana długość boku skrawka dla każdego obrazu $|p_x|_r$.
 \newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2357,7 +2355,7 @@ gdzie $p$ - procent z tabeli \ref{GS}, $t$ z tabeli \ref{CRIMTEST}. Ostatecznie 
 	\caption{Korekcja fotometryczna obrazu w przypadku propagacji głównych struktur obrazu. Źródło \cite{StructurePropagationManual}.}
 	\label{7_fig1} 
 \end{figure}
-\textbf{Aby dodatkowo ograniczyć błędy nieodpowiedniej syntezy struktur w obrazie autor tej pracy magisterskiej w dalszych badaniach proponuje segmentację celem wyznaczenia głównych dominujących kolorów} i na ich podstawie korzystając z metody przedstawionej w \cite{chen2005adaptive} badanie podobieństwa rozważanych skrawków (czyli skorzystanie ze wspomnianej zależności \eqref{colDistance}).
+\textbf{Aby dodatkowo ograniczyć błędy nieodpowiedniej syntezy struktur w obrazie Autor tej pracy magisterskiej w dalszych badaniach proponuje segmentację celem wyznaczenia głównych dominujących kolorów} i na ich podstawie korzystając z metody przedstawionej w \cite{chen2005adaptive} badanie podobieństwa rozważanych skrawków (czyli skorzystanie ze wspomnianej zależności \eqref{colDistance}).
 Najskuteczniejszym ograniczeniem niespójności struktury może być dodatkowy parametr wejściowy algorytmu w postaci dodatkowej maski $\Omega '$ definiowanej przez użytkownika stanowiącej zbiór pikseli, które nie powinny pojawić się we wmalowywanym obszarze. Niech:
 \begin{equation}
 \chi' \left(x\right)=\Bigg\{ \begin{array}{ll}
@@ -2547,7 +2545,7 @@ Parametr $\lambda$ służy do przemnożenia wartości $\chi$ danej wzorem\eqref{
 \ \ \ \ \ \lambda\ x \in D/ \Omega \end{array}
 \right\}
 \end{equation}
-Parametr $|s_x|_r$ określa wymiar promienia w pikselach tworzonego okna $\mathrm{N_x}$ (z ang. search window).
+Parametr $|s_x|_r$ określa wymiar długości boku w pikselach tworzonego okna $\mathrm{N_x}$ (z ang. search window).
 Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest prawie niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znaczącym stopniu przyspiesza algorytm wmalowywania}. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
 
 \begin{longtable}[h!]{|c|c|}
@@ -2772,7 +2770,7 @@ Model nielokalny wariacji całkowitej w pierwszych publikacjach dotyczących prz
 \end{enumerate}
 Wadą tego algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowością tekstury - \kotmyszm, \ObrIm .
 \subsection{Modyfikacja funkcji wagi.}
-Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość promienia okna $s(\cdot)$ wprowadzonego w równaniu \eqref{NLWEIGHTMODIFIED}):
+Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość boku okna $s(\cdot)$ wprowadzonego w równaniu \eqref{NLWEIGHTMODIFIED}):
 \begin{longtable}[h!]{|c|c|}
     \hline
     \multicolumn{2}{|c|}{
@@ -3014,7 +3012,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma: \eqref{nonLocalMedians} \\
-    Promień fragmentu obrazu: 7 \\
+    Długość boku fragmentu obrazu: 7 \\
     Wyniki: \\ 
     t: 234.16s 
     \vspace{0.2cm}
@@ -3025,7 +3023,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma: \eqref{nonLocalMeans} \\
-    Promień fragmentu obrazu: 7 \\
+    Długość boku fragmentu obrazu: 7 \\
     Wyniki: \\ 
     t: 258.49s  
     \vspace{0.2cm}
@@ -3049,7 +3047,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMedians} \\ 
-    Promień fragmentu obrazu: 7 \\
+    Długość boku fragmentu obrazu: 7 \\
     Wyniki: \\ 
     t: 234.16s 
     \vspace{0.2cm}
@@ -3060,7 +3058,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalpoisson} \\
-    Promień fragmentu obrazu: 7 \\
+    Długość boku fragmentu obrazu: 7 \\
     Wyniki: \\ 
     t: 763.77s  
     \vspace{0.2cm}
@@ -3088,7 +3086,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  Poisson'a \\
-    Promień fragmentu obrazu: 9 \\
+    Długość boku fragmentu obrazu: 9 \\
     Wyniki: \\ 
     t: 391.50s 
     \vspace{0.2cm}
@@ -3099,7 +3097,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMedians} $(L^1)$ \\
-    Promień fragmentu obrazu: 9 \\
+    Długość boku fragmentu obrazu: 9 \\
     Wyniki: \\ 
     t: 146.55s  
     \vspace{0.2cm}
@@ -3123,7 +3121,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMeans} \\
-    Promień fragmentu obrazu: 9 \\
+    Długość boku fragmentu obrazu: 9 \\
     Wyniki: \\ 
     t: 150.99s 
     \vspace{0.2cm}
@@ -3134,7 +3132,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMedians} $(L^1)$ \\
-    Promień fragmentu obrazu: 9 \\
+    Długość boku fragmentu obrazu: 9 \\
     Wyniki: \\ 
     t: 146.55s  
     \vspace{0.2cm}
@@ -3161,7 +3159,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  Poisson'a\\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 711.47s 
     \vspace{0.2cm}
@@ -3172,7 +3170,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalpoisson}\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 81.19s  
     \vspace{0.2cm}
@@ -3195,7 +3193,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  medianowa\\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 259.07s 
     \vspace{0.2cm}
@@ -3206,7 +3204,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMedians}\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 16.24s  
     \vspace{0.2cm}
@@ -3230,7 +3228,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMeans}\\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 370.96s 
     \vspace{0.2cm}
@@ -3241,7 +3239,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMeans}\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 20.50s  
     \vspace{0.2cm}
@@ -3266,7 +3264,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  Poisson'a\\
-    Promień fragmentu obrazu: 11 \\
+    Długość boku fragmentu obrazu: 11 \\
     Wyniki: \\ 
     t: 715.38s 
     \vspace{0.2cm}
@@ -3277,7 +3275,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalpoisson}\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 37.36s  
     \vspace{0.2cm}
@@ -3300,7 +3298,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  medianowa\\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 374.35s 
     \vspace{0.2cm}
@@ -3311,7 +3309,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMedians}\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 12.14s  
     \vspace{0.2cm}
@@ -3335,7 +3333,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMeans}\\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 585.15s 
     \vspace{0.2cm}
@@ -3346,7 +3344,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalMeans}\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 18.08s  
     \vspace{0.2cm}
@@ -3376,7 +3374,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  Poisson'a\\
-    Promień fragmentu obrazu: 3 \\
+    Długość boku fragmentu obrazu: 3 \\
     Wyniki: \\ 
     t: 57.79s 
     \vspace{0.2cm}
@@ -3387,7 +3385,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \centering
     Parametry: \\
     Norma:  \eqref{nonLocalpoisson}\\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 984.07s  
     \vspace{0.2cm}
@@ -3421,7 +3419,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     &
     \begin{minipage}{.35\textwidth}
     Norma:  \eqref{nonLocalpoisson} \\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 16316.70s  
     \end{minipage} \\ \hline
@@ -3435,7 +3433,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     &
     \begin{minipage}{.35\textwidth}
     Norma:  \eqref{nonLocalMeans} \\
-    Promień fragmentu obrazu: 13 \\
+    Długość boku fragmentu obrazu: 13 \\
     Wyniki: \\ 
     t: 6857.42s  
     \end{minipage} \\ \hline
@@ -3449,7 +3447,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     &
     \begin{minipage}{.35\textwidth}
     Norma:  \eqref{nonLocalMeans} \\
-    Promień fragmentu obrazu: 5 \\
+    Długość boku fragmentu obrazu: 5 \\
     Wyniki: \\ 
     t: 1381.94s
     \end{minipage} \\ \hline
@@ -3573,7 +3571,7 @@ Algorytmy zostały zbadane dla różnych parametrów wypełniania. Zestawienie w
          Crim    & Metoda Criminisi bazująca na kopiowaniu skrawków. \\ \hline
          Sal Crim    & Metoda Criminisi bazująca na kopiowaniu z uprzednim wmalowywaniem ręcznie zadanych głównych struktur \\ \hline
          NLCTV    & Metoda NLCTV \\ \hline
-         NLCTV MOD   & Metoda NLCTV z modyfikacją funkcji wagi proponowaną przez autora tej pracy \\ \hline
+         NLCTV MOD   & Metoda NLCTV z modyfikacją funkcji wagi proponowaną przez Autora tej pracy \\ \hline
          VFI   & Wariacyjny model nielokalny \\ \hline
     \end{tabular}
     \caption{Wyjaśnienie wprowadzanych skrótów.}
