@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{t1enc}
 \usepackage{a4wide}
+\usepackage{url}
 \usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{amsmath}
@@ -82,8 +83,21 @@
 \glsxtrnewsymbol[description={wypełniana część obrazu $I$}]{wmalowane}{$\Omega$}
 \glsxtrnewsymbol[description={reprezentacja funkcji będącej nielokalnym przekształceniem $D \times D \rightarrow R$} w modelu $NLCTV$]{nlreop}{$p$}
 \glsxtrnewsymbol[description={normy wektorowe}]{normywektor}{$\ell_{1},\ell_{2}$}
-\glsxtrnewsymbol[description={rozmiar pojedynczego piksela w obrazie}]{pixSize}{$h$}
+\glsxtrnewsymbol[description={rozmiar pojedynczego piksela w obrazie lub parametr funkcji wagi}]{pixSize}{$h$}
 \begin{document}
+
+\def \fullkotmyszm{obraz nr 1}
+\def \fullmaciekIm{obraz nr 2}
+\def \fullObrIm{obraz nr 3}
+\def \fullObrIVm{obraz nr 4}
+\def \fullObrVm{obraz nr 5}
+\def \fullObrVIm{obraz nr 6}
+\def \fullObrXVm{obraz nr 7}
+\def \fullObrXVIIm{obraz nr 8}
+\def \fullObrXIXm{obraz nr 9}
+\def \fullObrXXVIIIkm{obraz nr 10}
+\def \fullOsobaDrugam{obraz nr 11}
+\def \fullObrXIIIm{obraz nr 12}
 
 \def \kotmyszm{obr. nr 1}
 \def \maciekIm{obr. nr 2}
@@ -101,10 +115,10 @@
 \def \TEST{obr. nr 2}
 \def \Wood{obr. nr 3}
 
-\def \SNRI{obr. nr 1}
-\def \SNRII{obr. nr 2}
-\def \SNRIII{obr. nr 3}
-\def \SNRIV{obr. nr 4}
+\def \SNRI{obraz nr 1}
+\def \SNRII{obraz nr 2}
+\def \SNRIII{obraz nr 3}
+\def \SNRIV{obraz nr 4}
 
 \def \kotmyszmu{obrazu nr 1}
 \def \maciekImu{obrazu nr 2}
@@ -215,7 +229,7 @@ W ostatnich latach analiza obrazów zyskuje na popularności ciągle zwiększaj�
 	\includegraphics{rysunki/1_fig1.png}
 \end{figure}
 \\
-gdzie $I_0$ to obraz wejściowy, a $u$ to oczekiwany sygnał wyjściowy:
+gdzie $u$ to obraz wejściowy, a $y$ to oczekiwany sygnał wyjściowy:
 \begin{align}
 \begin{aligned}
 y(s) = G(s) \cdot u(s)
@@ -479,7 +493,7 @@ I_{i+1,j}+I_{i-1,j}+I_{i,j+1}+I_{i,j-1}-4I_{i,j}=h^2{\omega }_{i,j}
 \label{Laplace}
 .
 \end{equation}
-Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje nasz obraz $I$, $B$ gładkość obrazu $\omega$, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele różnych metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy Gaussa-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując podejście SOR – czyli metodę sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
+Na podstawie równania \eqref{Laplace} można stworzyć równanie macierzowe postaci $Ax=B$, gdzie $x$ reprezentuje nasz obraz $I$, $B$ gładkość obrazu $\omega$, natomiast $A$ to macierz charakterystyczna współczynników. Istnieje wiele różnych metod rozwiązywania równań Poissona takich jak metoda Jacobiego czy Gauss'a-Seidla.  Wystarczającą wydajność i szybkość działania w celach rozwiązania równania można uzyskać stosując podejście SOR – czyli metodę sukcesywnej nadrelaksacji, \cite{blacksuccessive}. Dyskretyzacja równania wygląda następująco:
 \begin{align}
 \begin{aligned}
 I^{n+1}_{i,j}
@@ -1133,11 +1147,11 @@ losowo wyznaczone wartości obrazu pobierane z obszaru $D^c$,
 \item
 rozwiązanie równania Poisson'a \eqref{Poisson2D}, dokładnie przedstawione w \autoref{chap:navierstokes}, metodą SOR ( z ang. succesive over relaxation method) zgodnie z zależnością \eqref{DiscreteSOR}.
 \end{itemize}
-Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gaussa. W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{S-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania wykorzystywany do tworzenia coraz mniejszych obrazów wynosi:
+Przeskalowywanie w obie strony musi odbywać się w sposób nie zniekształcający głównych struktur, obiektów i tekstur obrazu. W tym celu autorzy \cite{arias2011variational} proponują model piramidy Gauss'a. W celach wmalowywania tworzone są dwie oddzielne piramidy wyznaczające maski obrazu i same obrazy. Niech $S$ oznacza liczbę poziomów piramidy, a rozmiar oryginalnego obrazu jest oznaczany przez $s=0$. Niech rozmiar najmniejszego stopnia określa $A_{S-1}$, natomiast rozmiar oryginalnego obrazu $A_{0}$. Wtedy współczynnik próbkowania wykorzystywany do tworzenia coraz mniejszych obrazów wynosi:
 \begin{align}
 r := \left(\frac{A_0}{A_{s-1}}\right)^\frac{1}{s-1}.
 \end{align}
-W rezultacie aby uzyskać mniejszy obraz musi zachodzić zależność $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt{r^2-1}$. Rozmiar okna Gaussa wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień piramidy $s+1$ dla maski  wyznaczamy z zależności:
+W rezultacie aby uzyskać mniejszy obraz musi zachodzić zależność $r \geq 1$. Parametr $\sigma$ tworzonego filtru Gauss'a wyznaczany jest z zależności $\sigma(r)=0.62\sqrt{r^2-1}$. Rozmiar okna Gauss'a wykorzystywanego do filtrowania można przyjąć jako wartość stałą zdefiniowaną z góry. Niech indeks górny s odnosi się do zmiennych oraz do obszarów w zakresie rozważanego poziomu piramidy. Opiszmy maskę obrazu \eqref{maskFunction} na stopniu $s$ funkcją $\chi_{\Omega^{s}}$. Wtedy kolejny stopień piramidy $s+1$ dla maski  wyznaczamy z zależności:
 \begin{align}
 \chi_{\Omega^{s+1}}=(\downarrow_r G_{\sigma(r)} \ast \chi_{\Omega^s}) > T_{0},
 \end{align}
@@ -1145,7 +1159,7 @@ gdzie $\downarrow_r$ oznacza, że grupa pikseli w otoczeniu o boku (współczynn
 \begin{align}
 u^{s+1}(x)= \downarrow_r \frac{G \ast \chi_{\Omega^s} u^s(x)}{G \ast \chi_{\Omega^s}(x)}
 \end{align}
-W tej zależności pewnym ograniczeniem próbkowania w dół jest nieuwzględnianie wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gaussa. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ opisany w poprzednim rozdziale wymusza przy każdym przejściu ze stopnia $s$ do $s-1$ piramidy oprócz przeskalowania obrazu $u$ przeskalowanie także funkcji mapy podobieństwa $\varphi$. Obraz i mapa stanowią na każdym kolejnym poziomie $s-1$ piramidy aż do ostatniego $S$ warunki początkowe kolejnych kroków naprzemiennej minimalizacji. Do przeskalowania  został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
+W tej zależności pewnym ograniczeniem próbkowania w dół jest nieuwzględnianie wartości znajdujących się w obszarze $\Omega^s$. Obraz w pierwszym kroku zostaje przemnożony przez maskę przedstawiającą źródłową część obrazu, a następnie poddany operacji splotu z utworzonym filtrem Gauss'a. Mianownik tego równania służy normalizacji obliczenia. Wielostopniowy schemat wypełniania w zastosowaniu do algorytmu $VFI$ opisany w poprzednim rozdziale wymusza przy każdym przejściu ze stopnia $s$ do $s-1$ piramidy oprócz przeskalowania obrazu $u$ przeskalowanie także funkcji mapy podobieństwa $\varphi$. Obraz i mapa stanowią na każdym kolejnym poziomie $s-1$ piramidy aż do ostatniego $S$ warunki początkowe kolejnych kroków naprzemiennej minimalizacji. Do przeskalowania  został wykorzystany algorytm dokładnie przedstawiony w \cite{wexler2007space} i opisany w \cite{arias2011variational}.
 \subsection{Podsumowanie algorytmu}
 \label{ssec:VFIPodsumowanie}
 Jeśli połączymy opisane wcześniej operacje dokonywane na obrazie to algorytm wypełniania brakującego obszaru możemy przedstawić w następujących krokach:
@@ -1312,7 +1326,7 @@ Paired\left(i,j\right)={\mathrm{arg}\ \mathop{\mathrm{min}}_{i,j\ \epsilon \math
 \end{align}
 \end{enumerate}
 gdzie człon $IP$ określa czy para głównych struktur $(i,j)$ jest do siebie równoległa, czy nie, $D_1$ to liczbowa reprezentacja podobieństwa kolorów, $D_2$ to liczbowa reprezentacja podobieństwa tekstur, a $D_3$ to liczbowa reprezentacja podobieństwa krzywizn. 
-Analiza powyższych równań zostanie wykonana w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Krokiem wstępnym do rozwiązania powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gaussa:
+Analiza powyższych równań zostanie wykonana w sposób szczegółowy dla każdego z członów $\alpha \cdot D_1\left(f^i_C,f^j_C\right)\ $,$\ \beta {\cdot D}_2\left(f^i_T,f^j_T\right)$, oraz $\gamma {\cdot D}_3\left(f^i_{Cur},f^j_{Cur}\right)$. Krokiem wstępnym do rozwiązania powyższych równań według \cite{SalientStrucTexProp} jest wyznaczenie głównych struktur na podstawie obrazu wejściowego poddanego wstępnemu rozmyciu funkcją Gauss'a:
 \begin{align}
 G\left(i,j\right)=\frac{1}{\sqrt{2\pi }\sigma }e^{\frac{i^2+j^2}{2{\sigma }^2}}.
 \label{rozmycieGaussa}
@@ -1338,7 +1352,7 @@ Drugim członem w równaniu \eqref{SalientDistance} jest $D_2\left(f^i_T,f^j_T\r
 	\caption{Bank 38 filtrów grupy MR8. źródło \cite{varma2009statistical}.}
 \label{4_fig6}
 \end{figure}
-Przez odpowiedź obrazu na filtr należy rozumieć operację splotu z macierzą odpowiadającą definicji konkretnego filtru. W grupie filtrów $MR8$ branych pod uwagę znajduje się filtr Gaussowski, oraz filtr $LOG$ będący laplasjanem funkcji gaussowskiej.
+Przez odpowiedź obrazu na filtr należy rozumieć operację splotu z macierzą odpowiadającą definicji konkretnego filtru. W grupie filtrów $MR8$ branych pod uwagę znajduje się filtr Gauss'owski, oraz filtr $LOG$ będący laplasjanem funkcji Gauss'owskiej.
 Na pozostałe 36 filtrów składają się dwie grupy filtrów utworzonych na podstawie filtru krawędziowego oraz filtru (w języku angielskim) "bar filter". Każdy z nich przedstawiony jest w sześciu orientacjach oraz trzech skalach zgodnie z \autoref{4_fig6}. Maksymalna odpowiedź na bazę trzydziestu ośmiu filtrów definiowana jest następująco:
 \begin{align}
 I_{fmax}(p)=\mathrm{max}\big[(I_{f1}(p),I_{f2}(p),\dots ,I_{f38}(p) \big],
@@ -1447,7 +1461,7 @@ Takie zmniejszenie pozwala ograniczyć czas odnalezienia najlepszego wzorca \eqr
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.4]{rysunki/4_fig9}
-	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru$\boldsymbol{\mathrm{\Omega }}$. Rysunek autorski.}
+	\caption{Grupowanie podzbiorów stanowiących źródło fragmentów wykorzystywanych do syntezy podzbiorów nieznanego obszaru $\boldsymbol{\mathrm{\Omega }}$. Rysunek autorski.}
 \label{4_fig9}
 \end{figure}
 \subsection{Modyfikacja sposobu wyznaczania podobieństwa.}
@@ -1490,7 +1504,7 @@ c_2\\
 c_3
 \end{bmatrix},
 \end{equation}
-gdzie $c_1, c_2, c_3$ oznaczają współczynniki stopniujące wpływ różniczek (mogą być wyznaczane na podstawie rozkładu Gaussa). Analogicznie postępujemy dla innych rozmiarów.
+gdzie $c_1, c_2, c_3$ oznaczają współczynniki stopniujące wpływ różniczek (mogą być wyznaczane na podstawie rozkładu Gauss'a). Analogicznie postępujemy dla innych rozmiarów.
 \section{Model NLCTV}
 \label{sec:smodNLCTV}
 \subsection{Modyfikacja funkcji wagi.}
@@ -1554,7 +1568,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 		Wymiar: & 500 $\times$ 375 \\
 		Udział maski: &  28\% \\
-		Nazwa: & \kotmyszm
+		Nazwa: & \fullkotmyszm
     \end{tabular}
     \end{minipage} \\ \hline
     
@@ -1569,7 +1583,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 410 $\times$ 308 \\
 	Udział maski: & 28\% \\
-	Nazwa: & \maciekIm
+	Nazwa: & \fullmaciekIm
     \end{tabular}
     \end{minipage} \\ \hline
     
@@ -1584,7 +1598,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 614 $\times$ 461 \\
 	Udział maski: & 9\% \\
-	Nazwa: & \ObrIm
+	Nazwa: & \fullObrIm
     \end{tabular}
     \end{minipage} \\ \hline
     
@@ -1599,7 +1613,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 576 $\times$ 360 \\
 	Udział maski: & 7\% \\
-	Nazwa: & \ObrIVm
+	Nazwa: & \fullObrIVm
     \end{tabular}
     \end{minipage} \\ \hline
 
@@ -1614,7 +1628,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 650 $\times$ 570 \\
 	Udział maski: & 28\% \\
-	Nazwa: & \ObrVm
+	Nazwa: & \fullObrVm
     \end{tabular}
     \end{minipage} \\ \hline
 
@@ -1629,7 +1643,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 655 $\times$ 491 \\
 	Udział maski: & 9\% \\
-	Nazwa: & \ObrVIm
+	Nazwa: & \fullObrVIm
     \end{tabular}
     \end{minipage} \\ \hline
     
@@ -1644,7 +1658,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 1772 $\times$ 1181 \\
 	Udział maski: & 4.5\% \\
-	Nazwa: & \ObrXVm
+	Nazwa: & \fullObrXVm
     \end{tabular}
     \end{minipage} \\ \hline
 
@@ -1659,7 +1673,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 206 $\times$ 308 \\
 	Udział maski: & 14\% \\
-	Nazwa: & \ObrXVIIm
+	Nazwa: & \fullObrXVIIm
     \end{tabular}
     \end{minipage} \\ \hline
 
@@ -1674,7 +1688,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 461 $\times$ 615 \\
 	Udział maski: & 7\% \\
-	Nazwa: & \ObrXIXm
+	Nazwa: & \fullObrXIXm
     \end{tabular}
     \end{minipage} \\ \hline
 
@@ -1689,7 +1703,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 820 $\times$ 615 \\
 	Udział maski: & 28\% \\
-	Nazwa: & \ObrXXVIIIkm
+	Nazwa: & \fullObrXXVIIIkm
     \end{tabular}
     \end{minipage} \\ \hline
 
@@ -1704,7 +1718,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 2592 $\times$ 1944 \\
 	Udział maski: & 28\% \\
-	Nazwa: & \OsobaDrugam
+	Nazwa: & \fullOsobaDrugam
     \end{tabular}
     \end{minipage} \\ \hline
     
@@ -1719,7 +1733,7 @@ W niniejszej pracy testom poddano następującą grupę obrazów:
     \begin{tabular}{ l l  }
 	Wymiar: & 1181 $\times$ 1772 \\
 	Udział maski: & 4\% \\
-	Nazwa: & \ObrXIIIm
+	Nazwa: & \fullObrXIIIm
     \end{tabular}
     \end{minipage} \\ \hline
     \caption{Obrazy poddane analizie.}
@@ -1998,7 +2012,6 @@ Autor tej pracy magisterskiej sprawdził zaproponowane i opisane przez niego spo
 \section{Uzupełnianie kawałkami obrazu.}
 \subsection{Metoda Criminisi.}
 Przykładowe wyniki przedstawia tabela:
-\newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
     Obraz & Dane \\ \hline
@@ -2195,7 +2208,6 @@ Autorzy artykułu \cite{SalientStrucTexProp} nie opisują dokładnego sposobu wy
 Złożoność problemu implementacji oraz nie spełnione oczekiwania co do wyników uzyskiwanych dla zaimplementowanego rozwiązania skłoniły Autora tej pracy do zaproponowania innego rozwiązania. Zaimplementowana metoda działa jedynie na obrazach, na których bardzo łatwo wyróżnić linie głównych struktur jedynie w przypadku gdy linie te nie tworzą złożonych kształtów.
 \subsubsection{Manualne wprowadzanie głównych struktur.}
 W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{StructurePropagationManual} przebadano algorytm wmalowywania również pod kątem priorytetowego wypełnienia głównych struktur obrazu \textbf{zgodnie z wytycznymi wprowadzonymi ręcznie przez użytkownika}. Punkty linii głównej struktury znajdujące się w obszarze maski stanowią miejsca, które wypełniane są priorytetowo. Doświadczalnie została również dobrana długość boku skrawka dla każdego obrazu $|p_x|_r$.
-\newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
     Obraz & Dane \\ \hline
@@ -2208,7 +2220,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-		Wynik \ObrVImu \\
+		\ObrVIm \\
         $|p_x|_r$: 9 \\
         Główne struktury: 5
     \end{minipage} \\ \hline
@@ -2221,7 +2233,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    		Wynik \ObrXIIImu \\
+    	\ObrXIIIm \\
         $|p_x|_r$: 8 \\
         Główne struktury: 4
     \end{minipage} \\ \hline
@@ -2234,7 +2246,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    		Wynik \ObrXVIImu \\
+    		\ObrXVIIm \\
         $|p_x|_r$: 4 \\
         Główne struktury: 3
     \end{minipage} \\ \hline
@@ -2247,7 +2259,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    		Wynik \ObrXIXmu \\
+    		\ObrXIXm \\
         $|p_x|_r$: 12 \\
         Główne struktury: 1
     \end{minipage} \\ \hline
@@ -2258,9 +2270,11 @@ Linie granic głównych struktur przedstawiono kolorem czerwonym. \textbf{Autor 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=1]{rysunki/SalientPatch.png}
-	\caption{Przykład skrawków obrazu dla granicy w postaci plaży: kolor zielony przedstawia skrawek o wymiarze pozwalającym scharakteryzować granicę, kolorem czerwonym - skrawek jest zbyt mały.}
+	\caption{Przykład skrawków obrazu leżących na granicy struktur: kolor zielony przedstawia skrawek o wymiarze pozwalającym scharakteryzować granicę, kolorem czerwonym - skrawek jest zbyt mały.}
 	\label{PatchProperSize}
 \end{figure}
+\pagebreak
+\newpage
 Pośrednie wyniki wypełniania struktur przedstawiono w tabeli:
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -2579,15 +2593,20 @@ Parametr $\lambda$ służy do przemnożenia wartości $\chi$ danej wzorem\eqref{
 \right\}
 \end{equation}
 Parametr $|s_x|_r$ określa wymiar długości boku w pikselach tworzonego okna $\mathrm{N_x}$ (z ang. search window).
-Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest prawie niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znaczącym stopniu przyspiesza algorytm wmalowywania}. Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest prawie niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znaczącym stopniu przyspiesza algorytm wmalowywania}.
 
+\newpage
+Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
 \begin{longtable}[h!]{|c|c|}
     \hline
     \multicolumn{2}{|c|}{
     	Obrazy
     } \\ \hline 
     \multicolumn{2}{|c|}{
-		Wpływ parametru $h$ na odwzorowanie tekstur i struktur
+		\textbf{Wpływ parametru $h$ na odwzorowanie tekstur i struktur}
+    } \\ \hline  \hline 
+    \multicolumn{2}{|c|}{
+	wyniki dla obrazu \ObrXVIImu
     } \\ \hline 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -2626,6 +2645,10 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
+    \multicolumn{2}{|c|}{
+	wyniki dla obrazu \ObrXIXmu
+    } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2663,6 +2686,10 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
+    \multicolumn{2}{|c|}{
+	wyniki dla obrazu \ObrVImu
+    } \\ \hline \\
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2701,13 +2728,17 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \end{minipage}\\ \hline
 
     \multicolumn{2}{|c|}{
-		Wpływ parametrów $|s_x|_r$ i $|p_x|_r$ na odwzorowanie tekstur i struktur. \newline
-    } \\
+		\textbf{Wpływ parametrów $|s_x|_r$ i $|p_x|_r$ na odwzorowanie tekstur i struktur. }\newline
+    } \\ 
 
     \multicolumn{2}{|c|}{
 		($h$ dla małych $|s_x|_r$ i $|p_x|_r$ wyznaczone jako minimalne stabilne)
-    } \\ \hline 
+    } \\\hline  \hline 
 
+    \multicolumn{2}{|c|}{
+	wyniki dla obrazu \kotmyszmu
+    } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2745,6 +2776,10 @@ Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartośc
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
+    \multicolumn{2}{|c|}{
+	wyniki dla obrazu \ObrImu
+    } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2801,17 +2836,20 @@ Model nielokalny wariacji całkowitej w pierwszych publikacjach dotyczących prz
 \item $h < 5$.
 \end{itemize}
 \end{enumerate}
-Wadą tego algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowością tekstury - \kotmyszm, \ObrIm .
+Wadą tego algorytmu jest brak skutecznej kontynuacji charakteryzującej się losowością tekstury - \fullkotmyszm, \fullObrIm .
 \subsection{Modyfikacja funkcji wagi.}
-Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość boku okna $s(\cdot)$ wprowadzonego w równaniu \eqref{NLWEIGHTMODIFIED}):
+Wyniki przedstawiono w tabeli \ref{NLH1SWOVER1} (parametr $sw$ określa czynnik $ s(\cdot)$ wprowadzony w równaniu \eqref{NLWEIGHTMODIFIED} wykorzystywany do powiększenia skrawka  $|p_x|$  ):
+
 \begin{longtable}[h!]{|c|c|}
     \hline
     \multicolumn{2}{|c|}{
-    	Obrazy
+		Wpływ parametru $sw$ na odwzorowanie tekstur i struktur, $|s_x|_r$,$ \ |p_x|_r$ \textbf{są równe}
+    } \\ \hline  \hline
+    
+        \multicolumn{2}{|c|}{
+		wyniki dla \maciekImu
     } \\ \hline 
-    \multicolumn{2}{|c|}{
-		Wpływ parametru $sw$ na odwzorowanie tekstur i struktur, $|s_x|_r$,$ \ |p_x|_r$ równe
-    } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2847,6 +2885,10 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość bok
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
+        \multicolumn{2}{|c|}{
+		wyniki dla \ObrXVIImu
+    } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2882,6 +2924,10 @@ Wyniki przedstawiono w tabeli (parametr $sw$ określa w pikselach długość bok
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
+        \multicolumn{2}{|c|}{
+		wyniki dla obrazu \ObrXIXmu
+    } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -2935,7 +2981,8 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     \vspace{0.2cm}
     Parametry:
     $|s_x|_r$: 7
-    $|p_x|_r$: 3
+    $|p_x|_r$: 3,
+    wyniki dla \ObrXVIImu
     \vspace{0.2cm}
     \end{minipage}
     } \\ \hline 
@@ -2962,7 +3009,8 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     \vspace{0.2cm}
     Parametry:
     $|s_x|_r$: 9
-    $|p_x|_r$: 5
+    $|p_x|_r$: 5,
+        wyniki dla \ObrImu
     \vspace{0.2cm}
     \end{minipage}
     } \\ \hline 
@@ -2988,7 +3036,8 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     \centering
     Parametry:
     $|s_x|_r$: 7
-    $|p_x|_r$: 3
+    $|p_x|_r$: 3,
+        wyniki dla \ObrXIXmu
     \end{minipage}
     } \\ \hline 
     t: 140.31s
@@ -3039,7 +3088,12 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     } \\ \hline 
     \multicolumn{2}{|c|}{
     	Porównanie odwzorowania tekstur w zależności od normy
+    } \\ \hline   \hline 
+    
+        \multicolumn{2}{|c|}{
+    	wyniki dla \kotmyszmu
     } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -3113,6 +3167,10 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
 
     \multicolumn{2}{|c|}{
     	Porównanie uzyskanej spójności w zależności od normy
+    } \\ \hline \hline
+    
+            \multicolumn{2}{|c|}{
+    	wyniki dla \ObrIVmu
     } \\ \hline 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -3186,7 +3244,12 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     
     \multicolumn{2}{|c|}{
     	Porównanie uzyskanej spójności w zależności od rozmiaru fragmentu obrazu
+    } \\ \hline \hline
+    
+            \multicolumn{2}{|c|}{
+    	wyniki dla \maciekImu
     } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -3291,7 +3354,10 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \vspace{0.2cm}
     \end{minipage}\\ \hline
 
-
+    \multicolumn{2}{|c|}{
+    	wyniki dla \ObrXVIImu
+    }\\
+    \hline
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -3401,7 +3467,12 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     } \\
     \multicolumn{2}{|c|}{
     	dla normy Poisson'a $(\lambda=0.1)$
+    } \\ \hline \hline
+    
+                \multicolumn{2}{|c|}{
+    	wyniki dla \ObrIVmu
     } \\ \hline 
+    
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
     \centering
@@ -3441,7 +3512,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
 \newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
-    Obraz & Parametry \\ \hline
+    Wyniki dla  \OsobaDrugamu & Parametry \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
@@ -3489,7 +3560,17 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
 	\label{NONLOCALITYVFI}
 \end{longtable}
 
-Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu. Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu. Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury - \kotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski - \ObrIVm. Charakterem swoich wyników mogą przypominać wyniki otrzymywane z zastosowaniem metody bazującej na metodzie Criminisi'niego ze znacząco ograniczoną wadą niespójności w obrazie. //TODO składnia tylko czy ok// Analizując wyniki //TODO obr na obrazu \maciekImu \ i \ObrXVIImu, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy wyrażonej wzorem \eqref{nonLocalMedians}. Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury - \ObrIVmu //TODO obrazu//. Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu. W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów. Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku. Najlepszymi właściwościami charakteryzuje się norma wyrażona wzorem \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$. Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
+Trzy zaprezentowane normy różnią się sposobem porównywania ze sobą fragmentów obrazu.
+Wyniki uzyskane za pomocą norm $L^2$ stanowią gładką kontynuację obrazu wgłąb maski, natomiast wyniki oparte na $L^1$ faworyzują gwałtowne zmiany obrazu.
+Wyniki uzyskane dla normy bazującej na medianie \eqref{nonLocalMedians} charakteryzują się dokładniejszym odwzorowaniem tekstury np \fullkotmyszm,  nie gwarantując ostatecznie spójności obrazu w obszarze maski np \fullObrIVm.
+Charakterem swoich wyników mogą przypominać wyniki otrzymywane z zastosowaniem metody bazującej na metodzie Criminisi'niego ze znacząco ograniczoną wadą niespójności w obrazie.
+Analizując wyniki \maciekImu \ i \ObrXVIImu, można zauważyć większą skuteczność odwzorowania struktur w przypadku większego rozmiaru fragmentu obrazu, w szczególności dla normy wyrażonej wzorem \eqref{nonLocalMedians}.
+Zwiększający się  rozmiar fragmentu obrazu w przypadku normy Poissona prowadzi do głębszego rozmycia odrestaurowywanego obszaru, a w przypadku normy uśredniającej do lepszego odrestaurowania struktury i tekstury np wyniki \ObrIVmu.
+Parametr $\lambda$ wpływa na zdolność kontynuacji ostrych krawędzi obrazu.
+W przypadku zerowej wartości nadaje charakter wypełniania obrazu podobny do algorytmu korzystającego z równań mechaniki płynów.
+Dla każdego z przypadków zwiększenie rozmiaru fragmentu obrazu przyczynia się do wydłużenia czasu uzyskania ostatecznego wyniku.
+Najlepszymi właściwościami charakteryzuje się norma wyrażona wzorem \eqref{nonLocalpoisson} stanowiąca połączenie normy $L^1$ z $L^2$.
+Wszystkie z opisanych norm gwarantują kontynuację powtarzających się głównych schematów obrazu - \autoref{NONLOCALITYVFI}.
 \section{Porównanie algorytmów wmalowywania.}
 \subsection{Obrazy wykorzystane do porównania.}
 Do porównania ze sobą algorytmów wykorzystano cztery obrazy testowe przedstawione w \autoref{COMPAREIMAGES}. Za obraz idealnie wypełniony uznajemy obraz oryginalny bez nałożonej maski.
@@ -3593,7 +3674,7 @@ s(x,y) = \frac{\sigma_{xy} + C_3}{\sigma_{x}\sigma_{y}+C_3}.
 Zmienne $\mu_x$, $\mu_y$, $\sigma_{x}$, $\sigma_{y}$, $\sigma_{xy}$ stanowią lokalne średnie, odchylenia standardowe i kowariancję.
 \subsection{Porównanie i podsumowanie wybranych algorytmów.}
 Algorytmy zostały zbadane dla różnych parametrów wypełniania. Zestawienie w tabelach wykonane jest biorąc pod uwagę najlepszy wyniki dla każdej z grupy. Porównanie przedstawiają tabele \ref{TabCompare} i \ref{TabTimeCompare}.
-\newpage
+\ \linebreak
 \begin{table}[!h]
     \centering
     \begin{tabular}{|p{4cm}|p{9cm}|}
@@ -3609,6 +3690,10 @@ Algorytmy zostały zbadane dla różnych parametrów wypełniania. Zestawienie w
     \end{tabular}
     \caption{Wyjaśnienie wprowadzanych skrótów.}
 \end{table}
+
+\ \linebreak
+\ \linebreak
+\ \linebreak
 
 \begin{table}[!h]
 \begin{center}
@@ -3673,6 +3758,9 @@ VFI (\ref{sec:sVFI}) &
 \label{TabTimeCompare}
 \end{center}
 \end{table}
+
+\pagebreak
+\
 \newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -3745,9 +3833,8 @@ VFI (\ref{sec:sVFI}) &
 	\label{COMPAREIMAGES}
 \end{longtable}
 
-W metodzie bazującej na równaniu Naviera-Stokes'a //TODO metoda polegająca najpierw na segmentacji a potem oddzielnym wypełnianiu nie poprawia//segmentacja, a następnie oddzielne wypełnianie tekstury nie poprawia wyniku w wystarczającym stopniu ze względu na główny błąd jakim jest rozmycie struktury. Metoda ta jest najszybsza, lecz charakteryzuje się niezbyt dobrymi wynikami. Najlepsze wyniki uzyskiwane są dla algorytmów bazujących na minimalizacji energii, jednak ich wadą jest szybkość działania. Metoda $VFI$ w porównaniu z innymi najlepiej odwzorowuje braki w obrazie. Rozważając grupę algorytmów bazujących na procesie minimalizacji można stwierdzić, że metoda $VFI$ jest najszybsza i zużywa mniej zasobów obliczeniowych spośród rozważanych metod //TODO to co dopisałem//. Metoda $VFI$ w swoich wynikach jest najmniej wrażliwa na manipulacje tych parametrów wejściowych. W przypadku pozostałych algorytmów ich zmiana ma znaczny wpływ na ostateczną syntezę wyznaczanego obszaru. Główną przewagą algorytmu $VFI$ jest zastosowanie kroku  minimalizacji mapy położenia pikseli,a także wypełnianie wielostopniowe. Każdy z pozostałych algorytmów badanych w pracy wyznacza obraz postępując od granicy maski do jej wnętrza w pewnym stopniu ograniczając charakter nielokalności.\\
-W zagadnieniu wmalowywania brak jest wskaźnika, który jednoznacznie określiłby poprawność wyznaczonego obszaru zgodnie z obiektywnym odczuciem obserwatora.
-\\
+W metodzie bazującej na równaniu Naviera-Stokes'a metoda polegająca najpierw na segmentacji a potem oddzielnym wypełnianiu struktury i tekstury nie poprawia wyniku w wystarczającym stopniu ze względu na główny błąd jakim jest rozmycie struktury. Metoda ta jest najszybsza, lecz charakteryzuje się niezbyt dobrymi wynikami. Najlepsze wyniki uzyskiwane są dla algorytmów bazujących na minimalizacji energii, jednak ich wadą jest szybkość działania. Metoda $VFI$ w porównaniu z innymi najlepiej odwzorowuje braki w obrazie. Rozważając grupę algorytmów bazujących na procesie minimalizacji można stwierdzić, że metoda $VFI$ jest najszybsza i zużywa mniej zasobów obliczeniowych spośród grupy rozważanych metod. Metoda $VFI$ w swoich wynikach jest najmniej wrażliwa na manipulacje własnych parametrów wejściowych. W przypadku pozostałych algorytmów ich zmiana ma znaczny wpływ na ostateczną syntezę wyznaczanego obszaru. Główną przewagą algorytmu $VFI$ jest zastosowanie kroku minimalizacji mapy położenia pikseli,a także wypełnianie wielostopniowe. Każdy z pozostałych algorytmów badanych w pracy wyznacza obraz postępując od granicy maski do jej wnętrza w pewnym stopniu ograniczając charakter nielokalności.\\
+W zagadnieniu wmalowywania brak jest wskaźnika, który jednoznacznie określiłby poprawność wyznaczonego obszaru zgodnie z obiektywnym odczuciem obserwatora.\\
 Wadą wszystkich przedstawianych algorytmów jest brak głębszej analizy figur geometrycznych pojawiających się w wypełnianych obrazach. Przykładem może być \autoref{TabGeometryFail}. w której znak drogowy nie został odrestaurowany.
 \begin{longtable}[h!]{|c|c|}
     \hline
@@ -3779,7 +3866,7 @@ Wadą wszystkich przedstawianych algorytmów jest brak głębszej analizy figur 
     \includegraphics[height=5cm]{TESTY/GEOM/VF/{ZNAKm.png_nlmedians_sc7_0.0737705_initnone_ps3_10000_conf5_0.1_t118.217}.png}
     \vspace{0.2cm}
     \end{minipage} \\ \hline
-	\caption{Przykładowe algorytmy błędnie odtwarzające znak drogowy.}    
+	\caption{Przykładowe algorytmy błędnie odtwarzające znak drogowy. Źródło \cite{znakDrogowy}}.    
 	\label{TabGeometryFail}
 \end{longtable}
 %-----------Koniec pracy magisterskiej-----------
