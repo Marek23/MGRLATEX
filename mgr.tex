@@ -720,6 +720,7 @@ Wmalowanie obszaru $\mathrm{\Omega }$ w $v_1,v_2,v_3$ na podstawie dowolnego alg
 \end{enumerate}
 \textbf{W niniejszej pracy magisterskiej do wypełnienia $u$ posłużono się mętodą Naviera-Stokes'a, natomiast do wypełnienia $v$ metodą Criminisi opisaną w rozdziale \ref{sec:crimMetod}}.
 \section{Model nielokalny NLCTV. (Non-local color total variation)}
+\subsection{Opis zaproponowanego rozwiązania.}
 \label{sec:sNLCTV}
 Pojęcie wariacji całkowitej funkcji $TV$ (total variation) w analizie obrazów pierwszy raz wprowadzone zostało przez Rudin'a, Osher'a i Fatemi’ego w \cite{rudin1992nonlinear}, gdzie proponowany model znajduje zastosowanie w usuwaniu szumów z obrazu. Następnie model $TV$ zostaje zaproponowany do wmalowywania obrazu w \cite{MathematicalModelsforNLTextureInpainting} przez Chan'a i Shen’a. Problem doboru parametrów dla modelu $TV$, właściwości oraz proces dyskretyzacji problemu minimalizacji jest dokładnie przedstawiony w \cite{getreuer2012total}. Algorytm bazujący na lokalnych funkcjonałach $TV$  charakteryzuje się zdolnością do kontynuacji geometrycznych struktur obrazu i krawędzi. Zgodnie z przedstawioną literaturą wadą algorytmu jest brak możliwości propagacji tekstury w nieznany obszar $\Omega$. Warto wspomnieć, iż w przypadku usuwania szumów z obrazów wykorzystanie operatorów lokalnych nie pozwala zachować tekstur. Problem jednoczesnej propagacji geometrii i tekstury można rozwiązać przy zastosowaniu modelu nielokalnego, który zostanie poddany analizie w niniejszej pracy. \\
 Klasyczny model nielokalny wariacji całkowitej funkcji został gruntownie przebadany dla obrazów w odcieniach szarości. W przypadku obrazów kolorowych jednym z pierwszych zaproponowanych modeli jest model Mumford-Shah dokładnie opisany w \cite{jung2011nonlocal}. Model ten dla każdej z warstw obrazu kolorowego przeprowadza oddzielną analizę, prowadząc do niejednorodnego kontrastu kolorów obrazu w przestrzeni wmalowywanej $\Omega$ z jego otoczeniem $D/\mathrm{\Omega}$. Problem uzyskania jednakowego kontrastu rozwiązano poprzez propozycję nowego, szybkiego modelu przedstawionego w \cite{duan2015fast} wprowadzającego zależność pomiędzy wszystkimi warstwami obrazu kolorowego. W celu analizy nowego modelu nielokalnego wariacji całkowitej funkcji dla obrazów kolorowych $NLCTV$ (z ang. non-local color total variation) zaproponowanego w \cite{duan2015fast} należy wcześniej wprowadzić oznaczenia i zależności operatorów nielokalnych. 
@@ -996,6 +997,16 @@ wyznaczenie wartości $u_x$ dla każdego piksela $x$, dla którego $p_x$ zawiera
 Aktualizacja wagi $w_i$ w wypełnionym obszarze, pomniejszenie obszaru $\mathrm{\Omega }$ o wypełnione piksele.
 \end{enumerate}
 \end{enumerate}
+\subsection{Uproszczona wersja rozwiązania.}
+Złożoność obliczeniowa algorytmu $NLCTV$ powoduje, że czas potrzebny na obliczanie nowych wartości w obrazie wydłuża się. W celu skrócenia tego czasu Autorzy artykułu \cite{ColorTextureInpaintingNLCTVModel} udostępniają rozwiązanie oparte na następującej aproksymacji równania \eqref{uNLCTV}, pozwalającej uzyskać wyniki zbliżone do wyników oryginalnego algorytmu:
+\begin{align}
+\begin{aligned}
+{{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
+&+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr].
+\end{aligned}
+\label{NLH1}
+\end{align}
+W przytoczonym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie algorytmu dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
 \section{Wariacyjny model nielokalny wmalowywania - VFI}
 \label{sec:sVFI}
 Kolejną z rozważanych metod będzie metoda zaproponowana przez Fedorov'a, Facciolo i Arias'a w \cite{arias2011variational}. Autorzy tej publikacji proponują optymalizację energii $\mathcal{E}(\varphi(x), u(\Omega))$ zależnej:
@@ -1517,16 +1528,6 @@ w\left(x,y\right) &= {\mathrm{exp} \left\{-\frac{G_{\sigma }*{\big|I\left(x+\ \c
 \end{aligned}
 \end{align}
 W przytoczonej zależności człon $s(\cdot)$ oznacza przeskalowanie  domyślnej wartości przyjętego rozmiaru fragmentu obrazu do rozmiaru $s$-krotnie większego. Edycja nie dotyczy pozostałej części  algorytmu i wpływa jedynie na wartość obliczanej wagi.
-\subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
-Złożoność obliczeniowa algorytmu $NLCTV$ powoduje, że czas potrzebny na obliczanie nowych wartości w obrazie wydłuża się. W celu skrócenia tego czasu Autor tej pracy magisterskiej proponuje zastosowanie następującej aproksymacji równania \eqref{uNLCTV}, pozwalającej uzyskać wyniki zbliżone do wyników oryginalnego algorytmu:
-\begin{align}
-\begin{aligned}
-{{\left(u_i\right)}_l}^{k+1} &= \frac{1}{{\left({\lambda }_D\right)}_l+2\mathrm{\Theta} \sum\limits_{j\in N_i} {\left(w_i\right)}_{l,j}\ } \Biggl[2\mathrm{\Theta }\sum_{j\in N_i} {{{\left(u^k_i\right)}_j\left(w_i\right)}_{l,j}\ }\\
-&+ {\left({\lambda }_D\right)}_l{\left(f_i\right)}_l\Biggr].
-\end{aligned}
-\label{NLH1}
-\end{align}
-W przytoczonym równaniu eliminacja zmiennych $v$ oraz $b$ pozwala znacznie ograniczyć wykorzystywane zasoby pamięciowe i przyspieszyć działanie algorytmu dzięki pominięciu dodatkowych obliczeń wykluczonych zmiennych. Korzyści czasowe oraz różnice w obliczonych obrazach opisany zostanie w podrozdziale \ref{ssec:NLCTVModSec}.
 \section{Połączenie syntezy obrazu z funkcją wagi.}
 Kolejną modyfikacją algorytmu $NLCTV$ wykonaną przez Autora tej pracy jest zastąpienie równania \eqref{NLH1}, metodą syntezy obrazu bazującej na metodzie syntezy tekstury. Kroki nowego algorytmu można wtedy przedstawić w następującym schemacie postępowania:
 \begin{enumerate}
@@ -2220,7 +2221,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-		\ObrVIm \\
+		\fullObrVIm \\
         $|p_x|_r$: 9 \\
         Główne struktury: 5
     \end{minipage} \\ \hline
@@ -2233,7 +2234,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    	\ObrXIIIm \\
+    	\fullObrXIIIm \\
         $|p_x|_r$: 8 \\
         Główne struktury: 4
     \end{minipage} \\ \hline
@@ -2246,7 +2247,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    		\ObrXVIIm \\
+    		\fullObrXVIIm \\
         $|p_x|_r$: 4 \\
         Główne struktury: 3
     \end{minipage} \\ \hline
@@ -2259,7 +2260,7 @@ W celu poprawy jakości uzyskiwanych struktur zgodnie z artykułem \cite{Structu
     \end{minipage}
     &
     \begin{minipage}{.35\textwidth}
-    		\ObrXIXm \\
+    		\fullObrXIXm \\
         $|p_x|_r$: 12 \\
         Główne struktury: 1
     \end{minipage} \\ \hline
@@ -2415,7 +2416,7 @@ Wtedy dla każdego $\hat{q}_{\hat{x}}$ należy spełnić warunek:
 \forall x \in \hat{q}_{\hat{x}} : {\lambda }'(x) = 1
 \end{align}
 \section{Nielokalny model NLCTV.}
-\subsection{Modyfikacja wyznaczania wartości piksela w obrazie $u$.}
+\subsection{Porównanie rozwiązania oryginalnego z rozwiązaniem uproszczonym.}
 \label{ssec:NLCTVModSec}
 Porównanie wyników algorytmu oryginalnego i uproszczonego przedstawia \autoref{NLCTVVSNLHI}. Podobieństwo obrazów mierzy się współczynnikiem:
 \begin{align}
@@ -2437,7 +2438,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{tabular}{l l}
 	Wymiar: & 81$\times$81 \\
 	Udział maski: & 10\% \\
-	Nazwa: & \XXVIII
+	Nazwa: & obraz nr 1
 	\end{tabular}
     \end{minipage} \\ \hline
 
@@ -2452,7 +2453,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{tabular}{l l}
 	Wymiar: & 113$\times$66 \\
 	Udział maski: & 6\% \\
-	Nazwa: & \TEST
+	Nazwa: & obraz nr 2
 	\end{tabular}
     \end{minipage} \\ \hline
     
@@ -2467,7 +2468,7 @@ gdzie $n$ oznacza liczbę warstw obrazu tworzących kolor, $m, \ n$ to rozmiary 
     \begin{tabular}{l l}
 	Wymiar: & 134$\times$81 \\
 	Udział maski: & 11\% \\
-	Nazwa: & \Wood
+	Nazwa: & obraz nr 3
 	\end{tabular}
     \end{minipage} \\ \hline
   \caption{Dodatkowa grupa obrazów testowych dla nielokalnego modelu $NLCTV$.}
@@ -2593,10 +2594,10 @@ Parametr $\lambda$ służy do przemnożenia wartości $\chi$ danej wzorem\eqref{
 \right\}
 \end{equation}
 Parametr $|s_x|_r$ określa wymiar długości boku w pikselach tworzonego okna $\mathrm{N_x}$ (z ang. search window).
-Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest prawie niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znaczącym stopniu przyspiesza algorytm wmalowywania}.
+Maksymalny procentowy błąd $f$ w przytoczonych testach nie przekracza wartości 3\% i można uznać go za pomijalny. Różnica pomiędzy obrazami rośnie wraz ze wzrostem współczynnika $h$. Wizualne dostrzeżenie różnicy w obrazach otrzymanych przez zastosowanie wspomnianych algorytmów jest prawie niemożliwe. Wszystkie z pozostałych testów wykonano dla algorytmu uproszczonego. Czasy uzyskania wyników różnią się o rząd wielkości. \textbf{Uproszczony algorytm w znaczącym stopniu przyspiesza algorytm wmalowywania}. Przykładowe wyniki dla różnych parametrów uproszczonego algorytmu $NLCTV$ przedstawia tabela \autoref{NLH1Tab}.
 
 \newpage
-Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \autoref{NLH1Tab}.
+
 \begin{longtable}[h!]{|c|c|}
     \hline
     \multicolumn{2}{|c|}{
@@ -2606,7 +2607,7 @@ Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \auto
 		\textbf{Wpływ parametru $h$ na odwzorowanie tekstur i struktur}
     } \\ \hline  \hline 
     \multicolumn{2}{|c|}{
-	wyniki dla obrazu \ObrXVIImu
+	wyniki \ObrXVIImu
     } \\ \hline 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -2646,7 +2647,7 @@ Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \auto
     \end{minipage}\\ \hline
 
     \multicolumn{2}{|c|}{
-	wyniki dla obrazu \ObrXIXmu
+	wyniki \ObrXIXmu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -2687,8 +2688,8 @@ Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \auto
     \end{minipage}\\ \hline
 
     \multicolumn{2}{|c|}{
-	wyniki dla obrazu \ObrVImu
-    } \\ \hline \\
+	wyniki \ObrVImu
+    } \\ \hline
     
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -2736,7 +2737,7 @@ Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \auto
     } \\\hline  \hline 
 
     \multicolumn{2}{|c|}{
-	wyniki dla obrazu \kotmyszmu
+	wyniki \kotmyszmu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -2777,7 +2778,7 @@ Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \auto
     \end{minipage}\\ \hline
 
     \multicolumn{2}{|c|}{
-	wyniki dla obrazu \ObrImu
+	wyniki \ObrImu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -2821,7 +2822,9 @@ Przykładowe wyniki dla różnych parametrów algorytmu przedstawia tabela \auto
     \label{NLH1Tab}
 \end{longtable}
 
-Model nielokalny wariacji całkowitej w pierwszych publikacjach dotyczących przetwarzania obrazów został zastosowany filtracji, usuwania elementów tekstury i szumu, segmentacji obrazu na strukturę i teksturę, przykład \cite{buades2005non}. Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje, co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $|s_x|_r$ i $|p_x|_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące poza paletą dostarczaną w obrazie, bądź przechodzi w obszar niestabilności. W przypadku małych wartości parametru  $|s_x|_r$ i $|p_x|_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $|s_x|_r$, $|p_x|_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru. Wadą tego algorytmu jest znaczące wydłużenie czasu potrzebnego na obliczenie obrazu maski w przypadku dużych wartości $|s_x|_r$ i $|p_x|_r$ pomimo zastosowania algorytmu uproszczonego. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $|s_x|_r <30$, $|p_x|_r$ dla obrazu o wymiarze $500x500$. \textbf{Autor niniejszej pracy zaleca następujące parametry algorytmu:}
+Model nielokalny wariacji całkowitej w pierwszych publikacjach dotyczących przetwarzania obrazów został zastosowany w filtracji, usuwaniu elementów tekstury i szumu, segmentacji obrazu na strukturę i teksturę, przykład \cite{buades2005non}.
+Istotnym parametrem algorytmu jest parametr $h$, który w przypadku małych wartości nadaje ostry charakter funkcji wagi $w$. W przypadku zwiększania wartości $h$ gradient wartości wagi $w$ maleje, co powoduje dokładniejsze usunięcie szumów i tekstury w obrazie. Duża wartość parametru $h$ przekłada się na niską dokładność wmalowania obrazu: rozmycie odtworzonej struktury i braku kontynuacji tekstury. W przypadku małych wartości parametru $|s_x|_r$ i $|p_x|_r$, przy małej wartości parametru $h$ i braku ściśle powtarzających się tekstur obrazu algorytm generuje kolory będące poza paletą dostarczaną w obrazie, bądź przechodzi w obszar niestabilności. W przypadku małych wartości parametru  $|s_x|_r$ i $|p_x|_r$, przy dużej wartości parametru $h$ w wyniku otrzymuje się rozmyty obraz. Duża wartość parametru $h$ generuje prawidłowe wyniki wyłącznie w sytuacji ściśle powtarzających się tekstur obrazu znajdujących się w jednej strukturze. Zastosowanie odpowiednio dużych wartości parametrów $|s_x|_r$, $|p_x|_r$ pozwala przyjąć małą wartość parametru $h$ z zachowaniem stabilności skutkiem czego mamy prawidłową syntezę wyznaczanego obszaru.
+Wadą tego algorytmu jest znaczące wydłużenie czasu potrzebnego na obliczenie obrazu maski w przypadku dużych wartości $|s_x|_r$ i $|p_x|_r$ \textbf{pomimo zastosowania algorytmu uproszczonego}. W głównej mierze do przyrostu czasu przyczynia się funkcja wyznaczania wagi $w$. Dla komputera wyposażonego w 8 GB pamięci RAM górnym limitem parametrów jest $|s_x|_r <30$, $|p_x|_r$ dla obrazu o wymiarze $500x500$. \textbf{Autor niniejszej pracy zaleca następujące parametry algorytmu:}
 \begin{enumerate}
 \item Obraz ze ściśle powtarzającą się teksturą z maską w zakresie jednej struktury
 \begin{itemize}
@@ -2847,7 +2850,7 @@ Wyniki przedstawiono w tabeli \ref{NLH1SWOVER1} (parametr $sw$ określa czynnik 
     } \\ \hline  \hline
     
         \multicolumn{2}{|c|}{
-		wyniki dla \maciekImu
+		wyniki \maciekImu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -2886,7 +2889,7 @@ Wyniki przedstawiono w tabeli \ref{NLH1SWOVER1} (parametr $sw$ określa czynnik 
     \end{minipage}\\ \hline
 
         \multicolumn{2}{|c|}{
-		wyniki dla \ObrXVIImu
+		wyniki \ObrXVIImu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -2925,7 +2928,7 @@ Wyniki przedstawiono w tabeli \ref{NLH1SWOVER1} (parametr $sw$ określa czynnik 
     \end{minipage}\\ \hline
 
         \multicolumn{2}{|c|}{
-		wyniki dla obrazu \ObrXIXmu
+		wyniki \ObrXIXmu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -2982,7 +2985,7 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     Parametry:
     $|s_x|_r$: 7
     $|p_x|_r$: 3,
-    wyniki dla \ObrXVIImu
+    wyniki \ObrXVIImu
     \vspace{0.2cm}
     \end{minipage}
     } \\ \hline 
@@ -3010,7 +3013,7 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     Parametry:
     $|s_x|_r$: 9
     $|p_x|_r$: 5,
-        wyniki dla \ObrImu
+        wyniki \ObrImu
     \vspace{0.2cm}
     \end{minipage}
     } \\ \hline 
@@ -3037,7 +3040,7 @@ Zaproponowany sposób pozwala uniknąć sytuacji, w której w szukanym obszarze 
     Parametry:
     $|s_x|_r$: 7
     $|p_x|_r$: 3,
-        wyniki dla \ObrXIXmu
+        wyniki \ObrXIXmu
     \end{minipage}
     } \\ \hline 
     t: 140.31s
@@ -3091,7 +3094,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     } \\ \hline   \hline 
     
         \multicolumn{2}{|c|}{
-    	wyniki dla \kotmyszmu
+    	wyniki \kotmyszmu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -3170,7 +3173,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     } \\ \hline \hline
     
             \multicolumn{2}{|c|}{
-    	wyniki dla \ObrIVmu
+    	wyniki \ObrIVmu
     } \\ \hline 
     \begin{minipage}{0.5\textwidth}
     \vspace{0.2cm}
@@ -3247,7 +3250,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     } \\ \hline \hline
     
             \multicolumn{2}{|c|}{
-    	wyniki dla \maciekImu
+    	wyniki \maciekImu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -3355,7 +3358,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     \end{minipage}\\ \hline
 
     \multicolumn{2}{|c|}{
-    	wyniki dla \ObrXVIImu
+    	wyniki \ObrXVIImu
     }\\
     \hline
     \begin{minipage}{0.5\textwidth}
@@ -3470,7 +3473,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
     } \\ \hline \hline
     
                 \multicolumn{2}{|c|}{
-    	wyniki dla \ObrIVmu
+    	wyniki \ObrIVmu
     } \\ \hline 
     
     \begin{minipage}{0.5\textwidth}
@@ -3512,7 +3515,7 @@ dla asymptoty, do której dąży funkcja $c_{0}=0.1$.
 \newpage
 \begin{longtable}[h!]{|c|c|}
     \hline
-    Wyniki dla  \OsobaDrugamu & Parametry \\ \hline
+    Wyniki  \OsobaDrugamu & Parametry \\ \hline
 
     \begin{minipage}{.65\textwidth}
     \vspace{0.2cm}
