@@ -3,8 +3,8 @@
 \large \bf
 POPRAWA JAKOŚCI OBRAZÓW CYFROWYCH POPRZEZ METODĘ WMALOWYWANIA
 \end{center}
-\section*{Streszczenie}
-W pracy dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. Podstawowymi narzędziami wykorzystywanymi w algorytmach rekonstrukcji są cząstkowe równania różniczkowe wyższego rzędu oraz definicje metryk będące miarą podobieństwa badanych obszarów. W niniejszej pracy opisano wybrane algorytmy, podano sposoby dyskretyzacji, zaimplementowano, przetestowano, opisano dobór ich optymalnych parametrów i ostatecznie porównano je ze sobą. Zaproponowano nowe modele bądź ulepszenia do zaimplementowanych algorytmów uzupełniania brakujących danych. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. \textbf{Do implementacji prezentowanych przez autora algorytmów skorzystano z: Matlab'a, języka C, C++ oraz Python.}
+
+W pracy dokonano przeglądu istniejących algorytmów wmalowywania opartych na rozwiązaniu odpowiednio zdefiniowanych problemów matematycznych. W niniejszej pracy opisano wybrane algorytmy, podano sposoby dyskretyzacji, zaimplementowano, przetestowano, opisano dobór ich optymalnych parametrów i ostatecznie porównano je ze sobą. Następnie zaproponowano własne ulepszenia do zaimplementowanych algorytmów uzupełniania brakujących danych: zmiana sposobu dyskretyzacji dyfuzji anizotropowej w metodzie Naviera Stokesa, zmiana sposobu wmalowywania tekstury w metodzie Naviera-Stokesa, zmniejszenie okna poszukiwania najlepszego dopasowania w metodzie Criminisi, zmiana sposobu wyznaczania podobieństwa fragmentów obrazu w metodzie Criminisi,  modyfikacja funkcji wagi w metodzie NLCTV, połączenie syntezy obrazu metodą Criminisi z funkcją wagi. Zwrócono także uwagę na różne cechy obrazu, które mogą determinować dobór algorytmu do zadanego problemu. \textbf{Do implementacji prezentowanych przez autora algorytmów skorzystano z: Matlab'a, języka C, C++ oraz Python.}
 
 \bigskip
 {\noindent \bf Słowa kluczowe:} Inpainting, wmalowywanie, przetwarzanie obrazów
@@ -16,8 +16,9 @@ W pracy dokonano przeglądu istniejących algorytmów wmalowywania opartych na r
 IMPROVEMENT OF QUALITY OF DIGITAL IMAGE THROUGHT THE INPAINTING METHOD
 \end{center}
 
-\section*{Abstract}
-Existing inpainting algorithms based on solving properly defined mathematical problems were reviewed. The basic tools used in reconstruction algorithms are higher-order partial differential equations and definitions of metrics that measure the similarity of the image patches. This work describes selected algorithms, their discretization methods, types of implementation, tests, the selection of their optimal parameters and finally compare to each other. New models or improvements have been proposed to the implemented inpainting algorithms. Attention was also paid to various image features that may determine the selection of an algorithm for a given problem. \textbf {Implementation of described algorithms where made using: Matlab, C, C ++ and Python.}
+Existing inpainting algorithms based on solving properly defined mathematical problems were reviewed. This work describes selected algorithms, their discretization methods, types of implementations, tests, the selection of their optimal parameters and finally compares to each other.
+Next, this work describes author's improvements to the implemented algorithms for inpainting: change in the method of discretization of anisotropic diffusion in the Navier Stokes method, change in the method of inpainting textures in the Navier-Stokes method, reduction of the search window for the best fit in the Criminisi method, change in the method of determining the similarity of image patches in the Criminisi method, modification of weight function in the NLCTV method, combination of image synthesis with the Criminisi method and a weight function.
+Attention was also paid to various image features that may determine the selection of an algorithm for a given problem. \textbf {Implementation of described algorithms where made using: Matlab, C, C ++ and Python.}
 
 \bigskip
 {\noindent \bf Keywords:} Inpainting, image processing
